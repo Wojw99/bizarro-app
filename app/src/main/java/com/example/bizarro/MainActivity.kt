@@ -4,10 +4,21 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Scaffold
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.navigation.NavHostController
+import androidx.navigation.Navigation
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.rememberNavController
+import com.example.bizarro.ui.NavGraph
+import com.example.bizarro.ui.Screen
+import com.example.bizarro.ui.components.BottomNavItem
+import com.example.bizarro.ui.components.BottomNavigationBar
 import com.example.bizarro.ui.theme.BizarroTheme
 
 class MainActivity : ComponentActivity() {
@@ -15,9 +26,40 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             BizarroTheme {
-                // A surface container using the 'background' color from the theme
-                Surface(color = MaterialTheme.colors.background) {
-                    Greeting("Android")
+                val navController = rememberNavController()
+                Scaffold(bottomBar = {
+                    BottomNavigationBar(
+                        items = listOf(
+                            BottomNavItem(
+                                Screen.Compare.name,
+                                Screen.Compare.route,
+                                icon = Icons.Default.Check,
+                            ),
+                            BottomNavItem(
+                                Screen.UserRecordList.name,
+                                Screen.UserRecordList.route,
+                                icon = Icons.Default.List,
+                            ),
+                            BottomNavItem(
+                                Screen.Home.name,
+                                Screen.Home.route,
+                                icon = Icons.Default.Home,
+                            ),
+                            BottomNavItem(
+                                Screen.Search.name,
+                                Screen.Search.route,
+                                icon = Icons.Default.Search,
+                            ),
+                            BottomNavItem(
+                                Screen.UserProfile.name,
+                                Screen.UserProfile.route,
+                                icon = Icons.Default.Person,
+                            ),
+                        ),
+                        navController = navController,
+                    )
+                }) {
+                    NavGraph(navController = navController)
                 }
             }
         }
