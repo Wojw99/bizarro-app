@@ -27,7 +27,10 @@ class MainActivity : ComponentActivity() {
         setContent {
             BizarroTheme {
                 val navController = rememberNavController()
+
+
                 Scaffold(bottomBar = {
+
                     BottomNavigationBar(
                         items = listOf(
                             BottomNavItem(
@@ -58,6 +61,7 @@ class MainActivity : ComponentActivity() {
                         ),
                         navController = navController,
                     )
+
                 }) {
                     NavGraph(navController = navController)
                 }
