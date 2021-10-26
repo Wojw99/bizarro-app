@@ -35,6 +35,7 @@ import com.example.bizarro.R
 fun SignInScreen(navController: NavController)
 {
     Column(
+        
         modifier = Modifier
             .fillMaxSize()
             .background(Color.White),
@@ -54,12 +55,12 @@ fun SignInScreen(navController: NavController)
         Spacer(modifier = Modifier.height(80.dp))
 
 
-        var textEmail by remember { mutableStateOf(TextFieldValue("")) }
+        var textLoginEmail by remember { mutableStateOf(TextFieldValue("")) }
 
         OutlinedTextField(
-            value =textEmail,
+            value =textLoginEmail,
             onValueChange ={
-                textEmail = it
+                textLoginEmail = it
             },
             label = { Text(text = "Email") },
             placeholder = { Text(text = "Type your e-mail") },
@@ -73,12 +74,12 @@ fun SignInScreen(navController: NavController)
 
         Spacer(modifier = Modifier.height(20.dp))
 
-        var textPassword by remember { mutableStateOf(TextFieldValue("")) }
+        var textLoginPassword by remember { mutableStateOf(TextFieldValue("")) }
 
         OutlinedTextField(
-            value = textPassword,
+            value = textLoginPassword,
             onValueChange ={
-                textPassword = it
+                textLoginPassword = it
             },
             label = { Text(text = "Password") },
             placeholder = { Text(text = "Type your password") },
