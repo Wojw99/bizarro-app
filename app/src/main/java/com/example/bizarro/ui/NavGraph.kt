@@ -10,6 +10,7 @@ import com.example.bizarro.ui.screens.compare.CompareScreen
 import com.example.bizarro.ui.screens.home.HomeScreen
 import com.example.bizarro.ui.screens.record_details.RecordDetailsScreen
 import com.example.bizarro.ui.screens.search.SearchScreen
+import com.example.bizarro.ui.screens.user_profile.SettingsScreen
 import com.example.bizarro.ui.screens.user_profile.UserProfileScreen
 import com.example.bizarro.ui.screens.user_record_list.UserRecordListScreen
 
@@ -43,12 +44,18 @@ fun NavGraph(
         composable(route = Screen.UserRecordList.route){
             UserRecordListScreen()
         }
+
+        composable(route = Screen.Settings.route){
+            SettingsScreen(navController)
+        }
+
     }
 }
 
 sealed class Screen(val route: String, val name: String){
     object SignIn: Screen(route = "signin_screen", name = "Logowanie")
     object SignUp: Screen(route = "signup_acreen", name = "Rejestracja")
+    object Settings: Screen(route = "settings_screen", name = "Ustawienia")
 
     object Home: Screen(route = "home_screen", name = "Główna")
     object Compare: Screen(route = "compare_screen", name = "Porównaj")
