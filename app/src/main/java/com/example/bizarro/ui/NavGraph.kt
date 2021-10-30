@@ -18,8 +18,7 @@ import com.example.bizarro.ui.screens.user_record_list.UserRecordListScreen
 fun NavGraph(
     navController: NavHostController
 ) {
-    NavHost(navController = navController, startDestination = Screen.SignIn.route) {
-
+    NavHost(navController = navController, startDestination = Screen.Home.route) {
         composable(route = Screen.SignIn.route){
             SignInScreen(navController)
         }
@@ -44,11 +43,9 @@ fun NavGraph(
         composable(route = Screen.UserRecordList.route){
             UserRecordListScreen()
         }
-
         composable(route = Screen.Settings.route){
             SettingsScreen(navController)
         }
-
     }
 }
 
@@ -56,7 +53,6 @@ sealed class Screen(val route: String, val name: String){
     object SignIn: Screen(route = "signin_screen", name = "Logowanie")
     object SignUp: Screen(route = "signup_acreen", name = "Rejestracja")
     object Settings: Screen(route = "settings_screen", name = "Ustawienia")
-
     object Home: Screen(route = "home_screen", name = "Główna")
     object Compare: Screen(route = "compare_screen", name = "Porównaj")
     object RecordDetails: Screen(route = "record_details_screen", name = "Ogłoszenie")

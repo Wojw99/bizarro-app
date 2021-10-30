@@ -1,40 +1,22 @@
 package com.example.bizarro.ui.screens.authenticate
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
-import androidx.compose.material.SnackbarDefaults.backgroundColor
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Email
 import androidx.compose.material.icons.filled.Lock
-import androidx.compose.material.icons.filled.Person
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.BlendMode.Companion.Screen
 import androidx.navigation.NavController
-import androidx.navigation.compose.rememberNavController
-import com.example.bizarro.ui.NavGraph
-import com.example.bizarro.ui.NavGraph
-import com.example.bizarro.ui.Screen
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.RectangleShape
-import androidx.compose.ui.layout.layout
-import androidx.compose.ui.layout.layoutId
-import androidx.compose.ui.res.fontResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.TextFieldValue
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.constraintlayout.compose.ConstraintLayout
-import androidx.constraintlayout.compose.ConstraintSet
-import androidx.constraintlayout.compose.Dimension
-import com.example.bizarro.R
-import java.util.*
 
 
 @Composable
@@ -143,10 +125,6 @@ fun SignInScreen(navController: NavController)
                color = Color.White,
             )
          )
-
       }
-
    }
-
-    
 }
