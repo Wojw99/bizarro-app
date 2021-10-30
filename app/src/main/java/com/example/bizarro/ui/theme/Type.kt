@@ -1,6 +1,7 @@
 package com.example.bizarro.ui.theme
 
 import android.graphics.fonts.Font
+import androidx.compose.material.Button
 import androidx.compose.material.Typography
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontFamily
@@ -10,7 +11,10 @@ import androidx.compose.ui.unit.sp
 
 // Set of Material typography styles to start with
 
-
+//val ButtonBlack = Button(
+//
+//
+//)
 
 val Typography = Typography(
 
@@ -22,6 +26,7 @@ val Typography = Typography(
         fontSize = 16.sp
 
     )
+
 
 
 

@@ -31,7 +31,7 @@ fun SettingsScreen(navController: NavController)
 
         //Spacer(modifier = Modifier.height(200.dp))
 
-        Text("App Settings",
+        Text("Ustawienia aplikacji",
             style = TextStyle(
                 fontSize = 32.sp,
                 fontFamily = FontFamily.Serif,

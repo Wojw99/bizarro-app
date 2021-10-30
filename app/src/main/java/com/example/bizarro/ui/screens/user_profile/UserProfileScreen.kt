@@ -6,6 +6,7 @@ import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
+import androidx.compose.material.MaterialTheme.colors
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.Settings
@@ -42,9 +43,13 @@ fun UserProfileScreen(navController:NavController) {
 
         UserImage()
 
-        Spacer(modifier = Modifier.height(40.dp))
+        //Spacer(modifier = Modifier.height(40.dp))
 
-        UserInfo()
+        UserInfo(navController)
+
+        //Spacer(modifier = Modifier.height(20.dp))
+
+
 
         Spacer(modifier = Modifier.height(50.dp))
 
@@ -68,7 +73,7 @@ fun UserProfileScreen(navController:NavController) {
             colors = ButtonDefaults.buttonColors(backgroundColor = Color.Black),
 
             ) {
-            Text(text = "Sign Out",
+            Text(text = "Wyloguj",
                 style = TextStyle(
                     fontSize = 20.sp,
                     fontFamily = FontFamily.Serif,
@@ -120,25 +125,13 @@ fun UserImage()
             .clip(RoundedCornerShape(10))
             .border(3.dp, Color.Blue, RoundedCornerShape(10))
     )
-    
-    
-    FloatingActionButton(onClick = {
 
-    },backgroundColor = Color.Blue
-    ) {
-        Icon(
-            imageVector = Icons.Default.Edit,
-            contentDescription = "Edytuj photo",
-            tint = Color.White
-
-        )
-    }
     
 
 }
 
 @Composable
-fun UserInfo()
+fun UserInfo(navController: NavController)
 {
     Text("Jan Kowalski",
         style = TextStyle(
@@ -165,18 +158,26 @@ fun UserInfo()
             fontWeight = FontWeight.Normal
         ))
 
+    Spacer(modifier = Modifier.height(50.dp))
 
-    FloatingActionButton(onClick = {
-
-    },backgroundColor = Color.Blue
-    ) {
-        Icon(
-            imageVector = Icons.Default.Edit,
-            contentDescription = "Edytuj info",
-            tint = Color.White
-
+    Button(
+        onClick ={
+            navController.navigate(route = Screen.EditProfile.route)
+        },
+        Modifier.size(width = 180.dp, height = 40.dp),
+        colors = ButtonDefaults.buttonColors(backgroundColor = Color.Blue),
+    )
+    {
+        Text(text = "Edytuj profil",
+            style = TextStyle(
+                fontSize = 16.sp,
+                fontFamily = FontFamily.Serif,
+                fontWeight = FontWeight.Bold,
+                color = Color.White,
+            )
         )
     }
+
 
 
 

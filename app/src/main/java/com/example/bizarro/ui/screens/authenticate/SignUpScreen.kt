@@ -1,5 +1,6 @@
 package com.example.bizarro.ui.screens.authenticate
 
+import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
@@ -16,6 +17,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.navigation.NavController
 import com.example.bizarro.ui.Screen
 
@@ -81,13 +83,34 @@ fun SignUpScreen(navController: NavController)
 
         Button(
             onClick ={
+                //navController.navigate(route = com.example.bizarro.ui.Screen.SignIn.route)
+                //Toast.makeText(this,"Account registered", Toast.LENGTH_SHORT).show()
+            },
+            Modifier.size(width = 250.dp, height = 50.dp),
+        )
+        {
+            Text(text = "Register Account",
+                style = TextStyle(
+                    fontSize = 20.sp,
+                    fontFamily = FontFamily.Serif,
+                    fontWeight = FontWeight.Bold,
+                    color = Color.White,
+                )
+            )
+
+        }
+
+        Spacer(modifier = Modifier.height(50.dp))
+
+        Button(
+            onClick ={
                 navController.navigate(route = com.example.bizarro.ui.Screen.SignIn.route)
 
             },
             Modifier.size(width = 250.dp, height = 50.dp),
         )
         {
-            Text(text = "Register Account",
+            Text(text = "Go to Sign In",
                 style = TextStyle(
                     fontSize = 20.sp,
                     fontFamily = FontFamily.Serif,
