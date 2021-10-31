@@ -17,11 +17,19 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import com.example.bizarro.ui.AppState
 import com.example.bizarro.ui.Screen
 
 @Composable
 fun SettingsScreen(navController: NavController)
 {
+
+//     val appState: AppState
+//
+//    init {
+//        appState.bottomMenuVisible.value = false
+//    }
+
     Column(modifier = Modifier
         .fillMaxSize()
         .background(Color.White),
@@ -117,7 +125,7 @@ fun HeaderSectionSettings(navController: NavController)
 
         IconButton(
             onClick = {
-
+                    navController.navigate(route = Screen.OtherUserProfile.route)
             },
             modifier = Modifier.align(Alignment.CenterEnd)
         ) {
@@ -146,3 +154,4 @@ fun HeaderSectionSettings(navController: NavController)
 
     }
 }
+

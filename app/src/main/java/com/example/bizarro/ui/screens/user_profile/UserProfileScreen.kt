@@ -23,12 +23,19 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.example.bizarro.R
 import com.example.bizarro.ui.Screen
+import com.example.bizarro.ui.screens.record_details.RecordDetailsViewModel
 
 @Composable
-fun UserProfileScreen(navController:NavController) {
+fun UserProfileScreen(
+    navController:NavController,
+
+    //viewModel: UserProfileViewModel = hiltViewModel(),
+
+) {
 
     Column(
 
@@ -51,16 +58,16 @@ fun UserProfileScreen(navController:NavController) {
 
 
 
-        Spacer(modifier = Modifier.height(50.dp))
-
-        Button(onClick = {}) {
-            Image(
-                painterResource(R.drawable.ic_baseline_star_24),
-                contentDescription ="Zobacz opinie",
-                modifier = Modifier.size(35.dp))
-
-            Text(text = "Zobacz opinie",Modifier.padding(start = 10.dp))
-        }
+//        Spacer(modifier = Modifier.height(50.dp))
+//
+//        Button(onClick = {}) {
+//            Image(
+//                painterResource(R.drawable.ic_baseline_star_24),
+//                contentDescription ="Zobacz opinie",
+//                modifier = Modifier.size(35.dp))
+//
+//            Text(text = "Zobacz opinie",Modifier.padding(start = 10.dp))
+//        }
 
 
         Spacer(modifier = Modifier.height(50.dp))

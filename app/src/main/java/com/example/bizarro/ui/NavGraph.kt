@@ -10,9 +10,7 @@ import com.example.bizarro.ui.screens.compare.CompareScreen
 import com.example.bizarro.ui.screens.home.HomeScreen
 import com.example.bizarro.ui.screens.record_details.RecordDetailsScreen
 import com.example.bizarro.ui.screens.search.SearchScreen
-import com.example.bizarro.ui.screens.user_profile.EditProfileScreen
-import com.example.bizarro.ui.screens.user_profile.SettingsScreen
-import com.example.bizarro.ui.screens.user_profile.UserProfileScreen
+import com.example.bizarro.ui.screens.user_profile.*
 import com.example.bizarro.ui.screens.user_record_list.UserRecordListScreen
 
 @Composable
@@ -50,6 +48,12 @@ fun NavGraph(
         composable(route = Screen.Settings.route){
             SettingsScreen(navController)
         }
+        composable(route = Screen.OtherUserProfile.route){
+            OtherUserProfileScreen(navController)
+        }
+        composable(route = Screen.AddOpinion.route){
+            AddOpinionScreen(navController)
+        }
     }
 }
 
@@ -63,6 +67,8 @@ sealed class Screen(val route: String, val name: String){
     object Search: Screen(route = "search_screen", name = "Szukaj")
     object UserProfile: Screen(route = "user_profile_screen", name = "Profil")
     object EditProfile: Screen(route = "user_edit_profile_screen", name = "Edytuj swój profil")
+    object OtherUserProfile: Screen(route = "other_user_profile_screen", name = "Profil innego użytkownika")
+    object AddOpinion: Screen(route = "add_opinion_screen", name = "Dodaj opinię")
     object UserRecordList: Screen(route = "user_record_list_screen", name = "Ogłoszenia")
 
 
