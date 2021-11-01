@@ -20,10 +20,10 @@ class RecordRepository @Inject constructor(
 
     suspend fun getRecordList(limit: Int, offset: Int) : Resource<List<Record>>{
         val response = try {
-            api.getRecordList(limit, offset)
+            api.getRecordList(limit, offset, null, null, null)
         } catch (e: Exception) {
             Timber.d(e) // TODO: Check what is it
-            return Resource.Error("An unknown error ocurred")
+            return Resource.Error(Strings.unknownError)
         }
         return Resource.Success(response)
     }
