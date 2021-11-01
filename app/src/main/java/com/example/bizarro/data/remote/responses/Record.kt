@@ -6,7 +6,9 @@ data class Record(
     val id: Long,
     val name: String,
     val body: String,
-    val creationDate: Date,
-    val address: String,
+    val creationDate: String,
+    val city: String,
+    val province: String,
     val price: Double,
+    val type: String,
 )

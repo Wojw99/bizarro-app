@@ -21,13 +21,11 @@ fun SearchScreen(
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center,
         ) {
-            Text(text = "Search")
-            Text(text = viewModel.text.value)
+            Text(text = viewModel.records.value.toString())
             Button(onClick = {
-                val text = viewModel.text.value
-                viewModel.text.value = text + text
+                viewModel.updateList()
             }) {
-                Text("OK")
+                Text(text = "OK")
             }
         }
     }

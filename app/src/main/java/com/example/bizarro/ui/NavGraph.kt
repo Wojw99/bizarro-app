@@ -43,7 +43,7 @@ fun NavGraph(
             EditProfileScreen(navController)
         }
         composable(route = Screen.UserRecordList.route){
-            UserRecordListScreen()
+            UserRecordListScreen(navController)
         }
         composable(route = Screen.Settings.route){
             SettingsScreen(navController)

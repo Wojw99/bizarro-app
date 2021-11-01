@@ -21,7 +21,9 @@ import com.example.bizarro.ui.components.BottomNavItem
 import com.example.bizarro.ui.components.BottomNavigationBar
 import com.example.bizarro.ui.theme.BizarroTheme
 import dagger.hilt.android.AndroidEntryPoint
+import java.lang.Exception
 import javax.inject.Inject
+import javax.net.ssl.SSLContext
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
@@ -31,6 +33,7 @@ class MainActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         setContent {
             BizarroTheme {
                 val navController = rememberNavController()

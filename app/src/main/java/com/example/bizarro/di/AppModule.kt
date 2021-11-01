@@ -20,19 +20,19 @@ class AppModule {
 
     @Singleton
     @Provides
-    fun provideAppState() : AppState{
+    fun provideAppState(): AppState {
         return AppState()
     }
 
     @Singleton
     @Provides
-    fun provideRecordRepository(api: BizarroApi) : RecordRepository{
+    fun provideRecordRepository(api: BizarroApi): RecordRepository {
         return RecordRepository(api)
     }
 
     @Singleton
     @Provides
-    fun provideBizarroApi() : BizarroApi{
+    fun provideBizarroApi(): BizarroApi {
         return Retrofit.Builder()
             .addConverterFactory(GsonConverterFactory.create())
             .baseUrl(Constants.BASE_URL)
