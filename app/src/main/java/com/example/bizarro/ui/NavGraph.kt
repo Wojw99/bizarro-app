@@ -17,7 +17,7 @@ import com.example.bizarro.ui.screens.user_record_list.UserRecordListScreen
 fun NavGraph(
     navController: NavHostController
 ) {
-    NavHost(navController = navController, startDestination = Screen.Home.route) {
+    NavHost(navController = navController, startDestination = Screen.Search.route) {
         composable(route = Screen.SignIn.route){
             SignInScreen(navController)
         }

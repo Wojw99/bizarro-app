@@ -3,7 +3,7 @@ A mobile bicycle center where enthusiasts can post announcements on the purchase
 
 # TODO - screens
 - [#] Serialization and deserialization of Date (by using custom serializer)
-- [] Image transferring between client app and server
+- [#] Image transferring between client app and server
 - [] Token authentication
 - [] Search - record row component
 - [] Search - record list

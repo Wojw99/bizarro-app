@@ -17,6 +17,11 @@ var records = [
         province: "śląskie",
         price: 325.5,
         type: "górski",
+        imagePaths: [
+            "http://10.0.2.2:3000/images/record_1_0.jpg",
+            "http://10.0.2.2:3000/images/record_1_1.jpg",
+            "http://10.0.2.2:3000/images/record_1_2.jpg",
+        ],
     },
     {
         id: 1,
@@ -28,6 +33,10 @@ var records = [
         province: "śląskie",
         price: 425.5,
         type: "górski",
+        imagePaths: [
+            "http://10.0.2.2:3000/images/record_2_0.jpg",
+            "http://10.0.2.2:3000/images/record_2_1.jpg"
+        ],
     },
     {
         id: 2,
@@ -39,6 +48,10 @@ var records = [
         province: "śląskie",
         price: 255.5,
         type: "górski",
+        imagePaths: [
+            "http://10.0.2.2:3000/images/record_3_0.jpg",
+            "http://10.0.2.2:3000/images/record_3_1.jpg"
+        ],
     },
     {
         id: 3,
@@ -50,6 +63,10 @@ var records = [
         province: "łódzkie",
         price: 100.0,
         type: "gravel",
+        imagePaths: [
+            "http://10.0.2.2:3000/images/record_4_0.jpg",
+            "http://10.0.2.2:3000/images/record_4_1.jpg"
+        ],
     },
     {
         id: 4,
@@ -61,6 +78,9 @@ var records = [
         province: "mazowieckie",
         price: 112.0,
         type: "gravel",
+        imagePaths: [
+            "http://10.0.2.2:3000/images/record_5_0.jpg"
+        ],
     },
 ];
 
@@ -74,6 +94,7 @@ var profiles = [
         lastName: "Śląski",
         creationDate: "20-04-2021",
         description: "Jestem ze Śląska",
+        imagePath: "http://10.0.2.2:3000/images/profile_1.png"
     },
     {
         id: 4,
@@ -84,6 +105,7 @@ var profiles = [
         lastName: "Łódzka",
         creationDate: "19-04-2021",
         description: "Pływam łodzią",
+        imagePath: "http://10.0.2.2:3000/images/profile_2.png"
     },
     {
         id: 5,
@@ -94,6 +116,7 @@ var profiles = [
         lastName: "Mazowiecki",
         creationDate: "18-04-2021",
         description: "Fascynat rowerów górski i wieloletni członek klubu rowerowego \"Hamulcowi Tarczownicy\"",
+        imagePath: "http://10.0.2.2:3000/images/profile_3.png"
     },
 ];
 
@@ -141,6 +164,9 @@ var opinions = [
         content: "Pan Tomasz nie zjawił się na umówionym miejscu przekazania towaru.",
     },
 ];
+
+// - - - - - Serve static files (images) - - - - - */
+app.use(express.static('public'));
 
 // - - - - - GET main route - - - - - */
 app.get('/', function (request, response) {

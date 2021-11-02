@@ -12,4 +12,5 @@ data class Record(
     val province: String,
     val price: Double,
     val type: String,
+    val imagePaths: List<String>,
 )

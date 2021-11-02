@@ -13,6 +13,7 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.compose.currentBackStackEntryAsState
+import com.example.bizarro.ui.theme.*
 
 @Composable
 fun BottomNavigationBar(
@@ -21,7 +22,7 @@ fun BottomNavigationBar(
     modifier: Modifier = Modifier,
 ) {
     val backStackEntry = navController.currentBackStackEntryAsState()
-    BottomNavigation(modifier = modifier, backgroundColor = Color.DarkGray, elevation = 5.dp) {
+    BottomNavigation(modifier = modifier, backgroundColor = kDarkGray, elevation = 5.dp) {
         for (item in items) {
             val selected = item.route == backStackEntry.value?.destination?.route
             BottomNavigationItem(
@@ -43,8 +44,8 @@ fun BottomNavigationBar(
                         }
                     }
                 },
-                selectedContentColor = Color.Red,
-                unselectedContentColor = Color.Gray,
+                selectedContentColor = kWhite,
+                unselectedContentColor = kGray,
             )
         }
     }

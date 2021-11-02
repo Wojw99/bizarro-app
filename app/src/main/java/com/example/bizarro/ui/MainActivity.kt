@@ -3,27 +3,19 @@ package com.example.bizarro.ui
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Scaffold
-import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.navigation.NavHostController
-import androidx.navigation.Navigation
-import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.rememberNavController
-import com.example.bizarro.ui.NavGraph
-import com.example.bizarro.ui.Screen
+import com.example.bizarro.R
 import com.example.bizarro.ui.components.BottomNavItem
 import com.example.bizarro.ui.components.BottomNavigationBar
 import com.example.bizarro.ui.theme.BizarroTheme
 import dagger.hilt.android.AndroidEntryPoint
-import java.lang.Exception
 import javax.inject.Inject
-import javax.net.ssl.SSLContext
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
