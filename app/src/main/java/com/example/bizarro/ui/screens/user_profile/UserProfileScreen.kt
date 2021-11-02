@@ -33,7 +33,7 @@ import com.example.bizarro.ui.screens.record_details.RecordDetailsViewModel
 fun UserProfileScreen(
     navController:NavController,
 
-    //viewModel: UserProfileViewModel = hiltViewModel(),
+    viewModel: UserProfileViewModel = hiltViewModel(),
 
 ) {
 

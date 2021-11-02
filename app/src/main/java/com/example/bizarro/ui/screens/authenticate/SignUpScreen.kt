@@ -18,11 +18,14 @@ import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.core.content.ContentProviderCompat.requireContext
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.example.bizarro.ui.Screen
+import com.example.bizarro.ui.screens.user_profile.SettingsEditUserProfileViewModel
 
 @Composable
-fun SignUpScreen(navController: NavController)
+fun SignUpScreen(navController: NavController,
+                 viewModel: SettingsEditUserProfileViewModel = hiltViewModel(),)
 {
 
     Column(

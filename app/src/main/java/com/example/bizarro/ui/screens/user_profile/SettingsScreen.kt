@@ -16,12 +16,14 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.example.bizarro.ui.AppState
 import com.example.bizarro.ui.Screen
 
 @Composable
-fun SettingsScreen(navController: NavController)
+fun SettingsScreen(navController: NavController,
+                   viewModel: SettingsEditUserProfileViewModel = hiltViewModel(),)
 {
 
 //     val appState: AppState

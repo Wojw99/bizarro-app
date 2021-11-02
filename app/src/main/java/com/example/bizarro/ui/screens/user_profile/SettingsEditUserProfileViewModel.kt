@@ -6,10 +6,11 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 @HiltViewModel
-class UserProfileViewModel @Inject constructor(
-     appState: AppState) : ViewModel()
+class SettingsEditUserProfileViewModel @Inject constructor(
+    appState: AppState
+): ViewModel()
 {
     init {
-        appState.bottomMenuVisible.value = true
+        appState.bottomMenuVisible.value = false
     }
 }

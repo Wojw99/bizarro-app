@@ -2,19 +2,20 @@ package com.example.bizarro.ui.screens.user_profile
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
-import androidx.compose.material.Icon
-import androidx.compose.material.IconButton
-import androidx.compose.material.Text
+import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.filled.ArrowDropDown
 import androidx.compose.material.icons.filled.Face
-import androidx.compose.runtime.Composable
+import androidx.compose.material.icons.filled.Person
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
@@ -44,7 +45,7 @@ fun AddOpinionScreen(navController: NavController)
 
         Spacer(modifier = Modifier.height(80.dp))
 
-
+        AddOpinionSection()
 
 
 
@@ -90,6 +91,55 @@ fun AddOpinionSection()
 {
 
 
+
+    Box(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(12.dp)
+    ) {
+
+
+
+        var expanded by remember { mutableStateOf(false) }
+        val suggestions = listOf("Item1", "Item2", "Item3")
+
+        Button(onClick = { expanded = !expanded }){
+            Text ("DropDown")
+            Icon(
+                imageVector = Icons.Filled.ArrowDropDown,
+                contentDescription = null,
+            )
+        }
+        DropdownMenu(
+            expanded = expanded,
+            onDismissRequest = { expanded = false },
+        ) {
+            suggestions.forEach { label ->
+                DropdownMenuItem(onClick = {
+                    expanded = false
+                    //do something ...
+                }) {
+                    Text(text = label)
+                }
+            }
+        }
+
+
+        var textOpinion by remember { mutableStateOf(TextFieldValue("")) }
+
+        TextField(
+            value = textOpinion,
+            onValueChange = {
+                textOpinion = it },
+
+            label = { Text(text = "Komentarz") },
+            placeholder = { Text(text = "Wpisz swój komentarz") },
+
+            modifier = Modifier.align(Alignment.CenterEnd))
+
+
+        
+    }
 
 
 }
