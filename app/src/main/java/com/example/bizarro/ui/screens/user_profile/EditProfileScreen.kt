@@ -18,6 +18,9 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.example.bizarro.ui.Screen
+import com.example.bizarro.ui.theme.darkColor
+import com.example.bizarro.ui.theme.kGray
+import com.example.bizarro.ui.theme.kWhite
 
 @Composable
 fun EditProfileScreen(navController: NavController,
@@ -27,7 +30,7 @@ fun EditProfileScreen(navController: NavController,
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .background(Color.White),
+            .background(kWhite),
         horizontalAlignment = Alignment.CenterHorizontally) {
 
         HeaderEditProfileScreen(navController)
@@ -59,8 +62,8 @@ fun EditProfileScreen(navController: NavController,
                 Icon(imageVector = Icons.Default.Person, contentDescription = "PersonIcon" )
             },
             colors = TextFieldDefaults.outlinedTextFieldColors(
-                focusedBorderColor = Color.Blue,
-                unfocusedBorderColor = Color.Black)
+                focusedBorderColor = darkColor,
+                unfocusedBorderColor = darkColor)
 
         )
 
@@ -78,8 +81,8 @@ fun EditProfileScreen(navController: NavController,
                 Icon(imageVector = Icons.Default.Email, contentDescription = "EmailIcon" )
             },
             colors = TextFieldDefaults.outlinedTextFieldColors(
-                focusedBorderColor = Color.Blue,
-                unfocusedBorderColor = Color.Black)
+                focusedBorderColor = darkColor,
+                unfocusedBorderColor = darkColor)
 
         )
 
@@ -96,8 +99,8 @@ fun EditProfileScreen(navController: NavController,
                 Icon(imageVector = Icons.Default.Phone, contentDescription = "PhoneIcon" )
             },
             colors = TextFieldDefaults.outlinedTextFieldColors(
-                focusedBorderColor = Color.Blue,
-                unfocusedBorderColor = Color.Black)
+                focusedBorderColor = darkColor,
+                unfocusedBorderColor = darkColor)
 
         )
 
@@ -109,7 +112,7 @@ fun EditProfileScreen(navController: NavController,
 
             },
             Modifier.size(width = 250.dp, height = 50.dp),
-            colors = ButtonDefaults.buttonColors(backgroundColor = Color.Gray),
+            colors = ButtonDefaults.buttonColors(backgroundColor = kGray),
 
             ) {
             Text(text = "Zapisz",
@@ -117,7 +120,7 @@ fun EditProfileScreen(navController: NavController,
                     fontSize = 20.sp,
                     fontFamily = FontFamily.Serif,
                     fontWeight = FontWeight.Bold,
-                    color = Color.White,
+                    color = kWhite,
                 )
             )
         }

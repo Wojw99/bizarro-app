@@ -9,3 +9,8 @@ val kLightGray = Color(0xFFebebeb)
 val kBlue700 = Color(0xFF303F9F)
 val kBlue500 = Color(0xFF3F51B5)
 val kWhite = Color(0xFFFAFAFA)
+
+val darkColor = Color.Black
+val blueColor = Color.Blue
+val lightblueColor = Color(0xFF3F51B5)
+

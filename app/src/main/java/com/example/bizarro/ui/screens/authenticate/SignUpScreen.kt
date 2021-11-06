@@ -22,6 +22,10 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.example.bizarro.ui.Screen
 import com.example.bizarro.ui.screens.user_profile.SettingsEditUserProfileViewModel
+import com.example.bizarro.ui.theme.blueColor
+import com.example.bizarro.ui.theme.darkColor
+import com.example.bizarro.ui.theme.kWhite
+import com.example.bizarro.ui.theme.lightblueColor
 
 @Composable
 fun SignUpScreen(navController: NavController,
@@ -32,7 +36,7 @@ fun SignUpScreen(navController: NavController,
 
         modifier = Modifier
         .fillMaxSize()
-        .background(Color.White),
+        .background(kWhite),
         horizontalAlignment = Alignment.CenterHorizontally) {
 
 
@@ -61,8 +65,8 @@ fun SignUpScreen(navController: NavController,
                 Icon(imageVector = Icons.Default.Email, contentDescription = "EmailIcon" )
             },
             colors = TextFieldDefaults.outlinedTextFieldColors(
-                focusedBorderColor = Color.Blue,
-                unfocusedBorderColor = Color.Black)
+                focusedBorderColor = blueColor,
+                unfocusedBorderColor = darkColor)
         )
 
         Spacer(modifier = Modifier.height(20.dp))
@@ -90,6 +94,7 @@ fun SignUpScreen(navController: NavController,
                 //Toast.makeText(this,"Account registered", Toast.LENGTH_SHORT).show()
             },
             Modifier.size(width = 250.dp, height = 50.dp),
+            colors = ButtonDefaults.buttonColors(backgroundColor = lightblueColor),
         )
         {
             Text(text = "Register Account",
@@ -97,7 +102,7 @@ fun SignUpScreen(navController: NavController,
                     fontSize = 20.sp,
                     fontFamily = FontFamily.Serif,
                     fontWeight = FontWeight.Bold,
-                    color = Color.White,
+                    color = kWhite,
                 )
             )
 
@@ -111,6 +116,7 @@ fun SignUpScreen(navController: NavController,
 
             },
             Modifier.size(width = 250.dp, height = 50.dp),
+            colors = ButtonDefaults.buttonColors(backgroundColor = lightblueColor),
         )
         {
             Text(text = "Go to Sign In",
@@ -118,7 +124,7 @@ fun SignUpScreen(navController: NavController,
                     fontSize = 20.sp,
                     fontFamily = FontFamily.Serif,
                     fontWeight = FontWeight.Bold,
-                    color = Color.White,
+                    color = kWhite,
                 )
             )
 

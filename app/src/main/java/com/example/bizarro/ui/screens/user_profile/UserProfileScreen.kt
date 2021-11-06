@@ -28,6 +28,9 @@ import androidx.navigation.NavController
 import com.example.bizarro.R
 import com.example.bizarro.ui.Screen
 import com.example.bizarro.ui.screens.record_details.RecordDetailsViewModel
+import com.example.bizarro.ui.theme.blueColor
+import com.example.bizarro.ui.theme.darkColor
+import com.example.bizarro.ui.theme.kWhite
 
 @Composable
 fun UserProfileScreen(
@@ -42,7 +45,7 @@ fun UserProfileScreen(
 
         modifier = Modifier
             .fillMaxSize()
-            .background(Color.White),
+            .background(kWhite),
         horizontalAlignment = Alignment.CenterHorizontally) {
 
         HeaderSectionUserProfile(navController)
@@ -77,7 +80,7 @@ fun UserProfileScreen(
                 navController.navigate(route = com.example.bizarro.ui.Screen.SignIn.route)
             },
             Modifier.size(width = 250.dp, height = 50.dp),
-            colors = ButtonDefaults.buttonColors(backgroundColor = Color.Black),
+            colors = ButtonDefaults.buttonColors(backgroundColor = darkColor),
 
             ) {
             Text(text = "Wyloguj",
@@ -130,7 +133,7 @@ fun UserImage()
         modifier = Modifier
             .size(128.dp)
             .clip(RoundedCornerShape(10))
-            .border(3.dp, Color.Blue, RoundedCornerShape(10))
+            .border(3.dp, blueColor, RoundedCornerShape(10))
     )
 
     
@@ -172,7 +175,7 @@ fun UserInfo(navController: NavController)
             navController.navigate(route = Screen.EditProfile.route)
         },
         Modifier.size(width = 180.dp, height = 40.dp),
-        colors = ButtonDefaults.buttonColors(backgroundColor = Color.Blue),
+        colors = ButtonDefaults.buttonColors(backgroundColor = blueColor),
     )
     {
         Text(text = "Edytuj profil",
@@ -180,7 +183,7 @@ fun UserInfo(navController: NavController)
                 fontSize = 16.sp,
                 fontFamily = FontFamily.Serif,
                 fontWeight = FontWeight.Bold,
-                color = Color.White,
+                color = kWhite,
             )
         )
     }

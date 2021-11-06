@@ -20,6 +20,8 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.example.bizarro.ui.AppState
 import com.example.bizarro.ui.Screen
+import com.example.bizarro.ui.theme.blueColor
+import com.example.bizarro.ui.theme.kWhite
 
 @Composable
 fun SettingsScreen(navController: NavController,
@@ -34,7 +36,7 @@ fun SettingsScreen(navController: NavController,
 
     Column(modifier = Modifier
         .fillMaxSize()
-        .background(Color.White),
+        .background(kWhite),
         horizontalAlignment = Alignment.CenterHorizontally) {
 
         HeaderSectionSettings(navController)
@@ -55,7 +57,7 @@ fun SettingsScreen(navController: NavController,
                 //navController.navigate(route = com.example.bizarro.ui.Screen.SignIn.route)
             },
             Modifier.size(width = 250.dp, height = 50.dp),
-            colors = ButtonDefaults.buttonColors(backgroundColor = Color.Blue),
+            colors = ButtonDefaults.buttonColors(backgroundColor = blueColor),
 
             ) {
             Text(text = "App Info",
@@ -63,7 +65,7 @@ fun SettingsScreen(navController: NavController,
                     fontSize = 20.sp,
                     fontFamily = FontFamily.Serif,
                     fontWeight = FontWeight.Bold,
-                    color = Color.White,
+                    color = kWhite,
                 )
             )
         }
@@ -75,7 +77,7 @@ fun SettingsScreen(navController: NavController,
                 //navController.navigate(route = com.example.bizarro.ui.Screen.SignIn.route)
             },
             Modifier.size(width = 250.dp, height = 50.dp),
-            colors = ButtonDefaults.buttonColors(backgroundColor = Color.Blue),
+            colors = ButtonDefaults.buttonColors(backgroundColor = blueColor),
 
             ) {
             Text(text = "Help",
@@ -83,7 +85,7 @@ fun SettingsScreen(navController: NavController,
                     fontSize = 20.sp,
                     fontFamily = FontFamily.Serif,
                     fontWeight = FontWeight.Bold,
-                    color = Color.White,
+                    color = kWhite,
                 )
             )
         }
@@ -95,7 +97,7 @@ fun SettingsScreen(navController: NavController,
                 //navController.navigate(route = com.example.bizarro.ui.Screen.SignIn.route)
             },
             Modifier.size(width = 250.dp, height = 50.dp),
-            colors = ButtonDefaults.buttonColors(backgroundColor = Color.Blue),
+            colors = ButtonDefaults.buttonColors(backgroundColor = blueColor),
 
             ) {
             Text(text = "Privacy Policy",
@@ -103,7 +105,7 @@ fun SettingsScreen(navController: NavController,
                     fontSize = 20.sp,
                     fontFamily = FontFamily.Serif,
                     fontWeight = FontWeight.Bold,
-                    color = Color.White,
+                    color = kWhite,
                 )
             )
         }
