@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Button
 import androidx.compose.material.ButtonDefaults
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -23,6 +24,8 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.bizarro.R
 import com.example.bizarro.ui.Screen
+import com.example.bizarro.ui.theme.blueColor
+import com.example.bizarro.ui.theme.darkColor
 
 @Composable
 fun OtherUserProfileScreen(navController: NavController)
@@ -56,6 +59,21 @@ fun OtherUserProfileScreen(navController: NavController)
                 modifier = Modifier.size(35.dp))
 
             Text(text = "Dodaj opinię",Modifier.padding(start = 10.dp))
+        }
+
+        Spacer(modifier = Modifier.height(30.dp))
+
+        Button(
+            onClick ={
+                navController.navigate(route = Screen.SeeOpinionOtherUser.route)
+            },
+            Modifier.size(width = 180.dp, height = 60.dp),
+            colors = ButtonDefaults.buttonColors(backgroundColor = darkColor),
+        )
+        {
+            Text(text = "Zobacz opinie",
+                style = MaterialTheme.typography.button
+            )
         }
 
 

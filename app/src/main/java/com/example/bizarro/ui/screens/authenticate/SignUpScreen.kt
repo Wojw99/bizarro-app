@@ -44,11 +44,7 @@ fun SignUpScreen(navController: NavController,
 
 
         Text("Sign Up to Bizarro!",
-            style = TextStyle(
-                fontSize = 32.sp,
-                fontFamily = FontFamily.Serif,
-                fontWeight = FontWeight.Bold
-            ))
+            style = MaterialTheme.typography.caption)
 
         Spacer(modifier = Modifier.height(80.dp))
 
@@ -98,12 +94,7 @@ fun SignUpScreen(navController: NavController,
         )
         {
             Text(text = "Register Account",
-                style = TextStyle(
-                    fontSize = 20.sp,
-                    fontFamily = FontFamily.Serif,
-                    fontWeight = FontWeight.Bold,
-                    color = kWhite,
-                )
+                style = MaterialTheme.typography.button
             )
 
         }
@@ -120,12 +111,7 @@ fun SignUpScreen(navController: NavController,
         )
         {
             Text(text = "Go to Sign In",
-                style = TextStyle(
-                    fontSize = 20.sp,
-                    fontFamily = FontFamily.Serif,
-                    fontWeight = FontWeight.Bold,
-                    color = kWhite,
-                )
+                style = MaterialTheme.typography.button
             )
 
         }

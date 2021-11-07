@@ -36,11 +36,7 @@ fun EditProfileScreen(navController: NavController,
         HeaderEditProfileScreen(navController)
 
         Text("Edytuj informacje",
-            style = TextStyle(
-                fontSize = 28.sp,
-                fontFamily = FontFamily.Serif,
-                fontWeight = FontWeight.Bold
-            )
+            style =MaterialTheme.typography.caption
         )
 
         Spacer(modifier = Modifier.height(40.dp))
@@ -116,12 +112,7 @@ fun EditProfileScreen(navController: NavController,
 
             ) {
             Text(text = "Zapisz",
-                style = TextStyle(
-                    fontSize = 20.sp,
-                    fontFamily = FontFamily.Serif,
-                    fontWeight = FontWeight.Bold,
-                    color = kWhite,
-                )
+                style = MaterialTheme.typography.button
             )
         }
 

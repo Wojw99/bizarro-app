@@ -44,11 +44,7 @@ fun SettingsScreen(navController: NavController,
         //Spacer(modifier = Modifier.height(200.dp))
 
         Text("Ustawienia aplikacji",
-            style = TextStyle(
-                fontSize = 32.sp,
-                fontFamily = FontFamily.Serif,
-                fontWeight = FontWeight.Bold
-            ))
+            style = MaterialTheme.typography.caption)
 
         Spacer(modifier = Modifier.height(80.dp))
 
@@ -61,12 +57,7 @@ fun SettingsScreen(navController: NavController,
 
             ) {
             Text(text = "App Info",
-                style = TextStyle(
-                    fontSize = 20.sp,
-                    fontFamily = FontFamily.Serif,
-                    fontWeight = FontWeight.Bold,
-                    color = kWhite,
-                )
+                style = MaterialTheme.typography.button
             )
         }
 
@@ -81,12 +72,7 @@ fun SettingsScreen(navController: NavController,
 
             ) {
             Text(text = "Help",
-                style = TextStyle(
-                    fontSize = 20.sp,
-                    fontFamily = FontFamily.Serif,
-                    fontWeight = FontWeight.Bold,
-                    color = kWhite,
-                )
+                style = MaterialTheme.typography.button
             )
         }
 
@@ -101,12 +87,7 @@ fun SettingsScreen(navController: NavController,
 
             ) {
             Text(text = "Privacy Policy",
-                style = TextStyle(
-                    fontSize = 20.sp,
-                    fontFamily = FontFamily.Serif,
-                    fontWeight = FontWeight.Bold,
-                    color = kWhite,
-                )
+                style = MaterialTheme.typography.button
             )
         }
 

@@ -34,11 +34,7 @@ fun AddOpinionScreen(navController: NavController)
         HeaderSectionAddOpinion(navController)
 
         Text("Dodaj swoją opinię!",
-            style = TextStyle(
-                fontSize = 32.sp,
-                fontFamily = FontFamily.Serif,
-                fontWeight = FontWeight.Bold
-            )
+            style = MaterialTheme.typography.caption
         )
 
         Spacer(modifier = Modifier.height(40.dp))

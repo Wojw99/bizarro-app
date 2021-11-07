@@ -22,7 +22,27 @@ val Typography = Typography(
         fontWeight = FontWeight.Normal,
         fontSize = 16.sp
 
+    ),
+
+    button = TextStyle(
+        fontSize = 20.sp,
+        fontFamily = FontFamily.Serif,
+        fontWeight = FontWeight.Bold,
+        color = kWhite,
+    ),
+
+    caption = TextStyle(
+        fontSize = 28.sp,
+        fontFamily = FontFamily.Serif,
+        fontWeight = FontWeight.Bold
     )
+
+
+)
+
+
+
+
     /* Other default text styles to override
     button = TextStyle(
         fontFamily = FontFamily.Default,
@@ -35,4 +55,3 @@ val Typography = Typography(
         fontSize = 12.sp
     )
     */
-)

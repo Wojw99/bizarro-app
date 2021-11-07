@@ -40,11 +40,7 @@ fun SignInScreen(navController: NavController,
 
 
       Text("Welcome to Bizarro!",
-         style = TextStyle(
-            fontSize = 32.sp,
-            fontFamily = FontFamily.Serif,
-            fontWeight = FontWeight.Bold
-         ))
+         style = MaterialTheme.typography.caption)
 
       Spacer(modifier = Modifier.height(80.dp))
 
@@ -86,20 +82,16 @@ fun SignInScreen(navController: NavController,
 
       Button(
          onClick ={
-            navController.navigate(route = com.example.bizarro.ui.Screen.Home.route)
+            navController.navigate(route = com.example.bizarro.ui.Screen.UserProfile.route)
          },
          Modifier.size(width = 250.dp, height = 50.dp),
          colors = ButtonDefaults.buttonColors(backgroundColor = darkColor),
 
          ) {
          Text(text = "Sign In",
-            style = TextStyle(
-               fontSize = 20.sp,
-               fontFamily = FontFamily.Serif,
-               fontWeight = FontWeight.Bold,
-               color = kWhite,
-            )
+            style = MaterialTheme.typography.button
          )
+
       }
 
       Spacer(modifier = Modifier.height(20.dp))
@@ -124,12 +116,7 @@ fun SignInScreen(navController: NavController,
       )
       {
          Text(text = "Sign Up",
-            style = TextStyle(
-               fontSize = 20.sp,
-               fontFamily = FontFamily.Serif,
-               fontWeight = FontWeight.Bold,
-               color = kWhite,
-            )
+            style = MaterialTheme.typography.button
          )
       }
    }

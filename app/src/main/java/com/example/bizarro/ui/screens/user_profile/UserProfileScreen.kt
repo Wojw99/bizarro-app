@@ -84,12 +84,7 @@ fun UserProfileScreen(
 
             ) {
             Text(text = "Wyloguj",
-                style = TextStyle(
-                    fontSize = 20.sp,
-                    fontFamily = FontFamily.Serif,
-                    fontWeight = FontWeight.Bold,
-                    color = Color.White,
-                )
+                style = MaterialTheme.typography.button
             )
         }
 
@@ -179,14 +174,13 @@ fun UserInfo(navController: NavController)
     )
     {
         Text(text = "Edytuj profil",
-            style = TextStyle(
-                fontSize = 16.sp,
-                fontFamily = FontFamily.Serif,
-                fontWeight = FontWeight.Bold,
-                color = kWhite,
-            )
+            style = MaterialTheme.typography.button
         )
     }
+
+    //Spacer(modifier = Modifier.height(30.dp))
+
+
 
 
 

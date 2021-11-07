@@ -54,6 +54,10 @@ fun NavGraph(
         composable(route = Screen.AddOpinion.route){
             AddOpinionScreen(navController)
         }
+
+        composable(route = Screen.SeeOpinionOtherUser.route){
+            SeeOpinionsScreen(navController)
+        }
     }
 }
 
@@ -70,6 +74,6 @@ sealed class Screen(val route: String, val name: String){
     object OtherUserProfile: Screen(route = "other_user_profile_screen", name = "Profil innego użytkownika")
     object AddOpinion: Screen(route = "add_opinion_screen", name = "Dodaj opinię")
     object UserRecordList: Screen(route = "user_record_list_screen", name = "Ogłoszenia")
-
+    object SeeOpinionOtherUser: Screen(route = "user_other_see_opinion_screen", name = "Zobacz opinię o innym użytkowniku")
 
 }
