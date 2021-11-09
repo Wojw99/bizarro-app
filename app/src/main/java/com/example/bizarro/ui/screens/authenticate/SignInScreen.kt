@@ -18,7 +18,7 @@ import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.example.bizarro.ui.screens.user_profile.SettingsEditUserProfileViewModel
+import com.example.bizarro.ui.screens.user_profile.settings.SettingsViewModel
 import com.example.bizarro.ui.theme.darkColor
 import com.example.bizarro.ui.theme.kWhite
 import com.example.bizarro.ui.theme.lightblueColor
@@ -26,7 +26,7 @@ import com.example.bizarro.ui.theme.lightblueColor
 
 @Composable
 fun SignInScreen(navController: NavController,
-                 viewModel: SettingsEditUserProfileViewModel = hiltViewModel(),)
+                 viewModel: AuthenticateViewModel = hiltViewModel(),)
 {
    Column(
 

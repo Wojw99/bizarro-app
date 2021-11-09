@@ -18,11 +18,14 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.example.bizarro.ui.Screen
+import com.example.bizarro.ui.screens.user_profile.other_user_profile.OtherUserViewModel
 
 @Composable
-fun AddOpinionScreen(navController: NavController)
+fun AddOpinionScreen(navController: NavController,
+                     viewModel: OtherUserViewModel = hiltViewModel())
 {
     Column(
         modifier = Modifier

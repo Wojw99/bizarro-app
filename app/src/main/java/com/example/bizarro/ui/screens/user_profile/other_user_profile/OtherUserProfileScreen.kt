@@ -5,10 +5,10 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.Button
-import androidx.compose.material.ButtonDefaults
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
+import androidx.compose.material.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.filled.Settings
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -21,14 +21,18 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.example.bizarro.R
 import com.example.bizarro.ui.Screen
+import com.example.bizarro.ui.screens.user_profile.other_user_profile.OtherUserViewModel
+import com.example.bizarro.ui.screens.user_profile.settings.SettingsViewModel
 import com.example.bizarro.ui.theme.blueColor
 import com.example.bizarro.ui.theme.darkColor
 
 @Composable
-fun OtherUserProfileScreen(navController: NavController)
+fun OtherUserProfileScreen(navController: NavController,
+                           viewModel: OtherUserViewModel = hiltViewModel(),)
 {
 
     Column(
@@ -39,7 +43,9 @@ fun OtherUserProfileScreen(navController: NavController)
     ) {
 
 
-        Spacer(modifier = Modifier.height(80.dp))
+        HeaderSectionOtherUserProfile(navController)
+
+        //Spacer(modifier = Modifier.height(80.dp))
 
         OtherUserImage()
 
@@ -133,4 +139,28 @@ fun OtherUserInfo()
     )
 
 
+}
+
+@Composable
+fun HeaderSectionOtherUserProfile(navController: NavController)
+{
+    Box(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(12.dp)){
+
+        IconButton(
+            onClick = {
+                navController.navigate(route = Screen.Settings.route)
+            },
+            modifier = Modifier.align(Alignment.CenterStart)
+        ) {
+            Icon(
+                imageVector = Icons.Default.ArrowBack,
+                contentDescription = "Back to user record ",
+                Modifier.size(30.dp)
+            )
+        }
+
+    }
 }

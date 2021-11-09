@@ -20,12 +20,13 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.example.bizarro.ui.AppState
 import com.example.bizarro.ui.Screen
+import com.example.bizarro.ui.screens.user_profile.settings.SettingsViewModel
 import com.example.bizarro.ui.theme.blueColor
 import com.example.bizarro.ui.theme.kWhite
 
 @Composable
 fun SettingsScreen(navController: NavController,
-                   viewModel: SettingsEditUserProfileViewModel = hiltViewModel(),)
+                   viewModel: SettingsViewModel = hiltViewModel(),)
 {
 
 //     val appState: AppState

@@ -30,6 +30,7 @@ import com.example.bizarro.ui.Screen
 import com.example.bizarro.ui.screens.record_details.RecordDetailsViewModel
 import com.example.bizarro.ui.theme.blueColor
 import com.example.bizarro.ui.theme.darkColor
+import com.example.bizarro.ui.theme.kGray
 import com.example.bizarro.ui.theme.kWhite
 
 @Composable
@@ -38,7 +39,11 @@ fun UserProfileScreen(
 
     viewModel: UserProfileViewModel = hiltViewModel(),
 
+
+
 ) {
+
+    //val viewModelEdit: SettingsEditUserProfileViewModel = hiltViewModel()
 
     Column(
 
@@ -55,7 +60,63 @@ fun UserProfileScreen(
 
         //Spacer(modifier = Modifier.height(40.dp))
 
-        UserInfo(navController)
+
+        Text(viewModel.nameUser.value,
+            style = TextStyle(
+                fontSize = 30.sp,
+                fontFamily = FontFamily.Default,
+                fontWeight = FontWeight.Bold
+            ))
+
+        Spacer(modifier = Modifier.height(10.dp))
+
+        Text(viewModel.emailUser.value,
+            style = TextStyle(
+                fontSize = 30.sp,
+                fontFamily = FontFamily.Default,
+                fontWeight = FontWeight.Normal
+            ))
+
+        Spacer(modifier = Modifier.height(10.dp))
+
+        Text(viewModel.phoneUser.value,
+            style = TextStyle(
+                fontSize = 30.sp,
+                fontFamily = FontFamily.Default,
+                fontWeight = FontWeight.Normal
+            ))
+
+        Spacer(modifier = Modifier.height(50.dp))
+
+        Button(
+            onClick ={
+                navController.navigate(route = Screen.EditProfile.route)
+            },
+            Modifier.size(width = 180.dp, height = 40.dp),
+            colors = ButtonDefaults.buttonColors(backgroundColor = darkColor),
+        )
+        {
+            Text(text = "Edytuj profil",
+                style = MaterialTheme.typography.button
+            )
+        }
+
+        Spacer(modifier = Modifier.height(30.dp))
+
+        Button(
+            onClick ={
+                //navController.navigate(route = Screen.EditProfile.route)
+            },
+            Modifier.size(width = 180.dp, height = 40.dp),
+            colors = ButtonDefaults.buttonColors(backgroundColor = blueColor),
+        )
+        {
+            Text(text = "Zobacz opinie",
+                style = MaterialTheme.typography.button
+            )
+        }
+
+        //UserInfo(navController)
 
         //Spacer(modifier = Modifier.height(20.dp))
 

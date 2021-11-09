@@ -12,14 +12,17 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.example.bizarro.R
 import com.example.bizarro.ui.Screen
+import com.example.bizarro.ui.screens.user_profile.other_user_profile.OtherUserViewModel
 import com.example.bizarro.ui.theme.kWhite
 
 
 @Composable
-fun SeeOpinionsScreen(navController: NavController)
+fun SeeOpinionsScreen(navController: NavController,
+                      viewModel: OtherUserViewModel = hiltViewModel())
 {
     Column(modifier = Modifier
         .fillMaxSize()

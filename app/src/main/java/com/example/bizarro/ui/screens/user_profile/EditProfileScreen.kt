@@ -17,14 +17,17 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
+import androidx.navigation.NavType
+import androidx.navigation.navArgument
 import com.example.bizarro.ui.Screen
 import com.example.bizarro.ui.theme.darkColor
+import com.example.bizarro.ui.theme.kBlack
 import com.example.bizarro.ui.theme.kGray
 import com.example.bizarro.ui.theme.kWhite
 
 @Composable
 fun EditProfileScreen(navController: NavController,
-                      viewModel: SettingsEditUserProfileViewModel = hiltViewModel(),)
+                      viewModel: UserProfileViewModel = hiltViewModel(),)
 {
 
     Column(
@@ -36,13 +39,15 @@ fun EditProfileScreen(navController: NavController,
         HeaderEditProfileScreen(navController)
 
         Text("Edytuj informacje",
-            style =MaterialTheme.typography.caption
+            style = MaterialTheme.typography.caption
         )
 
         Spacer(modifier = Modifier.height(40.dp))
 
 
-        var editDataName by remember { mutableStateOf(TextFieldValue("")) }
+        var editDataName by remember {
+            mutableStateOf(TextFieldValue(viewModel.nameUser.value))
+        }
         var editEmail by remember { mutableStateOf(TextFieldValue("")) }
         var editPhoneNumber by remember { mutableStateOf(TextFieldValue("")) }
 
@@ -51,9 +56,12 @@ fun EditProfileScreen(navController: NavController,
             value = editDataName,
             onValueChange = {
                 editDataName = it
+
+
+
             },
 
-            label = { Text(text = "Edytuj imię i nazwisko")},
+            label = { Text(text = "",)},
             leadingIcon = {
                 Icon(imageVector = Icons.Default.Person, contentDescription = "PersonIcon" )
             },
@@ -105,10 +113,19 @@ fun EditProfileScreen(navController: NavController,
 
         Button(
             onClick ={
+                navController.navigate(
+                    route = Screen.UserProfile.route
+
+//                    navArgument("editName",){
+//                        type = NavType.StringType,
+//                        nullable = true
+//                    }
+                )
+                viewModel.updateName(editDataName.toString())
 
             },
             Modifier.size(width = 250.dp, height = 50.dp),
-            colors = ButtonDefaults.buttonColors(backgroundColor = kGray),
+            colors = ButtonDefaults.buttonColors(backgroundColor = kBlack),
 
             ) {
             Text(text = "Zapisz",

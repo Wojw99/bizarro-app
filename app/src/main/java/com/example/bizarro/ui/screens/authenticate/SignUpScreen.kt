@@ -21,7 +21,8 @@ import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.example.bizarro.ui.Screen
-import com.example.bizarro.ui.screens.user_profile.SettingsEditUserProfileViewModel
+
+import com.example.bizarro.ui.screens.user_profile.settings.SettingsViewModel
 import com.example.bizarro.ui.theme.blueColor
 import com.example.bizarro.ui.theme.darkColor
 import com.example.bizarro.ui.theme.kWhite
@@ -29,7 +30,7 @@ import com.example.bizarro.ui.theme.lightblueColor
 
 @Composable
 fun SignUpScreen(navController: NavController,
-                 viewModel: SettingsEditUserProfileViewModel = hiltViewModel(),)
+                 viewModel: AuthenticateViewModel = hiltViewModel(),)
 {
 
     Column(
