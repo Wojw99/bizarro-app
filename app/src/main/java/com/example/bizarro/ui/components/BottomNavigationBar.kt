@@ -22,7 +22,7 @@ fun BottomNavigationBar(
     modifier: Modifier = Modifier,
 ) {
     val backStackEntry = navController.currentBackStackEntryAsState()
-    BottomNavigation(modifier = modifier, backgroundColor = kDarkGray, elevation = 5.dp) {
+    BottomNavigation(modifier = modifier, backgroundColor = kBlack, elevation = 5.dp) {
         for (item in items) {
             val selected = item.route == backStackEntry.value?.destination?.route
             BottomNavigationItem(
@@ -45,7 +45,7 @@ fun BottomNavigationBar(
                     }
                 },
                 selectedContentColor = kWhite,
-                unselectedContentColor = kGray,
+                unselectedContentColor = kLightGray,
             )
         }
     }

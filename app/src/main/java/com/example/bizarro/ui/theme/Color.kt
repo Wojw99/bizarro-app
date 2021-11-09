@@ -3,11 +3,10 @@ package com.example.bizarro.ui.theme
 import androidx.compose.ui.graphics.Color
 
 val kBlack = Color(0xFF202020)
-val kDarkGray = Color(0xFF333333)
-val kGray = Color(0xFFbdbdbd)
-val kLightGray = Color(0xFFebebeb)
-val kBlue700 = Color(0xFF303F9F)
-val kBlue500 = Color(0xFF3F51B5)
+val kGray = Color(0xFF6E6E6E)
+val kLightGray = Color(0xFFF4F4F4)
+val kBlueDark = Color(0xFF324D92)
+val kBlueLight = Color(0xFF5A69BB)
 val kWhite = Color(0xFFFAFAFA)
 
 val darkColor = Color.Black
