@@ -1,19 +1,25 @@
 package com.example.bizarro.ui.screens.search
 
+import android.widget.Space
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.CircularProgressIndicator
-import androidx.compose.material.Surface
-import androidx.compose.material.Text
+import androidx.compose.foundation.text.BasicTextField
+import androidx.compose.foundation.text.KeyboardActions
+import androidx.compose.material.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Search
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
+import androidx.compose.ui.focus.FocusState
+import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
@@ -30,6 +36,7 @@ import com.example.bizarro.ui.Screen
 import com.example.bizarro.ui.theme.*
 import com.example.bizarro.util.*
 import com.example.bizarro.util.Dimens
+import com.example.bizarro.util.Strings
 
 
 @Composable
@@ -44,9 +51,50 @@ fun SearchScreen(
             .background(kLightGray)
             .padding(Dimens.standardPadding)
     ) {
+        // * * * * * * PROGRESS BAR * * * * * *
+        if (viewModel.isLoading.value) {
+            Box(modifier = Modifier.fillMaxSize().background(kLightGray)) {
+                CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
+            }
+        }
+
+        // * * * * * * ERROR TEXT * * * * * *
+        if (viewModel.loadError.value.isNotEmpty()) {
+            Box(modifier = Modifier.fillMaxSize().background(kLightGray)) {
+                Text(
+                    text = viewModel.loadError.value,
+                    modifier = Modifier.align(Alignment.Center)
+                )
+            }
+        }
+
+        // * * * * * * EMPTY TEXT * * * * * *
+        if (viewModel.recordList.value.isEmpty()
+            && !viewModel.isLoading.value
+            && viewModel.loadError.value.isEmpty()
+        ) {
+            Box(modifier = Modifier.fillMaxSize().background(kLightGray)) {
+                Text(
+                    text = Strings.listIsEmpty,
+                    modifier = Modifier.align(Alignment.Center)
+                )
+            }
+        }
+
+        // * * * * * * RECORD LIST * * * * * *
+        if (viewModel.recordList.value.isNotEmpty() && !viewModel.isLoading.value) {
+            RecordList(navController = navController)
+        }
+
         Column {
-            // * * * * * * SEARCH BAR * * * * * * 
-            Text(text = "Szukaj")
+            // * * * * * * SEARCH BAR * * * * * *
+            SearchBar(
+                hint = Strings.search,
+                onSearch = { text ->
+                    viewModel.nameText.value = text
+                    viewModel.updateRecordList()
+                },
+            )
 
             Spacer(modifier = Modifier.height(Dimens.standardPadding))
 
@@ -54,49 +102,65 @@ fun SearchScreen(
             Text(text = "Filtry")
 
             Spacer(modifier = Modifier.height(Dimens.standardPadding))
+        }
+    }
 
-            // * * * * * * PROGRESS BAR * * * * * *
-            if (viewModel.isLoading.value) {
-                Box(modifier = Modifier.fillMaxSize()) {
-                    CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
+}
+
+@Composable
+fun SearchBar(
+    hint: String = "",
+    modifier: Modifier = Modifier,
+    onSearch: (String) -> Unit = {},
+) {
+    var text by remember {
+        mutableStateOf("")
+    }
+    var isHintDisplayed by remember {
+        mutableStateOf(hint != "")
+    }
+
+    Box(
+        modifier = modifier
+            .fillMaxWidth()
+            .shadow(5.dp, RoundedCornerShape(Dimens.cornerRadius))
+            .background(kWhite, RoundedCornerShape(Dimens.cornerRadius))
+            .height(40.dp)
+    ) {
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.Start,
+            modifier = Modifier.fillMaxSize(),
+        ) {
+            //if (text.isEmpty()) {
+            Spacer(modifier = Modifier.width(10.dp))
+            Icon(Icons.Default.Search, "Icon here", tint = kGray)
+            //}
+
+            Spacer(modifier = Modifier.width(10.dp))
+
+            Box {
+                BasicTextField(
+                    value = text,
+                    onValueChange = {
+                        text = it
+                        onSearch(it)
+                        isHintDisplayed = it.isEmpty()
+                    },
+                    maxLines = 1,
+                    singleLine = true,
+                    textStyle = TextStyle(color = kBlack, fontSize = 16.sp),
+                    modifier = Modifier.fillMaxWidth(),
+                    keyboardActions = KeyboardActions(onDone = {
+                        onSearch(text)
+                    })
+
+                )
+                if (isHintDisplayed) {
+                    Text(color = kGray, text = hint, modifier = Modifier.fillMaxWidth())
                 }
-            } else {
-                RecordList(navController = navController)
             }
-
-            // * * * * * * ERROR TEXT * * * * * *
-            if (viewModel.loadError.value.isNotEmpty()) {
-                Box(modifier = Modifier.fillMaxSize()) {
-                    Text(
-                        text = viewModel.loadError.value,
-                        modifier = Modifier.align(Alignment.Center)
-                    )
-                }
-            } else {
-                RecordList(navController = navController)
-            }
-
-            // * * * * * * EMPTY TEXT * * * * * *
-            if (viewModel.recordList.value.isEmpty()
-                && !viewModel.isLoading.value
-                && viewModel.loadError.value.isEmpty()
-            ) {
-                Box(modifier = Modifier.fillMaxSize()) {
-                    Text(
-                        text = Strings.listIsEmpty,
-                        modifier = Modifier.align(Alignment.Center)
-                    )
-                }
-            } else {
-                RecordList(navController = navController)
-            }
-
-            // * * * * * * BOTTOM OFFSET * * * * * *
-            Box(
-                modifier = Modifier
-                    .height(32.dp)
-                    .fillMaxWidth()
-            )
+            Spacer(modifier = Modifier.width(10.dp))
         }
     }
 }
@@ -107,13 +171,20 @@ fun RecordList(
     modifier: Modifier = Modifier,
     navController: NavController,
 ) {
-    LazyColumn() {
+    LazyColumn(modifier = modifier.background(kLightGray)) {
         val recordList = viewModel.recordList.value
         val itemCount = recordList.size
 
         items(itemCount) { index ->
+            if (index == 0)
+                Spacer(modifier = Modifier.height(64.dp))
+
             RecordBox(record = recordList[index], navController = navController)
-            Spacer(modifier = Modifier.height(Dimens.standardPadding))
+
+            if (index == recordList.size - 1)
+                Spacer(modifier = Modifier.height(64.dp))
+            else
+                Spacer(modifier = Modifier.height(Dimens.standardPadding))
         }
     }
 }

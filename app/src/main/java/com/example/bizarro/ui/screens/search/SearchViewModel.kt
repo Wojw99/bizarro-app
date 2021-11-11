@@ -1,6 +1,5 @@
 package com.example.bizarro.ui.screens.search
 
-import android.util.Log
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -11,8 +10,6 @@ import com.example.bizarro.util.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-import okhttp3.Response
-import timber.log.Timber
 import javax.inject.Inject
 
 @HiltViewModel
@@ -24,26 +21,28 @@ class SearchViewModel @Inject constructor(
     val loadError = mutableStateOf("")
     val isLoading = mutableStateOf(false)
 
-    val name = mutableStateOf<String?>(null)
-    val city = mutableStateOf<String?>(null)
-    val province = mutableStateOf<String?>(null)
-    val type = mutableStateOf<String?>(null)
+    val nameText = mutableStateOf("")
+
+    val cityFilter = mutableStateOf<String?>(null)
+    val provinceFilter = mutableStateOf<String?>(null)
+    val typeFilter = mutableStateOf<String?>(null)
 
     init {
         updateRecordList()
     }
 
-    private fun updateRecordList() {
+    fun updateRecordList() {
+        if (isLoading.value) return
         viewModelScope.launch {
             isLoading.value = true
             delay(2000L)
             val resource = repository.getRecordList(
                 0,
                 0,
-                name.value,
-                city.value,
-                province.value,
-                type.value
+                if (nameText.value == "") null else nameText.value,
+                cityFilter.value,
+                provinceFilter.value,
+                typeFilter.value
             )
 
             when (resource) {
