@@ -1,19 +1,19 @@
 package com.example.bizarro.ui.screens.search
 
-import android.widget.Space
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.CircularProgressIndicator
+import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
@@ -22,59 +22,112 @@ import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.ViewModel
 import androidx.navigation.NavController
 import coil.compose.ImagePainter
 import coil.compose.rememberImagePainter
 import com.example.bizarro.data.remote.responses.Record
 import com.example.bizarro.ui.Screen
 import com.example.bizarro.ui.theme.*
-import com.example.bizarro.util.CommonMethods
-import com.example.bizarro.util.Constants
-import com.example.bizarro.util.Strings
-import com.example.bizarro.util.Values
+import com.example.bizarro.util.*
+import com.example.bizarro.util.Dimens
+
 
 @Composable
 fun SearchScreen(
     viewModel: SearchViewModel = hiltViewModel(),
     navController: NavController,
 ) {
-    Box(
+    viewModel.appState.bottomMenuVisible.value = true
+    Surface(
         modifier = Modifier
             .fillMaxSize()
             .background(kLightGray)
-            .padding(12.dp)
+            .padding(Dimens.standardPadding)
     ) {
-        Column(
-            modifier = Modifier.fillMaxSize(),
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.Center,
-        ) {
-            if (viewModel.singleRecord.value != null && viewModel.singleRecord2.value != null) {
-                RecordBox(
-                    entry = viewModel.singleRecord.value!!,
-                    navController = navController,
-                )
-                Spacer(modifier = Modifier.height(10.dp))
-                RecordBox(
-                    entry = viewModel.singleRecord2.value!!,
-                    navController = navController,
-                )
+        Column {
+            // * * * * * * SEARCH BAR * * * * * * 
+            Text(text = "Szukaj")
+
+            Spacer(modifier = Modifier.height(Dimens.standardPadding))
+
+            // * * * * * * FILTER BAR * * * * * *
+            Text(text = "Filtry")
+
+            Spacer(modifier = Modifier.height(Dimens.standardPadding))
+
+            // * * * * * * PROGRESS BAR * * * * * *
+            if (viewModel.isLoading.value) {
+                Box(modifier = Modifier.fillMaxSize()) {
+                    CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
+                }
+            } else {
+                RecordList(navController = navController)
             }
+
+            // * * * * * * ERROR TEXT * * * * * *
+            if (viewModel.loadError.value.isNotEmpty()) {
+                Box(modifier = Modifier.fillMaxSize()) {
+                    Text(
+                        text = viewModel.loadError.value,
+                        modifier = Modifier.align(Alignment.Center)
+                    )
+                }
+            } else {
+                RecordList(navController = navController)
+            }
+
+            // * * * * * * EMPTY TEXT * * * * * *
+            if (viewModel.recordList.value.isEmpty()
+                && !viewModel.isLoading.value
+                && viewModel.loadError.value.isEmpty()
+            ) {
+                Box(modifier = Modifier.fillMaxSize()) {
+                    Text(
+                        text = Strings.listIsEmpty,
+                        modifier = Modifier.align(Alignment.Center)
+                    )
+                }
+            } else {
+                RecordList(navController = navController)
+            }
+
+            // * * * * * * BOTTOM OFFSET * * * * * *
+            Box(
+                modifier = Modifier
+                    .height(32.dp)
+                    .fillMaxWidth()
+            )
+        }
+    }
+}
+
+@Composable
+fun RecordList(
+    viewModel: SearchViewModel = hiltViewModel(),
+    modifier: Modifier = Modifier,
+    navController: NavController,
+) {
+    LazyColumn() {
+        val recordList = viewModel.recordList.value
+        val itemCount = recordList.size
+
+        items(itemCount) { index ->
+            RecordBox(record = recordList[index], navController = navController)
+            Spacer(modifier = Modifier.height(Dimens.standardPadding))
         }
     }
 }
 
 @Composable
 fun RecordBox(
-    entry: Record,
+    record: Record,
     modifier: Modifier = Modifier,
     navController: NavController,
 ) {
     Box(
         modifier = modifier
-            .shadow(5.dp, RoundedCornerShape(Values.CORNER_RADIUS))
-            .clip(RoundedCornerShape(Values.CORNER_RADIUS))
+            .shadow(5.dp, RoundedCornerShape(Dimens.cornerRadius))
+            .clip(RoundedCornerShape(Dimens.cornerRadius))
             .background(kWhite)
             .height(150.dp)
             .clickable {
@@ -85,7 +138,7 @@ fun RecordBox(
             // * * * * * * * * IMAGE BOX * * * * * * * *
             Box(modifier = Modifier.weight(12f), contentAlignment = Alignment.Center) {
                 val painter = rememberImagePainter(
-                    entry.imagePaths?.first() ?: Constants.RECORD_DEFAULT_IMG_URL
+                    record.imagePaths?.first() ?: Constants.RECORD_DEFAULT_IMG_URL
                 )
 
                 Image(
@@ -113,36 +166,81 @@ fun RecordBox(
                 ) {
                     // * * * * * * * * NAME * * * * * * * *
                     Text(
-                        text = entry.name,
+                        text = record.name,
                         style = TextStyle(
-                            fontSize = countTextSizeForName(entry.name),
-                            fontWeight = FontWeight.SemiBold,
+                            fontSize = countTextSizeForName(record.name),
+                            fontWeight = FontWeight.Normal,
                             color = kBlack,
                         )
                     )
 
                     // * * * * * * * * TYPE SPECIFIC TITLE * * * * * * * *
-                    Box() {
-                        Column() {
-                            Text(
-                                text = CommonMethods.convertToPriceFormat(entry.salePrice!!),
-                                style = TextStyle(
-                                    fontSize = 24.sp,
-                                    fontWeight = FontWeight.SemiBold,
-                                    color = kBlack,
-                                )
-                            )
-                            Text(text = entry.type, style = TextStyle(fontSize = 18.sp))
-                        }
-                    }
+                    TypeSpecificTitle(record = record)
 
                     // * * * * * * * * ADDRESS, DATE * * * * * * * *
                     Text(
-                        text = "${entry.city}, ${CommonMethods.convertToRecordBoxDateFormat(entry.creationDate)}",
+                        text = "${record.city}, ${CommonMethods.convertToRecordBoxDateFormat(record.creationDate)}",
                         style = TextStyle(fontSize = 12.sp, color = kGray)
                     )
                 }
             }
+        }
+    }
+}
+
+@Composable
+fun TypeSpecificTitle(record: Record, modifier: Modifier = Modifier) {
+    var h1 = ""
+    var h2 = ""
+    var h1Size = 20.sp
+
+    when (record.type) {
+        "sprzedam" -> {
+            h1 = if (record.salePrice != null) {
+                CommonMethods.convertToPriceFormat(record.salePrice)
+            } else {
+                Strings.undefined
+            }
+            h2 = Strings.sellPrice
+        }
+        "kupię" -> {
+            h1 = if (record.purchasePrice != null) {
+                CommonMethods.convertToPriceFormat(record.purchasePrice)
+            } else {
+                Strings.undefined
+            }
+            h2 = Strings.purchasePrice
+        }
+        "wypożyczę" -> {
+            h1 = if (record.rentalPeriod != null && record.rentalPrice != null) {
+                "${CommonMethods.convertToPriceFormat(record.rentalPrice)}, ${record.rentalPeriod} ${Strings.days}"
+            } else {
+                Strings.undefined
+            }
+            h2 = Strings.rentalPeriodPrice
+        }
+        "zamienię" -> {
+            h1 = if (record.swapObject != null) {
+                record.swapObject
+            } else {
+                Strings.undefined
+            }
+            h2 = Strings.swapObject
+            h1Size = 16.sp
+        }
+    }
+
+    Box() {
+        Column() {
+            Text(
+                text = h1,
+                style = TextStyle(
+                    fontSize = h1Size,
+                    fontWeight = FontWeight.SemiBold,
+                    color = kBlack,
+                )
+            )
+            Text(text = h2, style = TextStyle(fontSize = 13.sp))
         }
     }
 }

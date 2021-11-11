@@ -205,6 +205,7 @@ app.get('/api/records', function (request, response) {
     var qCity = request.query.city;
     var qProvince = request.query.province;
     var qType = request.query.type;
+    var qName = request.query.name;
 
     var filtered = records;
 
@@ -223,6 +224,14 @@ app.get('/api/records', function (request, response) {
     if (qType != undefined) {
         filtered = filtered.filter(function (value) {
             return value.type.toLowerCase().trim() == qType.toString().toLowerCase().trim();
+        });
+    }
+
+    if (qName != undefined) {
+        filtered = filtered.filter(function (value) {
+            var str = qName.toString().trim().toLowerCase();
+            var valName = value.name.toString().toLowerCase().trim();
+            return valName.includes(str);
         });
     }
 

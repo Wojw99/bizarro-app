@@ -18,9 +18,16 @@ class RecordRepository @Inject constructor(
         private val TAG = "RecordRepository"
     }
 
-    suspend fun getRecordList(limit: Int, offset: Int) : Resource<List<Record>>{
+    suspend fun getRecordList(
+        limit: Int?,
+        offset: Int?,
+        name: String?,
+        city: String?,
+        province: String?,
+        type: String?,
+    ) : Resource<List<Record>>{
         val response = try {
-            api.getRecordList(limit, offset, null, null, null)
+            api.getRecordList(limit, offset, name, city, province, type)
         } catch (e: Exception) {
             Timber.d(e) // TODO: Check what is it
             return Resource.Error(Strings.unknownError)

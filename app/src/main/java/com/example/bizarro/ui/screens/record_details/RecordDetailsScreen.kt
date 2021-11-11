@@ -11,6 +11,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
+import androidx.navigation.NavGraph.Companion.findStartDestination
 import com.example.bizarro.ui.Screen
 
 @Composable
@@ -18,6 +19,7 @@ fun RecordDetailsScreen(
     navController: NavController,
     viewModel: RecordDetailsViewModel = hiltViewModel(),
 ) {
+    viewModel.appState.bottomMenuVisible.value = false
     Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
@@ -25,7 +27,12 @@ fun RecordDetailsScreen(
         ) {
             Text(text = "Record details")
             Button(onClick = {
-                navController.navigate(route = Screen.Home.route)
+                navController.navigate(route = Screen.Home.route) {
+                    // remove all previous screen in the stack
+                    popUpTo(navController.graph.findStartDestination().id) {
+                        inclusive = true
+                    }
+                }
             }) {
                 Text(text = "Home")
             }

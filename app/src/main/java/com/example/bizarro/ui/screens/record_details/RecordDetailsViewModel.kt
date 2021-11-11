@@ -8,11 +8,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class RecordDetailsViewModel @Inject constructor(
-    private val appState: AppState,
+    val appState: AppState,
     private val repository: RecordRepository,
 ) : ViewModel() {
 
-    init {
-        appState.bottomMenuVisible.value = false
-    }
 }

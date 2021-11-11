@@ -9,36 +9,55 @@ import com.example.bizarro.repositories.RecordRepository
 import com.example.bizarro.ui.AppState
 import com.example.bizarro.util.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import okhttp3.Response
+import timber.log.Timber
 import javax.inject.Inject
 
 @HiltViewModel
 class SearchViewModel @Inject constructor(
-    private val appState: AppState,
+    val appState: AppState,
     private val repository: RecordRepository
 ) : ViewModel() {
-    val records = mutableStateOf<List<Record>>(listOf())
-    val singleRecord = mutableStateOf<Record?>(null)
-    val singleRecord2 = mutableStateOf<Record?>(null)
+    val recordList = mutableStateOf<List<Record>>(listOf())
+    val loadError = mutableStateOf("")
+    val isLoading = mutableStateOf(false)
+
+    val name = mutableStateOf<String?>(null)
+    val city = mutableStateOf<String?>(null)
+    val province = mutableStateOf<String?>(null)
+    val type = mutableStateOf<String?>(null)
 
     init {
-        appState.bottomMenuVisible.value = true
-        updateList()
-        updateSingleRecords()
+        updateRecordList()
     }
 
-    private fun updateList() {
+    private fun updateRecordList() {
         viewModelScope.launch {
-            records.value = repository.getRecordList(0,0).data ?: listOf()
-        }
-    }
+            isLoading.value = true
+            delay(2000L)
+            val resource = repository.getRecordList(
+                0,
+                0,
+                name.value,
+                city.value,
+                province.value,
+                type.value
+            )
 
-    private fun updateSingleRecords() {
-        viewModelScope.launch {
-            val resource = repository.getRecordDetails(0)
-            val resource2 = repository.getRecordDetails(1)
-            singleRecord.value = resource.data
-            singleRecord2.value = resource2.data
+            when (resource) {
+                is Resource.Success -> {
+                    isLoading.value = false
+                    recordList.value = resource.data ?: listOf()
+                    loadError.value = ""
+                }
+                is Resource.Error<*> -> {
+                    isLoading.value = false
+                    recordList.value = listOf()
+                    loadError.value = resource.message ?: ""
+                }
+            }
         }
     }
 }

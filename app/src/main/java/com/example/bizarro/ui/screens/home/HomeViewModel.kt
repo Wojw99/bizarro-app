@@ -9,11 +9,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(
-    private val appState: AppState,
+    val appState: AppState,
     private val repository: RecordRepository
 ) : ViewModel() {
 
-    init {
-        appState.bottomMenuVisible.value = true
-    }
 }
