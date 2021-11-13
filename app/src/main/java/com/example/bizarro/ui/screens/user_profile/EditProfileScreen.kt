@@ -16,6 +16,7 @@ import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavController
 import androidx.navigation.NavType
 import androidx.navigation.navArgument
@@ -48,20 +49,23 @@ fun EditProfileScreen(navController: NavController,
         var editDataName by remember {
             mutableStateOf(TextFieldValue(viewModel.nameUser.value))
         }
-        var editEmail by remember { mutableStateOf(TextFieldValue("")) }
-        var editPhoneNumber by remember { mutableStateOf(TextFieldValue("")) }
+        var editEmail by remember { mutableStateOf(TextFieldValue(viewModel.emailUser.value)) }
+        var editPhoneNumber by remember { mutableStateOf(TextFieldValue(viewModel.phoneUser.value)) }
 
+        //val hint: String = ""
+
+//        var isHintDisplayed by remember {
+//            mutableStateOf(hint != "")
+//        }
 
         TextField(
             value = editDataName,
             onValueChange = {
                 editDataName = it
-
-
-
+                viewModel.updateName(it.text)
             },
 
-            label = { Text(text = "",)},
+            //label = { Text(text = "",)},
             leadingIcon = {
                 Icon(imageVector = Icons.Default.Person, contentDescription = "PersonIcon" )
             },
@@ -80,7 +84,7 @@ fun EditProfileScreen(navController: NavController,
                 editEmail = it
             },
 
-            label = { Text(text = "Edytuj e-mail")},
+            //label = { Text(text = "Edytuj e-mail")},
             leadingIcon = {
                 Icon(imageVector = Icons.Default.Email, contentDescription = "EmailIcon" )
             },
@@ -98,7 +102,7 @@ fun EditProfileScreen(navController: NavController,
                 editPhoneNumber = it
             },
 
-            label = { Text(text = "Edytuj numer telefonu")},
+            //label = { Text(text = "Edytuj numer telefonu")},
             leadingIcon = {
                 Icon(imageVector = Icons.Default.Phone, contentDescription = "PhoneIcon" )
             },
@@ -113,15 +117,21 @@ fun EditProfileScreen(navController: NavController,
 
         Button(
             onClick ={
-                navController.navigate(
-                    route = Screen.UserProfile.route
+
+                //viewModel.updateName(editDataName.text)
+
+//                navController.navigate(
+//                    route = Screen.UserProfile.route
 
 //                    navArgument("editName",){
 //                        type = NavType.StringType,
 //                        nullable = true
 //                    }
-                )
-                viewModel.updateName(editDataName.toString())
+                //)
+
+
+
+
 
             },
             Modifier.size(width = 250.dp, height = 50.dp),

@@ -3,6 +3,7 @@ package com.example.bizarro.ui.screens.user_profile
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
@@ -17,6 +18,7 @@ import androidx.navigation.NavController
 import com.example.bizarro.R
 import com.example.bizarro.ui.Screen
 import com.example.bizarro.ui.screens.user_profile.other_user_profile.OtherUserViewModel
+import com.example.bizarro.ui.theme.kLightGray
 import com.example.bizarro.ui.theme.kWhite
 
 
@@ -33,11 +35,17 @@ fun SeeOpinionsScreen(navController: NavController,
         HeaderSectionSeeOpinionOtherUser(navController)
 
 
-        Text("Opinie o użytkowniku",
+        Text("Opinie o użytkowniku:",
             style = MaterialTheme.typography.caption)
 
+        Spacer(modifier = Modifier.height(30.dp))
 
+        UserOpinionsList()
 
+        Spacer(modifier = Modifier.height(30.dp))
+
+        Text(text = viewModel.opinionOtherUserList.size.toString(),
+        style = MaterialTheme.typography.caption)
 
     }
 }
@@ -65,8 +73,22 @@ fun HeaderSectionSeeOpinionOtherUser(navController: NavController)
             )
         }
 
+    }
+}
 
-
-
+@Composable
+fun UserOpinionsList(
+    viewModel: OtherUserViewModel = hiltViewModel(),
+    modifier: Modifier = Modifier,
+)
+{
+    LazyColumn(
+        modifier = modifier.background(kLightGray)
+    ){
+        //val opinionsList = viewModel.opinionOtherUserList
+        //val itemCount = opinionsList.size
+//        items(viewModel.opinionOtherUserList){
+//            item ->
+//        }
     }
 }

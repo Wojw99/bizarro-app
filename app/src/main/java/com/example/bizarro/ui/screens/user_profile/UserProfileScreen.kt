@@ -105,7 +105,7 @@ fun UserProfileScreen(
 
         Button(
             onClick ={
-                //navController.navigate(route = Screen.EditProfile.route)
+                navController.navigate(route = Screen.SeeYourOpinionsScreen.route)
             },
             Modifier.size(width = 180.dp, height = 40.dp),
             colors = ButtonDefaults.buttonColors(backgroundColor = blueColor),
@@ -196,58 +196,58 @@ fun UserImage()
 
 }
 
-@Composable
-fun UserInfo(navController: NavController)
-{
-    Text("Jan Kowalski",
-        style = TextStyle(
-            fontSize = 30.sp,
-            fontFamily = FontFamily.Default,
-            fontWeight = FontWeight.Bold
-        ))
-
-    Spacer(modifier = Modifier.height(10.dp))
-
-    Text("jkowalski@gmail.com",
-        style = TextStyle(
-            fontSize = 30.sp,
-            fontFamily = FontFamily.Default,
-            fontWeight = FontWeight.Normal
-        ))
-
-    Spacer(modifier = Modifier.height(10.dp))
-
-    Text("123 456 789",
-        style = TextStyle(
-            fontSize = 30.sp,
-            fontFamily = FontFamily.Default,
-            fontWeight = FontWeight.Normal
-        ))
-
-    Spacer(modifier = Modifier.height(50.dp))
-
-    Button(
-        onClick ={
-            navController.navigate(route = Screen.EditProfile.route)
-        },
-        Modifier.size(width = 180.dp, height = 40.dp),
-        colors = ButtonDefaults.buttonColors(backgroundColor = blueColor),
-    )
-    {
-        Text(text = "Edytuj profil",
-            style = MaterialTheme.typography.button
-        )
-    }
-
-    //Spacer(modifier = Modifier.height(30.dp))
-
-
-
-
-
-
-
-}
+//@Composable
+//fun UserInfo(navController: NavController)
+//{
+//    Text("Jan Kowalski",
+//        style = TextStyle(
+//            fontSize = 30.sp,
+//            fontFamily = FontFamily.Default,
+//            fontWeight = FontWeight.Bold
+//        ))
+//
+//    Spacer(modifier = Modifier.height(10.dp))
+//
+//    Text("jkowalski@gmail.com",
+//        style = TextStyle(
+//            fontSize = 30.sp,
+//            fontFamily = FontFamily.Default,
+//            fontWeight = FontWeight.Normal
+//        ))
+//
+//    Spacer(modifier = Modifier.height(10.dp))
+//
+//    Text("123 456 789",
+//        style = TextStyle(
+//            fontSize = 30.sp,
+//            fontFamily = FontFamily.Default,
+//            fontWeight = FontWeight.Normal
+//        ))
+//
+//    Spacer(modifier = Modifier.height(50.dp))
+//
+//    Button(
+//        onClick ={
+//            navController.navigate(route = Screen.EditProfile.route)
+//        },
+//        Modifier.size(width = 180.dp, height = 40.dp),
+//        colors = ButtonDefaults.buttonColors(backgroundColor = blueColor),
+//    )
+//    {
+//        Text(text = "Edytuj profil",
+//            style = MaterialTheme.typography.button
+//        )
+//    }
+//
+//    //Spacer(modifier = Modifier.height(30.dp))
+//
+//
+//
+//
+//
+//
+//
+//}
 
 
 
