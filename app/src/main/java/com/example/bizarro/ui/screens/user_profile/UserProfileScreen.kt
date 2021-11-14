@@ -1,5 +1,6 @@
 package com.example.bizarro.ui.screens.user_profile
 
+import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -16,6 +17,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontFamily
@@ -24,6 +26,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import com.example.bizarro.R
 import com.example.bizarro.ui.Screen
@@ -42,7 +45,7 @@ fun UserProfileScreen(
 
 
 ) {
-
+    val context = LocalContext.current
     //val viewModelEdit: SettingsEditUserProfileViewModel = hiltViewModel()
 
     Column(
@@ -61,7 +64,7 @@ fun UserProfileScreen(
         //Spacer(modifier = Modifier.height(40.dp))
 
 
-        Text(viewModel.nameUser.value,
+        Text(viewModel.nameUser,
             style = TextStyle(
                 fontSize = 30.sp,
                 fontFamily = FontFamily.Default,
@@ -105,8 +108,10 @@ fun UserProfileScreen(
 
         Button(
             onClick ={
-                navController.navigate(route = Screen.SeeYourOpinionsScreen.route)
-            },
+                //navController.navigate(route = Screen.SeeYourOpinionsScreen.route)
+                Toast.makeText(context, viewModel.nameUser, Toast.LENGTH_SHORT).show()
+
+                     },
             Modifier.size(width = 180.dp, height = 40.dp),
             colors = ButtonDefaults.buttonColors(backgroundColor = blueColor),
         )

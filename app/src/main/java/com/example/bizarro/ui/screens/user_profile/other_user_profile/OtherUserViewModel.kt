@@ -15,8 +15,18 @@ class OtherUserViewModel @Inject constructor(
 {
 
     val opinionOtherUserList = mutableStateListOf<String>()
-    //val recordList = mutableStateOf<List<Record>>(listOf())
-    //val opinionOtherUserList = mutableStateOf<List<OpinionOfOtherUser>>(listOf())
+
+    val opinionsOtherUser= mutableStateOf(listOf(
+        "User1: 5, super produkty",
+        "User2: 4, dobre produkty",
+        "User3: 3, pozytywne produkty",
+        "User4: 5, super produkty",
+        "User5: 5, super produkty",
+        "User6: 2, takie średnie produkty"
+        ),
+
+        )
+
 
     init {
         appState.bottomMenuVisible.value = false
@@ -29,16 +39,4 @@ class OtherUserViewModel @Inject constructor(
 
     }
 
-
-
-
-
 }
-
-//data class OpinionOfOtherUser
-//(
-//    val id: Int,
-//    val opinionMark: String,
-//    val opinionText: String
-//
-//    )

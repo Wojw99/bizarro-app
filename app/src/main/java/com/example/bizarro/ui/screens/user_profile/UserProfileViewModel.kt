@@ -1,6 +1,8 @@
 package com.example.bizarro.ui.screens.user_profile
 
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.bizarro.ui.AppState
@@ -19,7 +21,7 @@ class UserProfileViewModel @Inject constructor(
 
    // var string = mutableStateOf("")
 
-    var nameUser = mutableStateOf("Jan Kowalski")
+    var nameUser by mutableStateOf("")
     var emailUser = mutableStateOf("jkowalski@gmail.com")
     var phoneUser = mutableStateOf("123 456 789")
 
@@ -28,9 +30,10 @@ class UserProfileViewModel @Inject constructor(
     fun updateName(name: String)
     {
         viewModelScope.launch{
-            nameUser.value= name
+            nameUser = name
         }
 
     }
+
 
 }

@@ -1,5 +1,6 @@
 package com.example.bizarro.ui.screens.user_profile
 
+import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
@@ -9,6 +10,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
@@ -25,11 +27,14 @@ import com.example.bizarro.ui.theme.darkColor
 import com.example.bizarro.ui.theme.kBlack
 import com.example.bizarro.ui.theme.kGray
 import com.example.bizarro.ui.theme.kWhite
+import kotlinx.coroutines.launch
 
 @Composable
 fun EditProfileScreen(navController: NavController,
                       viewModel: UserProfileViewModel = hiltViewModel(),)
 {
+    val context = LocalContext.current
+    val scope = rememberCoroutineScope()
 
     Column(
         modifier = Modifier
@@ -46,9 +51,9 @@ fun EditProfileScreen(navController: NavController,
         Spacer(modifier = Modifier.height(40.dp))
 
 
-        var editDataName by remember {
-            mutableStateOf(TextFieldValue(viewModel.nameUser.value))
-        }
+//        var editDataName by remember {
+//            mutableStateOf(TextFieldValue(viewModel.nameUser))
+//        }
         var editEmail by remember { mutableStateOf(TextFieldValue(viewModel.emailUser.value)) }
         var editPhoneNumber by remember { mutableStateOf(TextFieldValue(viewModel.phoneUser.value)) }
 
@@ -59,10 +64,9 @@ fun EditProfileScreen(navController: NavController,
 //        }
 
         TextField(
-            value = editDataName,
+            value = viewModel.nameUser,
             onValueChange = {
-                editDataName = it
-                viewModel.updateName(it.text)
+                viewModel.updateName(it)
             },
 
             //label = { Text(text = "",)},
@@ -118,7 +122,12 @@ fun EditProfileScreen(navController: NavController,
         Button(
             onClick ={
 
+                     scope.launch {
+                         Toast.makeText(context, viewModel.nameUser, Toast.LENGTH_SHORT).show()
+                     }
                 //viewModel.updateName(editDataName.text)
+
+                //Toast.makeText(context, viewModel.nameUser.value, Toast.LENGTH_SHORT).show()
 
 //                navController.navigate(
 //                    route = Screen.UserProfile.route
