@@ -14,6 +14,7 @@ interface BizarroApi {
         @Query("city") city: String?,
         @Query("province") province: String?,
         @Query("type") type: String?,
+        @Query("category") category: String?,
     ): List<Record>
 
     @GET("records/{recordId}")

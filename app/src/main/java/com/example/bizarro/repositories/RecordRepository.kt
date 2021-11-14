@@ -25,9 +25,10 @@ class RecordRepository @Inject constructor(
         city: String?,
         province: String?,
         type: String?,
+        category: String?,
     ) : Resource<List<Record>>{
         val response = try {
-            api.getRecordList(limit, offset, name, city, province, type)
+            api.getRecordList(limit, offset, name, city, province, type, category)
         } catch (e: Exception) {
             Timber.d(e) // TODO: Check what is it
             return Resource.Error(Strings.unknownError)

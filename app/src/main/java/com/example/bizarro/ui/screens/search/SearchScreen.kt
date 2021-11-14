@@ -1,16 +1,18 @@
 package com.example.bizarro.ui.screens.search
 
-import android.widget.Space
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.*
@@ -18,8 +20,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
-import androidx.compose.ui.focus.FocusState
-import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
@@ -33,11 +33,14 @@ import coil.compose.ImagePainter
 import coil.compose.rememberImagePainter
 import com.example.bizarro.data.remote.responses.Record
 import com.example.bizarro.ui.Screen
+import com.example.bizarro.ui.components.CustomIconButton
 import com.example.bizarro.ui.theme.*
 import com.example.bizarro.util.*
 import com.example.bizarro.util.Dimens
 import com.example.bizarro.util.Strings
 
+val barHeight = 40.dp
+val topRecordListMargin = 105.dp
 
 @Composable
 fun SearchScreen(
@@ -45,6 +48,7 @@ fun SearchScreen(
     navController: NavController,
 ) {
     viewModel.appState.bottomMenuVisible.value = true
+
     Surface(
         modifier = Modifier
             .fillMaxSize()
@@ -53,14 +57,22 @@ fun SearchScreen(
     ) {
         // * * * * * * PROGRESS BAR * * * * * *
         if (viewModel.isLoading.value) {
-            Box(modifier = Modifier.fillMaxSize().background(kLightGray)) {
+            Box(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .background(kLightGray)
+            ) {
                 CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
             }
         }
 
         // * * * * * * ERROR TEXT * * * * * *
         if (viewModel.loadError.value.isNotEmpty()) {
-            Box(modifier = Modifier.fillMaxSize().background(kLightGray)) {
+            Box(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .background(kLightGray)
+            ) {
                 Text(
                     text = viewModel.loadError.value,
                     modifier = Modifier.align(Alignment.Center)
@@ -73,7 +85,11 @@ fun SearchScreen(
             && !viewModel.isLoading.value
             && viewModel.loadError.value.isEmpty()
         ) {
-            Box(modifier = Modifier.fillMaxSize().background(kLightGray)) {
+            Box(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .background(kLightGray)
+            ) {
                 Text(
                     text = Strings.listIsEmpty,
                     modifier = Modifier.align(Alignment.Center)
@@ -99,13 +115,26 @@ fun SearchScreen(
             Spacer(modifier = Modifier.height(Dimens.standardPadding))
 
             // * * * * * * FILTER BAR * * * * * *
-            Text(text = "Filtry")
+            if (viewModel.hasFilters()) {
+                FilterList(navController = navController)
+            } else {
+                CustomIconButton(
+                    text = Strings.filter,
+                    iconVector = Icons.Default.Add,
+                    contentDescription = "Add icon",
+                    reverseColors = true,
+                    onButtonClick = {
+                        viewModel.addTestFilers()
+                    }
+                )
+            }
 
             Spacer(modifier = Modifier.height(Dimens.standardPadding))
         }
     }
 
 }
+
 
 @Composable
 fun SearchBar(
@@ -125,7 +154,7 @@ fun SearchBar(
             .fillMaxWidth()
             .shadow(5.dp, RoundedCornerShape(Dimens.cornerRadius))
             .background(kWhite, RoundedCornerShape(Dimens.cornerRadius))
-            .height(40.dp)
+            .height(barHeight)
     ) {
         Row(
             verticalAlignment = Alignment.CenterVertically,
@@ -166,6 +195,53 @@ fun SearchBar(
 }
 
 @Composable
+fun FilterList(
+    viewModel: SearchViewModel = hiltViewModel(),
+    modifier: Modifier = Modifier,
+    navController: NavController,
+) {
+    Row {
+        LazyRow {
+            val filterList = viewModel.filterList.value
+            val itemCount = filterList.size
+
+            items(itemCount) { index ->
+                // * * * * * ADD FILTER * * * * *
+                if (index == 0) {
+                    CustomIconButton(
+                        text = "",
+                        iconVector = Icons.Default.Add,
+                        contentDescription = "Add filer",
+                        reverseColors = true,
+                        onButtonClick = {
+                            viewModel.addTestFilers()
+                        },
+                    )
+                    Spacer(modifier = Modifier.width(10.dp))
+                }
+
+                // * * * * * FILTER BUTTON * * * * *
+                val filter = filterList[index]
+                if (filter.values.isNotEmpty()) {
+                    CustomIconButton(
+                        text = filter.values.first(),
+                        iconVector = Icons.Default.Close,
+                        contentDescription = "Close icon",
+                        onButtonClick = {
+                            if (!viewModel.isLoading.value) {
+                                viewModel.clearFilterAtIndex(index)
+                                viewModel.updateRecordList()
+                            }
+                        }
+                    )
+                    Spacer(modifier = Modifier.width(10.dp))
+                }
+            }
+        }
+    }
+}
+
+@Composable
 fun RecordList(
     viewModel: SearchViewModel = hiltViewModel(),
     modifier: Modifier = Modifier,
@@ -177,7 +253,7 @@ fun RecordList(
 
         items(itemCount) { index ->
             if (index == 0)
-                Spacer(modifier = Modifier.height(64.dp))
+                Spacer(modifier = Modifier.height(topRecordListMargin))
 
             RecordBox(record = recordList[index], navController = navController)
 
@@ -205,7 +281,7 @@ fun RecordBox(
                 navController.navigate(Screen.RecordDetails.route)
             }
     ) {
-        Row() {
+        Row {
             // * * * * * * * * IMAGE BOX * * * * * * * *
             Box(modifier = Modifier.weight(12f), contentAlignment = Alignment.Center) {
                 val painter = rememberImagePainter(
@@ -266,7 +342,7 @@ fun TypeSpecificTitle(record: Record, modifier: Modifier = Modifier) {
     var h1Size = 20.sp
 
     when (record.type) {
-        "sprzedam" -> {
+        Constants.TYPE_SELL -> {
             h1 = if (record.salePrice != null) {
                 CommonMethods.convertToPriceFormat(record.salePrice)
             } else {
@@ -274,7 +350,7 @@ fun TypeSpecificTitle(record: Record, modifier: Modifier = Modifier) {
             }
             h2 = Strings.sellPrice
         }
-        "kupię" -> {
+        Constants.TYPE_BUY -> {
             h1 = if (record.purchasePrice != null) {
                 CommonMethods.convertToPriceFormat(record.purchasePrice)
             } else {
@@ -282,7 +358,7 @@ fun TypeSpecificTitle(record: Record, modifier: Modifier = Modifier) {
             }
             h2 = Strings.purchasePrice
         }
-        "wypożyczę" -> {
+        Constants.TYPE_RENT -> {
             h1 = if (record.rentalPeriod != null && record.rentalPrice != null) {
                 "${CommonMethods.convertToPriceFormat(record.rentalPrice)}, ${record.rentalPeriod} ${Strings.days}"
             } else {
@@ -290,7 +366,7 @@ fun TypeSpecificTitle(record: Record, modifier: Modifier = Modifier) {
             }
             h2 = Strings.rentalPeriodPrice
         }
-        "zamienię" -> {
+        Constants.TYPE_SWAP -> {
             h1 = if (record.swapObject != null) {
                 record.swapObject
             } else {
@@ -301,8 +377,8 @@ fun TypeSpecificTitle(record: Record, modifier: Modifier = Modifier) {
         }
     }
 
-    Box() {
-        Column() {
+    Box {
+        Column {
             Text(
                 text = h1,
                 style = TextStyle(

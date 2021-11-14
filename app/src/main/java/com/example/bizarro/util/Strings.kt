@@ -12,5 +12,6 @@ object Strings {
     const val undefined = "Nie podano"
     const val days = "dni"
     const val listIsEmpty = "Brak wyników"
-    const val search = "Szukaj"
+    const val search = "Czego szukasz?"
+    const val filter = "Filtruj"
 }

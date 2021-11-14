@@ -6,7 +6,9 @@ import androidx.lifecycle.viewModelScope
 import com.example.bizarro.data.remote.responses.Record
 import com.example.bizarro.repositories.RecordRepository
 import com.example.bizarro.ui.AppState
+import com.example.bizarro.util.Constants
 import com.example.bizarro.util.Resource
+import com.example.bizarro.util.models.Filter
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -23,26 +25,59 @@ class SearchViewModel @Inject constructor(
 
     val nameText = mutableStateOf("")
 
-    val cityFilter = mutableStateOf<String?>(null)
-    val provinceFilter = mutableStateOf<String?>(null)
-    val typeFilter = mutableStateOf<String?>(null)
+    val filterList = mutableStateOf(listOf(
+        Filter(Constants.FILTER_CITY, listOf()),
+        Filter(Constants.FILTER_PROVINCE, listOf("śląskie")),
+        Filter(Constants.FILTER_TYPE, listOf("sprzedam")),
+        Filter(Constants.FILTER_CATEGORY, listOf("górski")),
+    ))
 
     init {
         updateRecordList()
+    }
+
+    private fun getFilterValue(filter: String) : String? {
+        for(x in filterList.value) {
+            if(filter == x.name && x.values.isNotEmpty())
+                return x.values.first()
+        }
+        return null
+    }
+
+    fun hasFilters() : Boolean{
+        for(x in filterList.value) {
+            if(x.values.isNotEmpty())
+                return true
+        }
+        return false
+    }
+
+    fun clearFilterAtIndex(index: Int) {
+        filterList.value[index].values = listOf()
+    }
+
+    fun addTestFilers() {
+        filterList.value = listOf(
+            Filter(Constants.FILTER_CITY, listOf()),
+            Filter(Constants.FILTER_PROVINCE, listOf("śląskie")),
+            Filter(Constants.FILTER_TYPE, listOf("sprzedam")),
+            Filter(Constants.FILTER_CATEGORY, listOf("górski")),
+        )
     }
 
     fun updateRecordList() {
         if (isLoading.value) return
         viewModelScope.launch {
             isLoading.value = true
-            delay(2000L)
+            delay(1000L)
             val resource = repository.getRecordList(
                 0,
                 0,
                 if (nameText.value == "") null else nameText.value,
-                cityFilter.value,
-                provinceFilter.value,
-                typeFilter.value
+                getFilterValue(Constants.FILTER_CITY),
+                getFilterValue(Constants.FILTER_PROVINCE),
+                getFilterValue(Constants.FILTER_TYPE),
+                getFilterValue(Constants.FILTER_CATEGORY),
             )
 
             when (resource) {
