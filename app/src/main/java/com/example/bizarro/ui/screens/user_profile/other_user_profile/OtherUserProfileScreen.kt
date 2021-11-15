@@ -19,6 +19,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -108,9 +109,9 @@ fun OtherUserImage()
 
 
 @Composable
-fun OtherUserInfo()
+fun OtherUserInfo(viewModel: OtherUserViewModel = hiltViewModel())
 {
-    Text("Tomasz Kowalski",
+    Text(viewModel.nameOtherUser,
         style = TextStyle(
             fontSize = 30.sp,
             fontFamily = FontFamily.Default,
@@ -120,7 +121,7 @@ fun OtherUserInfo()
 
     Spacer(modifier = Modifier.height(10.dp))
 
-    Text("tkowalski@gmail.com",
+    Text(viewModel.emailOtherUser,
         style = TextStyle(
             fontSize = 30.sp,
             fontFamily = FontFamily.Default,
@@ -130,12 +131,37 @@ fun OtherUserInfo()
 
     Spacer(modifier = Modifier.height(10.dp))
 
-    Text("987 654 321",
+    Text(viewModel.phoneOtherUser,
         style = TextStyle(
             fontSize = 30.sp,
             fontFamily = FontFamily.Default,
             fontWeight = FontWeight.Normal
         )
+    )
+
+    Spacer(modifier = Modifier.height(50.dp))
+
+    Text(text = "Opis profilu:",
+        style = TextStyle(
+            fontSize = 25.sp,
+            fontFamily = FontFamily.Default,
+            fontWeight = FontWeight.Bold,
+            textAlign = TextAlign.Start
+        ),
+    )
+
+
+
+    Spacer(modifier = Modifier.height(10.dp))
+
+    Text(text = viewModel.userOtherDescription,
+        style = TextStyle(
+            fontSize = 15.sp,
+            fontFamily = FontFamily.Default,
+            fontWeight = FontWeight.Bold,
+            textAlign = TextAlign.Center,
+
+            )
     )
 
 

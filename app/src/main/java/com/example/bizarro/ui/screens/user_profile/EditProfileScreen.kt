@@ -51,25 +51,21 @@ fun EditProfileScreen(navController: NavController,
         Spacer(modifier = Modifier.height(40.dp))
 
 
-//        var editDataName by remember {
-//            mutableStateOf(TextFieldValue(viewModel.nameUser))
-//        }
-        var editEmail by remember { mutableStateOf(TextFieldValue(viewModel.emailUser.value)) }
-        var editPhoneNumber by remember { mutableStateOf(TextFieldValue(viewModel.phoneUser.value)) }
+        var editDataName by remember {
+            mutableStateOf(TextFieldValue(viewModel.nameUser))
+        }
+        var editEmail by remember { mutableStateOf(TextFieldValue(viewModel.emailUser)) }
+        var editPhoneNumber by remember { mutableStateOf(TextFieldValue(viewModel.phoneUser)) }
 
-        //val hint: String = ""
+        var editUserDescription by remember { mutableStateOf(TextFieldValue(viewModel.userDescription)) }
 
-//        var isHintDisplayed by remember {
-//            mutableStateOf(hint != "")
-//        }
 
         TextField(
-            value = viewModel.nameUser,
+            value = editDataName,
             onValueChange = {
-                viewModel.updateName(it)
+                editDataName = it
             },
 
-            //label = { Text(text = "",)},
             leadingIcon = {
                 Icon(imageVector = Icons.Default.Person, contentDescription = "PersonIcon" )
             },
@@ -88,7 +84,6 @@ fun EditProfileScreen(navController: NavController,
                 editEmail = it
             },
 
-            //label = { Text(text = "Edytuj e-mail")},
             leadingIcon = {
                 Icon(imageVector = Icons.Default.Email, contentDescription = "EmailIcon" )
             },
@@ -106,7 +101,6 @@ fun EditProfileScreen(navController: NavController,
                 editPhoneNumber = it
             },
 
-            //label = { Text(text = "Edytuj numer telefonu")},
             leadingIcon = {
                 Icon(imageVector = Icons.Default.Phone, contentDescription = "PhoneIcon" )
             },
@@ -116,6 +110,22 @@ fun EditProfileScreen(navController: NavController,
 
         )
 
+        Spacer(modifier = Modifier.height(30.dp))
+
+        TextField(
+            value = editUserDescription,
+            onValueChange = {
+                editUserDescription= it
+            },
+
+            leadingIcon = {
+                Icon(imageVector = Icons.Default.Info, contentDescription = "InfoIcon" )
+            },
+            colors = TextFieldDefaults.outlinedTextFieldColors(
+                focusedBorderColor = darkColor,
+                unfocusedBorderColor = darkColor)
+
+        )
 
         Spacer(modifier = Modifier.height(80.dp))
 
@@ -182,7 +192,6 @@ fun HeaderEditProfileScreen(navController: NavController)
                 Modifier.size(30.dp)
             )
         }
-
 
     }
 }

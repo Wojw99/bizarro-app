@@ -10,6 +10,8 @@ import androidx.compose.material.*
 import androidx.compose.material.MaterialTheme.colors
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Edit
+import androidx.compose.material.icons.filled.Info
+import androidx.compose.material.icons.filled.Notifications
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -22,6 +24,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -73,7 +76,7 @@ fun UserProfileScreen(
 
         Spacer(modifier = Modifier.height(10.dp))
 
-        Text(viewModel.emailUser.value,
+        Text(viewModel.emailUser,
             style = TextStyle(
                 fontSize = 30.sp,
                 fontFamily = FontFamily.Default,
@@ -82,7 +85,7 @@ fun UserProfileScreen(
 
         Spacer(modifier = Modifier.height(10.dp))
 
-        Text(viewModel.phoneUser.value,
+        Text(viewModel.phoneUser,
             style = TextStyle(
                 fontSize = 30.sp,
                 fontFamily = FontFamily.Default,
@@ -123,7 +126,11 @@ fun UserProfileScreen(
 
         //UserInfo(navController)
 
-        //Spacer(modifier = Modifier.height(20.dp))
+        Spacer(modifier = Modifier.height(40.dp))
+
+
+        //UserDescription()
+
 
 
 
@@ -139,20 +146,31 @@ fun UserProfileScreen(
 //        }
 
 
-        Spacer(modifier = Modifier.height(50.dp))
+        Spacer(modifier = Modifier.height(20.dp))
 
-        Button(
-            onClick ={
-                navController.navigate(route = com.example.bizarro.ui.Screen.SignIn.route)
-            },
-            Modifier.size(width = 250.dp, height = 50.dp),
-            colors = ButtonDefaults.buttonColors(backgroundColor = darkColor),
 
-            ) {
-            Text(text = "Wyloguj",
-                style = MaterialTheme.typography.button
+        Text(text = "Opis profilu:",
+            style = TextStyle(
+                fontSize = 25.sp,
+                fontFamily = FontFamily.Default,
+                fontWeight = FontWeight.Bold,
+                textAlign = TextAlign.Start
+                ),
             )
-        }
+
+        //Icons.Default.Info
+
+        Spacer(modifier = Modifier.height(10.dp))
+
+        Text(text = viewModel.userDescription,
+            style = TextStyle(
+                fontSize = 15.sp,
+                fontFamily = FontFamily.Default,
+                fontWeight = FontWeight.Bold,
+                textAlign = TextAlign.Center,
+
+            )
+        )
 
     }
 
@@ -199,6 +217,24 @@ fun UserImage()
 
     
 
+}
+
+@Composable
+fun UserDescription(viewModel: UserProfileViewModel = hiltViewModel())
+{
+    Box(modifier = Modifier
+        .fillMaxWidth()
+        .padding(12.dp)) {
+
+        Icon(
+            imageVector = Icons.Default.Notifications,
+            contentDescription = "User description"
+        )
+
+
+
+
+    }
 }
 
 //@Composable

@@ -21,10 +21,10 @@ class UserProfileViewModel @Inject constructor(
 
    // var string = mutableStateOf("")
 
-    var nameUser by mutableStateOf("")
-    var emailUser = mutableStateOf("jkowalski@gmail.com")
-    var phoneUser = mutableStateOf("123 456 789")
-
+    var nameUser by mutableStateOf("Jan Kowalski")
+    var emailUser by mutableStateOf("jkowalski@gmail.com")
+    var phoneUser by mutableStateOf("123 456 789")
+    var userDescription by mutableStateOf("Użytkownik zajmujący się głównie sprzedażą rowerów sportowych oraz górskich")
 
 
     fun updateName(name: String)

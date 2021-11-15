@@ -22,6 +22,7 @@ import com.example.bizarro.ui.AppState
 import com.example.bizarro.ui.Screen
 import com.example.bizarro.ui.screens.user_profile.settings.SettingsViewModel
 import com.example.bizarro.ui.theme.blueColor
+import com.example.bizarro.ui.theme.darkColor
 import com.example.bizarro.ui.theme.kWhite
 
 @Composable
@@ -92,9 +93,25 @@ fun SettingsScreen(navController: NavController,
             )
         }
 
+        Spacer(modifier = Modifier.height(100.dp))
+
+
+        Button(
+            onClick ={
+                navController.navigate(route = Screen.SignIn.route)
+            },
+            Modifier.size(width = 250.dp, height = 50.dp),
+            colors = ButtonDefaults.buttonColors(backgroundColor = darkColor),
+
+            ) {
+            Text(text = "Wyloguj",
+                style = MaterialTheme.typography.button
+            )
+        }
 
 
     }
+
 
 
 
