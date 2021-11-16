@@ -9,10 +9,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.material.MaterialTheme.colors
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Edit
-import androidx.compose.material.icons.filled.Info
-import androidx.compose.material.icons.filled.Notifications
-import androidx.compose.material.icons.filled.Settings
+import androidx.compose.material.icons.filled.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -34,10 +31,7 @@ import androidx.navigation.NavController
 import com.example.bizarro.R
 import com.example.bizarro.ui.Screen
 import com.example.bizarro.ui.screens.record_details.RecordDetailsViewModel
-import com.example.bizarro.ui.theme.blueColor
-import com.example.bizarro.ui.theme.darkColor
-import com.example.bizarro.ui.theme.kGray
-import com.example.bizarro.ui.theme.kWhite
+import com.example.bizarro.ui.theme.*
 
 @Composable
 fun UserProfileScreen(
@@ -45,14 +39,10 @@ fun UserProfileScreen(
 
     viewModel: UserProfileViewModel = hiltViewModel(),
 
-
-
 ) {
     val context = LocalContext.current
-    //val viewModelEdit: SettingsEditUserProfileViewModel = hiltViewModel()
 
     Column(
-
 
         modifier = Modifier
             .fillMaxSize()
@@ -61,36 +51,7 @@ fun UserProfileScreen(
 
         HeaderSectionUserProfile(navController)
 
-
-        UserImage()
-
-        //Spacer(modifier = Modifier.height(40.dp))
-
-
-        Text(viewModel.nameUser,
-            style = TextStyle(
-                fontSize = 30.sp,
-                fontFamily = FontFamily.Default,
-                fontWeight = FontWeight.Bold
-            ))
-
-        Spacer(modifier = Modifier.height(10.dp))
-
-        Text(viewModel.emailUser,
-            style = TextStyle(
-                fontSize = 30.sp,
-                fontFamily = FontFamily.Default,
-                fontWeight = FontWeight.Normal
-            ))
-
-        Spacer(modifier = Modifier.height(10.dp))
-
-        Text(viewModel.phoneUser,
-            style = TextStyle(
-                fontSize = 30.sp,
-                fontFamily = FontFamily.Default,
-                fontWeight = FontWeight.Normal
-            ))
+        UserInformation()
 
         Spacer(modifier = Modifier.height(50.dp))
 
@@ -124,53 +85,11 @@ fun UserProfileScreen(
             )
         }
 
-        //UserInfo(navController)
-
-        Spacer(modifier = Modifier.height(40.dp))
-
-
-        //UserDescription()
+        Spacer(modifier = Modifier.height(60.dp))
 
 
 
 
-//        Spacer(modifier = Modifier.height(50.dp))
-//
-//        Button(onClick = {}) {
-//            Image(
-//                painterResource(R.drawable.ic_baseline_star_24),
-//                contentDescription ="Zobacz opinie",
-//                modifier = Modifier.size(35.dp))
-//
-//            Text(text = "Zobacz opinie",Modifier.padding(start = 10.dp))
-//        }
-
-
-        Spacer(modifier = Modifier.height(20.dp))
-
-
-        Text(text = "Opis profilu:",
-            style = TextStyle(
-                fontSize = 25.sp,
-                fontFamily = FontFamily.Default,
-                fontWeight = FontWeight.Bold,
-                textAlign = TextAlign.Start
-                ),
-            )
-
-        //Icons.Default.Info
-
-        Spacer(modifier = Modifier.height(10.dp))
-
-        Text(text = viewModel.userDescription,
-            style = TextStyle(
-                fontSize = 15.sp,
-                fontFamily = FontFamily.Default,
-                fontWeight = FontWeight.Bold,
-                textAlign = TextAlign.Center,
-
-            )
-        )
 
     }
 
@@ -202,7 +121,7 @@ fun HeaderSectionUserProfile(navController: NavController)
 }
 
 @Composable
-fun UserImage()
+fun UserInformation(viewModel: UserProfileViewModel = hiltViewModel())
 {
 
     Image(
@@ -215,80 +134,79 @@ fun UserImage()
             .border(3.dp, blueColor, RoundedCornerShape(10))
     )
 
-    
+    Text(viewModel.nameUser,
+        style = TextStyle(
+            fontSize = 30.sp,
+            fontFamily = FontFamily.Default,
+            fontWeight = FontWeight.Bold
+        ))
+
+    Spacer(modifier = Modifier.height(10.dp))
+
+    Text(viewModel.emailUser,
+        style = TextStyle(
+            fontSize = 30.sp,
+            fontFamily = FontFamily.Default,
+            fontWeight = FontWeight.Normal
+        ))
+
+    Spacer(modifier = Modifier.height(10.dp))
+
+    Text(viewModel.phoneUser,
+        style = TextStyle(
+            fontSize = 30.sp,
+            fontFamily = FontFamily.Default,
+            fontWeight = FontWeight.Normal
+        ))
+
+    Spacer(modifier = Modifier.height(30.dp))
+
+    DescriptionHeader()
+
+    Text(
+        text = viewModel.userDescription,
+        style = TextStyle(
+            fontSize = 15.sp,
+            fontFamily = FontFamily.Default,
+            fontWeight = FontWeight.Bold,
+            textAlign = TextAlign.Center,
+
+            )
+    )
+
 
 }
 
+
 @Composable
-fun UserDescription(viewModel: UserProfileViewModel = hiltViewModel())
+fun DescriptionHeader()
 {
     Box(modifier = Modifier
         .fillMaxWidth()
-        .padding(12.dp)) {
+        .padding(12.dp)){
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.Center,
 
-        Icon(
-            imageVector = Icons.Default.Notifications,
-            contentDescription = "User description"
-        )
+        ) {
 
+            Spacer(modifier = Modifier.width(120.dp))
 
+            Icon(Icons.Default.Info, "Icon description", tint = kBlack)
 
+            Text(text = "Opis profilu:",
+                style = TextStyle(
+                    fontSize = 25.sp,
+                    fontFamily = FontFamily.Default,
+                    fontWeight = FontWeight.Bold,
+                    textAlign = TextAlign.Start
+                ),)
+        }
 
     }
 }
 
-//@Composable
-//fun UserInfo(navController: NavController)
-//{
-//    Text("Jan Kowalski",
-//        style = TextStyle(
-//            fontSize = 30.sp,
-//            fontFamily = FontFamily.Default,
-//            fontWeight = FontWeight.Bold
-//        ))
-//
-//    Spacer(modifier = Modifier.height(10.dp))
-//
-//    Text("jkowalski@gmail.com",
-//        style = TextStyle(
-//            fontSize = 30.sp,
-//            fontFamily = FontFamily.Default,
-//            fontWeight = FontWeight.Normal
-//        ))
-//
-//    Spacer(modifier = Modifier.height(10.dp))
-//
-//    Text("123 456 789",
-//        style = TextStyle(
-//            fontSize = 30.sp,
-//            fontFamily = FontFamily.Default,
-//            fontWeight = FontWeight.Normal
-//        ))
-//
-//    Spacer(modifier = Modifier.height(50.dp))
-//
-//    Button(
-//        onClick ={
-//            navController.navigate(route = Screen.EditProfile.route)
-//        },
-//        Modifier.size(width = 180.dp, height = 40.dp),
-//        colors = ButtonDefaults.buttonColors(backgroundColor = blueColor),
-//    )
-//    {
-//        Text(text = "Edytuj profil",
-//            style = MaterialTheme.typography.button
-//        )
-//    }
-//
-//    //Spacer(modifier = Modifier.height(30.dp))
-//
-//
-//
-//
-//
-//
-//
-//}
+
 
 
 

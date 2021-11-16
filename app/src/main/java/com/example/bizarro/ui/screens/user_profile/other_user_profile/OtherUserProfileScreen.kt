@@ -8,6 +8,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.filled.Info
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -30,12 +31,12 @@ import com.example.bizarro.ui.screens.user_profile.other_user_profile.OtherUserV
 import com.example.bizarro.ui.screens.user_profile.settings.SettingsViewModel
 import com.example.bizarro.ui.theme.blueColor
 import com.example.bizarro.ui.theme.darkColor
+import com.example.bizarro.ui.theme.kBlack
 
 @Composable
 fun OtherUserProfileScreen(navController: NavController,
                            viewModel: OtherUserViewModel = hiltViewModel(),)
 {
-
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -46,13 +47,7 @@ fun OtherUserProfileScreen(navController: NavController,
 
         HeaderSectionOtherUserProfile(navController)
 
-        //Spacer(modifier = Modifier.height(80.dp))
-
-        OtherUserImage()
-
         OtherUserInfo()
-
-
 
         Spacer(modifier = Modifier.height(50.dp))
 
@@ -90,7 +85,7 @@ fun OtherUserProfileScreen(navController: NavController,
 
 
 @Composable
-fun OtherUserImage()
+fun OtherUserInfo(viewModel: OtherUserViewModel = hiltViewModel())
 {
 
     Image(
@@ -104,13 +99,6 @@ fun OtherUserImage()
     )
 
 
-
-}
-
-
-@Composable
-fun OtherUserInfo(viewModel: OtherUserViewModel = hiltViewModel())
-{
     Text(viewModel.nameOtherUser,
         style = TextStyle(
             fontSize = 30.sp,
@@ -139,22 +127,12 @@ fun OtherUserInfo(viewModel: OtherUserViewModel = hiltViewModel())
         )
     )
 
-    Spacer(modifier = Modifier.height(50.dp))
+    Spacer(modifier = Modifier.height(30.dp))
 
-    Text(text = "Opis profilu:",
-        style = TextStyle(
-            fontSize = 25.sp,
-            fontFamily = FontFamily.Default,
-            fontWeight = FontWeight.Bold,
-            textAlign = TextAlign.Start
-        ),
-    )
+    UserDescriptionHeader()
 
-
-
-    Spacer(modifier = Modifier.height(10.dp))
-
-    Text(text = viewModel.userOtherDescription,
+    Text(
+        text = viewModel.userOtherDescription,
         style = TextStyle(
             fontSize = 15.sp,
             fontFamily = FontFamily.Default,
@@ -163,7 +141,6 @@ fun OtherUserInfo(viewModel: OtherUserViewModel = hiltViewModel())
 
             )
     )
-
 
 }
 
@@ -188,5 +165,34 @@ fun HeaderSectionOtherUserProfile(navController: NavController)
             )
         }
 
+    }
+}
+
+@Composable
+fun UserDescriptionHeader()
+{
+    Box(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(12.dp)
+    ) {
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.Center,
+        ) {
+
+            Spacer(modifier = Modifier.width(110.dp))
+
+            Icon(Icons.Default.Info, "Icon description", tint = kBlack)
+
+            Text(text = "Opis profilu:",
+                style = TextStyle(
+                    fontSize = 25.sp,
+                    fontFamily = FontFamily.Default,
+                    fontWeight = FontWeight.Bold,
+                    textAlign = TextAlign.Start
+                ),
+            )
+        }
     }
 }
