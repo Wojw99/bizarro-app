@@ -1,6 +1,5 @@
 package com.example.bizarro.ui.components
 
-import android.widget.Space
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -16,7 +15,6 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.bizarro.ui.screens.search.barHeight
 import com.example.bizarro.ui.theme.kBlueDark
 import com.example.bizarro.ui.theme.kWhite
 import com.example.bizarro.util.Dimens
@@ -37,7 +35,7 @@ fun CustomIconButton(
             .shadow(5.dp, RoundedCornerShape(Dimens.cornerRadius))
             .clip(RoundedCornerShape(Dimens.cornerRadius))
             .background(backColor)
-            .height(barHeight)
+            .height(Dimens.barHeight)
             .clickable { onButtonClick() }
     ) {
         Row(
