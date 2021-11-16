@@ -9,6 +9,7 @@ import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.foundation.text.KeyboardActions
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
@@ -17,12 +18,17 @@ import androidx.compose.material.icons.filled.Search
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalFocusManager
+import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
@@ -39,9 +45,9 @@ import com.example.bizarro.util.*
 import com.example.bizarro.util.Dimens
 import com.example.bizarro.util.Strings
 
-val barHeight = 40.dp
-val topRecordListMargin = 105.dp
+val topRecordListMargin = 115.dp
 
+@ExperimentalComposeUiApi
 @Composable
 fun SearchScreen(
     viewModel: SearchViewModel = hiltViewModel(),
@@ -49,122 +55,121 @@ fun SearchScreen(
 ) {
     viewModel.appState.bottomMenuVisible.value = true
 
-    Surface(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(kLightGray)
-            .padding(Dimens.standardPadding)
-    ) {
-        // * * * * * * PROGRESS BAR * * * * * *
-        if (viewModel.isLoading.value) {
-            Box(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .background(kLightGray)
-            ) {
-                CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
-            }
-        }
-
-        // * * * * * * ERROR TEXT * * * * * *
-        if (viewModel.loadError.value.isNotEmpty()) {
-            Box(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .background(kLightGray)
-            ) {
-                Text(
-                    text = viewModel.loadError.value,
-                    modifier = Modifier.align(Alignment.Center)
-                )
-            }
-        }
-
-        // * * * * * * EMPTY TEXT * * * * * *
-        if (viewModel.recordList.value.isEmpty()
-            && !viewModel.isLoading.value
-            && viewModel.loadError.value.isEmpty()
+    Surface {
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .background(kLightGray)
+                .padding(horizontal = Dimens.standardPadding)
         ) {
-            Box(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .background(kLightGray)
+            // * * * * * * ERROR TEXT * * * * * *
+            if (viewModel.loadError.value.isNotEmpty()
+                && !viewModel.isLoading.value) {
+                Column(
+                    verticalArrangement = Arrangement.Center,
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    modifier = Modifier.fillMaxSize(),
+                ) {
+                    Text(
+                        text = viewModel.loadError.value,
+                    )
+                    Spacer(modifier = Modifier.height(Dimens.standardPadding))
+                    Button(onClick = { viewModel.updateRecordList() }) {
+                        Text(
+                            text = Strings.refresh,
+                        )
+                    }
+                }
+            }
+
+            // * * * * * * EMPTY TEXT * * * * * *
+            if (viewModel.recordList.value.isEmpty()
+                && !viewModel.isLoading.value
+                && viewModel.loadError.value.isEmpty()
             ) {
                 Text(
                     text = Strings.listIsEmpty,
                     modifier = Modifier.align(Alignment.Center)
                 )
             }
-        }
 
-        // * * * * * * RECORD LIST * * * * * *
-        if (viewModel.recordList.value.isNotEmpty() && !viewModel.isLoading.value) {
-            RecordList(navController = navController)
-        }
-
-        Column {
-            // * * * * * * SEARCH BAR * * * * * *
-            SearchBar(
-                hint = Strings.search,
-                onSearch = { text ->
-                    viewModel.nameText.value = text
-                    viewModel.updateRecordList()
-                },
-            )
-
-            Spacer(modifier = Modifier.height(Dimens.standardPadding))
-
-            // * * * * * * FILTER BAR * * * * * *
-            if (viewModel.hasFilters()) {
-                FilterList(navController = navController)
-            } else {
-                CustomIconButton(
-                    text = Strings.filter,
-                    iconVector = Icons.Default.Add,
-                    contentDescription = "Add icon",
-                    reverseColors = true,
-                    onButtonClick = {
-                        viewModel.addTestFilers()
-                    }
-                )
+            // * * * * * * RECORD LIST * * * * * *
+            if (viewModel.recordList.value.isNotEmpty() && !viewModel.isLoading.value) {
+                RecordList(navController = navController)
             }
 
-            Spacer(modifier = Modifier.height(Dimens.standardPadding))
+            Column(modifier = Modifier.padding(vertical = Dimens.standardPadding)) {
+                // * * * * * * SEARCH BAR * * * * * *
+                SearchBar(
+                    hint = Strings.search,
+                    onSearch = { text ->
+                        viewModel.nameText.value = text
+                        viewModel.updateRecordList()
+                    },
+                    initialText = viewModel.nameText.value,
+                )
+
+                Spacer(modifier = Modifier.height(Dimens.standardPadding))
+
+                // * * * * * * FILTER BAR * * * * * *
+                if (viewModel.hasFilters()) {
+                    FilterList(navController = navController)
+                } else {
+                    CustomIconButton(
+                        text = Strings.filter,
+                        iconVector = Icons.Default.Add,
+                        contentDescription = "Add icon",
+                        reverseColors = true,
+                        onButtonClick = {
+                            navController.navigate(Screen.Filter.route)
+                        }
+                    )
+                }
+
+                Spacer(modifier = Modifier.height(Dimens.standardPadding))
+            }
+
+            // * * * * * * PROGRESS BAR * * * * * *
+            if (viewModel.isLoading.value) {
+                CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
+            }
         }
     }
 
 }
 
 
+@ExperimentalComposeUiApi
 @Composable
 fun SearchBar(
-    hint: String = "",
     modifier: Modifier = Modifier,
+    hint: String = "",
+    initialText: String = "",
     onSearch: (String) -> Unit = {},
 ) {
     var text by remember {
-        mutableStateOf("")
+        mutableStateOf(initialText)
     }
     var isHintDisplayed by remember {
-        mutableStateOf(hint != "")
+        mutableStateOf(hint != "" && initialText == "")
     }
+    val keyboardController = LocalSoftwareKeyboardController.current
+    val focusManager = LocalFocusManager.current
 
     Box(
         modifier = modifier
             .fillMaxWidth()
             .shadow(5.dp, RoundedCornerShape(Dimens.cornerRadius))
             .background(kWhite, RoundedCornerShape(Dimens.cornerRadius))
-            .height(barHeight)
+            .height(Dimens.barHeight)
     ) {
         Row(
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.Start,
             modifier = Modifier.fillMaxSize(),
         ) {
-            //if (text.isEmpty()) {
             Spacer(modifier = Modifier.width(10.dp))
             Icon(Icons.Default.Search, "Icon here", tint = kGray)
-            //}
 
             Spacer(modifier = Modifier.width(10.dp))
 
@@ -173,7 +178,6 @@ fun SearchBar(
                     value = text,
                     onValueChange = {
                         text = it
-                        onSearch(it)
                         isHintDisplayed = it.isEmpty()
                     },
                     maxLines = 1,
@@ -181,9 +185,11 @@ fun SearchBar(
                     textStyle = TextStyle(color = kBlack, fontSize = 16.sp),
                     modifier = Modifier.fillMaxWidth(),
                     keyboardActions = KeyboardActions(onDone = {
+                        keyboardController?.hide()
+                        focusManager.clearFocus()
                         onSearch(text)
-                    })
-
+                    }),
+                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text),
                 )
                 if (isHintDisplayed) {
                     Text(color = kGray, text = hint, modifier = Modifier.fillMaxWidth())
@@ -215,6 +221,7 @@ fun FilterList(
                         reverseColors = true,
                         onButtonClick = {
                             viewModel.addTestFilers()
+                            viewModel.updateRecordList()
                         },
                     )
                     Spacer(modifier = Modifier.width(10.dp))
@@ -243,8 +250,8 @@ fun FilterList(
 
 @Composable
 fun RecordList(
-    viewModel: SearchViewModel = hiltViewModel(),
     modifier: Modifier = Modifier,
+    viewModel: SearchViewModel = hiltViewModel(),
     navController: NavController,
 ) {
     LazyColumn(modifier = modifier.background(kLightGray)) {
@@ -360,7 +367,7 @@ fun TypeSpecificTitle(record: Record, modifier: Modifier = Modifier) {
         }
         Constants.TYPE_RENT -> {
             h1 = if (record.rentalPeriod != null && record.rentalPrice != null) {
-                "${CommonMethods.convertToPriceFormat(record.rentalPrice)}, ${record.rentalPeriod} ${Strings.days}"
+                "${CommonMethods.convertToPriceFormat(record.rentalPrice)} - ${record.rentalPeriod} ${Strings.days}"
             } else {
                 Strings.undefined
             }

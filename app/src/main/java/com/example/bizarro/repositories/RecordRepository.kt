@@ -6,6 +6,7 @@ import com.example.bizarro.data.remote.responses.Record
 import com.example.bizarro.util.Resource
 import com.example.bizarro.util.Strings
 import dagger.hilt.android.scopes.ActivityScoped
+import kotlinx.coroutines.delay
 import timber.log.Timber
 import java.lang.Exception
 import javax.inject.Inject
@@ -27,6 +28,7 @@ class RecordRepository @Inject constructor(
         type: String?,
         category: String?,
     ) : Resource<List<Record>>{
+        delay(1000L)
         val response = try {
             api.getRecordList(limit, offset, name, city, province, type, category)
         } catch (e: Exception) {

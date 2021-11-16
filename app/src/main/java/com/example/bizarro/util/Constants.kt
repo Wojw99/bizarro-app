@@ -12,7 +12,7 @@ object Constants {
     const val FILTER_CATEGORY = "category"
 
     const val TYPE_SELL = "sprzedam"
-    const val TYPE_BUY = "province"
-    const val TYPE_SWAP = "type"
-    const val TYPE_RENT = "category"
+    const val TYPE_BUY = "kupię"
+    const val TYPE_SWAP = "zamienię"
+    const val TYPE_RENT = "wypożyczę"
 }

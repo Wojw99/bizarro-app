@@ -12,6 +12,7 @@ import com.example.bizarro.util.models.Filter
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import timber.log.Timber
 import javax.inject.Inject
 
 @HiltViewModel
@@ -27,9 +28,9 @@ class SearchViewModel @Inject constructor(
 
     val filterList = mutableStateOf(listOf(
         Filter(Constants.FILTER_CITY, listOf()),
-        Filter(Constants.FILTER_PROVINCE, listOf("śląskie")),
-        Filter(Constants.FILTER_TYPE, listOf("sprzedam")),
-        Filter(Constants.FILTER_CATEGORY, listOf("górski")),
+        Filter(Constants.FILTER_PROVINCE, listOf()),
+        Filter(Constants.FILTER_TYPE, listOf()),
+        Filter(Constants.FILTER_CATEGORY, listOf()),
     ))
 
     init {
@@ -69,7 +70,7 @@ class SearchViewModel @Inject constructor(
         if (isLoading.value) return
         viewModelScope.launch {
             isLoading.value = true
-            delay(1000L)
+            Timber.d("Search for ${nameText.value}")
             val resource = repository.getRecordList(
                 0,
                 0,
