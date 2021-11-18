@@ -11,6 +11,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
@@ -39,12 +40,12 @@ fun SignUpScreen(navController: NavController,
         .fillMaxSize()
         .background(kWhite),
         horizontalAlignment = Alignment.CenterHorizontally) {
-
+        val context = LocalContext.current
 
         Spacer(modifier = Modifier.height(100.dp))
 
 
-        Text("Sign Up to Bizarro!",
+        Text("Zapisz się do Bizarro!",
             style = MaterialTheme.typography.caption)
 
         Spacer(modifier = Modifier.height(80.dp))
@@ -56,8 +57,8 @@ fun SignUpScreen(navController: NavController,
             onValueChange ={
                 textRegisterEmail = it
             },
-            label = { Text(text = "Email") },
-            placeholder = { Text(text = "Type your e-mail") },
+            //label = { Text(text = "Email") },
+            placeholder = { Text(text = "Wpisz swój email") },
             leadingIcon = {
                 Icon(imageVector = Icons.Default.Email, contentDescription = "EmailIcon" )
             },
@@ -76,8 +77,8 @@ fun SignUpScreen(navController: NavController,
             onValueChange ={
                 textRegisterPassword = it
             },
-            label = { Text(text = "Password") },
-            placeholder = { Text(text = "Type your password") },
+            //label = { Text(text = "Hasło") },
+            placeholder = { Text(text = "Podaj swoje hasło") },
             leadingIcon = {
                 Icon(imageVector = Icons.Default.Lock, contentDescription = "PasswordIcon" )
             }
@@ -87,14 +88,16 @@ fun SignUpScreen(navController: NavController,
 
         Button(
             onClick ={
+
                 //navController.navigate(route = com.example.bizarro.ui.Screen.SignIn.route)
-                //Toast.makeText(this,"Account registered", Toast.LENGTH_SHORT).show()
+
+                Toast.makeText(context, "Konto zarejestrowane", Toast.LENGTH_SHORT).show()
             },
             Modifier.size(width = 250.dp, height = 50.dp),
             colors = ButtonDefaults.buttonColors(backgroundColor = lightblueColor),
         )
         {
-            Text(text = "Register Account",
+            Text(text = "Zarejestruj",
                 style = MaterialTheme.typography.button
             )
 
@@ -108,10 +111,10 @@ fun SignUpScreen(navController: NavController,
 
             },
             Modifier.size(width = 250.dp, height = 50.dp),
-            colors = ButtonDefaults.buttonColors(backgroundColor = lightblueColor),
+            colors = ButtonDefaults.buttonColors(backgroundColor = darkColor),
         )
         {
-            Text(text = "Go to Sign In",
+            Text(text = "Logowanie",
                 style = MaterialTheme.typography.button
             )
 

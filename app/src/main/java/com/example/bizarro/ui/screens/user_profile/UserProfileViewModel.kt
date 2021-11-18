@@ -27,6 +27,17 @@ class UserProfileViewModel @Inject constructor(
     var userDescription by mutableStateOf("Użytkownik zajmujący się głównie sprzedażą rowerów sportowych oraz górskich")
 
 
+    val opinionsLoggedUser= mutableStateOf(listOf(
+        "User6: 6, super produkty",
+        "User5: 5, dobre produkty",
+        "User4: 4, pozytywne produkty",
+        "User3: 3, super produkty",
+        "User2: 2, super produkty",
+        "User1: 1, takie średnie produkty"
+    ),
+
+        )
+
     fun updateName(name: String)
     {
         viewModelScope.launch{

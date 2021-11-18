@@ -72,8 +72,8 @@ fun UserProfileScreen(
 
         Button(
             onClick ={
-                //navController.navigate(route = Screen.SeeYourOpinionsScreen.route)
-                Toast.makeText(context, viewModel.nameUser, Toast.LENGTH_SHORT).show()
+                navController.navigate(route = Screen.SeeYourOpinionsScreen.route)
+                //Toast.makeText(context, viewModel.nameUser, Toast.LENGTH_SHORT).show()
 
                      },
             Modifier.size(width = 180.dp, height = 40.dp),

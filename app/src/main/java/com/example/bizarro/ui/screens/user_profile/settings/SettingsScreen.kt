@@ -54,11 +54,11 @@ fun SettingsScreen(navController: NavController,
             onClick ={
                 //navController.navigate(route = com.example.bizarro.ui.Screen.SignIn.route)
             },
-            Modifier.size(width = 250.dp, height = 50.dp),
+            Modifier.size(width = 300.dp, height = 50.dp),
             colors = ButtonDefaults.buttonColors(backgroundColor = blueColor),
 
             ) {
-            Text(text = "App Info",
+            Text(text = "Informacje o aplikacji",
                 style = MaterialTheme.typography.button
             )
         }
@@ -69,11 +69,11 @@ fun SettingsScreen(navController: NavController,
             onClick ={
                 //navController.navigate(route = com.example.bizarro.ui.Screen.SignIn.route)
             },
-            Modifier.size(width = 250.dp, height = 50.dp),
+            Modifier.size(width = 300.dp, height = 50.dp),
             colors = ButtonDefaults.buttonColors(backgroundColor = blueColor),
 
             ) {
-            Text(text = "Help",
+            Text(text = "Pomoc",
                 style = MaterialTheme.typography.button
             )
         }
@@ -84,11 +84,11 @@ fun SettingsScreen(navController: NavController,
             onClick ={
                 //navController.navigate(route = com.example.bizarro.ui.Screen.SignIn.route)
             },
-            Modifier.size(width = 250.dp, height = 50.dp),
+            Modifier.size(width = 300.dp, height = 50.dp),
             colors = ButtonDefaults.buttonColors(backgroundColor = blueColor),
 
             ) {
-            Text(text = "Privacy Policy",
+            Text(text = "Polityka prywatności",
                 style = MaterialTheme.typography.button
             )
         }

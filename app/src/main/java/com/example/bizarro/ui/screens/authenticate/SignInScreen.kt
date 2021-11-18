@@ -39,7 +39,7 @@ fun SignInScreen(navController: NavController,
       Spacer(modifier = Modifier.height(100.dp))
 
 
-      Text("Welcome to Bizarro!",
+      Text("Witaj w Bizarro!",
          style = MaterialTheme.typography.caption)
 
       Spacer(modifier = Modifier.height(80.dp))
@@ -52,8 +52,8 @@ fun SignInScreen(navController: NavController,
          onValueChange ={
             textLoginEmail = it
          },
-         label = { Text(text = "Email") },
-         placeholder = { Text(text = "Type your e-mail") },
+         //label = { Text(text = "Email") },
+         placeholder = { Text(text = "Podaj swój email") },
          leadingIcon = {
             Icon(imageVector = Icons.Default.Email, contentDescription = "EmailIcon" )
          },
@@ -71,8 +71,8 @@ fun SignInScreen(navController: NavController,
          onValueChange ={
             textLoginPassword = it
          },
-         label = { Text(text = "Password") },
-         placeholder = { Text(text = "Type your password") },
+         //label = { Text(text = "Hasło") },
+         placeholder = { Text(text = "Wpisz swoje hasło") },
          leadingIcon = {
             Icon(imageVector = Icons.Default.Lock, contentDescription = "PasswordIcon" )
          }
@@ -88,7 +88,7 @@ fun SignInScreen(navController: NavController,
          colors = ButtonDefaults.buttonColors(backgroundColor = darkColor),
 
          ) {
-         Text(text = "Sign In",
+         Text(text = "Zaloguj",
             style = MaterialTheme.typography.button
          )
 
@@ -96,7 +96,7 @@ fun SignInScreen(navController: NavController,
 
       Spacer(modifier = Modifier.height(20.dp))
 
-      Text("OR",
+      Text("ALBO",
          style = TextStyle(
             fontSize = 20.sp,
             fontFamily = FontFamily.Serif,
@@ -115,7 +115,7 @@ fun SignInScreen(navController: NavController,
          colors = ButtonDefaults.buttonColors(backgroundColor = lightblueColor),
       )
       {
-         Text(text = "Sign Up",
+         Text(text = "Zapisz się",
             style = MaterialTheme.typography.button
          )
       }

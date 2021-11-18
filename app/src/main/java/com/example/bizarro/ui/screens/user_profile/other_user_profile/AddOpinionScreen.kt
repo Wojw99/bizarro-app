@@ -195,10 +195,10 @@ fun RadioButtonDemo(
 
                     when {
                         selectedReview.value=="" -> {
-                            Toast.makeText(context, "Mark is required", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(context, "Ocena jest wymagana", Toast.LENGTH_SHORT).show()
                         }
                         textOpinion == "" -> {
-                            Toast.makeText(context, "Commentary is required", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(context, "Komentarz jest wymagany", Toast.LENGTH_SHORT).show()
                         }
                         else -> {
                             fullOpinion = "${selectedReview.value} $textOpinion"
