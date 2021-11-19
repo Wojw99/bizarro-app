@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.filled.Clear
 import androidx.compose.material.icons.filled.Face
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.runtime.Composable
@@ -20,10 +21,13 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.example.bizarro.ui.AppState
 import com.example.bizarro.ui.Screen
+import com.example.bizarro.ui.components.TopBar
 import com.example.bizarro.ui.screens.user_profile.settings.SettingsViewModel
 import com.example.bizarro.ui.theme.blueColor
 import com.example.bizarro.ui.theme.darkColor
 import com.example.bizarro.ui.theme.kWhite
+import com.example.bizarro.util.Strings
+import com.example.bizarro.util.models.TopBarAction
 
 @Composable
 fun SettingsScreen(navController: NavController,
@@ -95,6 +99,20 @@ fun SettingsScreen(navController: NavController,
 
         Spacer(modifier = Modifier.height(100.dp))
 
+        Button(
+            onClick ={
+                navController.navigate(route = Screen.OtherUserProfile.route)
+            },
+            Modifier.size(width = 250.dp, height = 50.dp),
+            colors = ButtonDefaults.buttonColors(backgroundColor = darkColor),
+
+            ) {
+            Text(text = "Tryb ciemny/jasny",
+                style = MaterialTheme.typography.button
+            )
+        }
+
+        Spacer(modifier = Modifier.height(50.dp))
 
         Button(
             onClick ={
@@ -108,6 +126,8 @@ fun SettingsScreen(navController: NavController,
                 style = MaterialTheme.typography.button
             )
         }
+
+
 
 
     }
@@ -126,18 +146,21 @@ fun HeaderSectionSettings(navController: NavController)
             .fillMaxWidth()
             .padding(12.dp)){
 
-        IconButton(
-            onClick = {
-                    navController.navigate(route = Screen.OtherUserProfile.route)
-            },
-            modifier = Modifier.align(Alignment.CenterEnd)
-        ) {
-            Icon(
-                imageVector = Icons.Default.Face,
-                contentDescription = "Light/Dark type ",
-                Modifier.size(30.dp)
-            )
-        }
+        // * * * * * * TOP BAR * * * * * *
+//        TopBar(
+//            navController = navController,
+//            //title = Strings.filterTitle,
+//            actions = listOf(
+//                TopBarAction(
+//                    onClick = {
+//
+//                    },
+//                    icon = Icons.Default.Clear,
+//                    contentDescription = Strings.clearFilters,
+//                ),
+//            ),
+//        )
+
 
         IconButton(
             onClick = {
