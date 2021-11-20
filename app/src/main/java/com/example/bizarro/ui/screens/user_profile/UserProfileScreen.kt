@@ -46,7 +46,7 @@ fun UserProfileScreen(
 
         modifier = Modifier
             .fillMaxSize()
-            .background(kWhite),
+            .background(kLightGray),
         horizontalAlignment = Alignment.CenterHorizontally) {
 
         HeaderSectionUserProfile(navController)
@@ -135,32 +135,77 @@ fun UserInformation(viewModel: UserProfileViewModel = hiltViewModel())
             .border(3.dp, blueColor, RoundedCornerShape(10))
     )
 
-    Text(viewModel.nameUser,
-        style = TextStyle(
-            fontSize = 30.sp,
-            fontFamily = FontFamily.Default,
-            fontWeight = FontWeight.Bold
-        ))
+    Box(modifier = Modifier
+        .fillMaxWidth()
+        .padding(12.dp)) {
+    }
+    Row(verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.Center,)
+    {
 
-    Spacer(modifier = Modifier.height(10.dp))
+        Icon(Icons.Default.Person, "Icon description", tint = kBlack)
 
-    Text(viewModel.emailUser,
-        style = TextStyle(
-            fontSize = 30.sp,
-            fontFamily = FontFamily.Default,
-            fontWeight = FontWeight.Normal
-        ))
+        Spacer(modifier = Modifier.width(15.dp))
 
-    Spacer(modifier = Modifier.height(10.dp))
+        Text(viewModel.nameUser,
+            style = TextStyle(
+                fontSize = 30.sp,
+                fontFamily = FontFamily.Default,
+                fontWeight = FontWeight.Bold
+            ))
 
-    Text(viewModel.phoneUser,
-        style = TextStyle(
-            fontSize = 30.sp,
-            fontFamily = FontFamily.Default,
-            fontWeight = FontWeight.Normal
-        ))
+    }
 
-    Spacer(modifier = Modifier.height(30.dp))
+
+
+    Box(modifier = Modifier
+        .fillMaxWidth()
+        .padding(12.dp)) {
+
+        Row(verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.Center,)
+        {
+            Spacer(modifier = Modifier.width(25.dp))
+
+            Icon(Icons.Default.Email, "Icon description", tint = kBlack)
+
+            Spacer(modifier = Modifier.width(15.dp))
+
+            Text(viewModel.emailUser,
+                style = TextStyle(
+                    fontSize = 30.sp,
+                    fontFamily = FontFamily.Default,
+                    fontWeight = FontWeight.Normal
+                ))
+        }
+
+    }
+
+
+
+    Box(modifier = Modifier
+        .fillMaxWidth()
+        .padding(12.dp)
+    ) {
+
+        Row(verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.Center,)
+        {
+            Spacer(modifier = Modifier.width(85.dp))
+
+            Icon(Icons.Default.Phone, "Icon description", tint = kBlack)
+
+            Spacer(modifier = Modifier.width(10.dp))
+
+            Text(viewModel.phoneUser,
+                style = TextStyle(
+                    fontSize = 30.sp,
+                    fontFamily = FontFamily.Default,
+                    fontWeight = FontWeight.Normal
+                ))
+        }
+
+    }
 
     DescriptionHeader()
 

@@ -7,9 +7,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBack
-import androidx.compose.material.icons.filled.Info
-import androidx.compose.material.icons.filled.Settings
+import androidx.compose.material.icons.filled.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -32,6 +30,7 @@ import com.example.bizarro.ui.screens.user_profile.settings.SettingsViewModel
 import com.example.bizarro.ui.theme.blueColor
 import com.example.bizarro.ui.theme.darkColor
 import com.example.bizarro.ui.theme.kBlack
+import com.example.bizarro.ui.theme.kLightGray
 
 @Composable
 fun OtherUserProfileScreen(navController: NavController,
@@ -40,7 +39,7 @@ fun OtherUserProfileScreen(navController: NavController,
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .background(Color.White),
+            .background(kLightGray),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
 
@@ -98,36 +97,73 @@ fun OtherUserInfo(viewModel: OtherUserViewModel = hiltViewModel())
             .border(3.dp, Color.Blue, RoundedCornerShape(10))
     )
 
+    Box(modifier = Modifier
+        .fillMaxWidth()
+        .padding(12.dp)) {
+        Row(verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.Center)
+        {
+            Spacer(modifier = Modifier.width(55.dp))
 
-    Text(viewModel.nameOtherUser,
-        style = TextStyle(
-            fontSize = 30.sp,
-            fontFamily = FontFamily.Default,
-            fontWeight = FontWeight.Bold
-        )
-    )
+            Icon(Icons.Default.Person, "Icon description", tint = kBlack)
 
-    Spacer(modifier = Modifier.height(10.dp))
+            Spacer(modifier = Modifier.width(15.dp))
 
-    Text(viewModel.emailOtherUser,
-        style = TextStyle(
-            fontSize = 30.sp,
-            fontFamily = FontFamily.Default,
-            fontWeight = FontWeight.Normal
-        )
-    )
+            Text(viewModel.nameOtherUser,
+                style = TextStyle(
+                    fontSize = 30.sp,
+                    fontFamily = FontFamily.Default,
+                    fontWeight = FontWeight.Bold
+                )
+            )
+        }
+    }
 
-    Spacer(modifier = Modifier.height(10.dp))
+    Box(modifier = Modifier
+        .fillMaxWidth()
+        .padding(12.dp)) {
+        Row(verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.Center)
+        {
+            Spacer(modifier = Modifier.width(25.dp))
 
-    Text(viewModel.phoneOtherUser,
-        style = TextStyle(
-            fontSize = 30.sp,
-            fontFamily = FontFamily.Default,
-            fontWeight = FontWeight.Normal
-        )
-    )
+            Icon(Icons.Default.Email, "Icon description", tint = kBlack)
 
-    Spacer(modifier = Modifier.height(30.dp))
+            Spacer(modifier = Modifier.width(15.dp))
+
+            Text(viewModel.emailOtherUser,
+                style = TextStyle(
+                    fontSize = 30.sp,
+                    fontFamily = FontFamily.Default,
+                    fontWeight = FontWeight.Normal
+                )
+            )
+        }
+    }
+
+
+    Box(modifier = Modifier
+        .fillMaxWidth()
+        .padding(12.dp)) {
+        Row(verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.Center)
+        {
+            Spacer(modifier = Modifier.width(85.dp))
+
+            Icon(Icons.Default.Phone, "Icon description", tint = kBlack)
+
+            Spacer(modifier = Modifier.width(15.dp))
+
+            Text(viewModel.phoneOtherUser,
+                style = TextStyle(
+                    fontSize = 30.sp,
+                    fontFamily = FontFamily.Default,
+                    fontWeight = FontWeight.Normal
+                )
+            )
+        }
+    }
+
 
     UserDescriptionHeader()
 

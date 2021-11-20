@@ -25,6 +25,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.example.bizarro.ui.Screen
 import com.example.bizarro.ui.screens.user_profile.other_user_profile.OtherUserViewModel
+import com.example.bizarro.ui.theme.kLightGray
 
 @Composable
 fun AddOpinionScreen(navController: NavController,
@@ -33,7 +34,7 @@ fun AddOpinionScreen(navController: NavController,
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .background(Color.White),
+            .background(kLightGray),
         horizontalAlignment = Alignment.CenterHorizontally) {
 
 

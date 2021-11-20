@@ -23,10 +23,7 @@ import androidx.navigation.NavController
 import androidx.navigation.NavType
 import androidx.navigation.navArgument
 import com.example.bizarro.ui.Screen
-import com.example.bizarro.ui.theme.darkColor
-import com.example.bizarro.ui.theme.kBlack
-import com.example.bizarro.ui.theme.kGray
-import com.example.bizarro.ui.theme.kWhite
+import com.example.bizarro.ui.theme.*
 import kotlinx.coroutines.launch
 
 @Composable
@@ -39,7 +36,7 @@ fun EditProfileScreen(navController: NavController,
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .background(kWhite),
+            .background(kLightGray),
         horizontalAlignment = Alignment.CenterHorizontally) {
 
         HeaderEditProfileScreen(navController)
@@ -123,7 +120,8 @@ fun EditProfileScreen(navController: NavController,
             },
             colors = TextFieldDefaults.outlinedTextFieldColors(
                 focusedBorderColor = darkColor,
-                unfocusedBorderColor = darkColor)
+                unfocusedBorderColor = darkColor),
+            modifier = Modifier.width(300.dp)
 
         )
 

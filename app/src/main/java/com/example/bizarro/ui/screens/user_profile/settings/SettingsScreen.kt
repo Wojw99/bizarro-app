@@ -25,6 +25,7 @@ import com.example.bizarro.ui.components.TopBar
 import com.example.bizarro.ui.screens.user_profile.settings.SettingsViewModel
 import com.example.bizarro.ui.theme.blueColor
 import com.example.bizarro.ui.theme.darkColor
+import com.example.bizarro.ui.theme.kLightGray
 import com.example.bizarro.ui.theme.kWhite
 import com.example.bizarro.util.Strings
 import com.example.bizarro.util.models.TopBarAction
@@ -42,7 +43,7 @@ fun SettingsScreen(navController: NavController,
 
     Column(modifier = Modifier
         .fillMaxSize()
-        .background(kWhite),
+        .background(kLightGray),
         horizontalAlignment = Alignment.CenterHorizontally) {
 
         HeaderSectionSettings(navController)

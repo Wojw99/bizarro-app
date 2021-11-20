@@ -31,7 +31,7 @@ fun SeeYourOpinionsScreen(navController: NavController,
 
     Column(modifier = Modifier
         .fillMaxSize()
-        .background(Color.White),
+        .background(kLightGray),
         horizontalAlignment = Alignment.CenterHorizontally) {
 
 
