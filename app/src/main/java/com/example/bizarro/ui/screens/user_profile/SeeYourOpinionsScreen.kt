@@ -21,6 +21,7 @@ import androidx.navigation.NavController
 import com.example.bizarro.ui.Screen
 import com.example.bizarro.ui.screens.user_profile.other_user_profile.OtherUserViewModel
 import com.example.bizarro.ui.theme.kLightGray
+import com.example.bizarro.ui.theme.kWhite
 
 
 @ExperimentalFoundationApi
@@ -31,7 +32,7 @@ fun SeeYourOpinionsScreen(navController: NavController,
 
     Column(modifier = Modifier
         .fillMaxSize()
-        .background(kLightGray),
+        .background(kWhite),
         horizontalAlignment = Alignment.CenterHorizontally) {
 
 

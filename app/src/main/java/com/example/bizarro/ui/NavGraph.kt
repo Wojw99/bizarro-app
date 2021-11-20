@@ -14,6 +14,9 @@ import com.example.bizarro.ui.screens.home.HomeScreen
 import com.example.bizarro.ui.screens.record_details.RecordDetailsScreen
 import com.example.bizarro.ui.screens.search.SearchScreen
 import com.example.bizarro.ui.screens.user_profile.*
+import com.example.bizarro.ui.screens.user_profile.settings.AboutAppScreen
+import com.example.bizarro.ui.screens.user_profile.settings.HelpScreen
+import com.example.bizarro.ui.screens.user_profile.settings.PrivacyPolicyScreen
 import com.example.bizarro.ui.screens.user_record_list.UserRecordListScreen
 
 @ExperimentalFoundationApi
@@ -62,14 +65,22 @@ fun NavGraph(
         composable(route = Screen.AddOpinion.route){
             AddOpinionScreen(navController)
         }
-
         composable(route = Screen.SeeOpinionOtherUser.route){
             SeeOpinionsScreen(navController)
         }
-
         composable(route = Screen.SeeYourOpinionsScreen.route){
             SeeYourOpinionsScreen(navController)
         }
+        composable(route = Screen.PrivacyPolicyScreen.route){
+            PrivacyPolicyScreen(navController)
+        }
+        composable(route = Screen.AboutAppScreen.route){
+            AboutAppScreen(navController)
+        }
+        composable(route = Screen.HelpScreen.route){
+            HelpScreen(navController)
+        }
+
     }
 }
 
@@ -89,4 +100,7 @@ sealed class Screen(val route: String, val name: String){
     object UserRecordList: Screen(route = "user_record_list_screen", name = "Ogłoszenia")
     object SeeOpinionOtherUser: Screen(route = "user_other_see_opinion_screen", name = "Zobacz opinię o innym użytkowniku")
     object SeeYourOpinionsScreen: Screen(route = "user_see_ypur_opinion_screen", name = "Zobacz opinie o swoim profilu")
+    object PrivacyPolicyScreen: Screen(route = "user_privacy_policy_screen", name = "Polityka prywatności")
+    object AboutAppScreen: Screen(route = "user_about_app_screen", name = "O aplikacji")
+    object HelpScreen: Screen(route = "user_help_screen", name = "Pomoc")
 }

@@ -35,20 +35,12 @@ fun SettingsScreen(navController: NavController,
                    viewModel: SettingsViewModel = hiltViewModel(),)
 {
 
-//     val appState: AppState
-//
-//    init {
-//        appState.bottomMenuVisible.value = false
-//    }
-
     Column(modifier = Modifier
         .fillMaxSize()
         .background(kLightGray),
         horizontalAlignment = Alignment.CenterHorizontally) {
 
         HeaderSectionSettings(navController)
-
-        //Spacer(modifier = Modifier.height(200.dp))
 
         Text("Ustawienia aplikacji",
             style = MaterialTheme.typography.caption)
@@ -57,7 +49,7 @@ fun SettingsScreen(navController: NavController,
 
         Button(
             onClick ={
-                //navController.navigate(route = com.example.bizarro.ui.Screen.SignIn.route)
+                navController.navigate(route = Screen.AboutAppScreen.route)
             },
             Modifier.size(width = 300.dp, height = 50.dp),
             colors = ButtonDefaults.buttonColors(backgroundColor = blueColor),
@@ -72,7 +64,7 @@ fun SettingsScreen(navController: NavController,
 
         Button(
             onClick ={
-                //navController.navigate(route = com.example.bizarro.ui.Screen.SignIn.route)
+                navController.navigate(route = Screen.HelpScreen.route)
             },
             Modifier.size(width = 300.dp, height = 50.dp),
             colors = ButtonDefaults.buttonColors(backgroundColor = blueColor),
@@ -87,7 +79,7 @@ fun SettingsScreen(navController: NavController,
 
         Button(
             onClick ={
-                //navController.navigate(route = com.example.bizarro.ui.Screen.SignIn.route)
+                navController.navigate(route = Screen.PrivacyPolicyScreen.route)
             },
             Modifier.size(width = 300.dp, height = 50.dp),
             colors = ButtonDefaults.buttonColors(backgroundColor = blueColor),
@@ -146,21 +138,6 @@ fun HeaderSectionSettings(navController: NavController)
         modifier = Modifier
             .fillMaxWidth()
             .padding(12.dp)){
-
-        // * * * * * * TOP BAR * * * * * *
-//        TopBar(
-//            navController = navController,
-//            //title = Strings.filterTitle,
-//            actions = listOf(
-//                TopBarAction(
-//                    onClick = {
-//
-//                    },
-//                    icon = Icons.Default.Clear,
-//                    contentDescription = Strings.clearFilters,
-//                ),
-//            ),
-//        )
 
 
         IconButton(
