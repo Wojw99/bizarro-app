@@ -28,7 +28,7 @@ fun TopBar(
 ) {
     Row(
         modifier = modifier
-            .height(55.dp),
+            .height(Dimens.topBarHeight),
         horizontalArrangement = Arrangement.Start,
         verticalAlignment = Alignment.CenterVertically,
     ) {

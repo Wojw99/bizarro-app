@@ -1,9 +1,18 @@
 package com.example.bizarro.util
 
+import androidx.compose.ui.text.substring
+import androidx.compose.ui.text.toLowerCase
 import timber.log.Timber
 import java.time.LocalDate
+import java.util.*
 
 object CommonMethods {
+    fun formatRecordTypeText(text: String) : String {
+        val lowerCase = text.lowercase(Locale.getDefault())
+        val firstLetter = lowerCase[0].uppercaseChar()
+        return firstLetter + lowerCase.substring(1)
+    }
+
     fun convertToPriceFormat(number: Double) : String{
         var str = number.toString()
         str += "zł"

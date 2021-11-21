@@ -1,5 +1,6 @@
 package com.example.bizarro.ui
 
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.navigation.NavHostController
@@ -15,6 +16,7 @@ import com.example.bizarro.ui.screens.search.SearchScreen
 import com.example.bizarro.ui.screens.user_profile.*
 import com.example.bizarro.ui.screens.user_record_list.UserRecordListScreen
 
+@ExperimentalFoundationApi
 @ExperimentalComposeUiApi
 @Composable
 fun NavGraph(
