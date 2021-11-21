@@ -4,6 +4,7 @@ object Strings {
     // * * * * * * * * GENERAL * * * * * * * *
     const val appName = "Bizarro"
     const val unknownError = "Wystąpił niezidentyfikowany problem!"
+    const val success = "Operacja przebiegła pomyślnie!"
     const val refresh = "Odźwież"
     const val iconBack = "Przycisk cofnięcia"
 

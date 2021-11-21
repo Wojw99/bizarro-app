@@ -2,6 +2,7 @@ package com.example.bizarro.di
 
 import com.example.bizarro.data.remote.BizarroApi
 import com.example.bizarro.data.remote.deserializers.CustomDateDeserializer
+import com.example.bizarro.data.remote.deserializers.CustomDateSerializer
 import com.example.bizarro.repositories.RecordRepository
 import com.example.bizarro.repositories.UserRepository
 import com.example.bizarro.ui.AppState
@@ -45,6 +46,7 @@ class AppModule {
     fun provideBizarroApi(): BizarroApi {
         val customGson = GsonBuilder()
             .registerTypeAdapter(LocalDate::class.java, CustomDateDeserializer())
+            .registerTypeAdapter(LocalDate::class.java, CustomDateSerializer())
             .create()
 
         return Retrofit.Builder()

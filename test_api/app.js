@@ -275,13 +275,13 @@ app.put('/api/records', function (request, response) {
 
 
 // - - - - - POST user opinions - - - - - */
-app.post('/api/records', function (request, response) {
-    var record = request.body;
-    record.id = records.length;
+app.post('/api/opinions', function (request, response) {
+    var opinion = request.body;
+    opinion.id = opinion.length;
 
-    records.push(record);
+    opinions.push(opinion);
 
-    response.send(record);
+    response.send(opinion);
 });
 
 
