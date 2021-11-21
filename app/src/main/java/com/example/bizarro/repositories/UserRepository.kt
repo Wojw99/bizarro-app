@@ -1,8 +1,8 @@
 package com.example.bizarro.repositories
 
-import android.util.Log
 import com.example.bizarro.data.remote.BizarroApi
-import com.example.bizarro.data.remote.responses.Record
+import com.example.bizarro.data.remote.responses.Opinion
+import com.example.bizarro.data.remote.responses.UserProfile
 import com.example.bizarro.util.Resource
 import com.example.bizarro.util.Strings
 import dagger.hilt.android.scopes.ActivityScoped
@@ -12,21 +12,13 @@ import java.lang.Exception
 import javax.inject.Inject
 
 @ActivityScoped
-class RecordRepository @Inject constructor(
+class UserRepository @Inject constructor(
     private val api: BizarroApi
 ) {
-    suspend fun getRecordList(
-        limit: Int?,
-        offset: Int?,
-        name: String?,
-        city: String?,
-        province: String?,
-        type: String?,
-        category: String?,
-    ) : Resource<List<Record>>{
+    suspend fun getUserProfile(userId: Long) : Resource<UserProfile> {
         delay(1000L)
         val response = try {
-            api.getRecordList(limit, offset, name, city, province, type, category)
+            api.getUserProfile(userId)
         } catch (e: Exception) {
             Timber.d(e)
             return Resource.Error(Strings.unknownError)
@@ -34,9 +26,10 @@ class RecordRepository @Inject constructor(
         return Resource.Success(response)
     }
 
-    suspend fun getRecordDetails(recordId: Long) : Resource<Record>{
+    suspend fun getUserOpinions(userId: Long) : Resource<List<Opinion>> {
+        delay(1000L)
         val response = try {
-            api.getRecordDetails(recordId)
+            api.getUserOpinions(userId)
         } catch (e: Exception) {
             Timber.d(e)
             return Resource.Error(Strings.unknownError)

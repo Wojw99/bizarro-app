@@ -3,6 +3,7 @@ package com.example.bizarro.di
 import com.example.bizarro.data.remote.BizarroApi
 import com.example.bizarro.data.remote.deserializers.CustomDateDeserializer
 import com.example.bizarro.repositories.RecordRepository
+import com.example.bizarro.repositories.UserRepository
 import com.example.bizarro.ui.AppState
 import com.example.bizarro.util.Constants
 import com.google.gson.GsonBuilder
@@ -31,6 +32,12 @@ class AppModule {
     @Provides
     fun provideRecordRepository(api: BizarroApi): RecordRepository {
         return RecordRepository(api)
+    }
+
+    @Singleton
+    @Provides
+    fun provideUserRepository(api: BizarroApi): UserRepository {
+        return UserRepository(api)
     }
 
     @Singleton

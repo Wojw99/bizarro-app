@@ -1,11 +1,14 @@
 package com.example.bizarro.data.remote
 
+import com.example.bizarro.data.remote.responses.Opinion
 import com.example.bizarro.data.remote.responses.Record
+import com.example.bizarro.data.remote.responses.UserProfile
 import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query
 
 interface BizarroApi {
+    // * * * * * GET * * * * *
     @GET("records")
     suspend fun getRecordList(
         @Query("limit") limit: Int?,
@@ -21,4 +24,20 @@ interface BizarroApi {
     suspend fun getRecordDetails(
         @Path("recordId") recordId: Long
     ): Record
+
+    @GET("/api/users/{userId}/profile")
+    suspend fun getUserProfile(
+        @Path("userId") userId: Long
+    ): UserProfile
+
+    @GET("/api/users/{userId}/opinions")
+    suspend fun getUserOpinions(
+        @Path("userId") userId: Long
+    ): List<Opinion>
+
+    // * * * * * POST * * * * *
+
+    // * * * * * PUT * * * * *
+
+    // * * * * * DELETE * * * * *
 }
