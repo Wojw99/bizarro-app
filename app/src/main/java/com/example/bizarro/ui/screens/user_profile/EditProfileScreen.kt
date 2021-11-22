@@ -24,7 +24,10 @@ import androidx.navigation.NavType
 import androidx.navigation.navArgument
 import com.example.bizarro.ui.Screen
 import com.example.bizarro.ui.theme.*
+import com.example.bizarro.util.Dimens
+import com.example.bizarro.util.Strings
 import kotlinx.coroutines.launch
+import timber.log.Timber
 
 @Composable
 fun EditProfileScreen(navController: NavController,
@@ -41,126 +44,62 @@ fun EditProfileScreen(navController: NavController,
 
         HeaderEditProfileScreen(navController)
 
-        Text("Edytuj informacje",
+        Text("Edytuj informacje:",
             style = MaterialTheme.typography.caption
         )
 
         Spacer(modifier = Modifier.height(40.dp))
 
 
-        viewModel.GetUserProfile()
 
 
-        var editDataName by remember {
-            mutableStateOf(TextFieldValue(viewModel.nameUser))
-        }
-        var editEmail by remember { mutableStateOf(TextFieldValue(viewModel.emailUser)) }
-        var editPhoneNumber by remember { mutableStateOf(TextFieldValue(viewModel.phoneUser)) }
-
-        var editUserDescription by remember { mutableStateOf(TextFieldValue(viewModel.userDescription)) }
-
-
-        TextField(
-            value = editDataName,
-            onValueChange = {
-                editDataName = it
-            },
-
-            leadingIcon = {
-                Icon(imageVector = Icons.Default.Person, contentDescription = "PersonIcon" )
-            },
-            colors = TextFieldDefaults.outlinedTextFieldColors(
-                focusedBorderColor = darkColor,
-                unfocusedBorderColor = darkColor)
-
-        )
-
-
-        Spacer(modifier = Modifier.height(30.dp))
-
-        TextField(
-            value = editEmail,
-            onValueChange = {
-                editEmail = it
-            },
-
-            leadingIcon = {
-                Icon(imageVector = Icons.Default.Email, contentDescription = "EmailIcon" )
-            },
-            colors = TextFieldDefaults.outlinedTextFieldColors(
-                focusedBorderColor = darkColor,
-                unfocusedBorderColor = darkColor)
-
-        )
-
-        Spacer(modifier = Modifier.height(30.dp))
-
-        TextField(
-            value = editPhoneNumber,
-            onValueChange = {
-                editPhoneNumber = it
-            },
-
-            leadingIcon = {
-                Icon(imageVector = Icons.Default.Phone, contentDescription = "PhoneIcon" )
-            },
-            colors = TextFieldDefaults.outlinedTextFieldColors(
-                focusedBorderColor = darkColor,
-                unfocusedBorderColor = darkColor)
-
-        )
-
-        Spacer(modifier = Modifier.height(30.dp))
-
-        TextField(
-            value = editUserDescription,
-            onValueChange = {
-                editUserDescription= it
-            },
-
-            leadingIcon = {
-                Icon(imageVector = Icons.Default.Info, contentDescription = "InfoIcon" )
-            },
-            colors = TextFieldDefaults.outlinedTextFieldColors(
-                focusedBorderColor = darkColor,
-                unfocusedBorderColor = darkColor),
-            modifier = Modifier.width(300.dp)
-
-        )
-
-        Spacer(modifier = Modifier.height(80.dp))
-
-        Button(
-            onClick ={
-
-                     scope.launch {
-                         Toast.makeText(context, viewModel.nameUser, Toast.LENGTH_SHORT).show()
-                     }
-                //viewModel.updateName(editDataName.text)
-
-                //Toast.makeText(context, viewModel.nameUser.value, Toast.LENGTH_SHORT).show()
-
-//                navController.navigate(
-//                    route = Screen.UserProfile.route
-
-//                    navArgument("editName",){
-//                        type = NavType.StringType,
-//                        nullable = true
-//                    }
-                //)
-
-
-
-
-
-            },
-            Modifier.size(width = 250.dp, height = 50.dp),
-            colors = ButtonDefaults.buttonColors(backgroundColor = kBlack),
-
+        // * * * * * * ERROR TEXT * * * * * *
+        if(viewModel.loadError.value.isNotEmpty() && !viewModel.isLoading.value)
+        {
+            Column(
+                verticalArrangement = Arrangement.Center,
+                horizontalAlignment = Alignment.CenterHorizontally,
+                modifier = Modifier.fillMaxSize(),
             ) {
-            Text(text = "Zapisz",
-                style = MaterialTheme.typography.button
-            )
+                Text(
+                    text = viewModel.loadError.value,
+                )
+                Spacer(modifier = Modifier.height(Dimens.standardPadding))
+                Button(onClick = { viewModel.getUserProfile() }) {
+                    Text(
+                        text = Strings.refresh,
+                    )
+                }
+            }
+        }
+
+        // * * * * * * EMPTY TEXT * * * * * *
+//        if (viewModel.recordList.value.isEmpty()
+//            && !viewModel.isLoading.value
+//            && viewModel.loadError.value.isEmpty()
+//        ) {
+//            Text(
+//                text = Strings.listIsEmpty,
+//                modifier = Modifier.align(Alignment.Center)
+//            )
+//        }
+
+        // * * * * * * USER PROFILE EDIT SECTION * * * * * *
+        if (!viewModel.isLoading.value) {
+            //RecordList(navController = navController)
+
+            //UserInformation()
+            EditFieldsSection()
+
+            Spacer(modifier = Modifier.height(50.dp))
+
+            //UserButtonSection(navController)
+
+        }
+
+        // * * * * * * PROGRESS BAR * * * * * *
+        if (viewModel.isLoading.value) {
+            CircularProgressIndicator(modifier = Modifier.align(Alignment.CenterHorizontally))
         }
 
 
@@ -194,5 +133,112 @@ fun HeaderEditProfileScreen(navController: NavController)
             )
         }
 
+    }
+}
+
+@Composable
+fun EditFieldsSection(viewModel: UserProfileViewModel = hiltViewModel())
+{
+    //        var editDataName by remember {
+//            mutableStateOf(TextFieldValue(viewModel.nameUser))
+//        }
+    //var editEmail by remember { mutableStateOf(TextFieldValue(viewModel.emailUser)) }
+    //var editPhoneNumber by remember { mutableStateOf(TextFieldValue(viewModel.phoneUser)) }
+
+    //var editUserDescription by remember { mutableStateOf(TextFieldValue(viewModel.userDescription)) }
+
+
+    TextField(
+        value = viewModel.nameUser,
+        onValueChange = {
+            viewModel.nameUser = it
+        },
+
+        leadingIcon = {
+            Icon(imageVector = Icons.Default.Person, contentDescription = "PersonIcon" )
+        },
+        colors = TextFieldDefaults.outlinedTextFieldColors(
+            focusedBorderColor = darkColor,
+            unfocusedBorderColor = darkColor)
+
+    )
+
+
+    Spacer(modifier = Modifier.height(30.dp))
+
+    TextField(
+        value = viewModel.emailUser,
+        onValueChange = {
+            viewModel.emailUser = it
+        },
+
+        leadingIcon = {
+            Icon(imageVector = Icons.Default.Email, contentDescription = "EmailIcon" )
+        },
+        colors = TextFieldDefaults.outlinedTextFieldColors(
+            focusedBorderColor = darkColor,
+            unfocusedBorderColor = darkColor)
+
+    )
+
+    Spacer(modifier = Modifier.height(30.dp))
+
+    TextField(
+        value = viewModel.phoneUser,
+        onValueChange = {
+            viewModel.phoneUser = it
+        },
+
+        leadingIcon = {
+            Icon(imageVector = Icons.Default.Phone, contentDescription = "PhoneIcon" )
+        },
+        colors = TextFieldDefaults.outlinedTextFieldColors(
+            focusedBorderColor = darkColor,
+            unfocusedBorderColor = darkColor)
+
+    )
+
+    Spacer(modifier = Modifier.height(30.dp))
+
+    TextField(
+        value = viewModel.userDescription,
+        onValueChange = {
+            viewModel.userDescription= it
+        },
+
+        leadingIcon = {
+            Icon(imageVector = Icons.Default.Info, contentDescription = "InfoIcon" )
+        },
+        colors = TextFieldDefaults.outlinedTextFieldColors(
+            focusedBorderColor = darkColor,
+            unfocusedBorderColor = darkColor),
+        modifier = Modifier.width(300.dp)
+
+    )
+
+    Spacer(modifier = Modifier.height(80.dp))
+
+    Button(
+        onClick ={
+                Timber.d("UserName: ${viewModel.nameUser}")
+            //viewModel.updateName(editDataName.text)
+
+//                navController.navigate(
+//                    route = Screen.UserProfile.route
+
+//                    navArgument("editName",){
+//                        type = NavType.StringType,
+//                        nullable = true
+//                    }
+            //)
+
+        },
+        Modifier.size(width = 250.dp, height = 50.dp),
+        colors = ButtonDefaults.buttonColors(backgroundColor = kBlack),
+
+        ) {
+        Text(text = "Zapisz",
+            style = MaterialTheme.typography.button
+        )
     }
 }

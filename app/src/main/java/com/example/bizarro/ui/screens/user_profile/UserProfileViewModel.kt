@@ -11,6 +11,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import coil.compose.ImagePainter
 import coil.compose.rememberImagePainter
+import com.example.bizarro.data.remote.responses.Opinion
 import com.example.bizarro.data.remote.responses.Record
 import com.example.bizarro.data.remote.responses.UserProfile
 import com.example.bizarro.repositories.UserRepository
@@ -27,8 +28,6 @@ class UserProfileViewModel @Inject constructor(
     private val repository: UserRepository,) : ViewModel()
 {
 
-    //val userProfile = mutableStateOf<List<UserProfile>>(listOf())
-
     val loadError = mutableStateOf("")
     val isLoading = mutableStateOf(false)
 
@@ -38,50 +37,33 @@ class UserProfileViewModel @Inject constructor(
     var userDescription by mutableStateOf("")
     var userImage by mutableStateOf(Constants.RECORD_DEFAULT_IMG_URL)
 
-    //val painter = rememberImagePainter(
-        //record.imagePaths?.first() ?: Constants.RECORD_DEFAULT_IMG_URL
-    //var imageUser by mutableStateOf()
+    val userLoggedOpinionList = mutableStateOf<List<Opinion>>(listOf())
 
     init {
         appState.bottomMenuVisible.value = true
 
-        GetUserProfile()
+        getUserProfile()
+
     }
 
-   // var string = mutableStateOf("")
 
-//    var nameUser by mutableStateOf("Jan Kowalski")
-//    var emailUser by mutableStateOf("jkowalski@gmail.com")
-//    var phoneUser by mutableStateOf("123 456 789")
-//    var userDescription by mutableStateOf("Użytkownik zajmujący się głównie sprzedażą rowerów sportowych oraz górskich")
-
-
-    val opinionsLoggedUser= mutableStateOf(listOf(
-        "User6: 6, super produkty",
-        "User5: 5, dobre produkty",
-        "User4: 4, pozytywne produkty",
-        "User3: 3, super produkty",
-        "User2: 2, super produkty",
-        "User1: 1, takie średnie produkty"
-    ),
-
-        )
-
-    fun GetUserProfile()
+    fun getUserProfile()
     {
         if (isLoading.value) return
         viewModelScope.launch {
 
             isLoading.value = true
+
             val resource = repository.getUserProfile(repository.userId)
+            val resource2 = repository.getUserOpinions(repository.userId)
 
             when (resource) {
                 is Resource.Success -> {
 
                     isLoading.value = false
+
                     val firstNameUser = resource.data?.firstName.toString()
                     val secondNameUser = resource.data?.lastName.toString()
-                    //val imageUser = resource.data?.imagePath
 
                     nameUser = "$firstNameUser $secondNameUser"
                     emailUser = resource.data?.email.toString()
@@ -89,37 +71,32 @@ class UserProfileViewModel @Inject constructor(
                     userDescription = resource.data?.description.toString()
                     userImage = resource.data?.imagePath.toString()
 
-                    //recordList.value = resource.data ?: listOf()
                     loadError.value = ""
+
                 }
                 is Resource.Error<*> -> {
-                    isLoading.value = false
-                    //val firstNameUser = resource.data?.firstName.toString()
-                    //val secondNameUser = resource.data?.lastName.toString()
 
-//                    nameUser = ""
-//                    emailUser = ""
-//                    phoneUser = ""
-//                    userDescription = ""
-                    //recordList.value = listOf()
+                    isLoading.value = false
+
                     loadError.value = resource.message ?: ""
+                }
+            }
+
+            when(resource2){
+                is Resource.Success -> {
+                    isLoading.value = false
+
+                    userLoggedOpinionList.value = resource2.data ?: listOf()
+                }
+                is Resource.Error -> {
+
+                    userLoggedOpinionList.value = listOf()
+
+                    loadError.value = resource2.message ?: ""
                 }
             }
 
         }
 
     }
-
-
-
-
-//    fun updateName(name: String)
-//    {
-//        viewModelScope.launch{
-//            nameUser = name
-//        }
-//
-//    }
-
-
 }

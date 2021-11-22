@@ -68,7 +68,7 @@ fun UserProfileScreen(
                     text = viewModel.loadError.value,
                 )
                 Spacer(modifier = Modifier.height(Dimens.standardPadding))
-                Button(onClick = { viewModel.GetUserProfile() }) {
+                Button(onClick = { viewModel.getUserProfile() }) {
                     Text(
                         text = Strings.refresh,
                     )
