@@ -48,6 +48,9 @@ fun EditProfileScreen(navController: NavController,
         Spacer(modifier = Modifier.height(40.dp))
 
 
+        viewModel.GetUserProfile()
+
+
         var editDataName by remember {
             mutableStateOf(TextFieldValue(viewModel.nameUser))
         }
