@@ -14,6 +14,7 @@ import com.example.bizarro.util.Constants
 import com.example.bizarro.util.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import java.time.LocalDate
 import javax.inject.Inject
 
 @HiltViewModel
@@ -22,6 +23,8 @@ class OtherUserViewModel @Inject constructor(
     private val repository: UserRepository,
 ): ViewModel()
 {
+    val otherUserId = 1L
+    var addedOpinionOfUser = ""
 
     val loadError = mutableStateOf("")
     val isLoading = mutableStateOf(false)
@@ -60,11 +63,38 @@ class OtherUserViewModel @Inject constructor(
         getOtherUserProfile()
     }
 
-//    fun addOpinion(opinionText: String){
+    fun addOpinion(opinionContent: String, opinionRating: Int){
+
+        //if(isLoading.value) return
+
+        viewModelScope.launch {
+
+            //isLoading.value = true
+             repository.addUserOpinion(Opinion(-1, otherUserId, LocalDate.now(), opinionRating, opinionContent))
+
+//            when (resourceOpinion){
 //
-//         opinionOtherUserList.add(opinionText)
+//                is Resource.Success -> {
 //
-//    }
+//                    isLoading.value = false
+//                    loadError.value = ""
+//                }
+//                is Resource.Error<*> -> {
+//
+//                    isLoading.value = false
+//
+//                    loadError.value = resourceOpinion.message ?: ""
+//                }
+//
+//
+//            }
+
+
+        }
+
+
+
+    }
 
     fun getOtherUserProfile()
     {
@@ -74,7 +104,7 @@ class OtherUserViewModel @Inject constructor(
 
             isLoading.value = true
 
-            val otherUserId = 1L
+
 
             val resource = repository.getUserProfile(otherUserId)
             val resource2 = repository.getUserOpinions(otherUserId)

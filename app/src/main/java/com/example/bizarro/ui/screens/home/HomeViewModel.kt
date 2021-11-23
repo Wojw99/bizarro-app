@@ -38,6 +38,7 @@ class HomeViewModel @Inject constructor(
 
             val resource33 = repository.getUserOpinions(otherUserId)
             Timber.d(resource33.data.toString())
+
             //val resource3 = repository.addUserOpinion(Opinion(-1, otherUserId, LocalDate.now(), 3, "Content"))
             //Timber.d(resource3.data.toString())
         }

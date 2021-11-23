@@ -26,6 +26,9 @@ import androidx.navigation.NavController
 import com.example.bizarro.ui.Screen
 import com.example.bizarro.ui.screens.user_profile.other_user_profile.OtherUserViewModel
 import com.example.bizarro.ui.theme.kLightGray
+import com.example.bizarro.util.Dimens
+import com.example.bizarro.util.Strings
+import timber.log.Timber
 
 @Composable
 fun AddOpinionScreen(navController: NavController,
@@ -53,26 +56,51 @@ fun AddOpinionScreen(navController: NavController,
                 fontWeight = FontWeight.Bold
             ))
 
-        Spacer(modifier = Modifier.height(40.dp))
+        // * * * * * * ERROR TEXT * * * * * *
+        if(viewModel.loadError.value.isNotEmpty() && !viewModel.isLoading.value)
+        {
+            Column(
+                verticalArrangement = Arrangement.Center,
+                horizontalAlignment = Alignment.CenterHorizontally,
+                modifier = Modifier.fillMaxSize(),
+            ) {
+                Text(
+                    text = viewModel.loadError.value,
+                )
+                Spacer(modifier = Modifier.height(Dimens.standardPadding))
+                Button(onClick = { viewModel.getOtherUserProfile() }) {
+                    Text(
+                        text = Strings.refresh,
+                    )
+                }
+            }
+        }
 
+        // * * * * * * EMPTY TEXT * * * * * *
+//        if (viewModel.recordList.value.isEmpty()
+//            && !viewModel.isLoading.value
+//            && viewModel.loadError.value.isEmpty()
+//        ) {
+//            Text(
+//                text = Strings.listIsEmpty,
+//                modifier = Modifier.align(Alignment.Center)
+//            )
+//        }
 
+        // * * * * * * USER PROFILE * * * * * *
+        if (!viewModel.isLoading.value) {
+            //RecordList(navController = navController)
 
+            Spacer(modifier = Modifier.height(40.dp))
 
+            RadioButtonDemo()
 
-        RadioButtonDemo()
+        }
 
-
-
-
-
-
-
-
-
-
-
-
-
+        // * * * * * * PROGRESS BAR * * * * * *
+        if (viewModel.isLoading.value) {
+            CircularProgressIndicator(modifier = Modifier.align(Alignment.CenterHorizontally))
+        }
 
     }
 }
@@ -204,11 +232,14 @@ fun RadioButtonDemo(
                         else -> {
                             fullOpinion = "${selectedReview.value} $textOpinion"
 
-                            //viewModel.addOpinion(fullOpinion)
+
+                            viewModel.addOpinion(textOpinion,selectedReview.value.toInt())
 
 
 
-                            //Toast.makeText(context, viewModel.opinionOtherUserList[0], Toast.LENGTH_SHORT).show()
+                            Toast.makeText(context, "Opinia została dodana!", Toast.LENGTH_SHORT).show()
+
+
 
                         }
                     }
