@@ -204,11 +204,11 @@ fun RadioButtonDemo(
                         else -> {
                             fullOpinion = "${selectedReview.value} $textOpinion"
 
-                            viewModel.addOpinion(fullOpinion)
+                            //viewModel.addOpinion(fullOpinion)
 
 
 
-                            Toast.makeText(context, viewModel.opinionOtherUserList[0], Toast.LENGTH_SHORT).show()
+                            //Toast.makeText(context, viewModel.opinionOtherUserList[0], Toast.LENGTH_SHORT).show()
 
                         }
                     }

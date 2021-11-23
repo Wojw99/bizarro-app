@@ -90,6 +90,8 @@ class UserProfileViewModel @Inject constructor(
                 }
                 is Resource.Error -> {
 
+                    isLoading.value = false
+
                     userLoggedOpinionList.value = listOf()
 
                     loadError.value = resource2.message ?: ""

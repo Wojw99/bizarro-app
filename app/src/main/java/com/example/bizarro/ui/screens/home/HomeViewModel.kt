@@ -23,6 +23,8 @@ class HomeViewModel @Inject constructor(
             val resource = repository.getUserProfile(repository.userId)
             Timber.d(resource.data.toString())
 
+
+
             val resource2 = repository.getUserOpinions(repository.userId)
             Timber.d(resource2.data.toString())
 
@@ -31,8 +33,13 @@ class HomeViewModel @Inject constructor(
             // przebiegła pomyślnie, w odpowiedzi otrzymamy dodaną opinię. To niepotrzebne, ale
             // jakiś gość z YT mówił, że tak się tradycyjnie robi.
             val otherUserId = 1L
-            val resource3 = repository.addUserOpinion(Opinion(-1, otherUserId, LocalDate.now(), 3, "Content"))
-            Timber.d(resource3.data.toString())
+            val resource1 = repository.getUserProfile(otherUserId)
+            Timber.d(resource1.data.toString())
+
+            val resource33 = repository.getUserOpinions(otherUserId)
+            Timber.d(resource33.data.toString())
+            //val resource3 = repository.addUserOpinion(Opinion(-1, otherUserId, LocalDate.now(), 3, "Content"))
+            //Timber.d(resource3.data.toString())
         }
     }
 }
