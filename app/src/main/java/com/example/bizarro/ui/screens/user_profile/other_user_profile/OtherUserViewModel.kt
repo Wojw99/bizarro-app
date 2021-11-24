@@ -65,29 +65,28 @@ class OtherUserViewModel @Inject constructor(
 
     fun addOpinion(opinionContent: String, opinionRating: Int){
 
-        //if(isLoading.value) return
+        if(isLoading.value) return
 
         viewModelScope.launch {
 
-            //isLoading.value = true
-             repository.addUserOpinion(Opinion(-1, otherUserId, LocalDate.now(), opinionRating, opinionContent))
+            isLoading.value = true
 
-//            when (resourceOpinion){
-//
-//                is Resource.Success -> {
-//
-//                    isLoading.value = false
-//                    loadError.value = ""
-//                }
-//                is Resource.Error<*> -> {
-//
-//                    isLoading.value = false
-//
-//                    loadError.value = resourceOpinion.message ?: ""
-//                }
-//
-//
-//            }
+            when (repository.addUserOpinion(Opinion(-1, otherUserId, LocalDate.now(), opinionRating, opinionContent))){
+
+                is Resource.Success -> {
+
+                    isLoading.value = false
+                    loadError.value = ""
+                }
+                is Resource.Error<*> -> {
+
+                    isLoading.value = false
+
+                    loadError.value = repository.addUserOpinion(Opinion(-1, otherUserId, LocalDate.now(), opinionRating, opinionContent)).message ?: ""
+                }
+
+
+            }
 
 
         }

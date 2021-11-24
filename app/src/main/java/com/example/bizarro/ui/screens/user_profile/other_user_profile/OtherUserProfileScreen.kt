@@ -43,7 +43,7 @@ fun OtherUserProfileScreen(navController: NavController,
         modifier = Modifier
             .fillMaxSize()
             .background(kLightGray),
-        horizontalAlignment = Alignment.CenterHorizontally
+        horizontalAlignment = Alignment.CenterHorizontally,
     ) {
 
 

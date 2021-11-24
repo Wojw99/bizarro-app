@@ -34,6 +34,7 @@ import timber.log.Timber
 fun AddOpinionScreen(navController: NavController,
                      viewModel: OtherUserViewModel = hiltViewModel())
 {
+
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -88,12 +89,13 @@ fun AddOpinionScreen(navController: NavController,
 //        }
 
         // * * * * * * USER PROFILE * * * * * *
-        if (!viewModel.isLoading.value) {
+        if (!viewModel.isLoading.value && viewModel.loadError.value.isEmpty()) {
             //RecordList(navController = navController)
 
             Spacer(modifier = Modifier.height(40.dp))
 
             RadioButtonDemo()
+
 
         }
 
@@ -237,7 +239,7 @@ fun RadioButtonDemo(
 
 
 
-                            Toast.makeText(context, "Opinia została dodana!", Toast.LENGTH_SHORT).show()
+                            //Toast.makeText(context, "Zapisano", Toast.LENGTH_SHORT).show()
 
 
 
