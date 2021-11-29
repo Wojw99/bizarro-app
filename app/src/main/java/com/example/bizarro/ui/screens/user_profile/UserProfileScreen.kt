@@ -270,7 +270,7 @@ fun UserButtonSection(navController: NavController)
 
         },
         Modifier.size(width = 180.dp, height = 40.dp),
-        colors = ButtonDefaults.buttonColors(backgroundColor = blueColor),
+        colors = ButtonDefaults.buttonColors(backgroundColor = kBlueDark),
     )
     {
         Text(text = "Zobacz opinie",

@@ -23,10 +23,7 @@ import com.example.bizarro.ui.AppState
 import com.example.bizarro.ui.Screen
 import com.example.bizarro.ui.components.TopBar
 import com.example.bizarro.ui.screens.user_profile.settings.SettingsViewModel
-import com.example.bizarro.ui.theme.blueColor
-import com.example.bizarro.ui.theme.darkColor
-import com.example.bizarro.ui.theme.kLightGray
-import com.example.bizarro.ui.theme.kWhite
+import com.example.bizarro.ui.theme.*
 import com.example.bizarro.util.Strings
 import com.example.bizarro.util.models.TopBarAction
 
@@ -52,7 +49,7 @@ fun SettingsScreen(navController: NavController,
                 navController.navigate(route = Screen.AboutAppScreen.route)
             },
             Modifier.size(width = 300.dp, height = 50.dp),
-            colors = ButtonDefaults.buttonColors(backgroundColor = blueColor),
+            colors = ButtonDefaults.buttonColors(backgroundColor = kBlueDark),
 
             ) {
             Text(text = "Informacje o aplikacji",
@@ -67,7 +64,7 @@ fun SettingsScreen(navController: NavController,
                 navController.navigate(route = Screen.HelpScreen.route)
             },
             Modifier.size(width = 300.dp, height = 50.dp),
-            colors = ButtonDefaults.buttonColors(backgroundColor = blueColor),
+            colors = ButtonDefaults.buttonColors(backgroundColor = kBlueDark),
 
             ) {
             Text(text = "Pomoc",
@@ -82,7 +79,7 @@ fun SettingsScreen(navController: NavController,
                 navController.navigate(route = Screen.PrivacyPolicyScreen.route)
             },
             Modifier.size(width = 300.dp, height = 50.dp),
-            colors = ButtonDefaults.buttonColors(backgroundColor = blueColor),
+            colors = ButtonDefaults.buttonColors(backgroundColor = kBlueDark),
 
             ) {
             Text(text = "Polityka prywatności",
