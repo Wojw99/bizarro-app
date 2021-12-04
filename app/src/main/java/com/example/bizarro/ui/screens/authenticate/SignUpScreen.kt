@@ -22,37 +22,42 @@ import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.example.bizarro.ui.Screen
-
 import com.example.bizarro.ui.screens.user_profile.settings.SettingsViewModel
-import com.example.bizarro.ui.theme.blueColor
-import com.example.bizarro.ui.theme.darkColor
+import com.example.bizarro.ui.theme.BizarroTheme
+import com.example.bizarro.ui.theme.kBlack
+import com.example.bizarro.ui.theme.kBlueDark
 import com.example.bizarro.ui.theme.kWhite
-import com.example.bizarro.ui.theme.lightblueColor
+import com.example.bizarro.util.Constants
+
 
 @Composable
 fun SignUpScreen(navController: NavController,
                  viewModel: AuthenticateViewModel = hiltViewModel(),)
 {
 
-    Column(
+    BizarroTheme(
+        darkTheme = Constants.isDark.value
+    ) {
+        Column(
 
-        modifier = Modifier
-            .fillMaxSize()
-            .background(kWhite),
-        horizontalAlignment = Alignment.CenterHorizontally) {
+            modifier = Modifier
+                .fillMaxSize()
+                .background(MaterialTheme.colors.background),
+            horizontalAlignment = Alignment.CenterHorizontally) {
 
+            Spacer(modifier = Modifier.height(100.dp))
 
+            Text("Zapisz się do Bizarro!",
+                style = MaterialTheme.typography.caption,
+                color = MaterialTheme.colors.onSurface)
 
-        Spacer(modifier = Modifier.height(100.dp))
+            Spacer(modifier = Modifier.height(80.dp))
 
-        Text("Zapisz się do Bizarro!",
-            style = MaterialTheme.typography.caption)
+            RegisterFields(navController)
 
-        Spacer(modifier = Modifier.height(80.dp))
-
-        RegisterFields(navController)
-
+        }
     }
+
 
 }
 
@@ -73,11 +78,14 @@ fun RegisterFields(navController: NavController)
         //label = { Text(text = "Email") },
         placeholder = { Text(text = "Podaj swój email") },
         leadingIcon = {
-            Icon(imageVector = Icons.Default.Email, contentDescription = "EmailIcon" )
+            Icon(imageVector = Icons.Default.Email, contentDescription = "EmailIcon",
+            tint =  MaterialTheme.colors.onSurface)
         },
         colors = TextFieldDefaults.outlinedTextFieldColors(
-            focusedBorderColor = blueColor,
-            unfocusedBorderColor = darkColor)
+            focusedBorderColor = MaterialTheme.colors.onSurface,
+            unfocusedBorderColor = MaterialTheme.colors.onSurface,
+            textColor = MaterialTheme.colors.onSurface
+        )
     )
 
     Spacer(modifier = Modifier.height(20.dp))
@@ -91,8 +99,13 @@ fun RegisterFields(navController: NavController)
         //label = { Text(text = "Hasło") },
         placeholder = { Text(text = "Podaj swoje hasło") },
         leadingIcon = {
-            Icon(imageVector = Icons.Default.Lock, contentDescription = "PasswordIcon" )
-        }
+            Icon(imageVector = Icons.Default.Lock, contentDescription = "PasswordIcon",
+            tint = MaterialTheme.colors.onSurface)
+        },
+        colors = TextFieldDefaults.outlinedTextFieldColors(
+            focusedBorderColor = MaterialTheme.colors.onSurface,
+            unfocusedBorderColor = MaterialTheme.colors.onSurface,
+            textColor = MaterialTheme.colors.onSurface)
     )
 
     Spacer(modifier = Modifier.height(80.dp))
@@ -105,11 +118,12 @@ fun RegisterFields(navController: NavController)
             Toast.makeText(context, "Zarejestrowano", Toast.LENGTH_SHORT).show()
         },
         Modifier.size(width = 250.dp, height = 50.dp),
-        colors = ButtonDefaults.buttonColors(backgroundColor = darkColor),
+        colors = ButtonDefaults.buttonColors(backgroundColor = MaterialTheme.colors.onSurface),
     )
     {
         Text(text = "Zarejestruj",
-            style = MaterialTheme.typography.button
+            style = MaterialTheme.typography.button,
+            color = MaterialTheme.colors.background
         )
 
     }
@@ -122,11 +136,12 @@ fun RegisterFields(navController: NavController)
 
         },
         Modifier.size(width = 250.dp, height = 50.dp),
-        colors = ButtonDefaults.buttonColors(backgroundColor = darkColor),
+        colors = ButtonDefaults.buttonColors(backgroundColor = MaterialTheme.colors.onSurface),
     )
     {
         Text(text = "Logowanie",
-            style = MaterialTheme.typography.button
+            style = MaterialTheme.typography.button,
+            color = MaterialTheme.colors.background
         )
 
     }

@@ -15,28 +15,31 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.example.bizarro.ui.Screen
+import com.example.bizarro.ui.theme.BizarroTheme
 import com.example.bizarro.ui.theme.kLightGray
+import com.example.bizarro.util.Constants
 
 @Composable
 fun HelpScreen(navController: NavController,
                viewModel: SettingsViewModel = hiltViewModel(),)
 {
+    BizarroTheme(
+        darkTheme = Constants.isDark.value
+    ) {
 
+        Column(modifier = Modifier
+            .fillMaxSize()
+            .background(MaterialTheme.colors.background),
+            horizontalAlignment = Alignment.CenterHorizontally)
+        {
 
+            HeaderSectionHelp(navController)
 
-    Column(modifier = Modifier
-        .fillMaxSize()
-        .background(kLightGray),
-        horizontalAlignment = Alignment.CenterHorizontally)
-    {
-
-        HeaderSectionHelp(navController)
-
-        Text("Pomoc",
-            style = MaterialTheme.typography.caption)
+            Text("Pomoc",
+                style = MaterialTheme.typography.caption,
+                color = MaterialTheme.colors.onSurface)
+        }
     }
-
-
 
 }
 
@@ -49,7 +52,6 @@ fun HeaderSectionHelp(navController: NavController)
             .fillMaxWidth()
             .padding(12.dp)){
 
-
         IconButton(
             onClick = {
                 navController.navigate(route = Screen.Settings.route)
@@ -59,12 +61,9 @@ fun HeaderSectionHelp(navController: NavController)
             Icon(
                 imageVector = Icons.Default.ArrowBack,
                 contentDescription = "Back to user profile ",
-                Modifier.size(30.dp)
+                Modifier.size(30.dp),
+                tint = MaterialTheme.colors.onSurface
             )
         }
-
-
-
-
     }
 }

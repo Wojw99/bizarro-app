@@ -19,112 +19,135 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
+import com.example.bizarro.BizarroApplication
 import com.example.bizarro.ui.AppState
 import com.example.bizarro.ui.Screen
 import com.example.bizarro.ui.components.TopBar
 import com.example.bizarro.ui.screens.user_profile.settings.SettingsViewModel
 import com.example.bizarro.ui.theme.*
+import com.example.bizarro.util.Constants
 import com.example.bizarro.util.Strings
 import com.example.bizarro.util.models.TopBarAction
+import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 @Composable
 fun SettingsScreen(navController: NavController,
-                   viewModel: SettingsViewModel = hiltViewModel(),)
+                   viewModel: SettingsViewModel = hiltViewModel(),
+)
 {
+    BizarroTheme(
+        darkTheme = Constants.isDark.value
+    ) {
+        Column(modifier = Modifier
+            .fillMaxSize()
+            .background(MaterialTheme.colors.background)
+            ,
+            horizontalAlignment = Alignment.CenterHorizontally) {
 
-    Column(modifier = Modifier
-        .fillMaxSize()
-        .background(kLightGray),
-        horizontalAlignment = Alignment.CenterHorizontally) {
+            HeaderSectionSettings(navController)
 
-        HeaderSectionSettings(navController)
+            Text("Ustawienia aplikacji",
+                color = MaterialTheme.colors.onSurface,
+                style = MaterialTheme.typography.caption)
 
-        Text("Ustawienia aplikacji",
-            style = MaterialTheme.typography.caption)
+            Spacer(modifier = Modifier.height(80.dp))
 
-        Spacer(modifier = Modifier.height(80.dp))
+            Button(
+                onClick ={
+                    navController.navigate(route = Screen.AboutAppScreen.route)
+                },
+                Modifier.size(width = 300.dp, height = 50.dp),
+                //colors = ButtonDefaults.buttonColors(backgroundColor = MaterialTheme.colors.onSurface),
 
-        Button(
-            onClick ={
-                navController.navigate(route = Screen.AboutAppScreen.route)
-            },
-            Modifier.size(width = 300.dp, height = 50.dp),
-            colors = ButtonDefaults.buttonColors(backgroundColor = kBlueDark),
+                ) {
+                Text(text = "Informacje o aplikacji",
+                    color = kWhite,
+                    style = MaterialTheme.typography.button
+                )
+            }
 
-            ) {
-            Text(text = "Informacje o aplikacji",
-                style = MaterialTheme.typography.button
-            )
-        }
+            Spacer(modifier = Modifier.height(20.dp))
 
-        Spacer(modifier = Modifier.height(20.dp))
+            Button(
+                onClick ={
+                    navController.navigate(route = Screen.HelpScreen.route)
+                },
+                Modifier.size(width = 300.dp, height = 50.dp),
+                //colors = ButtonDefaults.buttonColors(backgroundColor = kBlueDark),
 
-        Button(
-            onClick ={
-                navController.navigate(route = Screen.HelpScreen.route)
-            },
-            Modifier.size(width = 300.dp, height = 50.dp),
-            colors = ButtonDefaults.buttonColors(backgroundColor = kBlueDark),
+                ) {
+                Text(text = "Pomoc",
+                    style = MaterialTheme.typography.button
+                )
+            }
 
-            ) {
-            Text(text = "Pomoc",
-                style = MaterialTheme.typography.button
-            )
-        }
+            Spacer(modifier = Modifier.height(20.dp))
 
-        Spacer(modifier = Modifier.height(20.dp))
+            Button(
+                onClick ={
+                    navController.navigate(route = Screen.PrivacyPolicyScreen.route)
 
-        Button(
-            onClick ={
-                navController.navigate(route = Screen.PrivacyPolicyScreen.route)
-            },
-            Modifier.size(width = 300.dp, height = 50.dp),
-            colors = ButtonDefaults.buttonColors(backgroundColor = kBlueDark),
+                },
+                Modifier.size(width = 300.dp, height = 50.dp),
+                //colors = ButtonDefaults.buttonColors(backgroundColor = kBlueDark),
 
-            ) {
-            Text(text = "Polityka prywatności",
-                style = MaterialTheme.typography.button
-            )
-        }
+                ) {
+                Text(text = "Polityka prywatności",
+                    style = MaterialTheme.typography.button
+                )
+            }
 
-        Spacer(modifier = Modifier.height(100.dp))
+            Spacer(modifier = Modifier.height(20.dp))
 
-        Button(
-            onClick ={
-                navController.navigate(route = Screen.OtherUserProfile.route)
-            },
-            Modifier.size(width = 250.dp, height = 50.dp),
-            colors = ButtonDefaults.buttonColors(backgroundColor = darkColor),
+            Button(
+                onClick ={
+                    //navController.navigate(route = Screen.PrivacyPolicyScreen.route)
 
-            ) {
-            Text(text = "Tryb ciemny/jasny",
-                style = MaterialTheme.typography.button
-            )
-        }
-
-        Spacer(modifier = Modifier.height(50.dp))
-
-        Button(
-            onClick ={
-                navController.navigate(route = Screen.SignIn.route)
-            },
-            Modifier.size(width = 250.dp, height = 50.dp),
-            colors = ButtonDefaults.buttonColors(backgroundColor = darkColor),
+                    navController.navigate(route = Screen.OtherUserProfile.route)
+                },
+                Modifier.size(width = 300.dp, height = 50.dp),
+                //colors = ButtonDefaults.buttonColors(backgroundColor = kBlueDark),
 
             ) {
-            Text(text = "Wyloguj",
-                style = MaterialTheme.typography.button
-            )
+                Text(text = "OtherUserScreen test",
+                    style = MaterialTheme.typography.button
+                )
+            }
+
+            Spacer(modifier = Modifier.height(100.dp))
+
+            Button(
+                onClick = {
+                    Constants.checkIsDark()
+                },
+                Modifier.size(width = 250.dp, height = 50.dp),
+                colors = ButtonDefaults.buttonColors(backgroundColor = MaterialTheme.colors.onSurface),
+
+                ) {
+                Text(text = "Tryb ciemny/jasny",
+                    color = MaterialTheme.colors.background,
+                    style = MaterialTheme.typography.button
+                )
+            }
+
+            Spacer(modifier = Modifier.height(50.dp))
+
+            Button(
+                onClick ={
+                    navController.navigate(route = Screen.SignIn.route)
+                },
+                Modifier.size(width = 250.dp, height = 50.dp),
+                colors = ButtonDefaults.buttonColors(backgroundColor = MaterialTheme.colors.onSurface),
+
+                ) {
+                Text(text = "Wyloguj",
+                    color = MaterialTheme.colors.background,
+                    style = MaterialTheme.typography.button
+                )
+            }
         }
-
-
-
-
     }
-
-
-
-
 }
 
 @Composable
@@ -146,12 +169,10 @@ fun HeaderSectionSettings(navController: NavController)
             Icon(
                 imageVector = Icons.Default.ArrowBack,
                 contentDescription = "Back to user profile ",
-                Modifier.size(30.dp)
+                Modifier.size(30.dp),
+                tint = MaterialTheme.colors.onSurface
             )
         }
-
-
-
 
     }
 }

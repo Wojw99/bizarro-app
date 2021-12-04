@@ -28,10 +28,8 @@ import com.example.bizarro.R
 import com.example.bizarro.ui.Screen
 import com.example.bizarro.ui.screens.user_profile.other_user_profile.OtherUserViewModel
 import com.example.bizarro.ui.screens.user_profile.settings.SettingsViewModel
-import com.example.bizarro.ui.theme.blueColor
-import com.example.bizarro.ui.theme.darkColor
-import com.example.bizarro.ui.theme.kBlack
-import com.example.bizarro.ui.theme.kLightGray
+import com.example.bizarro.ui.theme.*
+import com.example.bizarro.util.Constants
 import com.example.bizarro.util.Dimens
 import com.example.bizarro.util.Strings
 
@@ -39,37 +37,41 @@ import com.example.bizarro.util.Strings
 fun OtherUserProfileScreen(navController: NavController,
                            viewModel: OtherUserViewModel = hiltViewModel(),)
 {
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(kLightGray),
-        horizontalAlignment = Alignment.CenterHorizontally,
+
+    BizarroTheme(
+        darkTheme = Constants.isDark.value
     ) {
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .background(MaterialTheme.colors.background),
+            horizontalAlignment = Alignment.CenterHorizontally,
+        ) {
 
 
-        HeaderSectionOtherUserProfile(navController)
+            HeaderSectionOtherUserProfile(navController)
 
-        // * * * * * * ERROR TEXT * * * * * *
-        if(viewModel.loadError.value.isNotEmpty() && !viewModel.isLoading.value)
-        {
-            Column(
-                verticalArrangement = Arrangement.Center,
-                horizontalAlignment = Alignment.CenterHorizontally,
-                modifier = Modifier.fillMaxSize(),
-            ) {
-                Text(
-                    text = viewModel.loadError.value,
-                )
-                Spacer(modifier = Modifier.height(Dimens.standardPadding))
-                Button(onClick = { viewModel.getOtherUserProfile() }) {
+            // * * * * * * ERROR TEXT * * * * * *
+            if(viewModel.loadError.value.isNotEmpty() && !viewModel.isLoading.value)
+            {
+                Column(
+                    verticalArrangement = Arrangement.Center,
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    modifier = Modifier.fillMaxSize(),
+                ) {
                     Text(
-                        text = Strings.refresh,
+                        text = viewModel.loadError.value,
                     )
+                    Spacer(modifier = Modifier.height(Dimens.standardPadding))
+                    Button(onClick = { viewModel.getOtherUserProfile() }) {
+                        Text(
+                            text = Strings.refresh,
+                        )
+                    }
                 }
             }
-        }
 
-        // * * * * * * EMPTY TEXT * * * * * *
+            // * * * * * * EMPTY TEXT * * * * * *
 //        if (viewModel.recordList.value.isEmpty()
 //            && !viewModel.isLoading.value
 //            && viewModel.loadError.value.isEmpty()
@@ -80,24 +82,27 @@ fun OtherUserProfileScreen(navController: NavController,
 //            )
 //        }
 
-        // * * * * * * USER PROFILE * * * * * *
-        if (!viewModel.isLoading.value) {
-            //RecordList(navController = navController)
+            // * * * * * * USER PROFILE * * * * * *
+            if (!viewModel.isLoading.value) {
+                //RecordList(navController = navController)
 
-            OtherUserInfo()
+                OtherUserInfo()
 
-            Spacer(modifier = Modifier.height(50.dp))
+                Spacer(modifier = Modifier.height(50.dp))
 
-            OtherUserButtonSection(navController)
+                OtherUserButtonSection(navController)
+
+            }
+
+            // * * * * * * PROGRESS BAR * * * * * *
+            if (viewModel.isLoading.value) {
+                CircularProgressIndicator(modifier = Modifier.align(Alignment.CenterHorizontally))
+            }
 
         }
-
-        // * * * * * * PROGRESS BAR * * * * * *
-        if (viewModel.isLoading.value) {
-            CircularProgressIndicator(modifier = Modifier.align(Alignment.CenterHorizontally))
-        }
-
     }
+
+
 
 }
 
@@ -113,7 +118,7 @@ fun OtherUserInfo(viewModel: OtherUserViewModel = hiltViewModel())
         modifier = Modifier
             .size(128.dp)
             .clip(RoundedCornerShape(10))
-            .border(3.dp, Color.Blue, RoundedCornerShape(10))
+            .border(3.dp, kBlueDark, RoundedCornerShape(10))
     )
 
     Box(modifier = Modifier
@@ -125,7 +130,7 @@ fun OtherUserInfo(viewModel: OtherUserViewModel = hiltViewModel())
         {
             //Spacer(modifier = Modifier.width(55.dp))
 
-            Icon(Icons.Default.Person, "Icon description", tint = kBlack)
+            Icon(Icons.Default.Person, "Icon description", tint = MaterialTheme.colors.onSurface)
 
             //Spacer(modifier = Modifier.width(15.dp))
 
@@ -133,7 +138,8 @@ fun OtherUserInfo(viewModel: OtherUserViewModel = hiltViewModel())
                 style = TextStyle(
                     fontSize = 30.sp,
                     fontFamily = FontFamily.Default,
-                    fontWeight = FontWeight.Bold
+                    fontWeight = FontWeight.Bold,
+                    color = MaterialTheme.colors.onSurface
                 )
             )
         }
@@ -148,7 +154,7 @@ fun OtherUserInfo(viewModel: OtherUserViewModel = hiltViewModel())
         {
             //Spacer(modifier = Modifier.width(25.dp))
 
-            Icon(Icons.Default.Email, "Icon description", tint = kBlack)
+            Icon(Icons.Default.Email, "Icon description", tint = MaterialTheme.colors.onSurface)
 
             //Spacer(modifier = Modifier.width(15.dp))
 
@@ -156,7 +162,8 @@ fun OtherUserInfo(viewModel: OtherUserViewModel = hiltViewModel())
                 style = TextStyle(
                     fontSize = 30.sp,
                     fontFamily = FontFamily.Default,
-                    fontWeight = FontWeight.Normal
+                    fontWeight = FontWeight.Normal,
+                    color = MaterialTheme.colors.onSurface
                 )
             )
         }
@@ -172,7 +179,7 @@ fun OtherUserInfo(viewModel: OtherUserViewModel = hiltViewModel())
         {
             //Spacer(modifier = Modifier.width(85.dp))
 
-            Icon(Icons.Default.Phone, "Icon description", tint = kBlack)
+            Icon(Icons.Default.Phone, "Icon description", tint = MaterialTheme.colors.onSurface)
 
             //Spacer(modifier = Modifier.width(15.dp))
 
@@ -180,7 +187,8 @@ fun OtherUserInfo(viewModel: OtherUserViewModel = hiltViewModel())
                 style = TextStyle(
                     fontSize = 30.sp,
                     fontFamily = FontFamily.Default,
-                    fontWeight = FontWeight.Normal
+                    fontWeight = FontWeight.Normal,
+                    color = MaterialTheme.colors.onSurface
                 )
             )
         }
@@ -196,7 +204,7 @@ fun OtherUserInfo(viewModel: OtherUserViewModel = hiltViewModel())
             fontFamily = FontFamily.Default,
             fontWeight = FontWeight.Bold,
             textAlign = TextAlign.Center,
-
+            color = MaterialTheme.colors.onSurface
             )
     )
 
@@ -212,9 +220,12 @@ fun OtherUserButtonSection(navController: NavController)
         Image(
             painterResource(R.drawable.ic_baseline_star_24),
             contentDescription ="Dodaj opinie",
-            modifier = Modifier.size(35.dp))
+            modifier = Modifier.size(35.dp),
+        )
 
-        Text(text = "Dodaj opinię",Modifier.padding(start = 10.dp))
+        Text(text = "Dodaj opinię",
+            Modifier.padding(start = 10.dp),
+            color = kWhite)
     }
 
     Spacer(modifier = Modifier.height(30.dp))
@@ -223,12 +234,13 @@ fun OtherUserButtonSection(navController: NavController)
         onClick ={
             navController.navigate(route = Screen.SeeOpinionOtherUser.route)
         },
-        Modifier.size(width = 180.dp, height = 60.dp),
-        colors = ButtonDefaults.buttonColors(backgroundColor = darkColor),
+        Modifier.size(width = 200.dp, height = 60.dp),
+        colors = ButtonDefaults.buttonColors(backgroundColor = MaterialTheme.colors.onSurface),
     )
     {
         Text(text = "Zobacz opinie",
-            style = MaterialTheme.typography.button
+            style = MaterialTheme.typography.button,
+            color = MaterialTheme.colors.background
         )
     }
 }
@@ -251,7 +263,8 @@ fun HeaderSectionOtherUserProfile(navController: NavController)
             Icon(
                 imageVector = Icons.Default.ArrowBack,
                 contentDescription = "Back to user record ",
-                Modifier.size(30.dp)
+                Modifier.size(30.dp),
+                tint = MaterialTheme.colors.onSurface
             )
         }
 
@@ -275,14 +288,15 @@ fun UserDescriptionHeader()
 
             //Spacer(modifier = Modifier.width(110.dp))
 
-            Icon(Icons.Default.Info, "Icon description", tint = kBlack)
+            Icon(Icons.Default.Info, "Icon description", tint = MaterialTheme.colors.onSurface)
 
             Text(text = "Opis profilu:",
                 style = TextStyle(
                     fontSize = 25.sp,
                     fontFamily = FontFamily.Default,
                     fontWeight = FontWeight.Bold,
-                    textAlign = TextAlign.Start
+                    textAlign = TextAlign.Start,
+                    color = MaterialTheme.colors.onSurface
                 ),
             )
         }

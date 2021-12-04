@@ -15,6 +15,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.vector.DefaultTintColor
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
@@ -45,13 +46,17 @@ fun UserProfileScreen(
     viewModel: UserProfileViewModel = hiltViewModel(),
 
 ) {
-    //val context = LocalContext.current
+
+BizarroTheme(
+    darkTheme = Constants.isDark.value
+) {
 
     Column(
 
         modifier = Modifier
             .fillMaxSize()
-            .background(kLightGray),
+            .background(colors.background)
+        ,
         horizontalAlignment = Alignment.CenterHorizontally) {
 
         HeaderSectionUserProfile(navController)
@@ -71,6 +76,7 @@ fun UserProfileScreen(
                 Button(onClick = { viewModel.getUserProfile() }) {
                     Text(
                         text = Strings.refresh,
+                        color = colors.onSurface
                     )
                 }
             }
@@ -111,6 +117,10 @@ fun UserProfileScreen(
 
 }
 
+
+
+}
+
 @Composable
 fun HeaderSectionUserProfile(navController: NavController)
 {
@@ -125,11 +135,13 @@ fun HeaderSectionUserProfile(navController: NavController)
                 navController.navigate(route = Screen.Settings.route)
             },
             modifier = Modifier.align(Alignment.CenterEnd)
+
         ) {
             Icon(
                 imageVector = Icons.Default.Settings,
                 contentDescription = "Settings Button",
-                Modifier.size(30.dp)
+                Modifier.size(30.dp),
+                tint = colors.onSurface
             )
 
         }
@@ -150,7 +162,7 @@ fun UserInformation(viewModel: UserProfileViewModel = hiltViewModel())
         modifier = Modifier
             .size(128.dp)
             .clip(RoundedCornerShape(10))
-            .border(3.dp, blueColor, RoundedCornerShape(10))
+            .border(3.dp, kBlueDark, RoundedCornerShape(10))
     )
 
     Box(modifier = Modifier
@@ -162,12 +174,13 @@ fun UserInformation(viewModel: UserProfileViewModel = hiltViewModel())
         horizontalArrangement = Arrangement.Center,)
     {
 
-        Icon(Icons.Default.Person, "Icon description", tint = kBlack)
+        Icon(Icons.Default.Person, "Icon description", tint = MaterialTheme.colors.onSurface)
 
         //Spacer(modifier = Modifier.width(15.dp))
 
         Text(viewModel.nameUser,
             style = TextStyle(
+                color = colors.onSurface,
                 fontSize = 30.sp,
                 fontFamily = FontFamily.Default,
                 fontWeight = FontWeight.Bold
@@ -187,12 +200,13 @@ fun UserInformation(viewModel: UserProfileViewModel = hiltViewModel())
         {
             //Spacer(modifier = Modifier.width(25.dp))
 
-            Icon(Icons.Default.Email, "Icon description", tint = kBlack)
+            Icon(Icons.Default.Email, "Icon description", tint = MaterialTheme.colors.onSurface )
 
             //Spacer(modifier = Modifier.width(15.dp))
 
             Text(viewModel.emailUser,
                 style = TextStyle(
+                    color = colors.onSurface,
                     fontSize = 30.sp,
                     fontFamily = FontFamily.Default,
                     fontWeight = FontWeight.Normal
@@ -214,12 +228,13 @@ fun UserInformation(viewModel: UserProfileViewModel = hiltViewModel())
         {
             //Spacer(modifier = Modifier.width(85.dp))
 
-            Icon(Icons.Default.Phone, "Icon description", tint = kBlack)
+            Icon(Icons.Default.Phone, "Icon description", tint = MaterialTheme.colors.onSurface)
 
             //Spacer(modifier = Modifier.width(10.dp))
 
             Text(viewModel.phoneUser,
                 style = TextStyle(
+                    color = colors.onSurface,
                     fontSize = 30.sp,
                     fontFamily = FontFamily.Default,
                     fontWeight = FontWeight.Normal
@@ -233,6 +248,7 @@ fun UserInformation(viewModel: UserProfileViewModel = hiltViewModel())
     Text(
         text = viewModel.userDescription,
         style = TextStyle(
+            color = colors.onSurface,
             fontSize = 15.sp,
             fontFamily = FontFamily.Default,
             fontWeight = FontWeight.Bold,
@@ -252,11 +268,13 @@ fun UserButtonSection(navController: NavController)
             navController.navigate(route = Screen.EditProfile.route)
         },
         Modifier.size(width = 180.dp, height = 40.dp),
-        colors = ButtonDefaults.buttonColors(backgroundColor = darkColor),
+        //colors = ButtonDefaults.buttonColors(backgroundColor = darkColor),
+        colors = ButtonDefaults.buttonColors(backgroundColor = colors.primary)
     )
     {
         Text(text = "Edytuj profil",
-            style = MaterialTheme.typography.button
+            color = kWhite
+            //style = MaterialTheme.typography.button
         )
     }
 
@@ -270,11 +288,12 @@ fun UserButtonSection(navController: NavController)
 
         },
         Modifier.size(width = 180.dp, height = 40.dp),
-        colors = ButtonDefaults.buttonColors(backgroundColor = kBlueDark),
+        colors = ButtonDefaults.buttonColors(backgroundColor = colors.primary),
+
     )
     {
         Text(text = "Zobacz opinie",
-            style = MaterialTheme.typography.button
+            //style = MaterialTheme.typography.button
         )
     }
 }
@@ -296,10 +315,11 @@ fun DescriptionHeader()
 
             //Spacer(modifier = Modifier.width(120.dp))
 
-            Icon(Icons.Default.Info, "Icon description", tint = kBlack)
+            Icon(Icons.Default.Info, "Icon description", tint = MaterialTheme.colors.onSurface)
 
             Text(text = "Opis profilu:",
                 style = TextStyle(
+                    color = colors.onSurface,
                     fontSize = 25.sp,
                     fontFamily = FontFamily.Default,
                     fontWeight = FontWeight.Bold,

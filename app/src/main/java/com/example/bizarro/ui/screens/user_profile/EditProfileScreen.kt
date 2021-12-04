@@ -38,6 +38,7 @@ import androidx.navigation.navArgument
 import coil.compose.rememberImagePainter
 import com.example.bizarro.ui.Screen
 import com.example.bizarro.ui.theme.*
+import com.example.bizarro.util.Constants
 import com.example.bizarro.util.Dimens
 import com.example.bizarro.util.Strings
 import kotlinx.coroutines.launch
@@ -51,43 +52,38 @@ fun EditProfileScreen(navController: NavController,
     //val scope = rememberCoroutineScope()
     //var imageToEdit = viewModel.userImage
 
+    BizarroTheme(
+        darkTheme = Constants.isDark.value
+    ) {
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .background(MaterialTheme.colors.background),
+            horizontalAlignment = Alignment.CenterHorizontally) {
 
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(kLightGray),
-        horizontalAlignment = Alignment.CenterHorizontally) {
+            HeaderEditProfileScreen(navController)
 
-        HeaderEditProfileScreen(navController)
-
-//        Text("Edytuj informacje:",
-//            style = MaterialTheme.typography.caption
-//        )
-
-        //Spacer(modifier = Modifier.height(40.dp))
-
-
-        // * * * * * * ERROR TEXT * * * * * *
-        if(viewModel.loadError.value.isNotEmpty() && !viewModel.isLoading.value)
-        {
-            Column(
-                verticalArrangement = Arrangement.Center,
-                horizontalAlignment = Alignment.CenterHorizontally,
-                modifier = Modifier.fillMaxSize(),
-            ) {
-                Text(
-                    text = viewModel.loadError.value,
-                )
-                Spacer(modifier = Modifier.height(Dimens.standardPadding))
-                Button(onClick = { viewModel.getUserProfile() }) {
+            // * * * * * * ERROR TEXT * * * * * *
+            if(viewModel.loadError.value.isNotEmpty() && !viewModel.isLoading.value)
+            {
+                Column(
+                    verticalArrangement = Arrangement.Center,
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    modifier = Modifier.fillMaxSize(),
+                ) {
                     Text(
-                        text = Strings.refresh,
+                        text = viewModel.loadError.value,
                     )
+                    Spacer(modifier = Modifier.height(Dimens.standardPadding))
+                    Button(onClick = { viewModel.getUserProfile() }) {
+                        Text(
+                            text = Strings.refresh,
+                        )
+                    }
                 }
             }
-        }
 
-        // * * * * * * EMPTY TEXT * * * * * *
+            // * * * * * * EMPTY TEXT * * * * * *
 //        if (viewModel.recordList.value.isEmpty()
 //            && !viewModel.isLoading.value
 //            && viewModel.loadError.value.isEmpty()
@@ -98,23 +94,26 @@ fun EditProfileScreen(navController: NavController,
 //            )
 //        }
 
-        // * * * * * * USER PROFILE EDIT SECTION * * * * * *
-        if (!viewModel.isLoading.value) {
+            // * * * * * * USER PROFILE EDIT SECTION * * * * * *
+            if (!viewModel.isLoading.value) {
 
-            EditFieldsSection()
+                EditFieldsSection()
 
-            Spacer(modifier = Modifier.height(50.dp))
+                Spacer(modifier = Modifier.height(50.dp))
+
+            }
+
+            // * * * * * * PROGRESS BAR * * * * * *
+            if (viewModel.isLoading.value) {
+                CircularProgressIndicator(modifier = Modifier.align(Alignment.CenterHorizontally))
+            }
+
+            // ImagePicker()
 
         }
-
-        // * * * * * * PROGRESS BAR * * * * * *
-        if (viewModel.isLoading.value) {
-            CircularProgressIndicator(modifier = Modifier.align(Alignment.CenterHorizontally))
-        }
-
-       // ImagePicker()
-
     }
+
+
 
 }
 
@@ -214,7 +213,8 @@ fun HeaderEditProfileScreen(navController: NavController)
             Icon(
                 imageVector = Icons.Default.ArrowBack,
                 contentDescription = "Back to user profile ",
-                Modifier.size(30.dp)
+                Modifier.size(30.dp),
+                tint = MaterialTheme.colors.onSurface
             )
         }
 
@@ -225,6 +225,8 @@ fun HeaderEditProfileScreen(navController: NavController)
 @Composable
 fun EditFieldsSection(viewModel: UserProfileViewModel = hiltViewModel())
 {
+
+    val newPainter = rememberImagePainter(viewModel.userImage)
     //        var editDataName by remember {
 //            mutableStateOf(TextFieldValue(viewModel.nameUser))
 //        }
@@ -235,7 +237,7 @@ fun EditFieldsSection(viewModel: UserProfileViewModel = hiltViewModel())
 
     Image(
         //painter = painterResource(id = R.drawable.ic_baseline_person_24),
-        painter = rememberImagePainter(viewModel.userImage),
+        painter = newPainter,
         //val painter = rememberImagePainter(
         //record.imagePaths?.first() ?: Constants.RECORD_DEFAULT_IMG_URL
         contentDescription = "User Image to edit",
@@ -243,7 +245,7 @@ fun EditFieldsSection(viewModel: UserProfileViewModel = hiltViewModel())
         modifier = Modifier
             .size(110.dp)
             .clip(RoundedCornerShape(10))
-            .border(3.dp, blueColor, RoundedCornerShape(10))
+            .border(3.dp, kBlueDark, RoundedCornerShape(10))
     )
 
     Spacer(modifier = Modifier.height(10.dp))
@@ -272,11 +274,13 @@ fun EditFieldsSection(viewModel: UserProfileViewModel = hiltViewModel())
         },
 
         leadingIcon = {
-            Icon(imageVector = Icons.Default.Person, contentDescription = "PersonIcon" )
+            Icon(imageVector = Icons.Default.Person, contentDescription = "PersonIcon",
+                tint = MaterialTheme.colors.onSurface)
         },
         colors = TextFieldDefaults.outlinedTextFieldColors(
-            focusedBorderColor = darkColor,
-            unfocusedBorderColor = darkColor)
+            focusedBorderColor = MaterialTheme.colors.onSurface,
+            unfocusedBorderColor = MaterialTheme.colors.onSurface,
+            textColor = MaterialTheme.colors.onSurface)
 
     )
 
@@ -290,11 +294,13 @@ fun EditFieldsSection(viewModel: UserProfileViewModel = hiltViewModel())
         },
 
         leadingIcon = {
-            Icon(imageVector = Icons.Default.Email, contentDescription = "EmailIcon" )
+            Icon(imageVector = Icons.Default.Email, contentDescription = "EmailIcon",
+                tint = MaterialTheme.colors.onSurface)
         },
         colors = TextFieldDefaults.outlinedTextFieldColors(
-            focusedBorderColor = darkColor,
-            unfocusedBorderColor = darkColor)
+            focusedBorderColor = MaterialTheme.colors.onSurface,
+            unfocusedBorderColor = MaterialTheme.colors.onSurface,
+            textColor = MaterialTheme.colors.onSurface)
 
     )
 
@@ -307,11 +313,13 @@ fun EditFieldsSection(viewModel: UserProfileViewModel = hiltViewModel())
         },
 
         leadingIcon = {
-            Icon(imageVector = Icons.Default.Phone, contentDescription = "PhoneIcon" )
+            Icon(imageVector = Icons.Default.Phone, contentDescription = "PhoneIcon",
+            tint = MaterialTheme.colors.onSurface)
         },
         colors = TextFieldDefaults.outlinedTextFieldColors(
-            focusedBorderColor = darkColor,
-            unfocusedBorderColor = darkColor)
+            focusedBorderColor = MaterialTheme.colors.onSurface,
+            unfocusedBorderColor = MaterialTheme.colors.onSurface,
+            textColor = MaterialTheme.colors.onSurface)
 
     )
 
@@ -324,11 +332,13 @@ fun EditFieldsSection(viewModel: UserProfileViewModel = hiltViewModel())
         },
 
         leadingIcon = {
-            Icon(imageVector = Icons.Default.Info, contentDescription = "InfoIcon" )
+            Icon(imageVector = Icons.Default.Info, contentDescription = "InfoIcon",
+                tint = MaterialTheme.colors.onSurface)
         },
         colors = TextFieldDefaults.outlinedTextFieldColors(
-            focusedBorderColor = darkColor,
-            unfocusedBorderColor = darkColor),
+            focusedBorderColor =  MaterialTheme.colors.onSurface,
+            unfocusedBorderColor = MaterialTheme.colors.onSurface,
+            textColor = MaterialTheme.colors.onSurface),
         modifier = Modifier.width(300.dp)
 
     )
@@ -351,11 +361,13 @@ fun EditFieldsSection(viewModel: UserProfileViewModel = hiltViewModel())
 
         },
         Modifier.size(width = 250.dp, height = 50.dp),
-        colors = ButtonDefaults.buttonColors(backgroundColor = kBlack),
+        colors = ButtonDefaults.buttonColors(backgroundColor = MaterialTheme.colors.onSurface),
 
         ) {
         Text(text = "Zapisz",
-            style = MaterialTheme.typography.button
+            style = MaterialTheme.typography.button,
+            color = MaterialTheme.colors.background,
+
         )
     }
 }

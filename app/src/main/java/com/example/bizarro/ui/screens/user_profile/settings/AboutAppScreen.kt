@@ -15,25 +15,34 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.example.bizarro.ui.Screen
+import com.example.bizarro.ui.theme.BizarroTheme
 import com.example.bizarro.ui.theme.kLightGray
+import com.example.bizarro.util.Constants
 
 @Composable
 fun AboutAppScreen(navController: NavController,
                    viewModel: SettingsViewModel = hiltViewModel(),)
 {
-    Column(modifier = Modifier
-        .fillMaxSize()
-        .background(kLightGray),
-        horizontalAlignment = Alignment.CenterHorizontally)
-    {
 
-        HeaderSectionAboutApp(navController)
+    BizarroTheme(
+        darkTheme = Constants.isDark.value
+    ) {
+        Column(modifier = Modifier
+            .fillMaxSize()
+            .background(MaterialTheme.colors.background),
+            horizontalAlignment = Alignment.CenterHorizontally)
+        {
 
-        Text("Informacje o aplikacji",
-            style = MaterialTheme.typography.caption)
+            HeaderSectionAboutApp(navController)
+
+            Text("Informacje o aplikacji",
+                style = MaterialTheme.typography.caption,
+                color = MaterialTheme.colors.onSurface)
 
 
+        }
     }
+
 }
 
 @Composable
@@ -55,7 +64,8 @@ fun HeaderSectionAboutApp(navController: NavController)
             Icon(
                 imageVector = Icons.Default.ArrowBack,
                 contentDescription = "Back to user profile ",
-                Modifier.size(30.dp)
+                Modifier.size(30.dp),
+                tint = MaterialTheme.colors.onSurface
             )
         }
 

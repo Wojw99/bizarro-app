@@ -35,10 +35,7 @@ import com.example.bizarro.ui.Screen
 import com.example.bizarro.ui.screens.search.TypeSpecificTitle
 import com.example.bizarro.ui.screens.search.topRecordListMargin
 import com.example.bizarro.ui.screens.user_profile.other_user_profile.OtherUserViewModel
-import com.example.bizarro.ui.theme.kBlack
-import com.example.bizarro.ui.theme.kGray
-import com.example.bizarro.ui.theme.kLightGray
-import com.example.bizarro.ui.theme.kWhite
+import com.example.bizarro.ui.theme.*
 import com.example.bizarro.util.CommonMethods
 import com.example.bizarro.util.Constants
 import com.example.bizarro.util.Dimens
@@ -50,60 +47,67 @@ import com.example.bizarro.util.Strings
 fun SeeOpinionsScreen(navController: NavController,
                       viewModel: OtherUserViewModel = hiltViewModel())
 {
-    Column(modifier = Modifier
-        .fillMaxSize()
-        .background(kWhite),
-        horizontalAlignment = Alignment.CenterHorizontally) {
+
+    BizarroTheme(
+        darkTheme = Constants.isDark.value
+    ) {
+        Column(modifier = Modifier
+            .fillMaxSize()
+            .background(MaterialTheme.colors.background),
+            horizontalAlignment = Alignment.CenterHorizontally) {
 
 
-        HeaderSectionSeeOpinionOtherUser(navController)
+            HeaderSectionSeeOpinionOtherUser(navController)
 
 
-        Text("Opinie o użytkowniku:",
-            style = MaterialTheme.typography.caption)
+            Text("Opinie o użytkowniku:",
+                style = MaterialTheme.typography.caption,
+                color =  MaterialTheme.colors.onSurface)
 
-        if (viewModel.loadError.value.isNotEmpty()
-            && !viewModel.isLoading.value) {
-            Column(
-                verticalArrangement = Arrangement.Center,
-                horizontalAlignment = Alignment.CenterHorizontally,
-                modifier = Modifier.fillMaxSize(),
-            ) {
-                Text(
-                    text = viewModel.loadError.value,
-                )
-                Spacer(modifier = Modifier.height(Dimens.standardPadding))
-                Button(onClick = { viewModel.getOtherUserProfile() }) {
+            if (viewModel.loadError.value.isNotEmpty()
+                && !viewModel.isLoading.value) {
+                Column(
+                    verticalArrangement = Arrangement.Center,
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    modifier = Modifier.fillMaxSize(),
+                ) {
                     Text(
-                        text = Strings.refresh,
+                        text = viewModel.loadError.value,
                     )
+                    Spacer(modifier = Modifier.height(Dimens.standardPadding))
+                    Button(onClick = { viewModel.getOtherUserProfile() }) {
+                        Text(
+                            text = Strings.refresh,
+                        )
+                    }
                 }
             }
+
+            // * * * * * * EMPTY TEXT * * * * * *
+            if (viewModel.userOtherOpinionList.value.isEmpty()
+                && !viewModel.isLoading.value
+                && viewModel.loadError.value.isEmpty()
+            ) {
+                Text(
+                    text = Strings.listIsEmpty,
+                    modifier = Modifier.align(Alignment.CenterHorizontally)
+                )
+            }
+
+            // * * * * * * RECORD LIST * * * * * *
+            if (viewModel.userOtherOpinionList.value.isNotEmpty() && !viewModel.isLoading.value) {
+                UserOpinionsList()
+            }
+
+            // * * * * * * PROGRESS BAR * * * * * *
+            if (viewModel.isLoading.value) {
+                CircularProgressIndicator(modifier = Modifier.align(Alignment.CenterHorizontally))
+            }
+
+
         }
-
-        // * * * * * * EMPTY TEXT * * * * * *
-        if (viewModel.userOtherOpinionList.value.isEmpty()
-            && !viewModel.isLoading.value
-            && viewModel.loadError.value.isEmpty()
-        ) {
-            Text(
-                text = Strings.listIsEmpty,
-                modifier = Modifier.align(Alignment.CenterHorizontally)
-            )
-        }
-
-        // * * * * * * RECORD LIST * * * * * *
-        if (viewModel.userOtherOpinionList.value.isNotEmpty() && !viewModel.isLoading.value) {
-            UserOpinionsList()
-        }
-
-        // * * * * * * PROGRESS BAR * * * * * *
-        if (viewModel.isLoading.value) {
-            CircularProgressIndicator(modifier = Modifier.align(Alignment.CenterHorizontally))
-        }
-
-
     }
+
 }
 
 @Composable
@@ -125,7 +129,8 @@ fun HeaderSectionSeeOpinionOtherUser(navController: NavController)
             Icon(
                 imageVector = Icons.Default.ArrowBack,
                 contentDescription = "Back to user profile ",
-                Modifier.size(30.dp)
+                Modifier.size(30.dp),
+                tint = MaterialTheme.colors.onSurface
             )
         }
 
@@ -142,7 +147,7 @@ fun UserOpinionsList(
     LazyColumn(
         modifier = Modifier
             .fillMaxSize()
-            .background(kLightGray)
+            .background(MaterialTheme.colors.surface)
 
     ){
 

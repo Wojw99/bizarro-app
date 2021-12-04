@@ -4,6 +4,7 @@ import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
+import androidx.compose.material.MaterialTheme.colors
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.ArrowDropDown
@@ -25,7 +26,9 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.example.bizarro.ui.Screen
 import com.example.bizarro.ui.screens.user_profile.other_user_profile.OtherUserViewModel
+import com.example.bizarro.ui.theme.BizarroTheme
 import com.example.bizarro.ui.theme.kLightGray
+import com.example.bizarro.util.Constants
 import com.example.bizarro.util.Dimens
 import com.example.bizarro.util.Strings
 import timber.log.Timber
@@ -35,27 +38,32 @@ fun AddOpinionScreen(navController: NavController,
                      viewModel: OtherUserViewModel = hiltViewModel())
 {
 
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(kLightGray),
-        horizontalAlignment = Alignment.CenterHorizontally) {
+    BizarroTheme(
+        darkTheme = Constants.isDark.value
+    ) {
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .background(MaterialTheme.colors.background),
+            horizontalAlignment = Alignment.CenterHorizontally) {
 
 
-        HeaderSectionAddOpinion(navController)
+            HeaderSectionAddOpinion(navController)
 
-        Text("Dodaj swoją opinię!",
-            style = MaterialTheme.typography.caption
-        )
+            Text("Dodaj swoją opinię!",
+                style = MaterialTheme.typography.caption,
+                color = MaterialTheme.colors.onSurface
+            )
 
-        Spacer(modifier = Modifier.height(40.dp))
+            Spacer(modifier = Modifier.height(40.dp))
 
-        Text("Jak oceniasz?",
-            style = TextStyle(
-                fontSize = 25.sp,
-                fontFamily = FontFamily.Serif,
-                fontWeight = FontWeight.Bold
-            ))
+            Text("Jak oceniasz?",
+                style = TextStyle(
+                    fontSize = 25.sp,
+                    fontFamily = FontFamily.Serif,
+                    fontWeight = FontWeight.Bold
+                ))
+
 
         // * * * * * * ERROR TEXT * * * * * *
         if(viewModel.loadError.value.isNotEmpty() && !viewModel.isLoading.value)
@@ -69,7 +77,9 @@ fun AddOpinionScreen(navController: NavController,
                     text = viewModel.loadError.value,
                 )
                 Spacer(modifier = Modifier.height(Dimens.standardPadding))
-                Button(onClick = { viewModel.getOtherUserProfile() }) {
+                Button(onClick = {
+                   // viewModel.getOtherUserProfile()
+                }) {
                     Text(
                         text = Strings.refresh,
                     )
@@ -77,7 +87,7 @@ fun AddOpinionScreen(navController: NavController,
             }
         }
 
-        // * * * * * * EMPTY TEXT * * * * * *
+            // * * * * * * EMPTY TEXT * * * * * *
 //        if (viewModel.recordList.value.isEmpty()
 //            && !viewModel.isLoading.value
 //            && viewModel.loadError.value.isEmpty()
@@ -88,7 +98,7 @@ fun AddOpinionScreen(navController: NavController,
 //            )
 //        }
 
-        // * * * * * * USER PROFILE * * * * * *
+            // * * * * * * ADD OPINION TO USER * * * * * *
         if (!viewModel.isLoading.value && viewModel.loadError.value.isEmpty()) {
             //RecordList(navController = navController)
 
@@ -99,12 +109,15 @@ fun AddOpinionScreen(navController: NavController,
 
         }
 
-        // * * * * * * PROGRESS BAR * * * * * *
-        if (viewModel.isLoading.value) {
-            CircularProgressIndicator(modifier = Modifier.align(Alignment.CenterHorizontally))
-        }
+            // * * * * * * PROGRESS BAR * * * * * *
+            if (viewModel.isLoading.value) {
+                CircularProgressIndicator(modifier = Modifier.align(Alignment.CenterHorizontally))
+            }
 
+        }
     }
+
+
 }
 
 
@@ -129,7 +142,8 @@ fun HeaderSectionAddOpinion(navController: NavController)
             Icon(
                 imageVector = Icons.Default.ArrowBack,
                 contentDescription = "Back to user profile ",
-                Modifier.size(30.dp)
+                Modifier.size(30.dp),
+                tint = MaterialTheme.colors.onSurface
             )
         }
 
@@ -153,55 +167,84 @@ fun RadioButtonDemo(
 //        horizontalAlignment = Alignment.CenterHorizontally
 //    ) {
         val selectedReview = remember { mutableStateOf("") }
-        Text("Zaznacz ocenę w stopniach od 1 do 5:")
+        Text("Zaznacz ocenę w stopniach od 1 do 5:",color = MaterialTheme.colors.onSurface)
         Spacer(modifier = Modifier.size(16.dp))
         Row {
             RadioButton(selected = selectedReview.value == Review.review1, onClick = {
                 selectedReview.value = Review.review1
+            },
 
-            })
+                colors = RadioButtonDefaults.colors(
+                    selectedColor = colors.onSurface,
+                    disabledColor = colors.onSurface,
+                    unselectedColor = colors.onSurface
+                )
+
+                )
+
+
             Spacer(modifier = Modifier.size(16.dp))
-            Text(Review.review1)
+            Text(Review.review1, color = MaterialTheme.colors.onSurface)
 
             Spacer(modifier = Modifier.size(16.dp))
 
             RadioButton(selected = selectedReview.value == Review.review2, onClick = {
                 selectedReview.value = Review.review2
-            })
+            },
+                colors = RadioButtonDefaults.colors(
+                    selectedColor = colors.onSurface,
+                    disabledColor = colors.onSurface,
+                    unselectedColor = colors.onSurface
+                )
+            )
             Spacer(modifier = Modifier.size(16.dp))
-            Text(Review.review2)
+            Text(Review.review2, color = MaterialTheme.colors.onSurface)
 
             Spacer(modifier = Modifier.size(16.dp))
 
             RadioButton(selected = selectedReview.value == Review.review3, onClick = {
                 selectedReview.value = Review.review3
-            })
+            },
+                colors = RadioButtonDefaults.colors(
+                    selectedColor = colors.onSurface,
+                    disabledColor = colors.onSurface,
+                    unselectedColor = colors.onSurface
+                )
+            )
             Spacer(modifier = Modifier.size(16.dp))
-            Text(Review.review3)
+            Text(Review.review3, color = MaterialTheme.colors.onSurface)
 
             Spacer(modifier = Modifier.size(16.dp))
 
             RadioButton(selected = selectedReview.value == Review.review4, onClick = {
                 selectedReview.value = Review.review4
-            })
+            },
+                colors = RadioButtonDefaults.colors(
+                    selectedColor = colors.onSurface,
+                    disabledColor = colors.onSurface,
+                    unselectedColor = colors.onSurface
+                ),
+            )
             Spacer(modifier = Modifier.size(16.dp))
-            Text(Review.review4)
+            Text(Review.review4, color = MaterialTheme.colors.onSurface)
 
             Spacer(modifier = Modifier.size(16.dp))
 
             RadioButton(selected = selectedReview.value == Review.review5, onClick = {
                 selectedReview.value = Review.review5
-            })
+            },
+                colors = RadioButtonDefaults.colors(
+                    selectedColor = colors.onSurface,
+                    disabledColor = colors.onSurface,
+                    unselectedColor = colors.onSurface
+                )
+            )
             Spacer(modifier = Modifier.size(16.dp))
-            Text(Review.review5)
-
+            Text(Review.review5, color = MaterialTheme.colors.onSurface)
 
             Spacer(modifier = Modifier.height(50.dp))
 
-
-
         }
-
 
             var textOpinion by remember { mutableStateOf("") }
 
@@ -213,7 +256,9 @@ fun RadioButtonDemo(
                     textOpinion = it },
 
                 //label = { Text(text = "Komentarz do oceny") },
-                placeholder = { Text(text = "Wpisz swój komentarz") },
+                placeholder = { Text(text = "Wpisz swój komentarz", color = MaterialTheme.colors.onSurface) },
+                colors = TextFieldDefaults.textFieldColors(
+                    textColor = MaterialTheme.colors.onSurface)
 
                 //modifier = Modifier.align(Alignment.Horizontal)
             )
@@ -235,7 +280,7 @@ fun RadioButtonDemo(
                             fullOpinion = "${selectedReview.value} $textOpinion"
 
 
-                            viewModel.addOpinion(textOpinion,selectedReview.value.toInt())
+                            //viewModel.addOpinion(textOpinion,selectedReview.value.toInt())
 
 
 
@@ -250,7 +295,7 @@ fun RadioButtonDemo(
 
                 },
                 Modifier.size(width = 250.dp, height = 50.dp),
-                colors = ButtonDefaults.buttonColors(backgroundColor = Color.Black),
+                colors = ButtonDefaults.buttonColors(backgroundColor = MaterialTheme.colors.onSurface),
 
                 ) {
                 Text(text = "Dodaj komentarz",
@@ -258,7 +303,7 @@ fun RadioButtonDemo(
                         fontSize = 20.sp,
                         fontFamily = FontFamily.Serif,
                         fontWeight = FontWeight.Bold,
-                        color = Color.White,
+                        color = MaterialTheme.colors.background,
                     )
                 )
             }

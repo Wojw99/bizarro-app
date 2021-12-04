@@ -19,35 +19,46 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.bizarro.ui.screens.user_profile.settings.SettingsViewModel
-import com.example.bizarro.ui.theme.darkColor
+import com.example.bizarro.ui.theme.BizarroTheme
+import com.example.bizarro.ui.theme.kBlack
 import com.example.bizarro.ui.theme.kWhite
-import com.example.bizarro.ui.theme.lightblueColor
+import com.example.bizarro.util.Constants
 
 
 @Composable
 fun SignInScreen(navController: NavController,
                  viewModel: AuthenticateViewModel = hiltViewModel(),)
 {
-   Column(
 
-      modifier = Modifier
-         .fillMaxSize()
-         .background(kWhite),
-      horizontalAlignment = Alignment.CenterHorizontally
+   BizarroTheme(
+      darkTheme = Constants.isDark.value
    ) {
 
-      Spacer(modifier = Modifier.height(100.dp))
+      Column(
+
+         modifier = Modifier
+            .fillMaxSize()
+            .background(MaterialTheme.colors.background),
+         horizontalAlignment = Alignment.CenterHorizontally
+      ) {
+
+         Spacer(modifier = Modifier.height(100.dp))
 
 
-      Text("Witaj w Bizarro!",
-         style = MaterialTheme.typography.caption)
+         Text("Witaj w Bizarro!",
+            style = MaterialTheme.typography.caption,
+            color = MaterialTheme.colors.onSurface
+         )
 
-      Spacer(modifier = Modifier.height(80.dp))
+         Spacer(modifier = Modifier.height(80.dp))
 
-      loginFields(navController)
+         loginFields(navController)
 
+
+      }
 
    }
+
 }
 
 @Composable
@@ -65,11 +76,14 @@ fun loginFields(navController: NavController)
       //label = { Text(text = "Email") },
       placeholder = { Text(text = "Podaj swój email") },
       leadingIcon = {
-         Icon(imageVector = Icons.Default.Email, contentDescription = "EmailIcon" )
+         Icon(imageVector = Icons.Default.Email, contentDescription = "EmailIcon",
+         tint = MaterialTheme.colors.onSurface)
       },
       colors = TextFieldDefaults.outlinedTextFieldColors(
-         focusedBorderColor = darkColor,
-         unfocusedBorderColor = darkColor)
+
+         focusedBorderColor = MaterialTheme.colors.onSurface,
+         unfocusedBorderColor = MaterialTheme.colors.onSurface,
+         textColor = MaterialTheme.colors.onSurface)
    )
 
    Spacer(modifier = Modifier.height(20.dp))
@@ -82,8 +96,13 @@ fun loginFields(navController: NavController)
       //label = { Text(text = "Hasło") },
       placeholder = { Text(text = "Podaj swoje hasło") },
       leadingIcon = {
-         Icon(imageVector = Icons.Default.Lock, contentDescription = "PasswordIcon" )
-      }
+         Icon(imageVector = Icons.Default.Lock, contentDescription = "PasswordIcon",
+         tint = MaterialTheme.colors.onSurface)
+      },
+      colors = TextFieldDefaults.outlinedTextFieldColors(
+         focusedBorderColor = MaterialTheme.colors.onSurface,
+         unfocusedBorderColor = MaterialTheme.colors.onSurface,
+         textColor = MaterialTheme.colors.onSurface)
    )
 
    Spacer(modifier = Modifier.height(80.dp))
@@ -93,11 +112,12 @@ fun loginFields(navController: NavController)
          navController.navigate(route = com.example.bizarro.ui.Screen.UserProfile.route)
       },
       Modifier.size(width = 250.dp, height = 50.dp),
-      colors = ButtonDefaults.buttonColors(backgroundColor = darkColor),
+      colors = ButtonDefaults.buttonColors(backgroundColor = MaterialTheme.colors.onSurface),
 
       ) {
       Text(text = "Zaloguj",
-         style = MaterialTheme.typography.button
+         style = MaterialTheme.typography.button,
+         color = MaterialTheme.colors.background,
       )
 
    }
@@ -108,7 +128,8 @@ fun loginFields(navController: NavController)
       style = TextStyle(
          fontSize = 20.sp,
          fontFamily = FontFamily.Serif,
-         fontWeight = FontWeight.Bold
+         fontWeight = FontWeight.Bold,
+         color = MaterialTheme.colors.onSurface
       ))
 
 
@@ -120,11 +141,12 @@ fun loginFields(navController: NavController)
 
       },
       Modifier.size(width = 250.dp, height = 50.dp),
-      colors = ButtonDefaults.buttonColors(backgroundColor = darkColor),
+      colors = ButtonDefaults.buttonColors(backgroundColor = MaterialTheme.colors.onSurface),
    )
    {
       Text(text = "Zapisz się",
-         style = MaterialTheme.typography.button
+         style = MaterialTheme.typography.button,
+         color = MaterialTheme.colors.background,
       )
    }
 }
