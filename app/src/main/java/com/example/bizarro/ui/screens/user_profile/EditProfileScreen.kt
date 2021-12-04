@@ -73,11 +73,13 @@ fun EditProfileScreen(navController: NavController,
                 ) {
                     Text(
                         text = viewModel.loadError.value,
+                        color = MaterialTheme.colors.onSurface
                     )
                     Spacer(modifier = Modifier.height(Dimens.standardPadding))
                     Button(onClick = { viewModel.getUserProfile() }) {
                         Text(
                             text = Strings.refresh,
+                            color = kWhite
                         )
                     }
                 }

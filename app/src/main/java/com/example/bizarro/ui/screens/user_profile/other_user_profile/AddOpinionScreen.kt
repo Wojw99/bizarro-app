@@ -28,6 +28,7 @@ import com.example.bizarro.ui.Screen
 import com.example.bizarro.ui.screens.user_profile.other_user_profile.OtherUserViewModel
 import com.example.bizarro.ui.theme.BizarroTheme
 import com.example.bizarro.ui.theme.kLightGray
+import com.example.bizarro.ui.theme.kWhite
 import com.example.bizarro.util.Constants
 import com.example.bizarro.util.Dimens
 import com.example.bizarro.util.Strings
@@ -75,6 +76,7 @@ fun AddOpinionScreen(navController: NavController,
             ) {
                 Text(
                     text = viewModel.loadError.value,
+                    color = MaterialTheme.colors.onSurface
                 )
                 Spacer(modifier = Modifier.height(Dimens.standardPadding))
                 Button(onClick = {
@@ -82,6 +84,7 @@ fun AddOpinionScreen(navController: NavController,
                 }) {
                     Text(
                         text = Strings.refresh,
+                        color = kWhite
                     )
                 }
             }

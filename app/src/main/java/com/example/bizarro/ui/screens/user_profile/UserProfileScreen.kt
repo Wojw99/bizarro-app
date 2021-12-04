@@ -71,12 +71,13 @@ BizarroTheme(
             ) {
                 Text(
                     text = viewModel.loadError.value,
+                    color = colors.onSurface
                 )
                 Spacer(modifier = Modifier.height(Dimens.standardPadding))
                 Button(onClick = { viewModel.getUserProfile() }) {
                     Text(
                         text = Strings.refresh,
-                        color = colors.onSurface
+                        color = kWhite
                     )
                 }
             }

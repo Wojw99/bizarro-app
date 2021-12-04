@@ -61,11 +61,13 @@ fun OtherUserProfileScreen(navController: NavController,
                 ) {
                     Text(
                         text = viewModel.loadError.value,
+                        color = MaterialTheme.colors.onSurface
                     )
                     Spacer(modifier = Modifier.height(Dimens.standardPadding))
                     Button(onClick = { viewModel.getOtherUserProfile() }) {
                         Text(
                             text = Strings.refresh,
+                            color = kWhite
                         )
                     }
                 }

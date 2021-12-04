@@ -73,11 +73,13 @@ fun SeeOpinionsScreen(navController: NavController,
                 ) {
                     Text(
                         text = viewModel.loadError.value,
+                        color = MaterialTheme.colors.onSurface
                     )
                     Spacer(modifier = Modifier.height(Dimens.standardPadding))
                     Button(onClick = { viewModel.getOtherUserProfile() }) {
                         Text(
                             text = Strings.refresh,
+                            color = kWhite
                         )
                     }
                 }
@@ -90,7 +92,8 @@ fun SeeOpinionsScreen(navController: NavController,
             ) {
                 Text(
                     text = Strings.listIsEmpty,
-                    modifier = Modifier.align(Alignment.CenterHorizontally)
+                    modifier = Modifier.align(Alignment.CenterHorizontally),
+                    color = MaterialTheme.colors.onSurface
                 )
             }
 
