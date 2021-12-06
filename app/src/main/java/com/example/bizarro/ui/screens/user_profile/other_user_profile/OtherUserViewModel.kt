@@ -10,6 +10,7 @@ import com.example.bizarro.data.remote.responses.Opinion
 import com.example.bizarro.data.remote.responses.Record
 import com.example.bizarro.repositories.UserRepository
 import com.example.bizarro.ui.AppState
+import com.example.bizarro.util.CommonMethods
 import com.example.bizarro.util.Constants
 import com.example.bizarro.util.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -65,13 +66,18 @@ class OtherUserViewModel @Inject constructor(
 
     fun addOpinion(opinionContent: String, opinionRating: Int){
 
+        //val localDate = LocalDate.now()
         if(isLoading.value) return
 
         viewModelScope.launch {
 
             isLoading.value = true
 
-            when (repository.addUserOpinion(Opinion(-1, otherUserId, LocalDate.now(), opinionRating, opinionContent))){
+            when (repository.addUserOpinion(Opinion(-1, otherUserId,
+                LocalDate.now()
+                //CommonMethods.convertToRecordBoxDateFormat(localDate)
+                ,
+                opinionRating, opinionContent))){
 
                 is Resource.Success -> {
 

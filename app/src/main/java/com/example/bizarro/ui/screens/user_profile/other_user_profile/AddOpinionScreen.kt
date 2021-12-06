@@ -80,7 +80,7 @@ fun AddOpinionScreen(navController: NavController,
                 )
                 Spacer(modifier = Modifier.height(Dimens.standardPadding))
                 Button(onClick = {
-                   // viewModel.getOtherUserProfile()
+                    viewModel.getOtherUserProfile()
                 }) {
                     Text(
                         text = Strings.refresh,
@@ -283,7 +283,7 @@ fun RadioButtonDemo(
                             fullOpinion = "${selectedReview.value} $textOpinion"
 
 
-                            //viewModel.addOpinion(textOpinion,selectedReview.value.toInt())
+                            viewModel.addOpinion(textOpinion,selectedReview.value.toInt())
 
 
 

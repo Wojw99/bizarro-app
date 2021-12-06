@@ -198,37 +198,56 @@ fun ImagePicker(
 
 
 @Composable
-fun HeaderEditProfileScreen(navController: NavController)
-{
-    Box(
-
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(5.dp)){
-
-        IconButton(
-            onClick = {
-                navController.navigate(route = Screen.UserProfile.route)
-            },
-            modifier = Modifier.align(Alignment.CenterStart)
-        ) {
-            Icon(
-                imageVector = Icons.Default.ArrowBack,
-                contentDescription = "Back to user profile ",
-                Modifier.size(30.dp),
-                tint = MaterialTheme.colors.onSurface
-            )
-        }
-
-    }
-}
-
-
-@Composable
 fun EditFieldsSection(viewModel: UserProfileViewModel = hiltViewModel())
 {
-
     val newPainter = rememberImagePainter(viewModel.userImage)
+
+
+    var imageUrl by remember { mutableStateOf<Uri?>(null) }
+
+    val context = LocalContext.current
+
+    val bitmap = remember { mutableStateOf<Bitmap?>(null) }
+
+    val launcher = rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.GetContent()) { uri: Uri? ->
+        imageUrl = uri
+    }
+
+    imageUrl?.let {
+        if (Build.VERSION.SDK_INT < 28) {
+            bitmap.value = MediaStore.Images.Media.getBitmap(context.contentResolver, it)
+        } else {
+            val source = ImageDecoder.createSource(context.contentResolver, it)
+            bitmap.value = ImageDecoder.decodeBitmap(source)
+        }
+
+        bitmap.value?.let { bitmap ->
+
+
+            Image(
+                //painter = painterResource(id = R.drawable.ic_baseline_person_24),
+                //painter = newPainter,
+
+                bitmap =  bitmap.asImageBitmap(),
+
+
+                //val painter = rememberImagePainter(
+                //record.imagePaths?.first() ?: Constants.RECORD_DEFAULT_IMG_URL
+                contentDescription = "User Image to edit",
+                contentScale = ContentScale.Crop,
+                modifier = Modifier
+                    .size(110.dp)
+                    .clip(RoundedCornerShape(10))
+                    .border(3.dp, kBlueDark, RoundedCornerShape(10))
+            )
+
+
+
+        }
+    }
+
+
     //        var editDataName by remember {
 //            mutableStateOf(TextFieldValue(viewModel.nameUser))
 //        }
@@ -237,29 +256,29 @@ fun EditFieldsSection(viewModel: UserProfileViewModel = hiltViewModel())
 
     //var editUserDescription by remember { mutableStateOf(TextFieldValue(viewModel.userDescription)) }
 
-    Image(
-        //painter = painterResource(id = R.drawable.ic_baseline_person_24),
-        painter = newPainter,
-        //val painter = rememberImagePainter(
-        //record.imagePaths?.first() ?: Constants.RECORD_DEFAULT_IMG_URL
-        contentDescription = "User Image to edit",
-        contentScale = ContentScale.Crop,
-        modifier = Modifier
-            .size(110.dp)
-            .clip(RoundedCornerShape(10))
-            .border(3.dp, kBlueDark, RoundedCornerShape(10))
-    )
+//    Image(
+//        //painter = painterResource(id = R.drawable.ic_baseline_person_24),
+//        painter = newPainter,
+//        //val painter = rememberImagePainter(
+//        //record.imagePaths?.first() ?: Constants.RECORD_DEFAULT_IMG_URL
+//        contentDescription = "User Image to edit",
+//        contentScale = ContentScale.Crop,
+//        modifier = Modifier
+//            .size(110.dp)
+//            .clip(RoundedCornerShape(10))
+//            .border(3.dp, kBlueDark, RoundedCornerShape(10))
+//    )
 
     Spacer(modifier = Modifier.height(10.dp))
 
     Button(
         onClick = {
-            //launcher.launch("image/*")
+            launcher.launch("image/*")
         },
         colors = ButtonDefaults.buttonColors(backgroundColor = kBlueDark),
     ) {
         Text(
-            text = "Edycja",
+            text = "Wybierz zdjęcie profilowe",
             color = kWhite,
             fontSize = 15.sp,
             fontWeight = FontWeight.Bold
@@ -371,5 +390,31 @@ fun EditFieldsSection(viewModel: UserProfileViewModel = hiltViewModel())
             color = MaterialTheme.colors.background,
 
         )
+    }
+}
+
+@Composable
+fun HeaderEditProfileScreen(navController: NavController)
+{
+    Box(
+
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(5.dp)){
+
+        IconButton(
+            onClick = {
+                navController.navigate(route = Screen.UserProfile.route)
+            },
+            modifier = Modifier.align(Alignment.CenterStart)
+        ) {
+            Icon(
+                imageVector = Icons.Default.ArrowBack,
+                contentDescription = "Back to user profile ",
+                Modifier.size(30.dp),
+                tint = MaterialTheme.colors.onSurface
+            )
+        }
+
     }
 }
