@@ -1,9 +1,12 @@
 package com.example.bizarro.ui.screens.user_profile
 
+import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.ImageDecoder
+import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.os.Build
+import android.os.Environment
 import android.provider.MediaStore
 import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
@@ -30,25 +33,32 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavController
 import androidx.navigation.NavType
 import androidx.navigation.navArgument
+import coil.ImageLoader
 import coil.compose.rememberImagePainter
+import coil.request.ImageRequest
+import coil.request.SuccessResult
 import com.example.bizarro.ui.Screen
 import com.example.bizarro.ui.theme.*
 import com.example.bizarro.util.Constants
 import com.example.bizarro.util.Dimens
 import com.example.bizarro.util.Strings
+import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.launch
 import timber.log.Timber
+import java.io.ByteArrayOutputStream
+import java.io.File
 
 @Composable
 fun EditProfileScreen(navController: NavController,
                       viewModel: UserProfileViewModel = hiltViewModel(),)
 {
-    //val context = LocalContext.current
+    val context = LocalContext.current
     //val scope = rememberCoroutineScope()
     //var imageToEdit = viewModel.userImage
 
@@ -125,6 +135,13 @@ fun ImagePicker(
 )
 {
 
+    //val loading:ImageLoader = ImageLoader(LocalContext.current)
+    //val request = ImageRequest.Builder(LocalContext.current).data(viewModel.userImage)
+        //.build()
+
+    ///val result:Drawable = (loading.execute(request) as SuccessResult).drawable
+
+
 
 
     var imageUrl by remember { mutableStateOf<Uri?>(null) }
@@ -197,11 +214,20 @@ fun ImagePicker(
 }
 
 
+//fun getImageUriFromBitmap(context: Context, bitmap: Bitmap): Uri{
+//    val bytes = ByteArrayOutputStream()
+//    bitmap.compress(Bitmap.CompressFormat.JPEG, 100, bytes)
+//    val path = MediaStore.Images.Media.insertImage(context.contentResolver, bitmap, "UserAddedPhoto", null)
+//    return Uri.parse(path.toString())
+//}
+
+
+
 @Composable
 fun EditFieldsSection(viewModel: UserProfileViewModel = hiltViewModel())
 {
-    val newPainter = rememberImagePainter(viewModel.userImage)
 
+    //val newPainter = rememberImagePainter(viewModel.userImage)
 
     var imageUrl by remember { mutableStateOf<Uri?>(null) }
 
@@ -222,8 +248,12 @@ fun EditFieldsSection(viewModel: UserProfileViewModel = hiltViewModel())
             bitmap.value = ImageDecoder.decodeBitmap(source)
         }
 
+
+
         bitmap.value?.let { bitmap ->
 
+
+            //val bitmapValue = bitmap.asImageBitmap()
 
             Image(
                 //painter = painterResource(id = R.drawable.ic_baseline_person_24),
@@ -278,7 +308,7 @@ fun EditFieldsSection(viewModel: UserProfileViewModel = hiltViewModel())
         colors = ButtonDefaults.buttonColors(backgroundColor = kBlueDark),
     ) {
         Text(
-            text = "Wybierz zdjęcie profilowe",
+            text = "Kliknij aby edytować zdjęcie",
             color = kWhite,
             fontSize = 15.sp,
             fontWeight = FontWeight.Bold
@@ -370,6 +400,20 @@ fun EditFieldsSection(viewModel: UserProfileViewModel = hiltViewModel())
         onClick ={
                 Timber.d("UserName: ${viewModel.nameUser}")
             //viewModel.updateName(editDataName.text)
+
+            if(bitmap.value!=null)
+            {
+
+                val bytes = ByteArrayOutputStream()
+                bitmap.value!!.compress(Bitmap.CompressFormat.JPEG, 100, bytes)
+                val path = MediaStore.Images.Media.insertImage(context.contentResolver, bitmap.value!!, "UserAddedPhoto", null)
+                val resultPath = Uri.parse(path.toString())
+
+                Timber.d("Photo: $resultPath")
+
+               // Timber.d("Photo: ${getImageUriFromBitmap(context,bitmap.value!!)}")
+            }
+
 
 //                navController.navigate(
 //                    route = Screen.UserProfile.route
