@@ -220,8 +220,7 @@ fun FilterList(
                         contentDescription = "Add filer",
                         reverseColors = true,
                         onButtonClick = {
-                            viewModel.addTestFilers()
-                            viewModel.updateRecordList()
+                            navController.navigate(Screen.Filter.route)
                         },
                     )
                     Spacer(modifier = Modifier.width(10.dp))

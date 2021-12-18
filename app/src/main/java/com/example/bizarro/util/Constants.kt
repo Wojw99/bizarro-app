@@ -14,17 +14,17 @@ object Constants {
     const val TYPE_SWAP = "zamienię"
     const val TYPE_RENT = "wypożyczę"
 
-    const val CATEGORY_BMX = "BMX"
-    const val CATEGORY_GRAVEL = "Gravel"
-    const val CATEGORY_MOUNTAIN = "Górski"
-    const val CATEGORY_CRUISER = "Cruiser"
-    const val CATEGORY_DIRT = "Dirt/Dual"
+    const val CATEGORY_BMX = "bmx"
+    const val CATEGORY_GRAVEL = "gravel"
+    const val CATEGORY_MOUNTAIN = "górski"
+    const val CATEGORY_CRUISER = "cruiser"
+    const val CATEGORY_DIRT = "dirt/dual"
 
     val provinces = listOf(
-        "Śląskie",
-        "Mazowieckie",
-        "Lubuskie",
-        "Pomorskie",
-        "Opolskie",
+        "śląskie",
+        "mazowieckie",
+        "lubuskie",
+        "pomorskie",
+        "opolskie",
     )
 }

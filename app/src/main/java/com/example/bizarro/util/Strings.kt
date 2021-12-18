@@ -7,6 +7,8 @@ object Strings {
     const val success = "Operacja przebiegła pomyślnie!"
     const val refresh = "Odźwież"
     const val iconBack = "Przycisk cofnięcia"
+    const val accept = "Akceptuj"
+    const val confirm = "Zatwierdź"
 
     // * * * * * * * * SEARCH SCREEN * * * * * * * *
     const val recordImage = "Zdjęcie ogłoszenia."
@@ -28,4 +30,20 @@ object Strings {
     const val category = "Kategoria"
     const val province = "Województwo"
     const val city = "Miasto"
+
+    const val sellPriceHeader = "Cena sprzedaży"
+    const val swapHeader = "Co chciałbyś w zamian?"
+    const val rentHeader1 = "Na ile dni?"
+    const val rentHeader2 = "W jakiej cenie?"
+    const val buyPriceHeader = "Ile jesteś gotów maksymalnie zapłacić?"
+
+    const val sellPriceHint = "Np. 500zł"
+    const val swapHint = "Np. Trek Marlin 4"
+    const val rentHint1 = "Np. 5"
+    const val rentHint2 = "Np. 339zł"
+    const val buyPriceHint = "Np. 500zł"
+
+    const val min = "Min"
+    const val max = "Max"
+
 }

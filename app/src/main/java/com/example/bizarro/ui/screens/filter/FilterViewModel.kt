@@ -3,43 +3,91 @@ package com.example.bizarro.ui.screens.filter
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import com.example.bizarro.ui.AppState
+import com.example.bizarro.ui.Screen
 import com.example.bizarro.util.Constants
 import com.example.bizarro.util.models.CheckState
+import com.example.bizarro.util.models.Filter
 import dagger.hilt.android.lifecycle.HiltViewModel
+import okhttp3.internal.notify
 import javax.inject.Inject
 
 @HiltViewModel
 class FilterViewModel @Inject constructor(
     val appState: AppState,
 ) : ViewModel() {
-    val selectedRecordType = mutableStateOf("")
-    val selectedCategory = mutableStateOf("")
-    val selectedProvince = mutableStateOf("")
-
-    val typeStateList = listOf(
-        mutableStateOf(CheckState(Constants.TYPE_BUY, false)),
-        mutableStateOf(CheckState(Constants.TYPE_SELL, false)),
-        mutableStateOf(CheckState(Constants.TYPE_RENT, false)),
-        mutableStateOf(CheckState(Constants.TYPE_SWAP, false)),
+    val typeStateList = mapOf(
+        Constants.TYPE_BUY to mutableStateOf(false),
+        Constants.TYPE_SELL to mutableStateOf(false),
+        Constants.TYPE_RENT to mutableStateOf(false),
+        Constants.TYPE_SWAP to mutableStateOf(false),
     )
 
-    val categoryStateList = listOf(
-        mutableStateOf(CheckState(Constants.CATEGORY_BMX, false)),
-        mutableStateOf(CheckState(Constants.CATEGORY_GRAVEL, false)),
-        mutableStateOf(CheckState(Constants.CATEGORY_MOUNTAIN, false)),
-        mutableStateOf(CheckState(Constants.CATEGORY_CRUISER, false)),
-        mutableStateOf(CheckState(Constants.CATEGORY_DIRT, false)),
+    val categoryStateList = mapOf(
+        Constants.CATEGORY_BMX to mutableStateOf(false),
+        Constants.CATEGORY_GRAVEL to mutableStateOf(false),
+        Constants.CATEGORY_MOUNTAIN to mutableStateOf(false),
+        Constants.CATEGORY_CRUISER to mutableStateOf(false),
+        Constants.CATEGORY_DIRT to mutableStateOf(false),
     )
 
-    val provinceStateList = listOf(
-        mutableStateOf(CheckState(Constants.provinces[0], false)),
-        mutableStateOf(CheckState(Constants.provinces[1], false)),
-        mutableStateOf(CheckState(Constants.provinces[2], false)),
-        mutableStateOf(CheckState(Constants.provinces[3], false)),
-        mutableStateOf(CheckState(Constants.provinces[4], false)),
+    val provinceStateList = mapOf(
+        Constants.provinces[0] to mutableStateOf(false),
+        Constants.provinces[1] to mutableStateOf(false),
+        Constants.provinces[2] to mutableStateOf(false),
+        Constants.provinces[3] to mutableStateOf(false),
+        Constants.provinces[4] to mutableStateOf(false),
     )
 
     init {
 
+    }
+
+    fun cleanStates(){
+        for (type in typeStateList)
+            type.value.value = false
+
+        for (category in categoryStateList)
+            category.value.value = false
+
+        for (province in provinceStateList)
+            province.value.value = false
+    }
+
+    fun loadFilters() {
+        val provinceFilter = appState.filters.first { f -> f.name == Constants.FILTER_PROVINCE }
+
+    }
+
+    fun saveFilters() {
+        val filters = mutableListOf<Filter>()
+
+        for (state in typeStateList) {
+            if (state.value.value) filters.add(
+                Filter(
+                    Constants.FILTER_TYPE,
+                    listOf(state.key),
+                )
+            )
+        }
+
+        for (state in provinceStateList) {
+            if (state.value.value) filters.add(
+                Filter(
+                    Constants.FILTER_PROVINCE,
+                    listOf(state.key),
+                )
+            )
+        }
+
+        for (state in categoryStateList) {
+            if (state.value.value) filters.add(
+                Filter(
+                    Constants.FILTER_CATEGORY,
+                    listOf(state.key),
+                )
+            )
+        }
+
+        appState.filters = filters
     }
 }

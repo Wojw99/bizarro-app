@@ -6,6 +6,7 @@ import com.example.bizarro.data.remote.deserializers.CustomDateSerializer
 import com.example.bizarro.repositories.RecordRepository
 import com.example.bizarro.repositories.UserRepository
 import com.example.bizarro.ui.AppState
+import com.example.bizarro.ui.FilterState
 import com.example.bizarro.util.Constants
 import com.google.gson.GsonBuilder
 import dagger.Module
@@ -15,6 +16,7 @@ import dagger.hilt.components.SingletonComponent
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.time.LocalDate
+import java.util.logging.Filter
 import javax.inject.Singleton
 
 @Module
@@ -22,6 +24,12 @@ import javax.inject.Singleton
 class AppModule {
     // Dependencies here live as long as the whole application.
     // All dependencies are singletons.
+
+    @Singleton
+    @Provides
+    fun provideFilterState(): FilterState {
+        return FilterState()
+    }
 
     @Singleton
     @Provides

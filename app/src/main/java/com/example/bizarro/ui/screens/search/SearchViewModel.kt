@@ -6,6 +6,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.bizarro.data.remote.responses.Record
 import com.example.bizarro.repositories.RecordRepository
 import com.example.bizarro.ui.AppState
+import com.example.bizarro.ui.FilterState
 import com.example.bizarro.util.Constants
 import com.example.bizarro.util.Resource
 import com.example.bizarro.util.models.Filter
@@ -25,15 +26,10 @@ class SearchViewModel @Inject constructor(
     val isLoading = mutableStateOf(false)
 
     val nameText = mutableStateOf("")
-
-    val filterList = mutableStateOf(listOf(
-        Filter(Constants.FILTER_CITY, listOf()),
-        Filter(Constants.FILTER_PROVINCE, listOf()),
-        Filter(Constants.FILTER_TYPE, listOf()),
-        Filter(Constants.FILTER_CATEGORY, listOf()),
-    ))
+    val filterList = mutableStateOf(appState.filters)
 
     init {
+        Timber.d("Init")
         updateRecordList()
     }
 
