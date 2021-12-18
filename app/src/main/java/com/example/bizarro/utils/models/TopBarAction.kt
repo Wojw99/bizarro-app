@@ -1,4 +1,4 @@
-package com.example.bizarro.util.models
+package com.example.bizarro.utils.models
 
 import androidx.compose.ui.graphics.vector.ImageVector
 

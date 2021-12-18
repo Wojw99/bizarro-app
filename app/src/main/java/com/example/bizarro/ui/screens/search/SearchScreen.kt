@@ -22,7 +22,6 @@ import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
@@ -37,13 +36,13 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import coil.compose.ImagePainter
 import coil.compose.rememberImagePainter
-import com.example.bizarro.data.remote.responses.Record
+import com.example.bizarro.api.models.Record
 import com.example.bizarro.ui.Screen
 import com.example.bizarro.ui.components.CustomIconButton
 import com.example.bizarro.ui.theme.*
-import com.example.bizarro.util.*
-import com.example.bizarro.util.Dimens
-import com.example.bizarro.util.Strings
+import com.example.bizarro.utils.*
+import com.example.bizarro.utils.Dimens
+import com.example.bizarro.utils.Strings
 
 val topRecordListMargin = 115.dp
 
@@ -291,7 +290,7 @@ fun RecordBox(
             // * * * * * * * * IMAGE BOX * * * * * * * *
             Box(modifier = Modifier.weight(12f), contentAlignment = Alignment.Center) {
                 val painter = rememberImagePainter(
-                    record.imagePaths?.first() ?: Constants.RECORD_DEFAULT_IMG_URL
+                    record.imagePath ?: Constants.RECORD_DEFAULT_IMG_URL
                 )
 
                 Image(
@@ -332,7 +331,7 @@ fun RecordBox(
 
                     // * * * * * * * * ADDRESS, DATE * * * * * * * *
                     Text(
-                        text = "${record.city}, ${CommonMethods.convertToRecordBoxDateFormat(record.creationDate)}",
+                        text = "${record.address.city}, ${CommonMethods.convertToRecordBoxDateFormat(record.creationDate)}",
                         style = TextStyle(fontSize = 12.sp, color = kGray)
                     )
                 }

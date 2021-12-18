@@ -3,12 +3,9 @@ package com.example.bizarro.ui.screens.filter
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import com.example.bizarro.ui.AppState
-import com.example.bizarro.ui.Screen
-import com.example.bizarro.util.Constants
-import com.example.bizarro.util.models.CheckState
-import com.example.bizarro.util.models.Filter
+import com.example.bizarro.utils.Constants
+import com.example.bizarro.utils.models.Filter
 import dagger.hilt.android.lifecycle.HiltViewModel
-import okhttp3.internal.notify
 import javax.inject.Inject
 
 @HiltViewModel

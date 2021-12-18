@@ -1,4 +1,4 @@
-package com.example.bizarro.data.remote.responses
+package com.example.bizarro.api.models
 
 import java.time.LocalDate
 
@@ -8,14 +8,14 @@ data class Record(
     val name: String,
     val body: String,
     val creationDate: LocalDate,
-    val city: String,
-    val province: String,
+    val address: Address,
     val type: String,
-    val categorie: String,
+    val category: String,
     val purchasePrice: Double?,
     val rentalPeriod: Int?,
     val rentalPrice: Double?,
     val salePrice: Double?,
     val swapObject: String?,
-    val imagePaths: List<String>?,
+    val imagePath: String?,
+    val generalOpinion: String,
 )

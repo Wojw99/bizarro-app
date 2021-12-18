@@ -1,8 +1,5 @@
-package com.example.bizarro.util
+package com.example.bizarro.utils
 
-import androidx.compose.ui.text.substring
-import androidx.compose.ui.text.toLowerCase
-import timber.log.Timber
 import java.time.LocalDate
 import java.util.*
 
@@ -38,5 +35,13 @@ object CommonMethods {
             return "$dayOfMonth.$monthValue.$year"
 
         return "$dayOfMonth.$monthValue"
+    }
+
+    fun convertToLabelDateFormat(date: LocalDate) : String{
+        val monthValue = date.monthValue.toString()
+        val dayOfMonth = date.dayOfMonth.toString()
+        val year = date.year.toString()
+
+        return "$dayOfMonth.$monthValue.$year"
     }
 }

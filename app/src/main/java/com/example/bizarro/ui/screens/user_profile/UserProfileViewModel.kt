@@ -1,23 +1,15 @@
 package com.example.bizarro.ui.screens.user_profile
 
-import androidx.compose.foundation.Image
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.graphics.ImageBitmap
-import androidx.compose.ui.graphics.painter.Painter
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import coil.compose.ImagePainter
-import coil.compose.rememberImagePainter
-import com.example.bizarro.data.remote.responses.Opinion
-import com.example.bizarro.data.remote.responses.Record
-import com.example.bizarro.data.remote.responses.UserProfile
+import com.example.bizarro.api.models.Opinion
 import com.example.bizarro.repositories.UserRepository
 import com.example.bizarro.ui.AppState
-import com.example.bizarro.util.Constants
-import com.example.bizarro.util.Resource
+import com.example.bizarro.utils.Constants
+import com.example.bizarro.utils.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -45,7 +37,6 @@ class UserProfileViewModel @Inject constructor(
         getUserProfile()
 
     }
-
 
     fun getUserProfile()
     {

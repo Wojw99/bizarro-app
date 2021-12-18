@@ -1,10 +1,9 @@
 package com.example.bizarro.repositories
 
-import android.util.Log
-import com.example.bizarro.data.remote.BizarroApi
-import com.example.bizarro.data.remote.responses.Record
-import com.example.bizarro.util.Resource
-import com.example.bizarro.util.Strings
+import com.example.bizarro.api.BizarroApi
+import com.example.bizarro.api.models.Record
+import com.example.bizarro.utils.Resource
+import com.example.bizarro.utils.Strings
 import dagger.hilt.android.scopes.ActivityScoped
 import kotlinx.coroutines.delay
 import timber.log.Timber

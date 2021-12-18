@@ -1,4 +1,4 @@
-package com.example.bizarro.util.models
+package com.example.bizarro.utils.models
 
 data class CheckState (
     val text: String,

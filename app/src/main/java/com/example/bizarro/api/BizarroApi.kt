@@ -1,8 +1,8 @@
-package com.example.bizarro.data.remote
+package com.example.bizarro.api
 
-import com.example.bizarro.data.remote.responses.Opinion
-import com.example.bizarro.data.remote.responses.Record
-import com.example.bizarro.data.remote.responses.UserProfile
+import com.example.bizarro.api.models.Opinion
+import com.example.bizarro.api.models.Record
+import com.example.bizarro.api.models.UserProfile
 import retrofit2.http.*
 
 interface BizarroApi {

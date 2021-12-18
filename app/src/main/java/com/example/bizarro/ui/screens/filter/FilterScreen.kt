@@ -27,11 +27,11 @@ import com.example.bizarro.ui.Screen
 import com.example.bizarro.ui.components.CustomTextField
 import com.example.bizarro.ui.components.TopBar
 import com.example.bizarro.ui.theme.*
-import com.example.bizarro.util.CommonMethods
-import com.example.bizarro.util.Constants
-import com.example.bizarro.util.Dimens
-import com.example.bizarro.util.Strings
-import com.example.bizarro.util.models.TopBarAction
+import com.example.bizarro.utils.CommonMethods
+import com.example.bizarro.utils.Constants
+import com.example.bizarro.utils.Dimens
+import com.example.bizarro.utils.Strings
+import com.example.bizarro.utils.models.TopBarAction
 
 val headerStyle = TextStyle(
     color = kBlack,

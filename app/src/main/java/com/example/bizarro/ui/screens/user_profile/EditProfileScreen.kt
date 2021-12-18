@@ -1,14 +1,10 @@
 package com.example.bizarro.ui.screens.user_profile
 
-import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.ImageDecoder
-import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.os.Build
-import android.os.Environment
 import android.provider.MediaStore
-import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.Image
@@ -27,32 +23,18 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavController
-import androidx.navigation.NavType
-import androidx.navigation.navArgument
-import coil.ImageLoader
-import coil.compose.rememberImagePainter
-import coil.request.ImageRequest
-import coil.request.SuccessResult
 import com.example.bizarro.ui.Screen
 import com.example.bizarro.ui.theme.*
-import com.example.bizarro.util.Constants
-import com.example.bizarro.util.Dimens
-import com.example.bizarro.util.Strings
-import kotlinx.coroutines.coroutineScope
-import kotlinx.coroutines.launch
+import com.example.bizarro.utils.Constants
+import com.example.bizarro.utils.Dimens
+import com.example.bizarro.utils.Strings
 import timber.log.Timber
 import java.io.ByteArrayOutputStream
-import java.io.File
 
 @Composable
 fun EditProfileScreen(navController: NavController,

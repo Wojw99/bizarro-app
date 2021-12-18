@@ -1,4 +1,4 @@
-package com.example.bizarro.util
+package com.example.bizarro.utils
 
 object Strings {
     // * * * * * * * * GENERAL * * * * * * * *
@@ -46,4 +46,10 @@ object Strings {
     const val min = "Min"
     const val max = "Max"
 
+    // * * * * * * * * RECORD DETAILS SCREEN * * * * * * * *
+    const val defaultUserName = "Użytkownik"
+    const val titleSectionSellLabel = "Sprzedam - proponowana cena"
+    const val titleSectionPurchaseLabel = "Kupię - proponowana cena"
+    const val titleSectionSwapLabel = "Zamienię - poszukiwany model"
+    const val titleSectionRentLabel = "Wypożyczę - cena i okres"
 }

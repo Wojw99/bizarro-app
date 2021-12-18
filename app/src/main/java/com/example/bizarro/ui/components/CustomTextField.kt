@@ -7,15 +7,11 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material.Icon
 import androidx.compose.material.Text
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Search
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.text.TextStyle
@@ -26,7 +22,7 @@ import com.example.bizarro.ui.theme.kBlack
 import com.example.bizarro.ui.theme.kBlueDark
 import com.example.bizarro.ui.theme.kGray
 import com.example.bizarro.ui.theme.kWhite
-import com.example.bizarro.util.Dimens
+import com.example.bizarro.utils.Dimens
 
 @ExperimentalComposeUiApi
 @Composable

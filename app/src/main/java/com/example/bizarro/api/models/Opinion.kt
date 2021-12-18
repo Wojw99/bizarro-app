@@ -1,4 +1,4 @@
-package com.example.bizarro.data.remote.responses
+package com.example.bizarro.api.models
 
 import java.time.LocalDate
 

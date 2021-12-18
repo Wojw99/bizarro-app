@@ -5,31 +5,16 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
-import androidx.compose.material.icons.filled.Clear
-import androidx.compose.material.icons.filled.Face
-import androidx.compose.material.icons.filled.Settings
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.font.FontFamily
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
-import com.example.bizarro.BizarroApplication
-import com.example.bizarro.ui.AppState
 import com.example.bizarro.ui.Screen
-import com.example.bizarro.ui.components.TopBar
 import com.example.bizarro.ui.screens.user_profile.settings.SettingsViewModel
 import com.example.bizarro.ui.theme.*
-import com.example.bizarro.util.Constants
-import com.example.bizarro.util.Strings
-import com.example.bizarro.util.models.TopBarAction
-import dagger.hilt.android.AndroidEntryPoint
-import javax.inject.Inject
+import com.example.bizarro.utils.Constants
 
 @Composable
 fun SettingsScreen(navController: NavController,

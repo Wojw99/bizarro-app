@@ -16,8 +16,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.example.bizarro.ui.Screen
 import com.example.bizarro.ui.theme.BizarroTheme
-import com.example.bizarro.ui.theme.kLightGray
-import com.example.bizarro.util.Constants
+import com.example.bizarro.utils.Constants
 
 @Composable
 fun HelpScreen(navController: NavController,

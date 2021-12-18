@@ -1,6 +1,5 @@
 package com.example.bizarro.ui.screens.user_profile
 
-import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -14,30 +13,21 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.vector.DefaultTintColor
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import coil.compose.rememberImagePainter
-import com.example.bizarro.R
 import com.example.bizarro.ui.Screen
-import com.example.bizarro.ui.screens.record_details.RecordDetailsViewModel
-import com.example.bizarro.ui.screens.search.RecordList
 import com.example.bizarro.ui.theme.*
-import com.example.bizarro.util.Constants
-import com.example.bizarro.util.Dimens
-import com.example.bizarro.util.Strings
+import com.example.bizarro.utils.Constants
+import com.example.bizarro.utils.Dimens
+import com.example.bizarro.utils.Strings
 
 @Composable
 fun UserProfileScreen(

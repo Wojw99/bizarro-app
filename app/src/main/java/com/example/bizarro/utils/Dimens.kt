@@ -1,4 +1,4 @@
-package com.example.bizarro.util
+package com.example.bizarro.utils
 
 import androidx.compose.ui.unit.dp
 

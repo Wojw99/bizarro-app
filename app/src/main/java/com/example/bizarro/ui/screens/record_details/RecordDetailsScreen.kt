@@ -25,17 +25,8 @@ fun RecordDetailsScreen(
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center,
         ) {
-            Text(text = "Record details")
-            Button(onClick = {
-                navController.navigate(route = Screen.Home.route) {
-                    // remove all previous screen in the stack
-                    popUpTo(navController.graph.findStartDestination().id) {
-                        inclusive = true
-                    }
-                }
-            }) {
-                Text(text = "Home")
-            }
+            Text(text = viewModel.isLoading.value.toString())
+            Text(text = viewModel.recordName.value)
         }
     }
 }

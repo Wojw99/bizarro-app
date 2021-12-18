@@ -1,13 +1,13 @@
 package com.example.bizarro.di
 
-import com.example.bizarro.data.remote.BizarroApi
-import com.example.bizarro.data.remote.deserializers.CustomDateDeserializer
-import com.example.bizarro.data.remote.deserializers.CustomDateSerializer
+import com.example.bizarro.api.BizarroApi
+import com.example.bizarro.api.deserializers.CustomDateDeserializer
+import com.example.bizarro.api.deserializers.CustomDateSerializer
 import com.example.bizarro.repositories.RecordRepository
 import com.example.bizarro.repositories.UserRepository
 import com.example.bizarro.ui.AppState
 import com.example.bizarro.ui.FilterState
-import com.example.bizarro.util.Constants
+import com.example.bizarro.utils.Constants
 import com.google.gson.GsonBuilder
 import dagger.Module
 import dagger.Provides
@@ -16,7 +16,6 @@ import dagger.hilt.components.SingletonComponent
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.time.LocalDate
-import java.util.logging.Filter
 import javax.inject.Singleton
 
 @Module

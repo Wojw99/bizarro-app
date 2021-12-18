@@ -1,4 +1,4 @@
-package com.example.bizarro.data.remote.deserializers
+package com.example.bizarro.api.deserializers
 
 import com.google.gson.JsonElement
 import com.google.gson.JsonPrimitive

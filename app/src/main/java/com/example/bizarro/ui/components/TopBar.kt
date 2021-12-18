@@ -14,9 +14,9 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
-import com.example.bizarro.util.Dimens
-import com.example.bizarro.util.Strings
-import com.example.bizarro.util.models.TopBarAction
+import com.example.bizarro.utils.Dimens
+import com.example.bizarro.utils.Strings
+import com.example.bizarro.utils.models.TopBarAction
 
 @Composable
 fun TopBar(

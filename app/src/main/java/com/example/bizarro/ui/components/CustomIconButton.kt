@@ -17,7 +17,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.bizarro.ui.theme.kBlueDark
 import com.example.bizarro.ui.theme.kWhite
-import com.example.bizarro.util.Dimens
+import com.example.bizarro.utils.Dimens
 
 @Composable
 fun CustomIconButton(

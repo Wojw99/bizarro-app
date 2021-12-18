@@ -4,26 +4,17 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.ExperimentalFoundationApi
-import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material.Icon
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
-import androidx.compose.material.TopAppBar
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.ExperimentalComposeUiApi
-import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
 import androidx.navigation.compose.rememberNavController
-import com.example.bizarro.R
 import com.example.bizarro.ui.components.BottomNavItem
 import com.example.bizarro.ui.components.BottomNavigationBar
 import com.example.bizarro.ui.theme.BizarroTheme
-import com.example.bizarro.ui.theme.kWhite
-import com.example.bizarro.util.Strings
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 

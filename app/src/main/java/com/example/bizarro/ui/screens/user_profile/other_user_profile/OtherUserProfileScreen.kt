@@ -12,7 +12,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
@@ -27,11 +26,10 @@ import coil.compose.rememberImagePainter
 import com.example.bizarro.R
 import com.example.bizarro.ui.Screen
 import com.example.bizarro.ui.screens.user_profile.other_user_profile.OtherUserViewModel
-import com.example.bizarro.ui.screens.user_profile.settings.SettingsViewModel
 import com.example.bizarro.ui.theme.*
-import com.example.bizarro.util.Constants
-import com.example.bizarro.util.Dimens
-import com.example.bizarro.util.Strings
+import com.example.bizarro.utils.Constants
+import com.example.bizarro.utils.Dimens
+import com.example.bizarro.utils.Strings
 
 @Composable
 fun OtherUserProfileScreen(navController: NavController,

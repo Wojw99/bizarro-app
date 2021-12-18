@@ -1,13 +1,12 @@
 package com.example.bizarro.repositories
 
-import com.example.bizarro.data.remote.BizarroApi
-import com.example.bizarro.data.remote.responses.Opinion
-import com.example.bizarro.data.remote.responses.UserProfile
-import com.example.bizarro.util.Resource
-import com.example.bizarro.util.Strings
+import com.example.bizarro.api.BizarroApi
+import com.example.bizarro.api.models.Opinion
+import com.example.bizarro.api.models.UserProfile
+import com.example.bizarro.utils.Resource
+import com.example.bizarro.utils.Strings
 import dagger.hilt.android.scopes.ActivityScoped
 import kotlinx.coroutines.delay
-import retrofit2.Response
 import timber.log.Timber
 import java.lang.Exception
 import javax.inject.Inject

@@ -13,8 +13,12 @@ var records = [
         name: "Sprzedam BMX 450. Dobra jakość.",
         body: "Ten rower górski jest tak Górski, że Robert mógłby się zawstydzić.",
         creationDate: "16-11-2021",
-        city: "Paniówki",
-        province: "śląskie",
+        address: {
+            province: "śląskie",
+            city: "Paniówki",
+            street: "Powstańców Śląskich",
+            number: "8A",
+        },
         type: "sprzedam",
         salePrice: 325.5,
         purchasePrice: null,
@@ -22,11 +26,7 @@ var records = [
         swapObject: null,
         rentalPrice: null,
         categorie: "górski",
-        imagePaths: [
-            "http://10.0.2.2:3000/images/record_1_0.jpg",
-            "http://10.0.2.2:3000/images/record_1_1.jpg",
-            "http://10.0.2.2:3000/images/record_1_2.jpg",
-        ],
+        imagePath: "http://10.0.2.2:3000/images/record_1_0.jpg",
     },
     {
         id: 1,
@@ -34,8 +34,12 @@ var records = [
         name: "Super rower górski !!!",
         body: "Co zarower?!!!??!.11?",
         creationDate: "15-11-2021",
-        city: "Gliwice",
-        province: "śląskie",
+        address: {
+            province: "śląskie",
+            city: "Gliwice",
+            street: "Toruńska",
+            number: "4",
+        },
         type: "sprzedam",
         salePrice: 600.34,
         purchasePrice: null,
@@ -43,10 +47,7 @@ var records = [
         swapObject: null,
         rentalPrice: null,
         categorie: "miejski",
-        imagePaths: [
-            "http://10.0.2.2:3000/images/record_2_0.jpg",
-            "http://10.0.2.2:3000/images/record_2_1.jpg"
-        ],
+        imagePath: "http://10.0.2.2:3000/images/record_2_0.jpg",
     },
     {
         id: 2,
@@ -54,8 +55,12 @@ var records = [
         name: "Świetny rower górski",
         body: "Sprzedam majestatyczny i wygodny rower.",
         creationDate: "21-05-2020",
-        city: "Dąbrowa Górnicza Mazowiecka",
-        province: "śląskie",
+        address: {
+            province: "śląskie",
+            city: "Dąbrowa Górnicza Mazowiecka",
+            street: "Toruńska",
+            number: "1",
+        },
         type: "kupię",
         salePrice: null,
         purchasePrice: 1000.0,
@@ -63,10 +68,7 @@ var records = [
         swapObject: null,
         rentalPrice: null,
         categorie: "górski",
-        imagePaths: [
-            "http://10.0.2.2:3000/images/record_3_0.jpg",
-            "http://10.0.2.2:3000/images/record_3_1.jpg"
-        ],
+        imagePath: "http://10.0.2.2:3000/images/record_3_0.jpg",
     },
     {
         id: 3,
@@ -74,8 +76,12 @@ var records = [
         name: "Majestatyczny rower gravel",
         body: "A sprzedawca jeszcze bardziej.",
         creationDate: "25-05-2021",
-        city: "Łódź",
-        province: "łódzkie",
+        address: {
+            province: "łódzkie",
+            city: "Łódź",
+            street: "Toruńska",
+            number: "2",
+        },
         type: "wypożyczę",
         salePrice: null,
         purchasePrice: null,
@@ -83,10 +89,7 @@ var records = [
         swapObject: null,
         rentalPrice: 66.0,
         categorie: "górski",
-        imagePaths: [
-            "http://10.0.2.2:3000/images/record_4_0.jpg",
-            "http://10.0.2.2:3000/images/record_4_1.jpg"
-        ],
+        imagePath: "http://10.0.2.2:3000/images/record_4_0.jpg",
     },
     {
         id: 4,
@@ -94,8 +97,12 @@ var records = [
         name: "Kozacki rower górski gravala",
         body: "Kozaków proszę nie mylić z tatarami.",
         creationDate: "23-05-2021",
-        city: "Warszawa",
-        province: "mazowieckie",
+        address: {
+            province: "mazowieckie",
+            city: "Warszawa",
+            street: "Toruńska",
+            number: "9",
+        },
         type: "zamienię",
         salePrice: null,
         purchasePrice: null,
@@ -103,9 +110,7 @@ var records = [
         swapObject: "Super rower górski",
         rentalPrice: null,
         categorie: "górski",
-        imagePaths: [
-            "http://10.0.2.2:3000/images/record_5_0.jpg"
-        ],
+        imagePath: "http://10.0.2.2:3000/images/record_5_0.jpg",
     },
 ];
 
@@ -119,7 +124,8 @@ var profiles = [
         lastName: "Śląski",
         creationDate: "20-04-2021",
         description: "Jestem ze Śląska",
-        imagePath: "http://10.0.2.2:3000/images/profile_1.png"
+        imagePath: "http://10.0.2.2:3000/images/profile_1.png",
+        generalOpinion: "W większości pozytywne",
     },
     {
         id: 4,
@@ -130,7 +136,8 @@ var profiles = [
         lastName: "Łódzka",
         creationDate: "19-04-2021",
         description: "Pływam łodzią",
-        imagePath: "http://10.0.2.2:3000/images/profile_2.png"
+        imagePath: "http://10.0.2.2:3000/images/profile_2.png",
+        generalOpinion: "W większości negatywne",
     },
     {
         id: 5,
@@ -141,7 +148,8 @@ var profiles = [
         lastName: "Mazowiecki",
         creationDate: "18-04-2021",
         description: "Fascynat rowerów górski i wieloletni członek klubu rowerowego \"Hamulcowi Tarczownicy\"",
-        imagePath: "http://10.0.2.2:3000/images/profile_3.png"
+        imagePath: "http://10.0.2.2:3000/images/profile_3.png",
+        generalOpinion: "Bardzo pozytywne",
     },
 ];
 

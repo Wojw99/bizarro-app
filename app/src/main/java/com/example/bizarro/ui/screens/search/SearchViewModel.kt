@@ -3,15 +3,14 @@ package com.example.bizarro.ui.screens.search
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.bizarro.data.remote.responses.Record
+import com.example.bizarro.api.models.Record
 import com.example.bizarro.repositories.RecordRepository
 import com.example.bizarro.ui.AppState
-import com.example.bizarro.ui.FilterState
-import com.example.bizarro.util.Constants
-import com.example.bizarro.util.Resource
-import com.example.bizarro.util.models.Filter
+import com.example.bizarro.ui.NetworkingViewModel
+import com.example.bizarro.utils.Constants
+import com.example.bizarro.utils.Resource
+import com.example.bizarro.utils.models.Filter
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import timber.log.Timber
 import javax.inject.Inject
@@ -20,11 +19,8 @@ import javax.inject.Inject
 class SearchViewModel @Inject constructor(
     val appState: AppState,
     private val repository: RecordRepository
-) : ViewModel() {
+) : NetworkingViewModel() {
     val recordList = mutableStateOf<List<Record>>(listOf())
-    val loadError = mutableStateOf("")
-    val isLoading = mutableStateOf(false)
-
     val nameText = mutableStateOf("")
     val filterList = mutableStateOf(appState.filters)
 
@@ -65,8 +61,10 @@ class SearchViewModel @Inject constructor(
     fun updateRecordList() {
         if (isLoading.value) return
         viewModelScope.launch {
-            isLoading.value = true
+            startLoading()
+
             Timber.d("Search for ${nameText.value}")
+
             val resource = repository.getRecordList(
                 0,
                 0,
@@ -79,14 +77,12 @@ class SearchViewModel @Inject constructor(
 
             when (resource) {
                 is Resource.Success -> {
-                    isLoading.value = false
+                    endLoading()
                     recordList.value = resource.data ?: listOf()
-                    loadError.value = ""
                 }
                 is Resource.Error<*> -> {
-                    isLoading.value = false
+                    endLoadingWithError()
                     recordList.value = listOf()
-                    loadError.value = resource.message ?: ""
                 }
             }
         }

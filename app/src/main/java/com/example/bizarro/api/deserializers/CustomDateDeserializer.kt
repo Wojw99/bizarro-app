@@ -1,10 +1,9 @@
-package com.example.bizarro.data.remote.deserializers
+package com.example.bizarro.api.deserializers
 
 import com.google.gson.JsonDeserializationContext
 import com.google.gson.JsonDeserializer
 import com.google.gson.JsonElement
 import java.lang.reflect.Type
-import java.util.*
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 

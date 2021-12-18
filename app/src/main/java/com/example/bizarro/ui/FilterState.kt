@@ -1,8 +1,8 @@
 package com.example.bizarro.ui
 
 import androidx.compose.runtime.mutableStateOf
-import com.example.bizarro.util.Constants
-import com.example.bizarro.util.models.CheckState
+import com.example.bizarro.utils.Constants
+import com.example.bizarro.utils.models.CheckState
 
 class FilterState {
     val typeStateList = listOf(
