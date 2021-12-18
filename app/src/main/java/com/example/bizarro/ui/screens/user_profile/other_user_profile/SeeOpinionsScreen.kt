@@ -21,6 +21,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -28,14 +29,13 @@ import androidx.navigation.NavController
 import coil.compose.ImagePainter
 import coil.compose.rememberImagePainter
 import com.example.bizarro.R
+import com.example.bizarro.data.remote.responses.Opinion
 import com.example.bizarro.data.remote.responses.Record
 import com.example.bizarro.ui.Screen
 import com.example.bizarro.ui.screens.search.TypeSpecificTitle
+import com.example.bizarro.ui.screens.search.topRecordListMargin
 import com.example.bizarro.ui.screens.user_profile.other_user_profile.OtherUserViewModel
-import com.example.bizarro.ui.theme.kBlack
-import com.example.bizarro.ui.theme.kGray
-import com.example.bizarro.ui.theme.kLightGray
-import com.example.bizarro.ui.theme.kWhite
+import com.example.bizarro.ui.theme.*
 import com.example.bizarro.util.CommonMethods
 import com.example.bizarro.util.Constants
 import com.example.bizarro.util.Dimens
@@ -47,28 +47,70 @@ import com.example.bizarro.util.Strings
 fun SeeOpinionsScreen(navController: NavController,
                       viewModel: OtherUserViewModel = hiltViewModel())
 {
-    Column(modifier = Modifier
-        .fillMaxSize()
-        .background(kWhite),
-        horizontalAlignment = Alignment.CenterHorizontally) {
+
+    BizarroTheme(
+        darkTheme = Constants.isDark.value
+    ) {
+        Column(modifier = Modifier
+            .fillMaxSize()
+            .background(MaterialTheme.colors.background),
+            horizontalAlignment = Alignment.CenterHorizontally) {
 
 
-        HeaderSectionSeeOpinionOtherUser(navController)
+            HeaderSectionSeeOpinionOtherUser(navController)
 
 
-        Text("Opinie o użytkowniku:",
-            style = MaterialTheme.typography.caption)
+            Text("Opinie o użytkowniku:",
+                style = MaterialTheme.typography.caption,
+                color =  MaterialTheme.colors.onSurface)
 
-        Spacer(modifier = Modifier.height(30.dp))
+            if (viewModel.loadError.value.isNotEmpty()
+                && !viewModel.isLoading.value) {
+                Column(
+                    verticalArrangement = Arrangement.Center,
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    modifier = Modifier.fillMaxSize(),
+                ) {
+                    Text(
+                        text = viewModel.loadError.value,
+                        color = MaterialTheme.colors.onSurface
+                    )
+                    Spacer(modifier = Modifier.height(Dimens.standardPadding))
+                    Button(onClick = { viewModel.getOtherUserProfile() }) {
+                        Text(
+                            text = Strings.refresh,
+                            color = kWhite
+                        )
+                    }
+                }
+            }
 
-        UserOpinionsList()
+            // * * * * * * EMPTY TEXT * * * * * *
+            if (viewModel.userOtherOpinionList.value.isEmpty()
+                && !viewModel.isLoading.value
+                && viewModel.loadError.value.isEmpty()
+            ) {
+                Text(
+                    text = Strings.listIsEmpty,
+                    modifier = Modifier.align(Alignment.CenterHorizontally),
+                    color = MaterialTheme.colors.onSurface
+                )
+            }
 
-        Spacer(modifier = Modifier.height(30.dp))
+            // * * * * * * RECORD LIST * * * * * *
+            if (viewModel.userOtherOpinionList.value.isNotEmpty() && !viewModel.isLoading.value) {
+                UserOpinionsList()
+            }
 
-        //Text(text = viewModel.opinionOtherUserList.size.toString(),
-        //style = MaterialTheme.typography.caption)
+            // * * * * * * PROGRESS BAR * * * * * *
+            if (viewModel.isLoading.value) {
+                CircularProgressIndicator(modifier = Modifier.align(Alignment.CenterHorizontally))
+            }
 
+
+        }
     }
+
 }
 
 @Composable
@@ -90,7 +132,8 @@ fun HeaderSectionSeeOpinionOtherUser(navController: NavController)
             Icon(
                 imageVector = Icons.Default.ArrowBack,
                 contentDescription = "Back to user profile ",
-                Modifier.size(30.dp)
+                Modifier.size(30.dp),
+                tint = MaterialTheme.colors.onSurface
             )
         }
 
@@ -107,25 +150,83 @@ fun UserOpinionsList(
     LazyColumn(
         modifier = Modifier
             .fillMaxSize()
-            .background(kLightGray)
+            .background(MaterialTheme.colors.surface)
+
     ){
 
-        val opinionList = viewModel.opinionsOtherUser.value
-        val opinionListCount = opinionList.size
+        val otherUserOpinionList = viewModel.userOtherOpinionList.value
+        val otherUserOpinionListCount = otherUserOpinionList.size
 
 
-        opinionList.forEach{
-            item ->
-            stickyHeader {
+        items(otherUserOpinionListCount) { index ->
+            if (index == 0)
+                Spacer(modifier = Modifier.height(topRecordListMargin))
+
+            OtherOpinionBox(opinion = otherUserOpinionList[index])
+
+            if (index == otherUserOpinionList.size - 1)
+                Spacer(modifier = Modifier.height(64.dp))
+            else
+                Spacer(modifier = Modifier.height(Dimens.standardPadding))
+        }
+
+    }
+}
+
+@Composable
+fun OtherOpinionBox(opinion: Opinion, modifier: Modifier = Modifier,)
+{
+    Box(modifier = modifier
+        .shadow(5.dp, RoundedCornerShape(Dimens.cornerRadius))
+        .clip(RoundedCornerShape(Dimens.cornerRadius))
+        .background(kWhite)
+        .fillMaxHeight()
+        .fillMaxWidth())
+    {
+
+        Column(horizontalAlignment = Alignment.Start,
+            verticalArrangement = Arrangement.SpaceBetween,
+            modifier = Modifier.fillMaxSize(),)
+        {
+            Row(verticalAlignment = Alignment.CenterVertically,
+
+                modifier = Modifier
+                    .wrapContentHeight()
+                    .fillMaxWidth()
+                    .background(kWhite)
+
+                    )
+            {
                 Text(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(18.dp),
-
-                    text = item,
-                    fontWeight = FontWeight.Bold
+                    text = "Ocena: ${opinion.rating}",
+                    style = TextStyle(
+                        fontSize = 20.sp,
+                        fontWeight = FontWeight.Bold,
+                        color = kBlack,
+                    )
                 )
+
+                Spacer(modifier = Modifier.width(30.dp))
+
+                Text(
+                    text = "Data: ${opinion.creationDate}",
+                    style = TextStyle(
+                        fontSize = 20.sp,
+                        fontWeight = FontWeight.Bold,
+                        color = kBlack,
+                    )
+                )
+
             }
+
+            Text(
+                text = opinion.content,
+                style = TextStyle(
+                    fontSize = 20.sp,
+                    fontWeight = FontWeight.Normal,
+                    color = kBlack,
+                )
+            )
 
         }
 

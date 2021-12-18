@@ -8,8 +8,7 @@ val kLightGray = Color(0xFFECECEC)
 val kBlueDark = Color(0xFF324D92)
 val kBlueLight = Color(0xFF5A69BB)
 val kWhite = Color(0xFFFAFAFA)
-
-val darkColor = Color.Black
-val blueColor = Color.Blue
-val lightblueColor = Color(0xFF3F51B5)
-
+val kblueLight = Color(0xFF3F51B5)
+val kRed = Color(0xFFB00020)
+val kLightRed = Color(0xFFEF5350)
+val kDarkGrey = Color(0xFF333333)

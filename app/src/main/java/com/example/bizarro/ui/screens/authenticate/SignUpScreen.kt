@@ -22,103 +22,127 @@ import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.example.bizarro.ui.Screen
-
 import com.example.bizarro.ui.screens.user_profile.settings.SettingsViewModel
-import com.example.bizarro.ui.theme.blueColor
-import com.example.bizarro.ui.theme.darkColor
+import com.example.bizarro.ui.theme.BizarroTheme
+import com.example.bizarro.ui.theme.kBlack
+import com.example.bizarro.ui.theme.kBlueDark
 import com.example.bizarro.ui.theme.kWhite
-import com.example.bizarro.ui.theme.lightblueColor
+import com.example.bizarro.util.Constants
+
 
 @Composable
 fun SignUpScreen(navController: NavController,
                  viewModel: AuthenticateViewModel = hiltViewModel(),)
 {
 
-    Column(
+    BizarroTheme(
+        darkTheme = Constants.isDark.value
+    ) {
+        Column(
 
-        modifier = Modifier
-        .fillMaxSize()
-        .background(kWhite),
-        horizontalAlignment = Alignment.CenterHorizontally) {
-        val context = LocalContext.current
+            modifier = Modifier
+                .fillMaxSize()
+                .background(MaterialTheme.colors.background),
+            horizontalAlignment = Alignment.CenterHorizontally) {
 
-        Spacer(modifier = Modifier.height(100.dp))
+            Spacer(modifier = Modifier.height(100.dp))
 
+            Text("Zapisz się do Bizarro!",
+                style = MaterialTheme.typography.caption,
+                color = MaterialTheme.colors.onSurface)
 
-        Text("Zapisz się do Bizarro!",
-            style = MaterialTheme.typography.caption)
+            Spacer(modifier = Modifier.height(80.dp))
 
-        Spacer(modifier = Modifier.height(80.dp))
-
-        var textRegisterEmail by remember { mutableStateOf(TextFieldValue("")) }
-
-        OutlinedTextField(
-            value =textRegisterEmail,
-            onValueChange ={
-                textRegisterEmail = it
-            },
-            //label = { Text(text = "Email") },
-            placeholder = { Text(text = "Wpisz swój email") },
-            leadingIcon = {
-                Icon(imageVector = Icons.Default.Email, contentDescription = "EmailIcon" )
-            },
-            colors = TextFieldDefaults.outlinedTextFieldColors(
-                focusedBorderColor = blueColor,
-                unfocusedBorderColor = darkColor)
-        )
-
-        Spacer(modifier = Modifier.height(20.dp))
-
-        var textRegisterPassword by remember { mutableStateOf(TextFieldValue("")) }
-
-
-        OutlinedTextField(
-            value = textRegisterPassword,
-            onValueChange ={
-                textRegisterPassword = it
-            },
-            //label = { Text(text = "Hasło") },
-            placeholder = { Text(text = "Podaj swoje hasło") },
-            leadingIcon = {
-                Icon(imageVector = Icons.Default.Lock, contentDescription = "PasswordIcon" )
-            }
-        )
-
-        Spacer(modifier = Modifier.height(80.dp))
-
-        Button(
-            onClick ={
-
-                //navController.navigate(route = com.example.bizarro.ui.Screen.SignIn.route)
-
-                Toast.makeText(context, "Konto zarejestrowane", Toast.LENGTH_SHORT).show()
-            },
-            Modifier.size(width = 250.dp, height = 50.dp),
-            colors = ButtonDefaults.buttonColors(backgroundColor = lightblueColor),
-        )
-        {
-            Text(text = "Zarejestruj",
-                style = MaterialTheme.typography.button
-            )
-
-        }
-
-        Spacer(modifier = Modifier.height(50.dp))
-
-        Button(
-            onClick ={
-                navController.navigate(route = com.example.bizarro.ui.Screen.SignIn.route)
-
-            },
-            Modifier.size(width = 250.dp, height = 50.dp),
-            colors = ButtonDefaults.buttonColors(backgroundColor = darkColor),
-        )
-        {
-            Text(text = "Logowanie",
-                style = MaterialTheme.typography.button
-            )
+            RegisterFields(navController)
 
         }
     }
 
+
+}
+
+@Composable
+fun RegisterFields(navController: NavController)
+{
+
+    val context = LocalContext.current
+
+    var textRegisterEmail by remember { mutableStateOf(TextFieldValue("")) }
+    var textRegisterPassword by remember { mutableStateOf(TextFieldValue("")) }
+
+    OutlinedTextField(
+        value =textRegisterEmail,
+        onValueChange ={
+            textRegisterEmail = it
+        },
+        //label = { Text(text = "Email") },
+        placeholder = { Text(text = "Podaj swój email") },
+        leadingIcon = {
+            Icon(imageVector = Icons.Default.Email, contentDescription = "EmailIcon",
+            tint =  MaterialTheme.colors.onSurface)
+        },
+        colors = TextFieldDefaults.outlinedTextFieldColors(
+            focusedBorderColor = MaterialTheme.colors.onSurface,
+            unfocusedBorderColor = MaterialTheme.colors.onSurface,
+            textColor = MaterialTheme.colors.onSurface
+        )
+    )
+
+    Spacer(modifier = Modifier.height(20.dp))
+
+
+    OutlinedTextField(
+        value = textRegisterPassword,
+        onValueChange ={
+            textRegisterPassword = it
+        },
+        //label = { Text(text = "Hasło") },
+        placeholder = { Text(text = "Podaj swoje hasło") },
+        leadingIcon = {
+            Icon(imageVector = Icons.Default.Lock, contentDescription = "PasswordIcon",
+            tint = MaterialTheme.colors.onSurface)
+        },
+        colors = TextFieldDefaults.outlinedTextFieldColors(
+            focusedBorderColor = MaterialTheme.colors.onSurface,
+            unfocusedBorderColor = MaterialTheme.colors.onSurface,
+            textColor = MaterialTheme.colors.onSurface)
+    )
+
+    Spacer(modifier = Modifier.height(80.dp))
+
+    Button(
+        onClick ={
+
+            //navController.navigate(route = com.example.bizarro.ui.Screen.SignIn.route)
+
+            Toast.makeText(context, "Zarejestrowano", Toast.LENGTH_SHORT).show()
+        },
+        Modifier.size(width = 250.dp, height = 50.dp),
+        colors = ButtonDefaults.buttonColors(backgroundColor = MaterialTheme.colors.onSurface),
+    )
+    {
+        Text(text = "Zarejestruj",
+            style = MaterialTheme.typography.button,
+            color = MaterialTheme.colors.background
+        )
+
+    }
+
+    Spacer(modifier = Modifier.height(50.dp))
+
+    Button(
+        onClick ={
+            navController.navigate(route = com.example.bizarro.ui.Screen.SignIn.route)
+
+        },
+        Modifier.size(width = 250.dp, height = 50.dp),
+        colors = ButtonDefaults.buttonColors(backgroundColor = MaterialTheme.colors.onSurface),
+    )
+    {
+        Text(text = "Logowanie",
+            style = MaterialTheme.typography.button,
+            color = MaterialTheme.colors.background
+        )
+
+    }
 }

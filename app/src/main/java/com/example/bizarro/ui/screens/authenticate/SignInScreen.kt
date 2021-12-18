@@ -19,105 +19,134 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.bizarro.ui.screens.user_profile.settings.SettingsViewModel
-import com.example.bizarro.ui.theme.darkColor
+import com.example.bizarro.ui.theme.BizarroTheme
+import com.example.bizarro.ui.theme.kBlack
 import com.example.bizarro.ui.theme.kWhite
-import com.example.bizarro.ui.theme.lightblueColor
+import com.example.bizarro.util.Constants
 
 
 @Composable
 fun SignInScreen(navController: NavController,
                  viewModel: AuthenticateViewModel = hiltViewModel(),)
 {
-   Column(
 
-      modifier = Modifier
-         .fillMaxSize()
-         .background(kWhite),
-      horizontalAlignment = Alignment.CenterHorizontally
+   BizarroTheme(
+      darkTheme = Constants.isDark.value
    ) {
 
-      Spacer(modifier = Modifier.height(100.dp))
+      Column(
+
+         modifier = Modifier
+            .fillMaxSize()
+            .background(MaterialTheme.colors.background),
+         horizontalAlignment = Alignment.CenterHorizontally
+      ) {
+
+         Spacer(modifier = Modifier.height(100.dp))
 
 
-      Text("Witaj w Bizarro!",
-         style = MaterialTheme.typography.caption)
-
-      Spacer(modifier = Modifier.height(80.dp))
-
-
-      var textLoginEmail by remember { mutableStateOf(TextFieldValue("")) }
-
-      OutlinedTextField(
-         value =textLoginEmail,
-         onValueChange ={
-            textLoginEmail = it
-         },
-         //label = { Text(text = "Email") },
-         placeholder = { Text(text = "Podaj swój email") },
-         leadingIcon = {
-            Icon(imageVector = Icons.Default.Email, contentDescription = "EmailIcon" )
-         },
-         colors = TextFieldDefaults.outlinedTextFieldColors(
-            focusedBorderColor = darkColor,
-            unfocusedBorderColor = darkColor)
-      )
-
-      Spacer(modifier = Modifier.height(20.dp))
-
-      var textLoginPassword by remember { mutableStateOf(TextFieldValue("")) }
-
-      OutlinedTextField(
-         value = textLoginPassword,
-         onValueChange ={
-            textLoginPassword = it
-         },
-         //label = { Text(text = "Hasło") },
-         placeholder = { Text(text = "Wpisz swoje hasło") },
-         leadingIcon = {
-            Icon(imageVector = Icons.Default.Lock, contentDescription = "PasswordIcon" )
-         }
-      )
-
-      Spacer(modifier = Modifier.height(80.dp))
-
-      Button(
-         onClick ={
-            navController.navigate(route = com.example.bizarro.ui.Screen.UserProfile.route)
-         },
-         Modifier.size(width = 250.dp, height = 50.dp),
-         colors = ButtonDefaults.buttonColors(backgroundColor = darkColor),
-
-         ) {
-         Text(text = "Zaloguj",
-            style = MaterialTheme.typography.button
+         Text("Witaj w Bizarro!",
+            style = MaterialTheme.typography.caption,
+            color = MaterialTheme.colors.onSurface
          )
+
+         Spacer(modifier = Modifier.height(80.dp))
+
+         loginFields(navController)
+
 
       }
 
-      Spacer(modifier = Modifier.height(20.dp))
+   }
 
-      Text("ALBO",
-         style = TextStyle(
-            fontSize = 20.sp,
-            fontFamily = FontFamily.Serif,
-            fontWeight = FontWeight.Bold
-         ))
+}
 
+@Composable
+fun loginFields(navController: NavController)
+{
 
-      Spacer(modifier = Modifier.height(20.dp))
+   var textLoginEmail by remember { mutableStateOf(TextFieldValue("")) }
+   var textLoginPassword by remember { mutableStateOf(TextFieldValue("")) }
 
-      Button(
-         onClick ={
-            navController.navigate(route = com.example.bizarro.ui.Screen.SignUp.route)
+   OutlinedTextField(
+      value =textLoginEmail,
+      onValueChange ={
+         textLoginEmail = it
+      },
+      //label = { Text(text = "Email") },
+      placeholder = { Text(text = "Podaj swój email") },
+      leadingIcon = {
+         Icon(imageVector = Icons.Default.Email, contentDescription = "EmailIcon",
+         tint = MaterialTheme.colors.onSurface)
+      },
+      colors = TextFieldDefaults.outlinedTextFieldColors(
 
-         },
-         Modifier.size(width = 250.dp, height = 50.dp),
-         colors = ButtonDefaults.buttonColors(backgroundColor = lightblueColor),
+         focusedBorderColor = MaterialTheme.colors.onSurface,
+         unfocusedBorderColor = MaterialTheme.colors.onSurface,
+         textColor = MaterialTheme.colors.onSurface)
+   )
+
+   Spacer(modifier = Modifier.height(20.dp))
+
+   OutlinedTextField(
+      value = textLoginPassword,
+      onValueChange ={
+         textLoginPassword = it
+      },
+      //label = { Text(text = "Hasło") },
+      placeholder = { Text(text = "Podaj swoje hasło") },
+      leadingIcon = {
+         Icon(imageVector = Icons.Default.Lock, contentDescription = "PasswordIcon",
+         tint = MaterialTheme.colors.onSurface)
+      },
+      colors = TextFieldDefaults.outlinedTextFieldColors(
+         focusedBorderColor = MaterialTheme.colors.onSurface,
+         unfocusedBorderColor = MaterialTheme.colors.onSurface,
+         textColor = MaterialTheme.colors.onSurface)
+   )
+
+   Spacer(modifier = Modifier.height(80.dp))
+
+   Button(
+      onClick ={
+         navController.navigate(route = com.example.bizarro.ui.Screen.UserProfile.route)
+      },
+      Modifier.size(width = 250.dp, height = 50.dp),
+      colors = ButtonDefaults.buttonColors(backgroundColor = MaterialTheme.colors.onSurface),
+
+      ) {
+      Text(text = "Zaloguj",
+         style = MaterialTheme.typography.button,
+         color = MaterialTheme.colors.background,
       )
-      {
-         Text(text = "Zapisz się",
-            style = MaterialTheme.typography.button
-         )
-      }
+
+   }
+
+   Spacer(modifier = Modifier.height(20.dp))
+
+   Text("ALBO",
+      style = TextStyle(
+         fontSize = 20.sp,
+         fontFamily = FontFamily.Serif,
+         fontWeight = FontWeight.Bold,
+         color = MaterialTheme.colors.onSurface
+      ))
+
+
+   Spacer(modifier = Modifier.height(20.dp))
+
+   Button(
+      onClick ={
+         navController.navigate(route = com.example.bizarro.ui.Screen.SignUp.route)
+
+      },
+      Modifier.size(width = 250.dp, height = 50.dp),
+      colors = ButtonDefaults.buttonColors(backgroundColor = MaterialTheme.colors.onSurface),
+   )
+   {
+      Text(text = "Zapisz się",
+         style = MaterialTheme.typography.button,
+         color = MaterialTheme.colors.background,
+      )
    }
 }
