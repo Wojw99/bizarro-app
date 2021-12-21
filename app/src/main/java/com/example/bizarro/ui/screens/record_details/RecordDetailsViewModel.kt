@@ -3,6 +3,7 @@ package com.example.bizarro.ui.screens.record_details
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.viewModelScope
 import com.example.bizarro.api.models.Record
+import com.example.bizarro.api.models.UserProfile
 import com.example.bizarro.repositories.RecordRepository
 import com.example.bizarro.repositories.UserRepository
 import com.example.bizarro.ui.AppState
@@ -19,11 +20,12 @@ import javax.inject.Inject
 @HiltViewModel
 class RecordDetailsViewModel @Inject constructor(
     val appState: AppState,
-    private val recordRepository: RecordRepository,
     private val userRepository: UserRepository,
 ) : NetworkingViewModel() {
-    val recordId: Long = 1
-    val userId: Long = 1
+    companion object{
+        var record: Record? = null
+        var userId: Long? = null
+    }
 
     val topBarTitle = mutableStateOf("")
     val topBarImagePath = mutableStateOf("")
@@ -36,7 +38,9 @@ class RecordDetailsViewModel @Inject constructor(
 
     val recordBody = mutableStateOf("")
     val recordGeneralOpinion = mutableStateOf("")
+    val recordGeneralOpinionDesc = mutableStateOf("")
     val recordCategory = mutableStateOf("")
+    val recordCategoryDesc = mutableStateOf("")
     val recordAddress = mutableStateOf("")
 
     init{
@@ -44,64 +48,55 @@ class RecordDetailsViewModel @Inject constructor(
         updateRecordInfo()
     }
 
-    private fun updateRecordInfo() {
-        viewModelScope.launch {
-            startLoading()
-
-            val resource = recordRepository.getRecordDetails(recordId)
-
-            when(resource) {
-                is Resource.Success -> {
-                    endLoading()
-
-                    val record: Record = resource.data ?: return@launch
-
-                    updateTitleSection(record)
-                    recordBody.value = record.body
-                    recordGeneralOpinion.value = record.generalOpinion
-                    recordCategory.value = record.category
-                    recordAddress.value = "${record.address.city}, ${record.address.street}${record.address.number}"
-                }
-                is Resource.Error -> {
-                    endLoadingWithError()
-                }
-            }
+    fun updateRecordInfo() {
+        if(record == null) {
+            loadError.value = Strings.recordLoadError
+            Timber.e("Record companion object must be set before initializing this view model.")
+            return
         }
-    }
+        recordName.value = record!!.name
+        recordCreationDateLabel.value = "Dodano - ${CommonMethods.convertToLabelDateFormat(record!!.creationDate)}"
+        if(record!!.imagePath != null)
+            recordImagePath.value = record!!.imagePath.toString()
 
-    private fun updateTitleSection(record: Record){
-        recordName.value = record.name
-        recordCreationDateLabel.value = "Dodano - ${CommonMethods.convertToLabelDateFormat(record.creationDate)}"
-        if(record.imagePath != null)
-            recordImagePath.value = record.imagePath.toString()
-
-        if(record.type == Constants.TYPE_BUY) {
-            recordHeader.value = record.purchasePrice.toString()
+        if(record!!.type == Constants.TYPE_BUY) {
+            recordHeader.value = "${record!!.purchasePrice}${Strings.priceSuffix}"
             recordLabel.value = Strings.titleSectionPurchaseLabel
-        } else if (record.type == Constants.TYPE_SELL) {
-            recordHeader.value = record.salePrice.toString()
+        } else if (record!!.type == Constants.TYPE_SELL) {
+            recordHeader.value = "${record!!.salePrice}${Strings.priceSuffix}"
             recordLabel.value = Strings.titleSectionSellLabel
-        } else if (record.type == Constants.TYPE_RENT) {
-            recordHeader.value = record.swapObject.toString()
+        } else if (record!!.type == Constants.TYPE_SWAP) {
+            recordHeader.value = "${record!!.swapObject}"
             recordLabel.value = Strings.titleSectionSwapLabel
-        } else if (record.type == Constants.TYPE_SWAP) {
-            recordHeader.value = "${record.rentalPrice}zł, ${record.rentalPeriod} dni"
+        } else if (record!!.type == Constants.TYPE_RENT) {
+            recordHeader.value = "${record!!.rentalPrice}${Strings.priceSuffix}, ${record!!.rentalPeriod} ${Strings.days}"
             recordLabel.value = Strings.titleSectionRentLabel
         }
+
+        recordBody.value = record!!.body
+        recordCategory.value = record!!.category.name
+        recordCategoryDesc.value = record!!.category.description
+        recordAddress.value = "${record!!.address.city}, ${record!!.address.street} ${record!!.address.number}"
     }
 
-    private fun updateProfileInfo(){
-        viewModelScope.launch {
-            startLoading()
+    fun updateProfileInfo(){
+        if(userId == null) {
+            loadError.value = Strings.recordLoadError
+            Timber.e("User id companion object must be set before initializing this view model.")
+            return
+        }
 
-            val resource = userRepository.getUserProfile(userId)
+        viewModelScope.launch {
+            val resource = userRepository.getUserProfile(userId!!)
 
             when (resource) {
                 is Resource.Success -> {
                     endLoading()
-
-                    topBarTitle.value = resource.data?.firstName ?: Strings.defaultUserName
-                    topBarImagePath.value = resource.data?.imagePath ?: ""
+                    val profile: UserProfile = resource.data ?: return@launch
+                    topBarTitle.value = "${profile.firstName} ${profile.lastName}"
+                    topBarImagePath.value = profile.imagePath
+                    recordGeneralOpinion.value = profile.generalOpinion.name
+                    recordGeneralOpinionDesc.value = profile.generalOpinion.description
                 }
                 is Resource.Error<*> -> {
                     endLoadingWithError()

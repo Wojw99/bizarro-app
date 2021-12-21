@@ -39,6 +39,7 @@ import coil.compose.rememberImagePainter
 import com.example.bizarro.api.models.Record
 import com.example.bizarro.ui.Screen
 import com.example.bizarro.ui.components.CustomIconButton
+import com.example.bizarro.ui.screens.record_details.RecordDetailsViewModel
 import com.example.bizarro.ui.theme.*
 import com.example.bizarro.utils.*
 import com.example.bizarro.utils.Dimens
@@ -283,6 +284,8 @@ fun RecordBox(
             .background(kWhite)
             .height(150.dp)
             .clickable {
+                RecordDetailsViewModel.record = record
+                RecordDetailsViewModel.userId = record.userId
                 navController.navigate(Screen.RecordDetails.route)
             }
     ) {

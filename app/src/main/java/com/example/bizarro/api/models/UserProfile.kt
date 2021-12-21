@@ -12,4 +12,5 @@ data class UserProfile (
     val imagePath: String,
     val lastName: String,
     val phone: String,
+    val generalOpinion: GeneralOpinion,
 )

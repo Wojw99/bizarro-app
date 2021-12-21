@@ -1,7 +1,6 @@
 package com.example.bizarro.api.models
 
-data class GeneralOpinion(
+data class Category (
     val name: String,
-    val rank: Int,
     val description: String,
 )

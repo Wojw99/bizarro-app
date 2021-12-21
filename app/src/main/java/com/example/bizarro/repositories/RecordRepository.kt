@@ -34,6 +34,7 @@ class RecordRepository @Inject constructor(
     }
 
     suspend fun getRecordDetails(recordId: Long) : Resource<Record>{
+        delay(1000L)
         val response = try {
             api.getRecordDetails(recordId)
         } catch (e: Exception) {

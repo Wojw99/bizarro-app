@@ -42,6 +42,7 @@ object Strings {
     const val rentHint1 = "Np. 5"
     const val rentHint2 = "Np. 339zł"
     const val buyPriceHint = "Np. 500zł"
+    const val priceSuffix = "zł"
 
     const val min = "Min"
     const val max = "Max"
@@ -52,4 +53,10 @@ object Strings {
     const val titleSectionPurchaseLabel = "Kupię - proponowana cena"
     const val titleSectionSwapLabel = "Zamienię - poszukiwany model"
     const val titleSectionRentLabel = "Wypożyczę - cena i okres"
+    const val description = "Opis"
+    const val info = "info"
+    const val opinions = "Opinie"
+    const val rate = "Oceń"
+    const val recordLoadError = "Nie udało się wczytać ogłoszenia!"
+    const val address = "Adres"
 }

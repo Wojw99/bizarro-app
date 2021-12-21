@@ -25,7 +25,10 @@ var records = [
         rentalPeriod: null,
         swapObject: null,
         rentalPrice: null,
-        categorie: "górski",
+        category: {
+            name: "Górski",
+            description: "Konstrukcja umożliwia poruszanie się w trudnym terenie. Często wybierany jako środek transportu podczas eskapad górskich.",
+        },
         imagePath: "http://10.0.2.2:3000/images/record_1_0.jpg",
     },
     {
@@ -46,7 +49,10 @@ var records = [
         rentalPeriod: null,
         swapObject: null,
         rentalPrice: null,
-        categorie: "miejski",
+        category: {
+            name: "Miejski",
+            description: "Konstrukcja umożliwia szybkie i wygodne poruszanie się po utwardzonej drodze. Często wybierany jako środek transportu podczas przejazdów miejskich.",
+        },
         imagePath: "http://10.0.2.2:3000/images/record_2_0.jpg",
     },
     {
@@ -67,7 +73,10 @@ var records = [
         rentalPeriod: null,
         swapObject: null,
         rentalPrice: null,
-        categorie: "górski",
+        category: {
+            name: "Górski",
+            description: "Konstrukcja umożliwia poruszanie się w trudnym terenie. Często wybierany jako środek transportu podczas eskapad górskich.",
+        },
         imagePath: "http://10.0.2.2:3000/images/record_3_0.jpg",
     },
     {
@@ -88,7 +97,10 @@ var records = [
         rentalPeriod: 7,
         swapObject: null,
         rentalPrice: 66.0,
-        categorie: "górski",
+        category: {
+            name: "Górski",
+            description: "Konstrukcja umożliwia poruszanie się w trudnym terenie. Często wybierany jako środek transportu podczas eskapad górskich.",
+        },
         imagePath: "http://10.0.2.2:3000/images/record_4_0.jpg",
     },
     {
@@ -109,7 +121,10 @@ var records = [
         rentalPeriod: null,
         swapObject: "Super rower górski",
         rentalPrice: null,
-        categorie: "górski",
+        category: {
+            name: "BMX",
+            description: "Rower o wzmocnionej i uproszczonej konstrukcji (bez przerzutek). Wybierany do sportu BMX - jazdy po torach ziemnych z przeszkodami.",
+        },
         imagePath: "http://10.0.2.2:3000/images/record_5_0.jpg",
     },
 ];
@@ -125,7 +140,11 @@ var profiles = [
         creationDate: "20-04-2021",
         description: "Jestem ze Śląska",
         imagePath: "http://10.0.2.2:3000/images/profile_1.png",
-        generalOpinion: "W większości pozytywne",
+        generalOpinion: {
+            name: "W większości pozytywne",
+            rank: "4",
+            description: "Większość użytkowników jest zadowolona z tego kupującego",
+        },
     },
     {
         id: 4,
@@ -137,7 +156,11 @@ var profiles = [
         creationDate: "19-04-2021",
         description: "Pływam łodzią",
         imagePath: "http://10.0.2.2:3000/images/profile_2.png",
-        generalOpinion: "W większości negatywne",
+        generalOpinion: {
+            name: "W większości negatywne",
+            rank: "2",
+            description: "Większość użytkowników nie jest zadowolona z tego kupującego",
+        },
     },
     {
         id: 5,
@@ -149,7 +172,11 @@ var profiles = [
         creationDate: "18-04-2021",
         description: "Fascynat rowerów górski i wieloletni członek klubu rowerowego \"Hamulcowi Tarczownicy\"",
         imagePath: "http://10.0.2.2:3000/images/profile_3.png",
-        generalOpinion: "Bardzo pozytywne",
+        generalOpinion: {
+            name: "Bardzo pozytywne",
+            rank: "5",
+            description: "Przytłaczająca większość użytkowników jest zadowolona z tego kupującego",
+        },
     },
 ];
 

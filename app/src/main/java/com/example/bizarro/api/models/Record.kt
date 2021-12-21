@@ -10,12 +10,11 @@ data class Record(
     val creationDate: LocalDate,
     val address: Address,
     val type: String,
-    val category: String,
+    val category: Category,
     val purchasePrice: Double?,
     val rentalPeriod: Int?,
     val rentalPrice: Double?,
     val salePrice: Double?,
     val swapObject: String?,
     val imagePath: String?,
-    val generalOpinion: String,
 )
