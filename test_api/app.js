@@ -273,6 +273,21 @@ app.get('/api/records', function (request, response) {
     response.send(filtered);
 });
 
+// - - - - - GET for user records - - - - - */
+app.get('/api/users/:userId/records', function (request, response) {
+    var pUserId = request.params.userId;
+
+    var filtered = records;
+
+    if (pUserId != undefined) {
+        filtered = filtered.filter(function (value) {
+            return value.userId == pUserId;
+        });
+    }
+
+    response.send(filtered);
+});
+
 // - - - - - GET for record details - - - - - */
 app.get('/api/records/:recordId', function (request, response) {
     var pRecordId = request.params.recordId;

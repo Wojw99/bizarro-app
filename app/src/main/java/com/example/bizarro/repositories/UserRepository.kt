@@ -2,6 +2,7 @@ package com.example.bizarro.repositories
 
 import com.example.bizarro.api.BizarroApi
 import com.example.bizarro.api.models.Opinion
+import com.example.bizarro.api.models.Record
 import com.example.bizarro.api.models.UserProfile
 import com.example.bizarro.utils.Resource
 import com.example.bizarro.utils.Strings
@@ -32,6 +33,17 @@ class UserRepository @Inject constructor(
         delay(1000L)
         val response = try {
             api.getUserOpinions(userId)
+        } catch (e: Exception) {
+            Timber.e(e)
+            return Resource.Error(Strings.unknownError)
+        }
+        return Resource.Success(response)
+    }
+
+    suspend fun getUserRecords(userId: Long) : Resource<List<Record>> {
+        delay(1000L)
+        val response = try {
+            api.getUserRecords(userId)
         } catch (e: Exception) {
             Timber.e(e)
             return Resource.Error(Strings.unknownError)

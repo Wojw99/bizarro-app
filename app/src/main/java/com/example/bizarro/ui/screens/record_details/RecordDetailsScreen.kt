@@ -13,6 +13,7 @@ import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Clear
+import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.Info
 import androidx.compose.material.icons.outlined.Info
 import androidx.compose.material.icons.outlined.LocationOn
@@ -33,6 +34,7 @@ import coil.compose.ImagePainter
 import coil.compose.rememberImagePainter
 import com.example.bizarro.ui.Screen
 import com.example.bizarro.ui.components.TopBar
+import com.example.bizarro.ui.screens.add_record.AddRecordViewModel
 import com.example.bizarro.ui.theme.*
 import com.example.bizarro.utils.Constants
 import com.example.bizarro.utils.Dimens
@@ -97,7 +99,18 @@ fun RecordDetailsScreen(
             title = viewModel.topBarTitle.value,
             modifier = Modifier
                 .background(kWhite)
-                .align(Alignment.TopCenter)
+                .align(Alignment.TopCenter),
+            actions = if (viewModel.editActionVisible.value)
+                listOf(
+                    TopBarAction(
+                        onClick = {
+                            AddRecordViewModel.record = RecordDetailsViewModel.record
+                            navController.navigate(Screen.AddRecord.route)
+                        },
+                        icon = Icons.Default.Edit,
+                        contentDescription = Strings.edit,
+                    )
+                ) else listOf(),
         )
     }
 }

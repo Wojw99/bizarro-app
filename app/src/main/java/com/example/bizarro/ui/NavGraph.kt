@@ -6,6 +6,7 @@ import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import com.example.bizarro.ui.screens.add_record.AddRecordScreen
 import com.example.bizarro.ui.screens.authenticate.SignInScreen
 import com.example.bizarro.ui.screens.authenticate.SignUpScreen
 import com.example.bizarro.ui.screens.compare.CompareScreen
@@ -25,7 +26,7 @@ import com.example.bizarro.ui.screens.user_record_list.UserRecordListScreen
 fun NavGraph(
     navController: NavHostController
 ) {
-    NavHost(navController = navController, startDestination = Screen.Home.route) {
+    NavHost(navController = navController, startDestination = Screen.UserRecordList.route) {
         composable(route = Screen.SignIn.route){
             SignInScreen(navController)
         }
@@ -80,7 +81,9 @@ fun NavGraph(
         composable(route = Screen.HelpScreen.route){
             HelpScreen(navController)
         }
-
+        composable(route = Screen.AddRecord.route){
+            AddRecordScreen(navController = navController)
+        }
     }
 }
 
@@ -91,13 +94,14 @@ sealed class Screen(val route: String, val name: String){
     object Home: Screen(route = "home_screen", name = "Główna")
     object Compare: Screen(route = "compare_screen", name = "Porównaj")
     object RecordDetails: Screen(route = "record_details_screen", name = "Ogłoszenie")
+    object AddRecord: Screen(route = "record_add_screen", name = "Dodaj ogłoszenie")
     object Search: Screen(route = "search_screen", name = "Szukaj")
     object Filter: Screen(route = "filter_screen", name = "Filtruj")
     object UserProfile: Screen(route = "user_profile_screen", name = "Profil")
     object EditProfile: Screen(route = "user_edit_profile_screen", name = "Edytuj swój profil")
     object OtherUserProfile: Screen(route = "other_user_profile_screen", name = "Profil innego użytkownika")
     object AddOpinion: Screen(route = "add_opinion_screen", name = "Dodaj opinię")
-    object UserRecordList: Screen(route = "user_record_list_screen", name = "Ogłoszenia")
+    object UserRecordList: Screen(route = "user_record_list_screen", name = "Twoje ogłoszenia")
     object SeeOpinionOtherUser: Screen(route = "user_other_see_opinion_screen", name = "Zobacz opinię o innym użytkowniku")
     object SeeYourOpinionsScreen: Screen(route = "user_see_ypur_opinion_screen", name = "Zobacz opinie o swoim profilu")
     object PrivacyPolicyScreen: Screen(route = "user_privacy_policy_screen", name = "Polityka prywatności")

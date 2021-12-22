@@ -33,6 +33,11 @@ interface BizarroApi {
         @Path("userId") userId: Long
     ): List<Opinion>
 
+    @GET("/api/users/{userId}/records")
+    suspend fun getUserRecords(
+        @Path("userId") userId: Long
+    ): List<Record>
+
     // * * * * * POST * * * * *
     @POST("/api/opinions")
     suspend fun addUserOpinion(

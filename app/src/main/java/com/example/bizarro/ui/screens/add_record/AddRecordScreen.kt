@@ -1,58 +1,40 @@
-package com.example.bizarro.ui.screens.filter
+package com.example.bizarro.ui.screens.add_record
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.text.KeyboardActions
-import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.*
+import androidx.compose.material.Button
+import androidx.compose.material.Surface
+import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Clear
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.MutableState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalFocusManager
-import androidx.compose.ui.platform.LocalSoftwareKeyboardController
-import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import com.example.bizarro.ui.Screen
 import com.example.bizarro.ui.components.CustomOutlinedTextField
-import com.example.bizarro.ui.components.CustomTextField
 import com.example.bizarro.ui.components.RadioGroup
 import com.example.bizarro.ui.components.TopBar
-import com.example.bizarro.ui.theme.*
-import com.example.bizarro.utils.CommonMethods
+import com.example.bizarro.ui.screens.filter.headerModifier
+import com.example.bizarro.ui.screens.filter.headerStyle
+import com.example.bizarro.ui.theme.kGray
+import com.example.bizarro.ui.theme.kWhite
 import com.example.bizarro.utils.Constants
 import com.example.bizarro.utils.Dimens
 import com.example.bizarro.utils.Strings
 import com.example.bizarro.utils.models.TopBarAction
 
-val headerStyle = TextStyle(
-    color = kBlack,
-    fontSize = 20.sp,
-    fontWeight = FontWeight.SemiBold,
-)
-
-val headerModifier = Modifier.padding(top = 15.dp, bottom = 5.dp)
-
 @ExperimentalComposeUiApi
 @Composable
-fun FilterScreen(
-    viewModel: FilterViewModel = hiltViewModel(),
+fun AddRecordScreen(
+    viewModel: AddRecordViewModel = hiltViewModel(),
     navController: NavController,
 ) {
     viewModel.appState.bottomMenuVisible.value = false
@@ -69,6 +51,36 @@ fun FilterScreen(
                     .verticalScroll(rememberScrollState())
             ) {
                 Column {
+                    val textFieldModifier = Modifier.fillMaxWidth()
+
+                    // * * * * * RECORD TITLE * * * * *
+                    Text(
+                        modifier = headerModifier,
+                        text = Strings.recordTitle,
+                        style = headerStyle,
+                    )
+                    CustomOutlinedTextField(
+                        value = viewModel.titleText.value,
+                        onValueChange = { viewModel.titleText.value = it },
+                        labelText = Strings.title,
+                        keyboardType = KeyboardType.Text,
+                        modifier = textFieldModifier,
+                    )
+
+                    // * * * * * RECORD DESCRIPTION * * * * *
+                    Text(
+                        modifier = headerModifier,
+                        text = Strings.recordDescription,
+                        style = headerStyle,
+                    )
+                    CustomOutlinedTextField(
+                        value = viewModel.descriptionText.value,
+                        onValueChange = { viewModel.descriptionText.value = it },
+                        labelText = Strings.recordDescription,
+                        keyboardType = KeyboardType.Text,
+                        modifier = textFieldModifier,
+                    )
+
                     // * * * * * RECORD TYPE * * * * *
                     Text(
                         modifier = headerModifier,
@@ -96,14 +108,43 @@ fun FilterScreen(
                     )
                     RadioGroup(selectedLabel = viewModel.selectedProvince, labels = viewModel.provinceLabels)
 
-                    Spacer(modifier = Modifier.height(64.dp))
+                    // * * * * * ADDRESS * * * * *
+                    Text(
+                        modifier = headerModifier,
+                        text = Strings.address,
+                        style = headerStyle,
+                    )
+                    CustomOutlinedTextField(
+                        value = viewModel.cityText.value,
+                        onValueChange = { viewModel.cityText.value = it },
+                        labelText = Strings.city,
+                        keyboardType = KeyboardType.Text,
+                        modifier = textFieldModifier,
+                    )
+                    Spacer(modifier = Modifier.height(8.dp))
+                    CustomOutlinedTextField(
+                        value = viewModel.streetText.value,
+                        onValueChange = { viewModel.streetText.value = it },
+                        labelText = Strings.street,
+                        keyboardType = KeyboardType.Text,
+                        modifier = textFieldModifier,
+                    )
+                    Spacer(modifier = Modifier.height(8.dp))
+                    CustomOutlinedTextField(
+                        value = viewModel.numberText.value,
+                        onValueChange = { viewModel.numberText.value = it },
+                        labelText = Strings.number,
+                        keyboardType = KeyboardType.Text,
+                        modifier = textFieldModifier,
+                    )
+                    
+                    Spacer(modifier = Modifier.height(128.dp))
                 }
             }
 
             // * * * * * ACCEPT BUTTON * * * * *
             Button(
                 onClick = {
-                    viewModel.saveFilters()
                     navController.navigate(Screen.Search.route) {
                         // remove all previous screen in the stack
                         popUpTo(navController.graph.findStartDestination().id) {
@@ -122,7 +163,7 @@ fun FilterScreen(
             // * * * * * * TOP BAR * * * * * *
             TopBar(
                 navController = navController,
-                title = Strings.filterTitle,
+                title = Strings.addRecord,
                 actions = listOf(
                     TopBarAction(
                         onClick = { viewModel.cleanStates() },
@@ -138,11 +179,12 @@ fun FilterScreen(
     }
 }
 
+
 @ExperimentalComposeUiApi
 @Composable
 fun TypeDependentSection(
     modifier: Modifier = Modifier,
-    viewModel: FilterViewModel = hiltViewModel()
+    viewModel: AddRecordViewModel = hiltViewModel()
 ) {
     val type = viewModel.selectedType.value
     Column(modifier = modifier) {
@@ -169,23 +211,12 @@ fun TypeDependentSection(
 
         // * * * * * PRICE MIN-MAX TEXT FIELD * * * * *
         if(type == Constants.TYPE_SELL || type == Constants.TYPE_BUY || type == Constants.TYPE_RENT) {
-            Row(modifier = modifier.fillMaxWidth()) {
-                CustomOutlinedTextField(
-                    modifier = Modifier.weight(1f),
-                    value = viewModel.priceMinText.value,
-                    onValueChange = { viewModel.priceMinText.value = it },
-                    labelText = Strings.min,
-                    keyboardType = KeyboardType.Number,
-                )
-                Spacer(modifier = Modifier.width(Dimens.standardPadding))
-                CustomOutlinedTextField(
-                    modifier = Modifier.weight(1f),
-                    value = viewModel.priceMaxText.value,
-                    onValueChange = { viewModel.priceMaxText.value = it },
-                    labelText = Strings.max,
-                    keyboardType = KeyboardType.Number,
-                )
-            }
+            CustomOutlinedTextField(
+                value = viewModel.priceText.value,
+                onValueChange = { viewModel.priceText.value = it },
+                labelText = Strings.price,
+                keyboardType = KeyboardType.Number,
+            )
         }
 
         // * * * * * ADDITIONAL RENT * * * * *

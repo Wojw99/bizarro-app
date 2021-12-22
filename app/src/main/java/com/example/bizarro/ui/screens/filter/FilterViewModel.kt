@@ -12,79 +12,39 @@ import javax.inject.Inject
 class FilterViewModel @Inject constructor(
     val appState: AppState,
 ) : ViewModel() {
-    val typeStateList = mapOf(
-        Constants.TYPE_BUY to mutableStateOf(false),
-        Constants.TYPE_SELL to mutableStateOf(false),
-        Constants.TYPE_RENT to mutableStateOf(false),
-        Constants.TYPE_SWAP to mutableStateOf(false),
-    )
+    val typeLabels = Constants.types
+    val categoryLabels = Constants.categories
+    val provinceLabels = Constants.provinces
 
-    val categoryStateList = mapOf(
-        Constants.CATEGORY_BMX to mutableStateOf(false),
-        Constants.CATEGORY_GRAVEL to mutableStateOf(false),
-        Constants.CATEGORY_MOUNTAIN to mutableStateOf(false),
-        Constants.CATEGORY_CRUISER to mutableStateOf(false),
-        Constants.CATEGORY_DIRT to mutableStateOf(false),
-    )
+    val selectedType = mutableStateOf("")
+    val selectedCategory = mutableStateOf("")
+    val selectedProvince = mutableStateOf("")
 
-    val provinceStateList = mapOf(
-        Constants.provinces[0] to mutableStateOf(false),
-        Constants.provinces[1] to mutableStateOf(false),
-        Constants.provinces[2] to mutableStateOf(false),
-        Constants.provinces[3] to mutableStateOf(false),
-        Constants.provinces[4] to mutableStateOf(false),
-    )
+    // TODO: Change it to type specific price handling
+    val priceMinText = mutableStateOf("")
+    val priceMaxText = mutableStateOf("")
+    val swapObjectText = mutableStateOf("")
+    val rentPeriodText = mutableStateOf("")
 
     init {
 
     }
 
     fun cleanStates(){
-        for (type in typeStateList)
-            type.value.value = false
+        val empty = ""
 
-        for (category in categoryStateList)
-            category.value.value = false
+        selectedType.value = empty
+        selectedCategory.value = empty
+        selectedProvince.value = empty
 
-        for (province in provinceStateList)
-            province.value.value = false
-    }
-
-    fun loadFilters() {
-        val provinceFilter = appState.filters.first { f -> f.name == Constants.FILTER_PROVINCE }
-
+        // TODO: Change it to type specific price handling
+        priceMinText.value = empty
+        priceMaxText.value = empty
+        swapObjectText.value = empty
+        rentPeriodText.value = empty
     }
 
     fun saveFilters() {
-        val filters = mutableListOf<Filter>()
 
-        for (state in typeStateList) {
-            if (state.value.value) filters.add(
-                Filter(
-                    Constants.FILTER_TYPE,
-                    listOf(state.key),
-                )
-            )
-        }
-
-        for (state in provinceStateList) {
-            if (state.value.value) filters.add(
-                Filter(
-                    Constants.FILTER_PROVINCE,
-                    listOf(state.key),
-                )
-            )
-        }
-
-        for (state in categoryStateList) {
-            if (state.value.value) filters.add(
-                Filter(
-                    Constants.FILTER_CATEGORY,
-                    listOf(state.key),
-                )
-            )
-        }
-
-        appState.filters = filters
     }
 }

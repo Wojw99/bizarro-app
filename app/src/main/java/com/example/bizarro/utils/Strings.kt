@@ -4,11 +4,14 @@ object Strings {
     // * * * * * * * * GENERAL * * * * * * * *
     const val appName = "Bizarro"
     const val unknownError = "Wystąpił niezidentyfikowany problem!"
+    const val networkError = "Wystąpił problem z połączeniem!"
     const val success = "Operacja przebiegła pomyślnie!"
     const val refresh = "Odźwież"
     const val iconBack = "Przycisk cofnięcia"
     const val accept = "Akceptuj"
     const val confirm = "Zatwierdź"
+    const val edit = "Edytuj"
+    const val add = "Dodaj"
 
     // * * * * * * * * SEARCH SCREEN * * * * * * * *
     const val recordImage = "Zdjęcie ogłoszenia."
@@ -32,16 +35,13 @@ object Strings {
     const val city = "Miasto"
 
     const val sellPriceHeader = "Cena sprzedaży"
+    const val rentHeader1 = "Cena wypożyczenia"
+    const val buyPriceHeader = "Cena kupna"
     const val swapHeader = "Co chciałbyś w zamian?"
-    const val rentHeader1 = "Na ile dni?"
-    const val rentHeader2 = "W jakiej cenie?"
-    const val buyPriceHeader = "Ile jesteś gotów maksymalnie zapłacić?"
+    const val rentHeader2 = "Na ile dni?"
 
-    const val sellPriceHint = "Np. 500zł"
     const val swapHint = "Np. Trek Marlin 4"
-    const val rentHint1 = "Np. 5"
-    const val rentHint2 = "Np. 339zł"
-    const val buyPriceHint = "Np. 500zł"
+    const val rentHint = "Np. 5"
     const val priceSuffix = "zł"
 
     const val min = "Min"
@@ -59,4 +59,12 @@ object Strings {
     const val rate = "Oceń"
     const val recordLoadError = "Nie udało się wczytać ogłoszenia!"
     const val address = "Adres"
+
+    // * * * * * * * * ADD RECORD SCREEN * * * * * * * *
+    const val addRecord = "Dodaj ogłoszenie"
+    const val recordTitle = "Tytuł ogłoszenia"
+    const val recordDescription = "Opis"
+    const val title = "Tytuł"
+    const val street = "Ulica"
+    const val number = "Numer domu/mieszkania"
 }

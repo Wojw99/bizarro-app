@@ -43,6 +43,8 @@ class RecordDetailsViewModel @Inject constructor(
     val recordCategoryDesc = mutableStateOf("")
     val recordAddress = mutableStateOf("")
 
+    val editActionVisible = mutableStateOf(userId == userRepository.userId)
+
     init{
         updateProfileInfo()
         updateRecordInfo()

@@ -8,6 +8,7 @@ import dagger.hilt.android.scopes.ActivityScoped
 import kotlinx.coroutines.delay
 import timber.log.Timber
 import java.lang.Exception
+import java.net.ConnectException
 import javax.inject.Inject
 
 @ActivityScoped
@@ -28,7 +29,8 @@ class RecordRepository @Inject constructor(
             api.getRecordList(limit, offset, name, city, province, type, category)
         } catch (e: Exception) {
             Timber.d(e)
-            return Resource.Error(Strings.unknownError)
+            val errorText = parseError(e)
+            return Resource.Error(errorText)
         }
         return Resource.Success(response)
     }
@@ -39,8 +41,16 @@ class RecordRepository @Inject constructor(
             api.getRecordDetails(recordId)
         } catch (e: Exception) {
             Timber.d(e)
-            return Resource.Error(Strings.unknownError)
+            val errorText = parseError(e)
+            return Resource.Error(errorText)
         }
         return Resource.Success(response)
+    }
+
+    private fun parseError(e: Exception): String {
+        if(e is ConnectException) {
+            return Strings.networkError
+        }
+        return Strings.unknownError
     }
 }

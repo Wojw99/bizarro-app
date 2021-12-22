@@ -30,6 +30,21 @@ object Constants {
         "opolskie",
     )
 
+    val categories = listOf(
+        CATEGORY_BMX,
+        CATEGORY_GRAVEL,
+        CATEGORY_MOUNTAIN,
+        CATEGORY_CRUISER,
+        CATEGORY_DIRT,
+    )
+
+    val types = listOf(
+        TYPE_BUY,
+        TYPE_SELL,
+        TYPE_SWAP,
+        TYPE_RENT,
+    )
+
     val isDark = mutableStateOf(false)
 
     fun checkIsDark()

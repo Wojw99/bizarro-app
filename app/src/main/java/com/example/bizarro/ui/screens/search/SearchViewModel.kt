@@ -25,7 +25,6 @@ class SearchViewModel @Inject constructor(
     val filterList = mutableStateOf(appState.filters)
 
     init {
-        Timber.d("Init")
         updateRecordList()
     }
 
@@ -81,7 +80,7 @@ class SearchViewModel @Inject constructor(
                     recordList.value = resource.data ?: listOf()
                 }
                 is Resource.Error<*> -> {
-                    endLoadingWithError()
+                    endLoadingWithError(resource.message!!)
                     recordList.value = listOf()
                 }
             }
