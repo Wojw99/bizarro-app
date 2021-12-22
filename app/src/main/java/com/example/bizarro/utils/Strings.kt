@@ -12,6 +12,8 @@ object Strings {
     const val confirm = "Zatwierdź"
     const val edit = "Edytuj"
     const val add = "Dodaj"
+    const val error = "Błąd!"
+    const val success2 = "Sukces!"
 
     // * * * * * * * * SEARCH SCREEN * * * * * * * *
     const val recordImage = "Zdjęcie ogłoszenia."
@@ -67,4 +69,7 @@ object Strings {
     const val title = "Tytuł"
     const val street = "Ulica"
     const val number = "Numer domu/mieszkania"
+
+    // * * * * * * ERRORS * * * * * *
+    const val notFoundError = "Nie odnaleziono żądanego zasobu!"
 }

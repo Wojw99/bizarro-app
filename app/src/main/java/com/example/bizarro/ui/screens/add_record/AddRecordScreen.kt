@@ -4,9 +4,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.Button
-import androidx.compose.material.Surface
-import androidx.compose.material.Text
+import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Clear
 import androidx.compose.runtime.Composable
@@ -19,6 +17,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import com.example.bizarro.ui.Screen
+import com.example.bizarro.ui.components.ConfirmAlertDialog
 import com.example.bizarro.ui.components.CustomOutlinedTextField
 import com.example.bizarro.ui.components.RadioGroup
 import com.example.bizarro.ui.components.TopBar
@@ -87,7 +86,10 @@ fun AddRecordScreen(
                         text = Strings.recordType,
                         style = headerStyle,
                     )
-                    RadioGroup(selectedLabel = viewModel.selectedType, labels = viewModel.typeLabels)
+                    RadioGroup(
+                        selectedLabel = viewModel.selectedType,
+                        labels = viewModel.typeLabels
+                    )
 
                     // * * * * * TYPE DEPENDENT SECTION * * * * *
                     TypeDependentSection()
@@ -98,7 +100,10 @@ fun AddRecordScreen(
                         text = Strings.category,
                         style = headerStyle,
                     )
-                    RadioGroup(selectedLabel = viewModel.selectedCategory, labels = viewModel.categoryLabels)
+                    RadioGroup(
+                        selectedLabel = viewModel.selectedCategory,
+                        labels = viewModel.categoryLabels
+                    )
 
                     // * * * * * PROVINCE * * * * *
                     Text(
@@ -106,7 +111,10 @@ fun AddRecordScreen(
                         text = Strings.province,
                         style = headerStyle,
                     )
-                    RadioGroup(selectedLabel = viewModel.selectedProvince, labels = viewModel.provinceLabels)
+                    RadioGroup(
+                        selectedLabel = viewModel.selectedProvince,
+                        labels = viewModel.provinceLabels
+                    )
 
                     // * * * * * ADDRESS * * * * *
                     Text(
@@ -137,7 +145,7 @@ fun AddRecordScreen(
                         keyboardType = KeyboardType.Text,
                         modifier = textFieldModifier,
                     )
-                    
+
                     Spacer(modifier = Modifier.height(128.dp))
                 }
             }
@@ -145,12 +153,7 @@ fun AddRecordScreen(
             // * * * * * ACCEPT BUTTON * * * * *
             Button(
                 onClick = {
-                    navController.navigate(Screen.Search.route) {
-                        // remove all previous screen in the stack
-                        popUpTo(navController.graph.findStartDestination().id) {
-                            inclusive = true
-                        }
-                    }
+                    viewModel.confirmAdding()
                 },
                 modifier = Modifier
                     .fillMaxWidth()
@@ -175,6 +178,36 @@ fun AddRecordScreen(
                     .background(kWhite)
                     .align(Alignment.TopCenter)
             )
+
+            // * * * * * * ERROR DIALOG * * * * * *
+            if (viewModel.loadError.value.isNotEmpty()) {
+                ConfirmAlertDialog(
+                    onDismiss = { viewModel.clearError() },
+                    title = Strings.error,
+                    body = viewModel.loadError.value,
+                )
+            }
+
+            // * * * * * * SUCCESS DIALOG * * * * * *
+            if (viewModel.isSuccess.value) {
+                ConfirmAlertDialog(
+                    onDismiss = {
+                        navController.navigate(Screen.Search.route) {
+                            // remove all previous screen in the stack
+                            popUpTo(navController.graph.findStartDestination().id) {
+                                inclusive = true
+                            }
+                        }
+                    },
+                    title = Strings.success2,
+                    body = Strings.success,
+                )
+            }
+
+            // * * * * * * PROGRESS BAR * * * * * *
+            if (viewModel.isLoading.value) {
+                CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
+            }
         }
     }
 }
@@ -189,7 +222,7 @@ fun TypeDependentSection(
     val type = viewModel.selectedType.value
     Column(modifier = modifier) {
         // * * * * * PRICE MIN-MAX HEADER * * * * *
-        if(type == Constants.TYPE_SELL) {
+        if (type == Constants.TYPE_SELL) {
             Text(
                 modifier = headerModifier,
                 text = Strings.sellPriceHeader,
@@ -210,7 +243,7 @@ fun TypeDependentSection(
         }
 
         // * * * * * PRICE MIN-MAX TEXT FIELD * * * * *
-        if(type == Constants.TYPE_SELL || type == Constants.TYPE_BUY || type == Constants.TYPE_RENT) {
+        if (type == Constants.TYPE_SELL || type == Constants.TYPE_BUY || type == Constants.TYPE_RENT) {
             CustomOutlinedTextField(
                 value = viewModel.priceText.value,
                 onValueChange = { viewModel.priceText.value = it },
@@ -220,7 +253,7 @@ fun TypeDependentSection(
         }
 
         // * * * * * ADDITIONAL RENT * * * * *
-        if(type == Constants.TYPE_RENT) {
+        if (type == Constants.TYPE_RENT) {
             Text(
                 modifier = headerModifier,
                 text = Strings.rentHeader2,
@@ -235,7 +268,7 @@ fun TypeDependentSection(
         }
 
         // * * * * * SWAP * * * * *
-        if(type == Constants.TYPE_SWAP) {
+        if (type == Constants.TYPE_SWAP) {
             Text(
                 modifier = headerModifier,
                 text = Strings.swapHeader,

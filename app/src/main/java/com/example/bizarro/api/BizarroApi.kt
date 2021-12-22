@@ -18,7 +18,7 @@ interface BizarroApi {
         @Query("category") category: String?,
     ): List<Record>
 
-    @GET("records/{recordId}")
+    @GET("/api/records/{recordId}")
     suspend fun getRecordDetails(
         @Path("recordId") recordId: Long
     ): Record
@@ -43,6 +43,11 @@ interface BizarroApi {
     suspend fun addUserOpinion(
         @Body opinion: Opinion,
     ): Opinion
+
+    @POST("/api/records")
+    suspend fun addRecord(
+        @Body record: Record,
+    ): Record
 
     // * * * * * PUT * * * * *
 
