@@ -2,16 +2,20 @@ package com.example.bizarro.ui.screens.filter
 
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.example.bizarro.ui.AppState
+import com.example.bizarro.ui.NetworkingViewModel
 import com.example.bizarro.utils.Constants
 import com.example.bizarro.utils.models.Filter
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class FilterViewModel @Inject constructor(
     val appState: AppState,
-) : ViewModel() {
+) : NetworkingViewModel() {
     val typeLabels = Constants.types
     val categoryLabels = Constants.categories
     val provinceLabels = Constants.provinces
@@ -45,6 +49,10 @@ class FilterViewModel @Inject constructor(
     }
 
     fun saveFilters() {
-
+        viewModelScope.launch {
+            startLoading()
+            delay(1000L)
+            endLoading()
+        }
     }
 }

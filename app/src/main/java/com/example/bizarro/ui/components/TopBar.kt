@@ -1,5 +1,6 @@
 package com.example.bizarro.ui.components
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
@@ -25,6 +26,7 @@ fun TopBar(
     title: String = "",
     actions: List<TopBarAction> = listOf(),
     showBackButton: Boolean = true,
+    onTitleClick: () -> Unit = {},
 ) {
     Row(
         modifier = modifier
@@ -53,7 +55,11 @@ fun TopBar(
 
         Spacer(modifier = Modifier.width(10.dp))
 
-        Text(text = title, style = TextStyle(fontSize = 20.sp, fontWeight = FontWeight.SemiBold))
+        Text(
+            text = title,
+            style = TextStyle(fontSize = 20.sp, fontWeight = FontWeight.SemiBold),
+            modifier = Modifier.clickable { onTitleClick() },
+        )
 
         Spacer(modifier = Modifier.width(Dimens.standardPadding))
 

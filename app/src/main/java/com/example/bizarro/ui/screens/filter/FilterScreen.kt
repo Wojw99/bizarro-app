@@ -30,10 +30,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import com.example.bizarro.ui.Screen
-import com.example.bizarro.ui.components.CustomOutlinedTextField
-import com.example.bizarro.ui.components.CustomTextField
-import com.example.bizarro.ui.components.RadioGroup
-import com.example.bizarro.ui.components.TopBar
+import com.example.bizarro.ui.components.*
 import com.example.bizarro.ui.theme.*
 import com.example.bizarro.utils.CommonMethods
 import com.example.bizarro.utils.Constants
@@ -57,85 +54,102 @@ fun FilterScreen(
 ) {
     viewModel.appState.bottomMenuVisible.value = false
 
-    Surface(color = kGray) {
-        Box {
-            // * * * * * * BODY * * * * * *
-            Box(
-                modifier = Modifier
-                    .background(kWhite)
-                    .padding(horizontal = Dimens.standardPadding * 2)
-                    .padding(top = Dimens.topBarHeight)
-                    .fillMaxSize()
-                    .verticalScroll(rememberScrollState())
-            ) {
-                Column {
-                    // * * * * * RECORD TYPE * * * * *
-                    Text(
-                        modifier = headerModifier,
-                        text = Strings.recordType,
-                        style = headerStyle,
-                    )
-                    RadioGroup(selectedLabel = viewModel.selectedType, labels = viewModel.typeLabels)
+    Box {
+        // * * * * * * BODY * * * * * *
+        Column(
+            modifier = Modifier
+                .background(kWhite)
+                .padding(horizontal = Dimens.standardPadding * 2)
+                .padding(top = Dimens.topBarHeight)
+                .fillMaxSize()
+                .verticalScroll(rememberScrollState())
+        ) {
+            // * * * * * RECORD TYPE * * * * *
+            Text(
+                modifier = headerModifier,
+                text = Strings.recordType,
+                style = headerStyle,
+            )
+            RadioGroup(selectedLabel = viewModel.selectedType, labels = viewModel.typeLabels)
 
-                    // * * * * * TYPE DEPENDENT SECTION * * * * *
-                    TypeDependentSection()
+            // * * * * * TYPE DEPENDENT SECTION * * * * *
+            TypeDependentSection()
 
-                    // * * * * * CATEGORY * * * * *
-                    Text(
-                        modifier = headerModifier,
-                        text = Strings.category,
-                        style = headerStyle,
-                    )
-                    RadioGroup(selectedLabel = viewModel.selectedCategory, labels = viewModel.categoryLabels)
+            // * * * * * CATEGORY * * * * *
+            Text(
+                modifier = headerModifier,
+                text = Strings.category,
+                style = headerStyle,
+            )
+            RadioGroup(
+                selectedLabel = viewModel.selectedCategory,
+                labels = viewModel.categoryLabels
+            )
 
-                    // * * * * * PROVINCE * * * * *
-                    Text(
-                        modifier = headerModifier,
-                        text = Strings.province,
-                        style = headerStyle,
-                    )
-                    RadioGroup(selectedLabel = viewModel.selectedProvince, labels = viewModel.provinceLabels)
+            // * * * * * PROVINCE * * * * *
+            Text(
+                modifier = headerModifier,
+                text = Strings.province,
+                style = headerStyle,
+            )
+            RadioGroup(
+                selectedLabel = viewModel.selectedProvince,
+                labels = viewModel.provinceLabels
+            )
 
-                    Spacer(modifier = Modifier.height(64.dp))
-                }
-            }
+            Spacer(modifier = Modifier.height(64.dp))
+        }
 
-            // * * * * * ACCEPT BUTTON * * * * *
-            Button(
-                onClick = {
-                    viewModel.saveFilters()
-                    navController.navigate(Screen.Search.route) {
-                        // remove all previous screen in the stack
-                        popUpTo(navController.graph.findStartDestination().id) {
-                            inclusive = true
-                        }
-                    }
-                },
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .align(Alignment.BottomCenter)
-                    .padding(Dimens.standardPadding)
-            ) {
-                Text(text = Strings.confirm)
-            }
+        // * * * * * ACCEPT BUTTON * * * * *
+        Button(
+            onClick = {
+                viewModel.saveFilters()
+//                navController.navigate(Screen.Search.route) {
+//                    // remove all previous screen in the stack
+//                    popUpTo(navController.graph.findStartDestination().id) {
+//                        inclusive = true
+//                    }
+//                }
+            },
+            modifier = Modifier
+                .fillMaxWidth()
+                .align(Alignment.BottomCenter)
+                .padding(Dimens.standardPadding)
+        ) {
+            Text(text = Strings.confirm)
+        }
 
-            // * * * * * * TOP BAR * * * * * *
-            TopBar(
-                navController = navController,
-                title = Strings.filterTitle,
-                actions = listOf(
-                    TopBarAction(
-                        onClick = { viewModel.cleanStates() },
-                        icon = Icons.Default.Clear,
-                        contentDescription = Strings.clearFilters,
-                    ),
+        // * * * * * * TOP BAR * * * * * *
+        TopBar(
+            navController = navController,
+            title = Strings.filterTitle,
+            actions = listOf(
+                TopBarAction(
+                    onClick = { viewModel.cleanStates() },
+                    icon = Icons.Default.Clear,
+                    contentDescription = Strings.clearFilters,
                 ),
-                modifier = Modifier
-                    .background(kWhite)
-                    .align(Alignment.TopCenter)
+            ),
+            modifier = Modifier
+                .background(kWhite)
+                .align(Alignment.TopCenter)
+        )
+
+        // * * * * * * ERROR DIALOG * * * * * *
+        if (viewModel.loadError.value.isNotEmpty()) {
+            ConfirmAlertDialog(
+                onDismiss = { viewModel.clearError() },
+                title = Strings.error,
+                body = viewModel.loadError.value,
             )
         }
+
+        // * * * * * * PROGRESS BAR * * * * * *
+        if(viewModel.isLoading.value) {
+            LoadingBox()
+        }
     }
+
 }
 
 @ExperimentalComposeUiApi
@@ -147,7 +161,7 @@ fun TypeDependentSection(
     val type = viewModel.selectedType.value
     Column(modifier = modifier) {
         // * * * * * PRICE MIN-MAX HEADER * * * * *
-        if(type == Constants.TYPE_SELL) {
+        if (type == Constants.TYPE_SELL) {
             Text(
                 modifier = headerModifier,
                 text = Strings.sellPriceHeader,
@@ -168,7 +182,7 @@ fun TypeDependentSection(
         }
 
         // * * * * * PRICE MIN-MAX TEXT FIELD * * * * *
-        if(type == Constants.TYPE_SELL || type == Constants.TYPE_BUY || type == Constants.TYPE_RENT) {
+        if (type == Constants.TYPE_SELL || type == Constants.TYPE_BUY || type == Constants.TYPE_RENT) {
             Row(modifier = modifier.fillMaxWidth()) {
                 CustomOutlinedTextField(
                     modifier = Modifier.weight(1f),
@@ -189,7 +203,7 @@ fun TypeDependentSection(
         }
 
         // * * * * * ADDITIONAL RENT * * * * *
-        if(type == Constants.TYPE_RENT) {
+        if (type == Constants.TYPE_RENT) {
             Text(
                 modifier = headerModifier,
                 text = Strings.rentHeader2,
@@ -204,7 +218,7 @@ fun TypeDependentSection(
         }
 
         // * * * * * SWAP * * * * *
-        if(type == Constants.TYPE_SWAP) {
+        if (type == Constants.TYPE_SWAP) {
             Text(
                 modifier = headerModifier,
                 text = Strings.swapHeader,

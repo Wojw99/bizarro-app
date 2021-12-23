@@ -44,6 +44,7 @@ class AddRecordViewModel @Inject constructor(
     val numberText = mutableStateOf("")
 
     val isSuccess = mutableStateOf(false)
+    val isEditScreen = mutableStateOf(record != null)
 
     init {
         if(record != null) {

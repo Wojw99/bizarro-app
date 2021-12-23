@@ -6,6 +6,7 @@ import com.example.bizarro.utils.models.Filter
 
 class AppState {
     val bottomMenuVisible = mutableStateOf(true)
+    val userId = 0L
 
     var filters = listOf(
         Filter(Constants.FILTER_CITY, listOf()),

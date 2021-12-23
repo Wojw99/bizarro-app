@@ -17,10 +17,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import com.example.bizarro.ui.Screen
-import com.example.bizarro.ui.components.ConfirmAlertDialog
-import com.example.bizarro.ui.components.CustomOutlinedTextField
-import com.example.bizarro.ui.components.RadioGroup
-import com.example.bizarro.ui.components.TopBar
+import com.example.bizarro.ui.components.*
 import com.example.bizarro.ui.screens.filter.headerModifier
 import com.example.bizarro.ui.screens.filter.headerStyle
 import com.example.bizarro.ui.theme.kGray
@@ -38,178 +35,176 @@ fun AddRecordScreen(
 ) {
     viewModel.appState.bottomMenuVisible.value = false
 
-    Surface(color = kGray) {
-        Box {
-            // * * * * * * BODY * * * * * *
-            Box(
-                modifier = Modifier
-                    .background(kWhite)
-                    .padding(horizontal = Dimens.standardPadding * 2)
-                    .padding(top = Dimens.topBarHeight)
-                    .fillMaxSize()
-                    .verticalScroll(rememberScrollState())
-            ) {
-                Column {
-                    val textFieldModifier = Modifier.fillMaxWidth()
+    Box {
+        // * * * * * * BODY * * * * * *
+        Column(
+            modifier = Modifier
+                .background(kWhite)
+                .padding(horizontal = Dimens.standardPadding * 2)
+                .padding(top = Dimens.topBarHeight)
+                .fillMaxSize()
+                .verticalScroll(rememberScrollState())
+        ) {
+            val textFieldModifier = Modifier.fillMaxWidth()
 
-                    // * * * * * RECORD TITLE * * * * *
-                    Text(
-                        modifier = headerModifier,
-                        text = Strings.recordTitle,
-                        style = headerStyle,
-                    )
-                    CustomOutlinedTextField(
-                        value = viewModel.titleText.value,
-                        onValueChange = { viewModel.titleText.value = it },
-                        labelText = Strings.title,
-                        keyboardType = KeyboardType.Text,
-                        modifier = textFieldModifier,
-                    )
-
-                    // * * * * * RECORD DESCRIPTION * * * * *
-                    Text(
-                        modifier = headerModifier,
-                        text = Strings.recordDescription,
-                        style = headerStyle,
-                    )
-                    CustomOutlinedTextField(
-                        value = viewModel.descriptionText.value,
-                        onValueChange = { viewModel.descriptionText.value = it },
-                        labelText = Strings.recordDescription,
-                        keyboardType = KeyboardType.Text,
-                        modifier = textFieldModifier,
-                    )
-
-                    // * * * * * RECORD TYPE * * * * *
-                    Text(
-                        modifier = headerModifier,
-                        text = Strings.recordType,
-                        style = headerStyle,
-                    )
-                    RadioGroup(
-                        selectedLabel = viewModel.selectedType,
-                        labels = viewModel.typeLabels
-                    )
-
-                    // * * * * * TYPE DEPENDENT SECTION * * * * *
-                    TypeDependentSection()
-
-                    // * * * * * CATEGORY * * * * *
-                    Text(
-                        modifier = headerModifier,
-                        text = Strings.category,
-                        style = headerStyle,
-                    )
-                    RadioGroup(
-                        selectedLabel = viewModel.selectedCategory,
-                        labels = viewModel.categoryLabels
-                    )
-
-                    // * * * * * PROVINCE * * * * *
-                    Text(
-                        modifier = headerModifier,
-                        text = Strings.province,
-                        style = headerStyle,
-                    )
-                    RadioGroup(
-                        selectedLabel = viewModel.selectedProvince,
-                        labels = viewModel.provinceLabels
-                    )
-
-                    // * * * * * ADDRESS * * * * *
-                    Text(
-                        modifier = headerModifier,
-                        text = Strings.address,
-                        style = headerStyle,
-                    )
-                    CustomOutlinedTextField(
-                        value = viewModel.cityText.value,
-                        onValueChange = { viewModel.cityText.value = it },
-                        labelText = Strings.city,
-                        keyboardType = KeyboardType.Text,
-                        modifier = textFieldModifier,
-                    )
-                    Spacer(modifier = Modifier.height(8.dp))
-                    CustomOutlinedTextField(
-                        value = viewModel.streetText.value,
-                        onValueChange = { viewModel.streetText.value = it },
-                        labelText = Strings.street,
-                        keyboardType = KeyboardType.Text,
-                        modifier = textFieldModifier,
-                    )
-                    Spacer(modifier = Modifier.height(8.dp))
-                    CustomOutlinedTextField(
-                        value = viewModel.numberText.value,
-                        onValueChange = { viewModel.numberText.value = it },
-                        labelText = Strings.number,
-                        keyboardType = KeyboardType.Text,
-                        modifier = textFieldModifier,
-                    )
-
-                    Spacer(modifier = Modifier.height(128.dp))
-                }
-            }
-
-            // * * * * * ACCEPT BUTTON * * * * *
-            Button(
-                onClick = {
-                    viewModel.confirmAdding()
-                },
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .align(Alignment.BottomCenter)
-                    .padding(Dimens.standardPadding)
-            ) {
-                Text(text = Strings.confirm)
-            }
-
-            // * * * * * * TOP BAR * * * * * *
-            TopBar(
-                navController = navController,
-                title = Strings.addRecord,
-                actions = listOf(
-                    TopBarAction(
-                        onClick = { viewModel.cleanStates() },
-                        icon = Icons.Default.Clear,
-                        contentDescription = Strings.clearFilters,
-                    ),
-                ),
-                modifier = Modifier
-                    .background(kWhite)
-                    .align(Alignment.TopCenter)
+            // * * * * * RECORD TITLE * * * * *
+            Text(
+                modifier = headerModifier,
+                text = Strings.recordTitle,
+                style = headerStyle,
+            )
+            CustomOutlinedTextField(
+                value = viewModel.titleText.value,
+                onValueChange = { viewModel.titleText.value = it },
+                labelText = Strings.title,
+                keyboardType = KeyboardType.Text,
+                modifier = textFieldModifier,
             )
 
-            // * * * * * * ERROR DIALOG * * * * * *
-            if (viewModel.loadError.value.isNotEmpty()) {
-                ConfirmAlertDialog(
-                    onDismiss = { viewModel.clearError() },
-                    title = Strings.error,
-                    body = viewModel.loadError.value,
-                )
-            }
+            // * * * * * RECORD DESCRIPTION * * * * *
+            Text(
+                modifier = headerModifier,
+                text = Strings.recordDescription,
+                style = headerStyle,
+            )
+            CustomOutlinedTextField(
+                value = viewModel.descriptionText.value,
+                onValueChange = { viewModel.descriptionText.value = it },
+                labelText = Strings.recordDescription,
+                keyboardType = KeyboardType.Text,
+                modifier = textFieldModifier,
+            )
 
-            // * * * * * * SUCCESS DIALOG * * * * * *
-            if (viewModel.isSuccess.value) {
-                ConfirmAlertDialog(
-                    onDismiss = {
-                        navController.navigate(Screen.Search.route) {
-                            // remove all previous screen in the stack
-                            popUpTo(navController.graph.findStartDestination().id) {
-                                inclusive = true
-                            }
+            // * * * * * RECORD TYPE * * * * *
+            Text(
+                modifier = headerModifier,
+                text = Strings.recordType,
+                style = headerStyle,
+            )
+            RadioGroup(
+                selectedLabel = viewModel.selectedType,
+                labels = viewModel.typeLabels
+            )
+
+            // * * * * * TYPE DEPENDENT SECTION * * * * *
+            TypeDependentSection()
+
+            // * * * * * CATEGORY * * * * *
+            Text(
+                modifier = headerModifier,
+                text = Strings.category,
+                style = headerStyle,
+            )
+            RadioGroup(
+                selectedLabel = viewModel.selectedCategory,
+                labels = viewModel.categoryLabels
+            )
+
+            // * * * * * PROVINCE * * * * *
+            Text(
+                modifier = headerModifier,
+                text = Strings.province,
+                style = headerStyle,
+            )
+            RadioGroup(
+                selectedLabel = viewModel.selectedProvince,
+                labels = viewModel.provinceLabels
+            )
+
+            // * * * * * ADDRESS * * * * *
+            Text(
+                modifier = headerModifier,
+                text = Strings.address,
+                style = headerStyle,
+            )
+            CustomOutlinedTextField(
+                value = viewModel.cityText.value,
+                onValueChange = { viewModel.cityText.value = it },
+                labelText = Strings.city,
+                keyboardType = KeyboardType.Text,
+                modifier = textFieldModifier,
+            )
+            Spacer(modifier = Modifier.height(8.dp))
+            CustomOutlinedTextField(
+                value = viewModel.streetText.value,
+                onValueChange = { viewModel.streetText.value = it },
+                labelText = Strings.street,
+                keyboardType = KeyboardType.Text,
+                modifier = textFieldModifier,
+            )
+            Spacer(modifier = Modifier.height(8.dp))
+            CustomOutlinedTextField(
+                value = viewModel.numberText.value,
+                onValueChange = { viewModel.numberText.value = it },
+                labelText = Strings.number,
+                keyboardType = KeyboardType.Text,
+                modifier = textFieldModifier,
+            )
+
+            Spacer(modifier = Modifier.height(128.dp))
+        }
+
+
+        // * * * * * ACCEPT BUTTON * * * * *
+        Button(
+            onClick = {
+                viewModel.confirmAdding()
+            },
+            modifier = Modifier
+                .fillMaxWidth()
+                .align(Alignment.BottomCenter)
+                .padding(Dimens.standardPadding)
+        ) {
+            Text(text = Strings.confirm)
+        }
+
+        // * * * * * * TOP BAR * * * * * *
+        TopBar(
+            navController = navController,
+            title = if(viewModel.isEditScreen.value) Strings.editRecord else Strings.addRecord,
+            actions = listOf(
+                TopBarAction(
+                    onClick = { viewModel.cleanStates() },
+                    icon = Icons.Default.Clear,
+                    contentDescription = Strings.clearFilters,
+                ),
+            ),
+            modifier = Modifier
+                .background(kWhite)
+                .align(Alignment.TopCenter)
+        )
+
+        // * * * * * * ERROR DIALOG * * * * * *
+        if (viewModel.loadError.value.isNotEmpty()) {
+            ConfirmAlertDialog(
+                onDismiss = { viewModel.clearError() },
+                title = Strings.error,
+                body = viewModel.loadError.value,
+            )
+        }
+
+        // * * * * * * SUCCESS DIALOG * * * * * *
+        if (viewModel.isSuccess.value) {
+            ConfirmAlertDialog(
+                onDismiss = {
+                    navController.navigate(Screen.Search.route) {
+                        // remove all previous screen in the stack
+                        popUpTo(navController.graph.findStartDestination().id) {
+                            inclusive = true
                         }
-                    },
-                    title = Strings.success2,
-                    body = Strings.success,
-                )
-            }
+                    }
+                },
+                title = Strings.success2,
+                body = Strings.success,
+            )
+        }
 
-            // * * * * * * PROGRESS BAR * * * * * *
-            if (viewModel.isLoading.value) {
-                CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
-            }
+        // * * * * * * PROGRESS BAR * * * * * *
+        if (viewModel.isLoading.value) {
+            LoadingBox()
         }
     }
+
 }
 
 

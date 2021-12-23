@@ -256,7 +256,7 @@ fun HeaderSectionOtherUserProfile(navController: NavController)
 
         IconButton(
             onClick = {
-                navController.navigate(route = Screen.Settings.route)
+                navController.popBackStack()
             },
             modifier = Modifier.align(Alignment.CenterStart)
         ) {

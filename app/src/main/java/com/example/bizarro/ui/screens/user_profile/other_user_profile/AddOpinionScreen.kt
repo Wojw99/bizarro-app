@@ -14,6 +14,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -43,9 +44,10 @@ fun AddOpinionScreen(navController: NavController,
 
             HeaderSectionAddOpinion(navController)
 
-            Text("Dodaj swoją opinię!",
-                style = MaterialTheme.typography.caption,
-                color = MaterialTheme.colors.onSurface
+            Text("Dodaj opinię o użytkowniku ${viewModel.nameUser}!",
+                style = TextStyle(textAlign = TextAlign.Center, fontSize = 21.sp, fontFamily = FontFamily.Serif,),
+                color = colors.onSurface,
+                modifier = Modifier.padding(horizontal = 24.dp),
             )
 
             Spacer(modifier = Modifier.height(40.dp))
@@ -130,7 +132,7 @@ fun HeaderSectionAddOpinion(navController: NavController)
 
         IconButton(
             onClick = {
-                navController.navigate(route = Screen.OtherUserProfile.route)
+                navController.popBackStack()
             },
             modifier = Modifier.align(Alignment.CenterStart)
         ) {

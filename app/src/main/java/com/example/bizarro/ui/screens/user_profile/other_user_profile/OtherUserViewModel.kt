@@ -21,7 +21,10 @@ class OtherUserViewModel @Inject constructor(
     private val repository: UserRepository,
 ): ViewModel()
 {
-    val otherUserId = 1L
+    companion object{
+        var otherUserId = 1L
+    }
+
     var addedOpinionOfUser = ""
 
     val loadError = mutableStateOf("")

@@ -112,7 +112,7 @@ fun HeaderSectionSeeOpinionOtherUser(navController: NavController)
 
         IconButton(
             onClick = {
-                navController.navigate(route = Screen.OtherUserProfile.route)
+                navController.popBackStack()
             },
             modifier = Modifier.align(Alignment.CenterStart)
         ) {

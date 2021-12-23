@@ -4,7 +4,6 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.viewModelScope
 import com.example.bizarro.api.models.Record
 import com.example.bizarro.api.models.UserProfile
-import com.example.bizarro.repositories.RecordRepository
 import com.example.bizarro.repositories.UserRepository
 import com.example.bizarro.ui.AppState
 import com.example.bizarro.ui.NetworkingViewModel
@@ -43,7 +42,7 @@ class RecordDetailsViewModel @Inject constructor(
     val recordCategoryDesc = mutableStateOf("")
     val recordAddress = mutableStateOf("")
 
-    val editActionVisible = mutableStateOf(userId == userRepository.userId)
+    val isCurrentUser = mutableStateOf(userId == userRepository.userId)
 
     init{
         updateProfileInfo()
@@ -89,11 +88,13 @@ class RecordDetailsViewModel @Inject constructor(
         }
 
         viewModelScope.launch {
+            startLoading()
             val resource = userRepository.getUserProfile(userId!!)
 
             when (resource) {
                 is Resource.Success -> {
                     endLoading()
+
                     val profile: UserProfile = resource.data ?: return@launch
                     topBarTitle.value = "${profile.firstName} ${profile.lastName}"
                     topBarImagePath.value = profile.imagePath

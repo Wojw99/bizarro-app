@@ -64,6 +64,7 @@ object Strings {
 
     // * * * * * * * * ADD RECORD SCREEN * * * * * * * *
     const val addRecord = "Dodaj ogłoszenie"
+    const val editRecord = "Edytuj ogłoszenie"
     const val recordTitle = "Tytuł ogłoszenia"
     const val recordDescription = "Opis"
     const val title = "Tytuł"
