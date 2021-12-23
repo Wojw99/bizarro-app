@@ -30,66 +30,66 @@ fun UserRecordListScreen(
 ) {
     viewModel.appState.bottomMenuVisible.value = true
 
-    Surface {
-        Box(
-            modifier = Modifier
-                .fillMaxSize()
-                .background(kLightGray)
-                .padding(Dimens.standardPadding)
+    Box(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(kLightGray)
+            .padding(Dimens.standardPadding)
+    ) {
+        // * * * * * * ERROR TEXT * * * * * *
+        if (viewModel.loadError.value.isNotEmpty()
+            && !viewModel.isLoading.value
         ) {
-            // * * * * * * ERROR TEXT * * * * * *
-            if (viewModel.loadError.value.isNotEmpty()
-                && !viewModel.isLoading.value
-            ) {
-                Column(
-                    verticalArrangement = Arrangement.Center,
-                    horizontalAlignment = Alignment.CenterHorizontally,
-                    modifier = Modifier.fillMaxSize(),
-                ) {
-                    Text(
-                        text = viewModel.loadError.value,
-                    )
-                    Spacer(modifier = Modifier.height(Dimens.standardPadding))
-                    Button(onClick = { viewModel.updateRecordList() }) {
-                        Text(
-                            text = Strings.refresh,
-                        )
-                    }
-                }
-            }
-
-            // * * * * * * EMPTY TEXT * * * * * *
-            if (viewModel.recordList.value.isEmpty()
-                && !viewModel.isLoading.value
-                && viewModel.loadError.value.isEmpty()
+            Column(
+                verticalArrangement = Arrangement.Center,
+                horizontalAlignment = Alignment.CenterHorizontally,
+                modifier = Modifier.fillMaxSize(),
             ) {
                 Text(
-                    text = Strings.listIsEmpty,
-                    modifier = Modifier.align(Alignment.Center)
+                    text = viewModel.loadError.value,
                 )
+                Spacer(modifier = Modifier.height(Dimens.standardPadding))
+                Button(onClick = { viewModel.updateRecordList() }) {
+                    Text(
+                        text = Strings.refresh,
+                    )
+                }
             }
+        }
 
-            // * * * * * * RECORD LIST * * * * * *
-            if (viewModel.recordList.value.isNotEmpty() && !viewModel.isLoading.value) {
-                RecordList(navController = navController)
-            }
+        // * * * * * * EMPTY TEXT * * * * * *
+        if (viewModel.recordList.value.isEmpty()
+            && !viewModel.isLoading.value
+            && viewModel.loadError.value.isEmpty()
+        ) {
+            Text(
+                text = Strings.listIsEmpty,
+                modifier = Modifier.align(Alignment.Center)
+            )
+        }
 
-            // * * * * * * ADD BUTTON * * * * * * *
-            FloatingActionButton(
-                onClick = {
-                    navController.navigate(Screen.AddRecord.route)
-                },
-                modifier = Modifier.align(Alignment.BottomEnd).padding(bottom = 64.dp),
-                contentColor = kWhite,
-                backgroundColor = kBlueDark,
-            ) {
-                Icon(Icons.Default.Add, contentDescription = Strings.add)
-            }
+        // * * * * * * RECORD LIST * * * * * *
+        if (viewModel.recordList.value.isNotEmpty() && !viewModel.isLoading.value) {
+            RecordList(navController = navController)
+        }
 
-            // * * * * * * PROGRESS BAR * * * * * *
-            if (viewModel.isLoading.value) {
-                CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
-            }
+        // * * * * * * ADD BUTTON * * * * * * *
+        FloatingActionButton(
+            onClick = {
+                navController.navigate(Screen.AddRecord.route)
+            },
+            modifier = Modifier
+                .align(Alignment.BottomEnd)
+                .padding(bottom = 64.dp),
+            contentColor = kWhite,
+            backgroundColor = kBlueDark,
+        ) {
+            Icon(Icons.Default.Add, contentDescription = Strings.add)
+        }
+
+        // * * * * * * PROGRESS BAR * * * * * *
+        if (viewModel.isLoading.value) {
+            CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
         }
     }
 }

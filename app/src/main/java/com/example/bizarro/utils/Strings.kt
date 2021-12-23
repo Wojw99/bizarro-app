@@ -73,4 +73,11 @@ object Strings {
 
     // * * * * * * ERRORS * * * * * *
     const val notFoundError = "Nie odnaleziono żądanego zasobu!"
+
+    // * * * * * * COMPARE * * * * * *
+    const val clear = "Wyczyść"
+    const val added = "Dodano"
+    const val userOpinion = "Opinie o użytkowniku"
+    const val delete = "Usuń"
+    const val details = "Szczegóły"
 }
