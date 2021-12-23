@@ -7,7 +7,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class CompareViewModel @Inject constructor(
-    appState: AppState
+    val appState: AppState
 ) : ViewModel() {
     init {
         appState.bottomMenuVisible.value = true

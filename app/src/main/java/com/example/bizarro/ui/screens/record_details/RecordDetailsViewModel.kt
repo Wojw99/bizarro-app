@@ -7,6 +7,7 @@ import com.example.bizarro.api.models.UserProfile
 import com.example.bizarro.repositories.UserRepository
 import com.example.bizarro.ui.AppState
 import com.example.bizarro.ui.NetworkingViewModel
+import com.example.bizarro.ui.screens.add_record.AddRecordViewModel
 import com.example.bizarro.utils.CommonMethods
 import com.example.bizarro.utils.Constants
 import com.example.bizarro.utils.Resource
@@ -47,6 +48,12 @@ class RecordDetailsViewModel @Inject constructor(
     init{
         updateProfileInfo()
         updateRecordInfo()
+    }
+
+    override fun onCleared() {
+        super.onCleared()
+        record = null
+        userId = null
     }
 
     fun updateRecordInfo() {

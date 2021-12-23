@@ -37,7 +37,7 @@ fun NavGraph(
             HomeScreen(navController)
         }
         composable(route = Screen.Compare.route){
-            CompareScreen()
+            CompareScreen(navController = navController)
         }
         composable(route = Screen.RecordDetails.route){
             RecordDetailsScreen(navController)

@@ -64,6 +64,11 @@ class OtherUserViewModel @Inject constructor(
         getOtherUserProfile()
     }
 
+    override fun onCleared() {
+        super.onCleared()
+        otherUserId = 1L
+    }
+
     fun addOpinion(opinionContent: String, opinionRating: Int){
 
         //val localDate = LocalDate.now()

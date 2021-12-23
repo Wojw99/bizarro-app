@@ -52,6 +52,11 @@ class AddRecordViewModel @Inject constructor(
         }
     }
 
+    override fun onCleared() {
+        super.onCleared()
+        record = null
+    }
+
     private fun updateWithRecord(record: Record) {
         selectedType.value = record.type
         selectedCategory.value = record.category.name
