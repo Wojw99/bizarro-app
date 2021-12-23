@@ -83,22 +83,8 @@ fun SettingsScreen(navController: NavController,
                 )
             }
 
-            Spacer(modifier = Modifier.height(20.dp))
 
-            Button(
-                onClick ={
-                    //navController.navigate(route = Screen.PrivacyPolicyScreen.route)
 
-                    navController.navigate(route = Screen.OtherUserProfile.route)
-                },
-                Modifier.size(width = 300.dp, height = 50.dp),
-                //colors = ButtonDefaults.buttonColors(backgroundColor = kBlueDark),
-
-            ) {
-                Text(text = "OtherUserScreen test",
-                    style = MaterialTheme.typography.button
-                )
-            }
 
             Spacer(modifier = Modifier.height(100.dp))
 

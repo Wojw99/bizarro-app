@@ -4,6 +4,8 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
+import androidx.compose.material.MaterialTheme
+import androidx.compose.material.MaterialTheme.colors
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
@@ -46,7 +48,8 @@ fun TopBar(
                     contentDescription = Strings.iconBack,
                     modifier = Modifier
                         .height(27.dp)
-                        .width(27.dp)
+                        .width(27.dp),
+                    tint = colors.onSurface
                 )
             }
         } else {
@@ -57,8 +60,13 @@ fun TopBar(
 
         Text(
             text = title,
-            style = TextStyle(fontSize = 20.sp, fontWeight = FontWeight.SemiBold),
+            style = TextStyle(
+                //color = colors.onSurface,
+                fontSize = 20.sp,
+                fontWeight = FontWeight.SemiBold
+            ),
             modifier = Modifier.clickable { onTitleClick() },
+            color = colors.onSurface
         )
 
         Spacer(modifier = Modifier.width(Dimens.standardPadding))
@@ -77,7 +85,8 @@ fun TopBar(
                         contentDescription = action.contentDescription,
                         modifier = Modifier
                             .height(27.dp)
-                            .width(27.dp)
+                            .width(27.dp),
+                        tint = colors.onSurface
                     )
                 }
             }

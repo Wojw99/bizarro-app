@@ -11,6 +11,7 @@ import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
+import androidx.compose.material.MaterialTheme.colors
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Close
@@ -56,86 +57,93 @@ fun SearchScreen(
 ) {
     viewModel.appState.bottomMenuVisible.value = true
 
-    Surface {
-        Box(
-            modifier = Modifier
-                .fillMaxSize()
-                .background(kLightGray)
-                .padding(horizontal = Dimens.standardPadding)
-        ) {
-            // * * * * * * ERROR TEXT * * * * * *
-            if (viewModel.loadError.value.isNotEmpty()
-                && !viewModel.isLoading.value) {
-                Column(
-                    verticalArrangement = Arrangement.Center,
-                    horizontalAlignment = Alignment.CenterHorizontally,
-                    modifier = Modifier.fillMaxSize(),
-                ) {
-                    Text(
-                        text = viewModel.loadError.value,
-                    )
-                    Spacer(modifier = Modifier.height(Dimens.standardPadding))
-                    Button(onClick = { viewModel.updateRecordList() }) {
+    BizarroTheme(darkTheme = Constants.isDark.value)
+    {
+        Surface {
+            Box(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .background(colors.background)
+                    .padding(horizontal = Dimens.standardPadding)
+            ) {
+                // * * * * * * ERROR TEXT * * * * * *
+                if (viewModel.loadError.value.isNotEmpty()
+                    && !viewModel.isLoading.value) {
+                    Column(
+                        verticalArrangement = Arrangement.Center,
+                        horizontalAlignment = Alignment.CenterHorizontally,
+                        modifier = Modifier.fillMaxSize(),
+                    ) {
                         Text(
-                            text = Strings.refresh,
+                            text = viewModel.loadError.value,
+                            color = colors.onSurface
                         )
+                        Spacer(modifier = Modifier.height(Dimens.standardPadding))
+                        Button(onClick = { viewModel.updateRecordList() }) {
+                            Text(
+                                text = Strings.refresh,
+                                color = colors.onSurface
+                            )
+                        }
                     }
                 }
-            }
 
-            // * * * * * * EMPTY TEXT * * * * * *
-            if (viewModel.recordList.value.isEmpty()
-                && !viewModel.isLoading.value
-                && viewModel.loadError.value.isEmpty()
-            ) {
-                Text(
-                    text = Strings.listIsEmpty,
-                    modifier = Modifier.align(Alignment.Center)
-                )
-            }
-
-            // * * * * * * RECORD LIST * * * * * *
-            if (viewModel.recordList.value.isNotEmpty() && !viewModel.isLoading.value) {
-                RecordList(navController = navController)
-            }
-
-            Column(modifier = Modifier.padding(vertical = Dimens.standardPadding)) {
-                // * * * * * * SEARCH BAR * * * * * *
-                SearchBar(
-                    hint = Strings.search,
-                    onSearch = { text ->
-                        viewModel.nameText.value = text
-                        viewModel.updateRecordList()
-                    },
-                    initialText = viewModel.nameText.value,
-                )
-
-                Spacer(modifier = Modifier.height(Dimens.standardPadding))
-
-                // * * * * * * FILTER BAR * * * * * *
-                if (viewModel.hasFilters()) {
-                    FilterList(navController = navController)
-                } else {
-                    CustomIconButton(
-                        text = Strings.filter,
-                        iconVector = Icons.Default.Add,
-                        contentDescription = "Add icon",
-                        reverseColors = true,
-                        onButtonClick = {
-                            navController.navigate(Screen.Filter.route)
-                        }
+                // * * * * * * EMPTY TEXT * * * * * *
+                if (viewModel.recordList.value.isEmpty()
+                    && !viewModel.isLoading.value
+                    && viewModel.loadError.value.isEmpty()
+                ) {
+                    Text(
+                        text = Strings.listIsEmpty,
+                        modifier = Modifier.align(Alignment.Center),
+                        color = colors.onSurface
                     )
                 }
 
-                Spacer(modifier = Modifier.height(Dimens.standardPadding))
-            }
+                // * * * * * * RECORD LIST * * * * * *
+                if (viewModel.recordList.value.isNotEmpty() && !viewModel.isLoading.value) {
+                    RecordList(navController = navController)
+                }
 
-            // * * * * * * PROGRESS BAR * * * * * *
-            if (viewModel.isLoading.value) {
-                CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
+                Column(modifier = Modifier.padding(vertical = Dimens.standardPadding)) {
+                    // * * * * * * SEARCH BAR * * * * * *
+                    SearchBar(
+                        hint = Strings.search,
+                        onSearch = { text ->
+                            viewModel.nameText.value = text
+                            viewModel.updateRecordList()
+                        },
+                        initialText = viewModel.nameText.value,
+                    )
+
+                    Spacer(modifier = Modifier.height(Dimens.standardPadding))
+
+                    // * * * * * * FILTER BAR * * * * * *
+                    if (viewModel.hasFilters()) {
+                        FilterList(navController = navController)
+                    } else {
+                        CustomIconButton(
+                            text = Strings.filter,
+                            iconVector = Icons.Default.Add,
+                            contentDescription = "Add icon",
+                            reverseColors = true,
+                            onButtonClick = {
+                                navController.navigate(Screen.Filter.route)
+                            }
+                        )
+                    }
+
+                    Spacer(modifier = Modifier.height(Dimens.standardPadding))
+                }
+
+                // * * * * * * PROGRESS BAR * * * * * *
+                if (viewModel.isLoading.value) {
+                    CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
+                }
             }
         }
     }
+
 
 }
 
@@ -161,7 +169,7 @@ fun SearchBar(
         modifier = modifier
             .fillMaxWidth()
             .shadow(5.dp, RoundedCornerShape(Dimens.cornerRadius))
-            .background(kWhite, RoundedCornerShape(Dimens.cornerRadius))
+            .background(colors.surface, RoundedCornerShape(Dimens.cornerRadius))
             .height(Dimens.barHeight)
     ) {
         Row(
@@ -170,7 +178,7 @@ fun SearchBar(
             modifier = Modifier.fillMaxSize(),
         ) {
             Spacer(modifier = Modifier.width(10.dp))
-            Icon(Icons.Default.Search, "Icon here", tint = kGray)
+            Icon(Icons.Default.Search, "Icon here", tint = colors.onSurface)
 
             Spacer(modifier = Modifier.width(10.dp))
 
@@ -183,7 +191,7 @@ fun SearchBar(
                     },
                     maxLines = 1,
                     singleLine = true,
-                    textStyle = TextStyle(color = kBlack, fontSize = 16.sp),
+                    textStyle = TextStyle(color = colors.onSurface, fontSize = 16.sp),
                     modifier = Modifier.fillMaxWidth(),
                     keyboardActions = KeyboardActions(onDone = {
                         keyboardController?.hide()
@@ -193,7 +201,7 @@ fun SearchBar(
                     keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text),
                 )
                 if (isHintDisplayed) {
-                    Text(color = kGray, text = hint, modifier = Modifier.fillMaxWidth())
+                    Text(color = colors.onSurface, text = hint, modifier = Modifier.fillMaxWidth())
                 }
             }
             Spacer(modifier = Modifier.width(10.dp))
@@ -254,7 +262,7 @@ fun RecordList(
     viewModel: SearchViewModel = hiltViewModel(),
     navController: NavController,
 ) {
-    LazyColumn(modifier = modifier.background(kLightGray)) {
+    LazyColumn(modifier = modifier.background(colors.background)) {
         val recordList = viewModel.recordList.value
         val itemCount = recordList.size
 
@@ -328,10 +336,10 @@ fun TypeSpecificTitle(record: Record, modifier: Modifier = Modifier) {
                 style = TextStyle(
                     fontSize = h1Size,
                     fontWeight = FontWeight.SemiBold,
-                    color = kBlack,
+                    color = MaterialTheme.colors.onSurface,
                 )
             )
-            Text(text = h2, style = TextStyle(fontSize = 13.sp))
+            Text(text = h2, style = TextStyle(fontSize = 13.sp), color = MaterialTheme.colors.onSurface)
         }
     }
 }

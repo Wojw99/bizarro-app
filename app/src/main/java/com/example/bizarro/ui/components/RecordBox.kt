@@ -6,6 +6,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.CircularProgressIndicator
+import androidx.compose.material.MaterialTheme.colors
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -43,7 +44,7 @@ fun RecordBox(
         modifier = modifier
             .shadow(5.dp, RoundedCornerShape(Dimens.cornerRadius))
             .clip(RoundedCornerShape(Dimens.cornerRadius))
-            .background(kWhite)
+            .background(colors.surface)
             .height(150.dp)
             .clickable { onClick() }
     ) {
@@ -83,7 +84,7 @@ fun RecordBox(
                         style = TextStyle(
                             fontSize = countTextSizeForName(record.name),
                             fontWeight = FontWeight.Normal,
-                            color = kBlack,
+                            color = colors.onSurface,
                         )
                     )
 
@@ -93,7 +94,7 @@ fun RecordBox(
                     // * * * * * * * * ADDRESS, DATE * * * * * * * *
                     Text(
                         text = "${record.address.city}, ${CommonMethods.convertToRecordBoxDateFormat(record.creationDate)}",
-                        style = TextStyle(fontSize = 12.sp, color = kGray)
+                        style = TextStyle(fontSize = 12.sp, color = colors.onSurface)
                     )
                 }
             }

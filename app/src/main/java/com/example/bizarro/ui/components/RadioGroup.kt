@@ -4,6 +4,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
+import androidx.compose.material.MaterialTheme.colors
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 import androidx.compose.ui.Alignment
@@ -44,7 +45,7 @@ fun RadioGroup(
                     // * * * RADIO BUTTON * * *
                     RadioButton(
                         selected = selectedLabel.value == label,
-                        colors = RadioButtonDefaults.colors(kBlueDark),
+                        colors = RadioButtonDefaults.colors(colors.onSurface),
                         onClick = { selectedLabel.value = label }
                     )
 
@@ -56,7 +57,7 @@ fun RadioGroup(
                         style = TextStyle(
                             fontSize = 16.sp,
                             fontWeight = FontWeight.Normal,
-                            color = kBlack,
+                            color = colors.onSurface,
                         ),
                     )
                 }

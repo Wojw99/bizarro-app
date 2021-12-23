@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.*
+import androidx.compose.material.MaterialTheme.colors
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Clear
 import androidx.compose.runtime.Composable
@@ -20,6 +21,7 @@ import com.example.bizarro.ui.Screen
 import com.example.bizarro.ui.components.*
 import com.example.bizarro.ui.screens.filter.headerModifier
 import com.example.bizarro.ui.screens.filter.headerStyle
+import com.example.bizarro.ui.theme.BizarroTheme
 import com.example.bizarro.ui.theme.kGray
 import com.example.bizarro.ui.theme.kWhite
 import com.example.bizarro.utils.Constants
@@ -35,175 +37,187 @@ fun AddRecordScreen(
 ) {
     viewModel.appState.bottomMenuVisible.value = false
 
-    Box {
-        // * * * * * * BODY * * * * * *
-        Column(
-            modifier = Modifier
-                .background(kWhite)
-                .padding(horizontal = Dimens.standardPadding * 2)
-                .padding(top = Dimens.topBarHeight)
-                .fillMaxSize()
-                .verticalScroll(rememberScrollState())
-        ) {
-            val textFieldModifier = Modifier.fillMaxWidth()
+    BizarroTheme(darkTheme = Constants.isDark.value)
+    {
+        Box {
+            // * * * * * * BODY * * * * * *
+            Column(
+                modifier = Modifier
+                    .background(colors.background)
+                    .padding(horizontal = Dimens.standardPadding * 2)
+                    .padding(top = Dimens.topBarHeight)
+                    .fillMaxSize()
+                    .verticalScroll(rememberScrollState())
+            ) {
+                val textFieldModifier = Modifier.fillMaxWidth()
 
-            // * * * * * RECORD TITLE * * * * *
-            Text(
-                modifier = headerModifier,
-                text = Strings.recordTitle,
-                style = headerStyle,
-            )
-            CustomOutlinedTextField(
-                value = viewModel.titleText.value,
-                onValueChange = { viewModel.titleText.value = it },
-                labelText = Strings.title,
-                keyboardType = KeyboardType.Text,
-                modifier = textFieldModifier,
-            )
+                // * * * * * RECORD TITLE * * * * *
+                Text(
+                    modifier = headerModifier,
+                    text = Strings.recordTitle,
+                    style = headerStyle,
+                    color = colors.onSurface
+                )
+                CustomOutlinedTextField(
+                    value = viewModel.titleText.value,
+                    onValueChange = { viewModel.titleText.value = it },
+                    labelText = Strings.title,
 
-            // * * * * * RECORD DESCRIPTION * * * * *
-            Text(
-                modifier = headerModifier,
-                text = Strings.recordDescription,
-                style = headerStyle,
-            )
-            CustomOutlinedTextField(
-                value = viewModel.descriptionText.value,
-                onValueChange = { viewModel.descriptionText.value = it },
-                labelText = Strings.recordDescription,
-                keyboardType = KeyboardType.Text,
-                modifier = textFieldModifier,
-            )
+                    keyboardType = KeyboardType.Text,
+                    modifier = textFieldModifier,
+                )
 
-            // * * * * * RECORD TYPE * * * * *
-            Text(
-                modifier = headerModifier,
-                text = Strings.recordType,
-                style = headerStyle,
-            )
-            RadioGroup(
-                selectedLabel = viewModel.selectedType,
-                labels = viewModel.typeLabels
-            )
+                // * * * * * RECORD DESCRIPTION * * * * *
+                Text(
+                    modifier = headerModifier,
+                    text = Strings.recordDescription,
+                    style = headerStyle,
+                    color = colors.onSurface
+                )
+                CustomOutlinedTextField(
+                    value = viewModel.descriptionText.value,
+                    onValueChange = { viewModel.descriptionText.value = it },
+                    labelText = Strings.recordDescription,
+                    keyboardType = KeyboardType.Text,
+                    modifier = textFieldModifier,
+                )
 
-            // * * * * * TYPE DEPENDENT SECTION * * * * *
-            TypeDependentSection()
+                // * * * * * RECORD TYPE * * * * *
+                Text(
+                    modifier = headerModifier,
+                    text = Strings.recordType,
+                    style = headerStyle,
+                    color = colors.onSurface
+                )
+                RadioGroup(
+                    selectedLabel = viewModel.selectedType,
+                    labels = viewModel.typeLabels
+                )
 
-            // * * * * * CATEGORY * * * * *
-            Text(
-                modifier = headerModifier,
-                text = Strings.category,
-                style = headerStyle,
-            )
-            RadioGroup(
-                selectedLabel = viewModel.selectedCategory,
-                labels = viewModel.categoryLabels
-            )
+                // * * * * * TYPE DEPENDENT SECTION * * * * *
+                TypeDependentSection()
 
-            // * * * * * PROVINCE * * * * *
-            Text(
-                modifier = headerModifier,
-                text = Strings.province,
-                style = headerStyle,
-            )
-            RadioGroup(
-                selectedLabel = viewModel.selectedProvince,
-                labels = viewModel.provinceLabels
-            )
+                // * * * * * CATEGORY * * * * *
+                Text(
+                    modifier = headerModifier,
+                    text = Strings.category,
+                    style = headerStyle,
+                    color = colors.onSurface
+                )
+                RadioGroup(
+                    selectedLabel = viewModel.selectedCategory,
+                    labels = viewModel.categoryLabels
+                )
 
-            // * * * * * ADDRESS * * * * *
-            Text(
-                modifier = headerModifier,
-                text = Strings.address,
-                style = headerStyle,
-            )
-            CustomOutlinedTextField(
-                value = viewModel.cityText.value,
-                onValueChange = { viewModel.cityText.value = it },
-                labelText = Strings.city,
-                keyboardType = KeyboardType.Text,
-                modifier = textFieldModifier,
-            )
-            Spacer(modifier = Modifier.height(8.dp))
-            CustomOutlinedTextField(
-                value = viewModel.streetText.value,
-                onValueChange = { viewModel.streetText.value = it },
-                labelText = Strings.street,
-                keyboardType = KeyboardType.Text,
-                modifier = textFieldModifier,
-            )
-            Spacer(modifier = Modifier.height(8.dp))
-            CustomOutlinedTextField(
-                value = viewModel.numberText.value,
-                onValueChange = { viewModel.numberText.value = it },
-                labelText = Strings.number,
-                keyboardType = KeyboardType.Text,
-                modifier = textFieldModifier,
-            )
+                // * * * * * PROVINCE * * * * *
+                Text(
+                    modifier = headerModifier,
+                    text = Strings.province,
+                    style = headerStyle,
+                    color = colors.onSurface
+                )
+                RadioGroup(
+                    selectedLabel = viewModel.selectedProvince,
+                    labels = viewModel.provinceLabels
+                )
 
-            Spacer(modifier = Modifier.height(128.dp))
-        }
+                // * * * * * ADDRESS * * * * *
+                Text(
+                    modifier = headerModifier,
+                    text = Strings.address,
+                    style = headerStyle,
+                    color = colors.onSurface
+                )
+                CustomOutlinedTextField(
+                    value = viewModel.cityText.value,
+                    onValueChange = { viewModel.cityText.value = it },
+                    labelText = Strings.city,
+                    keyboardType = KeyboardType.Text,
+                    modifier = textFieldModifier,
+                )
+                Spacer(modifier = Modifier.height(8.dp))
+                CustomOutlinedTextField(
+                    value = viewModel.streetText.value,
+                    onValueChange = { viewModel.streetText.value = it },
+                    labelText = Strings.street,
+                    keyboardType = KeyboardType.Text,
+                    modifier = textFieldModifier,
+                )
+                Spacer(modifier = Modifier.height(8.dp))
+                CustomOutlinedTextField(
+                    value = viewModel.numberText.value,
+                    onValueChange = { viewModel.numberText.value = it },
+                    labelText = Strings.number,
+                    keyboardType = KeyboardType.Text,
+                    modifier = textFieldModifier,
+                )
+
+                Spacer(modifier = Modifier.height(128.dp))
+            }
 
 
-        // * * * * * ACCEPT BUTTON * * * * *
-        Button(
-            onClick = {
-                viewModel.confirmAdding()
-            },
-            modifier = Modifier
-                .fillMaxWidth()
-                .align(Alignment.BottomCenter)
-                .padding(Dimens.standardPadding)
-        ) {
-            Text(text = Strings.confirm)
-        }
-
-        // * * * * * * TOP BAR * * * * * *
-        TopBar(
-            navController = navController,
-            title = if(viewModel.isEditScreen.value) Strings.editRecord else Strings.addRecord,
-            actions = listOf(
-                TopBarAction(
-                    onClick = { viewModel.cleanStates() },
-                    icon = Icons.Default.Clear,
-                    contentDescription = Strings.clearFilters,
-                ),
-            ),
-            modifier = Modifier
-                .background(kWhite)
-                .align(Alignment.TopCenter)
-        )
-
-        // * * * * * * ERROR DIALOG * * * * * *
-        if (viewModel.loadError.value.isNotEmpty()) {
-            ConfirmAlertDialog(
-                onDismiss = { viewModel.clearError() },
-                title = Strings.error,
-                body = viewModel.loadError.value,
-            )
-        }
-
-        // * * * * * * SUCCESS DIALOG * * * * * *
-        if (viewModel.isSuccess.value) {
-            ConfirmAlertDialog(
-                onDismiss = {
-                    navController.navigate(Screen.Search.route) {
-                        // remove all previous screen in the stack
-                        popUpTo(navController.graph.findStartDestination().id) {
-                            inclusive = true
-                        }
-                    }
+            // * * * * * ACCEPT BUTTON * * * * *
+            Button(
+                onClick = {
+                    viewModel.confirmAdding()
                 },
-                title = Strings.success2,
-                body = Strings.success,
-            )
-        }
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .align(Alignment.BottomCenter)
+                    .padding(Dimens.standardPadding)
+            ) {
+                Text(text = Strings.confirm)
+            }
 
-        // * * * * * * PROGRESS BAR * * * * * *
-        if (viewModel.isLoading.value) {
-            LoadingBox()
+            // * * * * * * TOP BAR * * * * * *
+            TopBar(
+                navController = navController,
+                title = if(viewModel.isEditScreen.value) Strings.editRecord else Strings.addRecord,
+                actions = listOf(
+                    TopBarAction(
+                        onClick = { viewModel.cleanStates() },
+                        icon = Icons.Default.Clear,
+                        contentDescription = Strings.clearFilters,
+                    ),
+                ),
+                modifier = Modifier
+                    .background(colors.background)
+                    .align(Alignment.TopCenter)
+            )
+
+            // * * * * * * ERROR DIALOG * * * * * *
+            if (viewModel.loadError.value.isNotEmpty()) {
+                ConfirmAlertDialog(
+                    onDismiss = { viewModel.clearError() },
+                    title = Strings.error,
+                    body = viewModel.loadError.value,
+                )
+            }
+
+            // * * * * * * SUCCESS DIALOG * * * * * *
+            if (viewModel.isSuccess.value) {
+                ConfirmAlertDialog(
+                    onDismiss = {
+                        navController.navigate(Screen.Search.route) {
+                            // remove all previous screen in the stack
+                            popUpTo(navController.graph.findStartDestination().id) {
+                                inclusive = true
+                            }
+                        }
+                    },
+                    title = Strings.success2,
+                    body = Strings.success,
+                )
+            }
+
+            // * * * * * * PROGRESS BAR * * * * * *
+            if (viewModel.isLoading.value) {
+                LoadingBox()
+            }
         }
     }
+
+
 
 }
 
@@ -222,18 +236,21 @@ fun TypeDependentSection(
                 modifier = headerModifier,
                 text = Strings.sellPriceHeader,
                 style = headerStyle,
+                color = colors.onSurface
             )
         } else if (type == Constants.TYPE_BUY) {
             Text(
                 modifier = headerModifier,
                 text = Strings.buyPriceHeader,
                 style = headerStyle,
+                color = colors.onSurface
             )
         } else if (type == Constants.TYPE_RENT) {
             Text(
                 modifier = headerModifier,
                 text = Strings.rentHeader1,
                 style = headerStyle,
+                color = colors.onSurface
             )
         }
 
@@ -253,6 +270,7 @@ fun TypeDependentSection(
                 modifier = headerModifier,
                 text = Strings.rentHeader2,
                 style = headerStyle,
+                color = colors.onSurface
             )
             CustomOutlinedTextField(
                 value = viewModel.rentPeriodText.value,
@@ -268,6 +286,7 @@ fun TypeDependentSection(
                 modifier = headerModifier,
                 text = Strings.swapHeader,
                 style = headerStyle,
+                color = colors.onSurface
             )
             CustomOutlinedTextField(
                 value = viewModel.swapObjectText.value,

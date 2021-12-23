@@ -13,37 +13,34 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
 
 private val DarkColorPalette = darkColors(
-//    primary = kBlueDark,
-//    primaryVariant = kBlueLight,
-//    secondary = kGray
 
     primary = kBlueDark,
     primaryVariant = kBlueLight,
     onPrimary = kWhite,
     secondary = kBlack,
+    secondaryVariant = kDarkGrey,
     onSecondary = kWhite,
     background = kBlack,
     onBackground = kWhite,
     surface = kDarkGrey,
     onSurface = kWhite,
+
 )
 
 
 private val LightColorPalette = lightColors(
 
-//    secondary = kGray,
-//    onPrimary = kWhite,
-    //secondaryVariant = Teal300,
-
     primary = kBlueDark,
-    primaryVariant = kBlueLight,
+    primaryVariant = kBlueDark,
     onPrimary = kBlack,
     secondary = kWhite,
+    secondaryVariant = kLightGray,
     onSecondary = kBlack,
     background = kWhite,
     onBackground = kBlack,
-    surface = kLightGray,
+    surface = kWhite,
     onSurface = kBlack,
+
 )
 
 @Composable

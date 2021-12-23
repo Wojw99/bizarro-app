@@ -10,6 +10,7 @@ import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
+import androidx.compose.material.MaterialTheme.colors
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowForward
 import androidx.compose.material.icons.filled.Delete
@@ -39,6 +40,7 @@ import com.example.bizarro.ui.components.RecordBox
 import com.example.bizarro.ui.screens.record_details.RecordDetailsViewModel
 import com.example.bizarro.ui.theme.*
 import com.example.bizarro.utils.CommonMethods
+import com.example.bizarro.utils.Constants
 import com.example.bizarro.utils.Dimens
 import com.example.bizarro.utils.Strings
 
@@ -50,70 +52,82 @@ fun CompareScreen(
 ) {
     viewModel.appState.bottomMenuVisible.value = true
 
-    Box {
-        // * * * * * * BODY * * * * * *
-        Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .background(kLightGray)
-        ) {
-            // * * * * * * * TOP BAR * * * * * * *
-            Box(
-                modifier = Modifier.height(Dimens.topBarHeight).fillMaxWidth().padding(Dimens.standardPadding),
+
+    BizarroTheme(darkTheme = Constants.isDark.value)
+    {
+        Box {
+            // * * * * * * BODY * * * * * *
+            Column(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .background(colors.background)
             ) {
-                Text(
-                    text = "4 / 5",
-                    modifier = Modifier.align(Alignment.Center),
-                    style = TextStyle(
-                        textAlign = TextAlign.Center,
-                        fontSize = 18.sp,
-                        fontWeight = FontWeight.SemiBold,
-                        color = kBlueDark,
-                    ),
-                )
-                Box(modifier = Modifier.align(Alignment.CenterEnd).fillMaxHeight().clickable { }) {
+                // * * * * * * * TOP BAR * * * * * * *
+                Box(
+                    modifier = Modifier
+                        .height(Dimens.topBarHeight)
+                        .fillMaxWidth()
+                        .padding(Dimens.standardPadding),
+                ) {
                     Text(
+                        text = "4 / 5",
                         modifier = Modifier.align(Alignment.Center),
-                        text = Strings.clear,
                         style = TextStyle(
-                            textAlign = TextAlign.End,
-                            fontSize = 16.sp,
+                            textAlign = TextAlign.Center,
+                            fontSize = 18.sp,
                             fontWeight = FontWeight.SemiBold,
-                            color = kBlueDark
+                            color = colors.primaryVariant,
                         ),
                     )
+                    Box(modifier = Modifier
+                        .align(Alignment.CenterEnd)
+                        .fillMaxHeight()
+                        .clickable { }) {
+                        Text(
+                            modifier = Modifier.align(Alignment.Center),
+                            text = Strings.clear,
+                            style = TextStyle(
+                                textAlign = TextAlign.End,
+                                fontSize = 16.sp,
+                                fontWeight = FontWeight.SemiBold,
+                                color = colors.primaryVariant
+                            ),
+                        )
+                    }
+                }
+
+                // * * * * * * * COMPARE LIST * * * * * * *
+                LazyRow {
+                    val recordList = viewModel.recordList.value
+                    val itemCount = recordList.size
+
+                    items(itemCount) { index ->
+                        RecordCompareBox(
+                            record = recordList[index],
+                            onGoClick = {
+                                RecordDetailsViewModel.record = recordList[index]
+                                RecordDetailsViewModel.userId = recordList[index].userId
+                                navController.navigate(Screen.RecordDetails.route)
+                            },
+                            onDeleteClick = {
+
+                            },
+                        )
+
+                        if (index == recordList.size - 1)
+                            Spacer(modifier = Modifier.width(Dimens.standardPadding))
+                    }
                 }
             }
 
-            // * * * * * * * COMPARE LIST * * * * * * *
-            LazyRow {
-                val recordList = viewModel.recordList.value
-                val itemCount = recordList.size
-
-                items(itemCount) { index ->
-                    RecordCompareBox(
-                        record = recordList[index],
-                        onGoClick = {
-                            RecordDetailsViewModel.record = recordList[index]
-                            RecordDetailsViewModel.userId = recordList[index].userId
-                            navController.navigate(Screen.RecordDetails.route)
-                        },
-                        onDeleteClick = {
-
-                        },
-                    )
-
-                    if (index == recordList.size - 1)
-                        Spacer(modifier = Modifier.width(Dimens.standardPadding))
-                }
+            // * * * * * * PROGRESS BAR * * * * * *
+            if (viewModel.isLoading.value) {
+                LoadingBox()
             }
-        }
-
-        // * * * * * * PROGRESS BAR * * * * * *
-        if (viewModel.isLoading.value) {
-            LoadingBox()
         }
     }
+
+
 }
 
 @ExperimentalCoilApi
@@ -139,7 +153,7 @@ fun RecordCompareBox(
             modifier = modifier
                 .width(screenWidth - Dimens.standardPadding * 2)
                 .fillMaxHeight()
-                .background(kWhite, RoundedCornerShape(Dimens.cornerRadius))
+                .background(colors.secondaryVariant, RoundedCornerShape(Dimens.cornerRadius))
         ) {
             // * * * * * BODY * * * * *
             Column() {
@@ -173,7 +187,7 @@ fun RecordCompareBox(
                     // * * * * * * * * TITLE * * * * * * * *
                     Text(
                         text = record.name,
-                        style = TextStyle(fontSize = 18.sp, color = kBlack),
+                        style = TextStyle(fontSize = 18.sp, color = colors.onSurface),
                     )
 
                     Spacer(modifier = Modifier.height(8.dp))
@@ -182,14 +196,15 @@ fun RecordCompareBox(
                         text = viewModel.getHeader(record),
                         style = TextStyle(
                             fontSize = 26.sp,
-                            color = kBlack,
-                            fontWeight = FontWeight.Bold
+                            color = colors.onSurface,
+                            fontWeight = FontWeight.Bold,
+
                         ),
                     )
 
                     Text(
                         text = viewModel.getLabel(record),
-                        style = TextStyle(fontSize = 16.sp, color = kGray),
+                        style = TextStyle(fontSize = 16.sp, color = colors.onSurface),
                     )
 
                     Spacer(modifier = Modifier.height(16.dp))
@@ -197,11 +212,11 @@ fun RecordCompareBox(
 
                     val style1 = TextStyle(
                         fontSize = 15.sp,
-                        color = kBlack,
+                        color =  colors.onSurface,
                     )
                     val style2 = TextStyle(
                         fontSize = 19.sp,
-                        color = kBlack,
+                        color =  colors.onSurface,
                         fontWeight = FontWeight.Bold,
                     )
                     val spacerHeight = 8.dp
@@ -211,19 +226,21 @@ fun RecordCompareBox(
                     Text(
                         text = CommonMethods.convertToLabelDateFormat(record.creationDate),
                         style = style2,
+                        color =  colors.onSurface
                     )
                     Spacer(modifier = Modifier.height(spacerHeight))
 
                     // * * * * * * * * CATEGORY * * * * * * * *
-                    Text(text = Strings.category, style = style1)
+                    Text(text = Strings.category, style = style1, color = colors.onSurface)
                     Text(
                         text = record.category.name,
                         style = style2,
+                       color = colors.onSurface
                     )
                     Spacer(modifier = Modifier.height(spacerHeight))
 
                     // * * * * * * * * PROVINCE * * * * * * * *
-                    Text(text = Strings.province, style = style1)
+                    Text(text = Strings.province, style = style1, color = colors.onSurface)
                     Text(
                         text = record.address.province,
                         style = style2,
@@ -231,10 +248,11 @@ fun RecordCompareBox(
                     Spacer(modifier = Modifier.height(spacerHeight))
 
                     // * * * * * * * * ADDRESS * * * * * * * *
-                    Text(text = Strings.address, style = style1)
+                    Text(text = Strings.address, style = style1, color = colors.onSurface )
                     Text(
                         text = "${record.address.city}, ${record.address.street} ${record.address.number}",
                         style = style2,
+                        color = colors.onSurface
                     )
                 }
             }

@@ -4,6 +4,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material.AlertDialog
 import androidx.compose.material.Button
+import androidx.compose.material.MaterialTheme.colors
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -25,11 +26,11 @@ fun ConfirmAlertDialog(
                     onClick = onDismiss,
                     modifier = Modifier.align(Alignment.BottomEnd)
                 ) {
-                    Text(text = "OK")
+                    Text(text = "OK", color = colors.onSurface)
                 }
             }
         },
-        title = { Text(text = title) },
-        text = { Text(text = body) },
+        title = { Text(text = title, color = colors.onSurface) },
+        text = { Text(text = body, color = colors.onSurface) },
     )
 }

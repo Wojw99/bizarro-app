@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
+import androidx.compose.material.MaterialTheme.colors
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.outlined.Info
@@ -29,6 +30,7 @@ import com.example.bizarro.ui.components.TopBar
 import com.example.bizarro.ui.screens.add_record.AddRecordViewModel
 import com.example.bizarro.ui.screens.user_profile.other_user_profile.OtherUserViewModel
 import com.example.bizarro.ui.theme.*
+import com.example.bizarro.utils.Constants
 import com.example.bizarro.utils.Dimens
 import com.example.bizarro.utils.Strings
 import com.example.bizarro.utils.models.TopBarAction
@@ -40,74 +42,81 @@ fun RecordDetailsScreen(
 ) {
     viewModel.appState.bottomMenuVisible.value = false
 
-    Box {
-        // * * * * * * BODY * * * * * *
-        if (viewModel.loadError.value.isEmpty()) {
-            RecordDetailsBody(
-                navController = navController,
-                modifier = Modifier
-                    .fillMaxSize()
-                    .background(kWhite)
-                    .padding(top = Dimens.topBarHeight)
-                    .verticalScroll(rememberScrollState()),
-            )
-        }
-
-        // * * * * * * ERROR TEXT * * * * * *
-        if (viewModel.loadError.value.isNotEmpty()
-            && !viewModel.isLoading.value
-        ) {
-            Column(
-                verticalArrangement = Arrangement.Center,
-                horizontalAlignment = Alignment.CenterHorizontally,
-                modifier = Modifier.fillMaxSize(),
-            ) {
-                Text(
-                    text = viewModel.loadError.value,
+    BizarroTheme(darkTheme = Constants.isDark.value)
+    {
+        Box {
+            // * * * * * * BODY * * * * * *
+            if (viewModel.loadError.value.isEmpty()) {
+                RecordDetailsBody(
+                    navController = navController,
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .background(colors.background)
+                        .padding(top = Dimens.topBarHeight)
+                        .verticalScroll(rememberScrollState()),
                 )
-                Spacer(modifier = Modifier.height(Dimens.standardPadding))
-                Button(onClick = {
-                    viewModel.updateProfileInfo()
-                    viewModel.updateRecordInfo()
-                }) {
+            }
+
+            // * * * * * * ERROR TEXT * * * * * *
+            if (viewModel.loadError.value.isNotEmpty()
+                && !viewModel.isLoading.value
+            ) {
+                Column(
+                    verticalArrangement = Arrangement.Center,
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    modifier = Modifier.fillMaxSize(),
+                ) {
                     Text(
-                        text = Strings.refresh,
+                        text = viewModel.loadError.value,
+                        color = colors.onSurface
                     )
+                    Spacer(modifier = Modifier.height(Dimens.standardPadding))
+                    Button(onClick = {
+                        viewModel.updateProfileInfo()
+                        viewModel.updateRecordInfo()
+                    }) {
+                        Text(
+                            text = Strings.refresh,
+                            color = colors.onSurface
+                        )
+                    }
                 }
             }
-        }
 
-        // * * * * * * TOP BAR * * * * * *
-        TopBar(
-            navController = navController,
-            title = viewModel.topBarTitle.value,
-            modifier = Modifier
-                .background(kWhite)
-                .align(Alignment.TopCenter),
-            actions = if (viewModel.isCurrentUser.value)
-                listOf(
-                    TopBarAction(
-                        onClick = {
-                            AddRecordViewModel.record = RecordDetailsViewModel.record
-                            navController.navigate(Screen.AddRecord.route)
-                        },
-                        icon = Icons.Default.Edit,
-                        contentDescription = Strings.edit,
-                    )
-                ) else listOf(),
-            onTitleClick = {
-                if (!viewModel.isCurrentUser.value) {
-                    OtherUserViewModel.otherUserId = RecordDetailsViewModel.userId!!
-                    navController.navigate(Screen.OtherUserProfile.route)
+            // * * * * * * TOP BAR * * * * * *
+            TopBar(
+                navController = navController,
+                title = viewModel.topBarTitle.value,
+                modifier = Modifier
+                    .background(colors.background)
+                    .align(Alignment.TopCenter),
+                actions = if (viewModel.isCurrentUser.value)
+                    listOf(
+                        TopBarAction(
+                            onClick = {
+                                AddRecordViewModel.record = RecordDetailsViewModel.record
+                                navController.navigate(Screen.AddRecord.route)
+                            },
+                            icon = Icons.Default.Edit,
+                            contentDescription = Strings.edit,
+                        )
+                    ) else listOf(),
+                onTitleClick = {
+                    if (!viewModel.isCurrentUser.value) {
+                        OtherUserViewModel.otherUserId = RecordDetailsViewModel.userId!!
+                        navController.navigate(Screen.OtherUserProfile.route)
+                    }
                 }
-            }
-        )
+            )
 
-        // * * * * * * PROGRESS BAR * * * * * *
-        if (viewModel.isLoading.value) {
-            LoadingBox()
+            // * * * * * * PROGRESS BAR * * * * * *
+            if (viewModel.isLoading.value) {
+                LoadingBox()
+            }
         }
     }
+
+
 }
 
 @Composable
@@ -143,12 +152,12 @@ fun RecordDetailsBody(
         // * * * * * * * * TITLE SECTION * * * * * * * *
         Box(
             modifier = Modifier
-                .background(kLightGray)
+                .background(colors.background)
                 .fillMaxWidth()
         ) {
             Box(
                 modifier = Modifier
-                    .background(kWhite, RoundedCornerShape(bottomStart = 16.dp, bottomEnd = 16.dp))
+                    .background(colors.secondaryVariant, RoundedCornerShape(bottomStart = 16.dp, bottomEnd = 16.dp))
                     .fillMaxWidth()
             ) {
                 Column(
@@ -159,7 +168,7 @@ fun RecordDetailsBody(
                 ) {
                     Text(
                         text = viewModel.recordName.value,
-                        style = TextStyle(fontSize = 20.sp, color = kGray),
+                        style = TextStyle(fontSize = 20.sp, color = colors.onSurface),
                     )
 
                     Spacer(modifier = Modifier.height(8.dp))
@@ -168,21 +177,21 @@ fun RecordDetailsBody(
                         text = viewModel.recordHeader.value,
                         style = TextStyle(
                             fontSize = 36.sp,
-                            color = kBlack,
+                            color = colors.onSurface,
                             fontWeight = FontWeight.Bold
                         ),
                     )
 
                     Text(
                         text = viewModel.recordLabel.value,
-                        style = TextStyle(fontSize = 18.sp, color = kBlack),
+                        style = TextStyle(fontSize = 18.sp, color = colors.onSurface),
                     )
 
                     Spacer(modifier = Modifier.height(8.dp))
 
                     Text(
                         text = viewModel.recordCreationDateLabel.value,
-                        style = TextStyle(fontSize = 16.sp, color = kGray),
+                        style = TextStyle(fontSize = 16.sp, color = colors.onSurface),
                     )
                 }
             }
@@ -194,7 +203,7 @@ fun RecordDetailsBody(
             modifier = Modifier
                 .height(25.dp)
                 .fillMaxWidth()
-                .background(kLightGray)
+                .background(colors.background)
         )
 
         val sectionsPaddingHorizontal = 24.dp
@@ -214,13 +223,14 @@ fun RecordDetailsBody(
                     contentDescription = Strings.info,
                     modifier = Modifier
                         .height(iconSize)
-                        .width(iconSize)
+                        .width(iconSize),
+                    tint = colors.onSurface
                 )
                 Spacer(modifier = Modifier.width(Dimens.standardPadding))
                 Text(
                     text = Strings.description,
                     style = TextStyle(
-                        color = kBlack,
+                        color = colors.onSurface,
                         fontSize = 22.sp,
                         fontWeight = FontWeight.Bold
                     )
@@ -229,7 +239,7 @@ fun RecordDetailsBody(
             Spacer(modifier = Modifier.height(4.dp))
             Text(
                 text = viewModel.recordBody.value,
-                style = TextStyle(color = kGray, fontSize = 18.sp),
+                style = TextStyle(color = colors.onSurface, fontSize = 18.sp),
                 modifier = sectionsTextModifier,
             )
         }
@@ -248,13 +258,14 @@ fun RecordDetailsBody(
                     contentDescription = Strings.info,
                     modifier = Modifier
                         .height(iconSize)
-                        .width(iconSize)
+                        .width(iconSize),
+                    tint = colors.onSurface
                 )
                 Spacer(modifier = Modifier.width(Dimens.standardPadding))
                 Text(
                     text = Strings.opinions,
                     style = TextStyle(
-                        color = kBlack,
+                        color = colors.onSurface,
                         fontSize = 22.sp,
                         fontWeight = FontWeight.Bold
                     ),
@@ -264,7 +275,7 @@ fun RecordDetailsBody(
                     // Show opinion button only if record is not own by the logged user
                     Box(
                         modifier = Modifier
-                            .background(kBlueDark, RoundedCornerShape(Dimens.cornerRadius))
+                            .background(colors.primaryVariant, RoundedCornerShape(Dimens.cornerRadius))
                             .clickable {
                                 OtherUserViewModel.otherUserId = RecordDetailsViewModel.userId!!
                                 navController.navigate(Screen.AddOpinion.route)
@@ -297,7 +308,7 @@ fun RecordDetailsBody(
 
             Text(
                 text = viewModel.recordGeneralOpinionDesc.value,
-                style = TextStyle(color = kGray, fontSize = 18.sp),
+                style = TextStyle(color = colors.onSurface, fontSize = 18.sp),
                 modifier = sectionsTextModifier,
             )
         }
@@ -316,13 +327,14 @@ fun RecordDetailsBody(
                     contentDescription = Strings.info,
                     modifier = Modifier
                         .height(iconSize)
-                        .width(iconSize)
+                        .width(iconSize),
+                    tint = colors.onSurface
                 )
                 Spacer(modifier = Modifier.width(Dimens.standardPadding))
                 Text(
                     text = Strings.category,
                     style = TextStyle(
-                        color = kBlack,
+                        color = colors.onSurface,
                         fontSize = 22.sp,
                         fontWeight = FontWeight.Bold
                     ),
@@ -344,7 +356,7 @@ fun RecordDetailsBody(
 
             Text(
                 text = viewModel.recordCategoryDesc.value,
-                style = TextStyle(color = kGray, fontSize = 18.sp),
+                style = TextStyle(color = colors.onSurface, fontSize = 18.sp),
                 modifier = sectionsTextModifier,
             )
         }
@@ -364,13 +376,14 @@ fun RecordDetailsBody(
                     contentDescription = Strings.info,
                     modifier = Modifier
                         .height(iconSize)
-                        .width(iconSize)
+                        .width(iconSize),
+                    tint = colors.onSurface
                 )
                 Spacer(modifier = Modifier.width(Dimens.standardPadding))
                 Text(
                     text = Strings.address,
                     style = TextStyle(
-                        color = kBlack,
+                        color = colors.onSurface,
                         fontSize = 22.sp,
                         fontWeight = FontWeight.Bold
                     ),

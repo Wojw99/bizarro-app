@@ -9,6 +9,7 @@ import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.*
+import androidx.compose.material.MaterialTheme.colors
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Clear
 import androidx.compose.runtime.Composable
@@ -54,101 +55,106 @@ fun FilterScreen(
 ) {
     viewModel.appState.bottomMenuVisible.value = false
 
-    Box {
-        // * * * * * * BODY * * * * * *
-        Column(
-            modifier = Modifier
-                .background(kWhite)
-                .padding(horizontal = Dimens.standardPadding * 2)
-                .padding(top = Dimens.topBarHeight)
-                .fillMaxSize()
-                .verticalScroll(rememberScrollState())
-        ) {
-            // * * * * * RECORD TYPE * * * * *
-            Text(
-                modifier = headerModifier,
-                text = Strings.recordType,
-                style = headerStyle,
-            )
-            RadioGroup(selectedLabel = viewModel.selectedType, labels = viewModel.typeLabels)
 
-            // * * * * * TYPE DEPENDENT SECTION * * * * *
-            TypeDependentSection()
+    BizarroTheme(darkTheme = Constants.isDark.value)
+    {
+        Box {
+            // * * * * * * BODY * * * * * *
+            Column(
+                modifier = Modifier
+                    .background(colors.background)
+                    .padding(horizontal = Dimens.standardPadding * 2)
+                    .padding(top = Dimens.topBarHeight)
+                    .fillMaxSize()
+                    .verticalScroll(rememberScrollState())
+            ) {
+                // * * * * * RECORD TYPE * * * * *
+                Text(
+                    modifier = headerModifier,
+                    text = Strings.recordType,
+                    style = headerStyle,
+                )
+                RadioGroup(selectedLabel = viewModel.selectedType, labels = viewModel.typeLabels)
 
-            // * * * * * CATEGORY * * * * *
-            Text(
-                modifier = headerModifier,
-                text = Strings.category,
-                style = headerStyle,
-            )
-            RadioGroup(
-                selectedLabel = viewModel.selectedCategory,
-                labels = viewModel.categoryLabels
-            )
+                // * * * * * TYPE DEPENDENT SECTION * * * * *
+                TypeDependentSection()
 
-            // * * * * * PROVINCE * * * * *
-            Text(
-                modifier = headerModifier,
-                text = Strings.province,
-                style = headerStyle,
-            )
-            RadioGroup(
-                selectedLabel = viewModel.selectedProvince,
-                labels = viewModel.provinceLabels
-            )
+                // * * * * * CATEGORY * * * * *
+                Text(
+                    modifier = headerModifier,
+                    text = Strings.category,
+                    style = headerStyle,
+                )
+                RadioGroup(
+                    selectedLabel = viewModel.selectedCategory,
+                    labels = viewModel.categoryLabels
+                )
 
-            Spacer(modifier = Modifier.height(64.dp))
-        }
+                // * * * * * PROVINCE * * * * *
+                Text(
+                    modifier = headerModifier,
+                    text = Strings.province,
+                    style = headerStyle,
+                )
+                RadioGroup(
+                    selectedLabel = viewModel.selectedProvince,
+                    labels = viewModel.provinceLabels
+                )
 
-        // * * * * * ACCEPT BUTTON * * * * *
-        Button(
-            onClick = {
-                viewModel.saveFilters()
+                Spacer(modifier = Modifier.height(64.dp))
+            }
+
+            // * * * * * ACCEPT BUTTON * * * * *
+            Button(
+                onClick = {
+                    viewModel.saveFilters()
 //                navController.navigate(Screen.Search.route) {
 //                    // remove all previous screen in the stack
 //                    popUpTo(navController.graph.findStartDestination().id) {
 //                        inclusive = true
 //                    }
 //                }
-            },
-            modifier = Modifier
-                .fillMaxWidth()
-                .align(Alignment.BottomCenter)
-                .padding(Dimens.standardPadding)
-        ) {
-            Text(text = Strings.confirm)
-        }
+                },
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .align(Alignment.BottomCenter)
+                    .padding(Dimens.standardPadding)
+            ) {
+                Text(text = Strings.confirm)
+            }
 
-        // * * * * * * TOP BAR * * * * * *
-        TopBar(
-            navController = navController,
-            title = Strings.filterTitle,
-            actions = listOf(
-                TopBarAction(
-                    onClick = { viewModel.cleanStates() },
-                    icon = Icons.Default.Clear,
-                    contentDescription = Strings.clearFilters,
+            // * * * * * * TOP BAR * * * * * *
+            TopBar(
+                navController = navController,
+                title = Strings.filterTitle,
+                actions = listOf(
+                    TopBarAction(
+                        onClick = { viewModel.cleanStates() },
+                        icon = Icons.Default.Clear,
+                        contentDescription = Strings.clearFilters,
+                    ),
                 ),
-            ),
-            modifier = Modifier
-                .background(kWhite)
-                .align(Alignment.TopCenter)
-        )
-
-        // * * * * * * ERROR DIALOG * * * * * *
-        if (viewModel.loadError.value.isNotEmpty()) {
-            ConfirmAlertDialog(
-                onDismiss = { viewModel.clearError() },
-                title = Strings.error,
-                body = viewModel.loadError.value,
+                modifier = Modifier
+                    .background(colors.background)
+                    .align(Alignment.TopCenter)
             )
-        }
 
-        // * * * * * * PROGRESS BAR * * * * * *
-        if(viewModel.isLoading.value) {
-            LoadingBox()
+            // * * * * * * ERROR DIALOG * * * * * *
+            if (viewModel.loadError.value.isNotEmpty()) {
+                ConfirmAlertDialog(
+                    onDismiss = { viewModel.clearError() },
+                    title = Strings.error,
+                    body = viewModel.loadError.value,
+                )
+            }
+
+            // * * * * * * PROGRESS BAR * * * * * *
+            if(viewModel.isLoading.value) {
+                LoadingBox()
+            }
         }
     }
+
 
 }
 
