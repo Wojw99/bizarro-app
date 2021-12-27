@@ -23,6 +23,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.example.bizarro.api.models.Opinion
 import com.example.bizarro.ui.Screen
+import com.example.bizarro.ui.components.TopBar
 import com.example.bizarro.ui.screens.search.topRecordListMargin
 import com.example.bizarro.ui.screens.user_profile.other_user_profile.OtherUserViewModel
 import com.example.bizarro.ui.theme.*
@@ -46,7 +47,13 @@ fun SeeOpinionsScreen(navController: NavController,
             horizontalAlignment = Alignment.CenterHorizontally) {
 
 
-            HeaderSectionSeeOpinionOtherUser(navController)
+            TopBar(
+                navController = navController,
+                title = Strings.empty,
+                modifier = Modifier
+                    .background(MaterialTheme.colors.background)
+                    .align(Alignment.CenterHorizontally)
+            )
 
 
 //            Text("Opinie o użytkowniku:",
@@ -145,7 +152,7 @@ fun UserOpinionsList(
     LazyColumn(
         modifier = Modifier
             .fillMaxSize()
-            .background(MaterialTheme.colors.surface)
+            .background(MaterialTheme.colors.secondaryVariant)
 
     ){
 

@@ -260,32 +260,6 @@ fun OtherUserButtonSection(navController: NavController)
 }
 
 @Composable
-fun HeaderSectionOtherUserProfile(navController: NavController)
-{
-    Box(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(12.dp),
-        contentAlignment = Alignment.Center){
-
-        IconButton(
-            onClick = {
-                navController.popBackStack()
-            },
-            modifier = Modifier.align(Alignment.CenterStart)
-        ) {
-            Icon(
-                imageVector = Icons.Default.ArrowBack,
-                contentDescription = "Back to user record ",
-                Modifier.size(30.dp),
-                tint = MaterialTheme.colors.onSurface
-            )
-        }
-
-    }
-}
-
-@Composable
 fun UserDescriptionHeader()
 {
     Box(
