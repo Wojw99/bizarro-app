@@ -15,8 +15,10 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.example.bizarro.ui.Screen
+import com.example.bizarro.ui.components.TopBar
 import com.example.bizarro.ui.theme.BizarroTheme
 import com.example.bizarro.utils.Constants
+import com.example.bizarro.utils.Strings
 
 @Composable
 fun AboutAppScreen(navController: NavController,
@@ -32,7 +34,14 @@ fun AboutAppScreen(navController: NavController,
             horizontalAlignment = Alignment.CenterHorizontally)
         {
 
-            HeaderSectionAboutApp(navController)
+            TopBar(
+                navController = navController,
+                title = Strings.empty,
+
+                modifier = Modifier
+                    .background(MaterialTheme.colors.background)
+                    .align(Alignment.CenterHorizontally)
+            )
 
             Text("Informacje o aplikacji",
                 style = MaterialTheme.typography.caption,

@@ -1,5 +1,6 @@
 package com.example.bizarro.ui.screens.authenticate
 
+import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import com.example.bizarro.ui.AppState
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -14,5 +15,13 @@ class AuthenticateViewModel @Inject constructor(
     init{
         appState.bottomMenuVisible.value = false
     }
+
+    var emailLoginText = mutableStateOf("")
+    val passwordLoginText = mutableStateOf("")
+
+    var emailRegisterText = mutableStateOf("")
+    val passwordRegisterText = mutableStateOf("")
+
+
 
 }

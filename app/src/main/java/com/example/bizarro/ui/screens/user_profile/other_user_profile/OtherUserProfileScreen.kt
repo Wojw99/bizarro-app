@@ -1,4 +1,4 @@
-package com.example.bizarro.ui.screens.user_profile
+ package com.example.bizarro.ui.screens.user_profile
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -25,6 +25,8 @@ import androidx.navigation.NavController
 import coil.compose.rememberImagePainter
 import com.example.bizarro.R
 import com.example.bizarro.ui.Screen
+import com.example.bizarro.ui.components.TopBar
+import com.example.bizarro.ui.screens.record_details.RecordDetailsViewModel
 import com.example.bizarro.ui.screens.user_profile.other_user_profile.OtherUserViewModel
 import com.example.bizarro.ui.theme.*
 import com.example.bizarro.utils.Constants
@@ -47,7 +49,13 @@ fun OtherUserProfileScreen(navController: NavController,
         ) {
 
 
-            HeaderSectionOtherUserProfile(navController)
+            TopBar(
+                navController = navController,
+                title = Strings.empty,
+                modifier = Modifier
+                    .background(MaterialTheme.colors.background)
+                    .align(Alignment.CenterHorizontally)
+            )
 
             // * * * * * * ERROR TEXT * * * * * *
             if(viewModel.loadError.value.isNotEmpty() && !viewModel.isLoading.value)
@@ -215,7 +223,12 @@ fun OtherUserButtonSection(navController: NavController)
 {
     Button(
         onClick = {
+
+
+            OtherUserViewModel.otherUserId = RecordDetailsViewModel.userId!!
             navController.navigate(route = Screen.AddOpinion.route)
+
+
         }) {
         Image(
             painterResource(R.drawable.ic_baseline_star_24),
@@ -232,6 +245,7 @@ fun OtherUserButtonSection(navController: NavController)
 
     Button(
         onClick ={
+            OtherUserViewModel.otherUserId = RecordDetailsViewModel.userId!!
             navController.navigate(route = Screen.SeeOpinionOtherUser.route)
         },
         Modifier.size(width = 200.dp, height = 60.dp),
@@ -288,7 +302,9 @@ fun UserDescriptionHeader()
 
             //Spacer(modifier = Modifier.width(110.dp))
 
-            Icon(Icons.Default.Info, "Icon description", tint = MaterialTheme.colors.onSurface)
+            Icon(Icons.Default.Info,
+                "Icon description",
+                tint = MaterialTheme.colors.onSurface)
 
             Text(text = "Opis profilu:",
                 style = TextStyle(

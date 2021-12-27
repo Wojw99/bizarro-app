@@ -14,7 +14,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -47,9 +49,15 @@ fun SeeOpinionsScreen(navController: NavController,
             HeaderSectionSeeOpinionOtherUser(navController)
 
 
-            Text("Opinie o użytkowniku:",
-                style = MaterialTheme.typography.caption,
-                color =  MaterialTheme.colors.onSurface)
+//            Text("Opinie o użytkowniku:",
+//                style = MaterialTheme.typography.caption,
+//                color =  MaterialTheme.colors.onSurface)
+
+            Text("Opinie o użytkowniku ${viewModel.nameUser}!",
+                style = TextStyle(textAlign = TextAlign.Center, fontSize = 21.sp, fontFamily = FontFamily.Serif,),
+                color = MaterialTheme.colors.onSurface,
+                modifier = Modifier.padding(horizontal = 24.dp),
+            )
 
             if (viewModel.loadError.value.isNotEmpty()
                 && !viewModel.isLoading.value) {

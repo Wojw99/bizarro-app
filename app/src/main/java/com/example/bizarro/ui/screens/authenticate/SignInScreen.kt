@@ -13,12 +13,15 @@ import androidx.navigation.NavController
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.example.bizarro.ui.components.CustomOutlinedTextField
 import com.example.bizarro.ui.theme.BizarroTheme
 import com.example.bizarro.utils.Constants
+import com.example.bizarro.utils.Strings
 
 
 @Composable
@@ -58,25 +61,21 @@ fun SignInScreen(navController: NavController,
 }
 
 @Composable
-fun loginFields(navController: NavController)
+fun loginFields(navController: NavController,
+                viewModel: AuthenticateViewModel = hiltViewModel())
 {
 
-   var textLoginEmail by remember { mutableStateOf(TextFieldValue("")) }
-   var textLoginPassword by remember { mutableStateOf(TextFieldValue("")) }
-
    OutlinedTextField(
-      value =textLoginEmail,
+      value =viewModel.emailLoginText.value,
       onValueChange ={
-         textLoginEmail = it
+         viewModel.emailLoginText.value = it
       },
-      //label = { Text(text = "Email") },
       placeholder = { Text(text = "Podaj swój email") },
       leadingIcon = {
          Icon(imageVector = Icons.Default.Email, contentDescription = "EmailIcon",
          tint = MaterialTheme.colors.onSurface)
       },
       colors = TextFieldDefaults.outlinedTextFieldColors(
-
          focusedBorderColor = MaterialTheme.colors.onSurface,
          unfocusedBorderColor = MaterialTheme.colors.onSurface,
          textColor = MaterialTheme.colors.onSurface)
@@ -85,11 +84,10 @@ fun loginFields(navController: NavController)
    Spacer(modifier = Modifier.height(20.dp))
 
    OutlinedTextField(
-      value = textLoginPassword,
+      value = viewModel.passwordLoginText.value,
       onValueChange ={
-         textLoginPassword = it
+         viewModel.passwordLoginText.value = it
       },
-      //label = { Text(text = "Hasło") },
       placeholder = { Text(text = "Podaj swoje hasło") },
       leadingIcon = {
          Icon(imageVector = Icons.Default.Lock, contentDescription = "PasswordIcon",
@@ -105,7 +103,7 @@ fun loginFields(navController: NavController)
 
    Button(
       onClick ={
-         navController.navigate(route = com.example.bizarro.ui.Screen.UserProfile.route)
+         navController.navigate(route = com.example.bizarro.ui.Screen.Compare.route)
       },
       Modifier.size(width = 250.dp, height = 50.dp),
       colors = ButtonDefaults.buttonColors(backgroundColor = MaterialTheme.colors.onSurface),

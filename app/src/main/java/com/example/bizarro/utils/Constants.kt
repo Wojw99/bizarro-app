@@ -22,6 +22,12 @@ object Constants {
     const val CATEGORY_CRUISER = "cruiser"
     const val CATEGORY_DIRT = "dirt/dual"
 
+    const val Review_1 = "1"
+    const val Review_2 = "2"
+    const val Review_3 = "3"
+    const val Review_4 = "4"
+    const val Review_5 = "5"
+
     val provinces = listOf(
         "śląskie",
         "mazowieckie",
@@ -43,6 +49,14 @@ object Constants {
         TYPE_SELL,
         TYPE_SWAP,
         TYPE_RENT,
+    )
+
+    val marks = listOf(
+        Review_1,
+        Review_2,
+        Review_3,
+        Review_4,
+        Review_5
     )
 
     val isDark = mutableStateOf(false)

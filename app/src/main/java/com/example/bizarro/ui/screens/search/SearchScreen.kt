@@ -39,6 +39,7 @@ import coil.compose.ImagePainter
 import coil.compose.rememberImagePainter
 import com.example.bizarro.api.models.Record
 import com.example.bizarro.ui.Screen
+import com.example.bizarro.ui.components.ConfirmAlertDialog
 import com.example.bizarro.ui.components.CustomIconButton
 import com.example.bizarro.ui.components.RecordBox
 import com.example.bizarro.ui.screens.record_details.RecordDetailsViewModel

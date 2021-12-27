@@ -70,7 +70,7 @@ fun AddOpinionScreen(navController: NavController,
             ) {
                 Text(
                     text = viewModel.loadError.value,
-                    color = MaterialTheme.colors.onSurface
+                    color = colors.onSurface
                 )
                 Spacer(modifier = Modifier.height(Dimens.standardPadding))
                 Button(onClick = {
@@ -158,12 +158,10 @@ fun RadioButtonDemo(
 ) {
     val context = LocalContext.current
 
-//    Column(
-//        modifier = Modifier.fillMaxSize(),
-//        verticalArrangement = Arrangement.Center,
-//        horizontalAlignment = Alignment.CenterHorizontally
-//    ) {
+
         val selectedReview = remember { mutableStateOf("") }
+
+
         Text("Zaznacz ocenę w stopniach od 1 do 5:",color = MaterialTheme.colors.onSurface)
         Spacer(modifier = Modifier.size(16.dp))
         Row {
@@ -236,7 +234,9 @@ fun RadioButtonDemo(
                     unselectedColor = colors.onSurface
                 )
             )
+
             Spacer(modifier = Modifier.size(16.dp))
+
             Text(Review.review5, color = MaterialTheme.colors.onSurface)
 
             Spacer(modifier = Modifier.height(50.dp))
@@ -309,7 +309,7 @@ fun RadioButtonDemo(
 
 
     }
-//}
+
 
 
 object Review {

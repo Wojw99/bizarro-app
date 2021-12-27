@@ -38,6 +38,9 @@ class OtherUserViewModel @Inject constructor(
 
     val userOtherOpinionList = mutableStateOf<List<Opinion>>(listOf())
 
+//    val marks = Constants.marks
+//    val selectedMark = mutableStateOf("")
+
     //val opinionOtherUserList = mutableStateListOf<String>()
 
 //    val opinionsOtherUser= mutableStateOf(listOf(

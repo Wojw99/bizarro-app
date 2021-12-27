@@ -51,20 +51,17 @@ fun SignUpScreen(navController: NavController,
 }
 
 @Composable
-fun RegisterFields(navController: NavController)
+fun RegisterFields(navController: NavController,
+                   viewModel: AuthenticateViewModel = hiltViewModel())
 {
 
     val context = LocalContext.current
 
-    var textRegisterEmail by remember { mutableStateOf(TextFieldValue("")) }
-    var textRegisterPassword by remember { mutableStateOf(TextFieldValue("")) }
-
     OutlinedTextField(
-        value =textRegisterEmail,
+        value =viewModel.emailRegisterText.value,
         onValueChange ={
-            textRegisterEmail = it
+            viewModel.emailRegisterText.value = it
         },
-        //label = { Text(text = "Email") },
         placeholder = { Text(text = "Podaj swój email") },
         leadingIcon = {
             Icon(imageVector = Icons.Default.Email, contentDescription = "EmailIcon",
@@ -81,11 +78,10 @@ fun RegisterFields(navController: NavController)
 
 
     OutlinedTextField(
-        value = textRegisterPassword,
+        value = viewModel.passwordRegisterText.value,
         onValueChange ={
-            textRegisterPassword = it
+            viewModel.passwordRegisterText.value = it
         },
-        //label = { Text(text = "Hasło") },
         placeholder = { Text(text = "Podaj swoje hasło") },
         leadingIcon = {
             Icon(imageVector = Icons.Default.Lock, contentDescription = "PasswordIcon",
@@ -101,9 +97,6 @@ fun RegisterFields(navController: NavController)
 
     Button(
         onClick ={
-
-            //navController.navigate(route = com.example.bizarro.ui.Screen.SignIn.route)
-
             Toast.makeText(context, "Zarejestrowano", Toast.LENGTH_SHORT).show()
         },
         Modifier.size(width = 250.dp, height = 50.dp),

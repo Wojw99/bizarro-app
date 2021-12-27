@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.filled.Clear
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -12,9 +13,12 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.example.bizarro.ui.Screen
+import com.example.bizarro.ui.components.TopBar
 import com.example.bizarro.ui.screens.user_profile.settings.SettingsViewModel
 import com.example.bizarro.ui.theme.*
 import com.example.bizarro.utils.Constants
+import com.example.bizarro.utils.Strings
+import com.example.bizarro.utils.models.TopBarAction
 
 @Composable
 fun SettingsScreen(navController: NavController,
@@ -30,7 +34,20 @@ fun SettingsScreen(navController: NavController,
             ,
             horizontalAlignment = Alignment.CenterHorizontally) {
 
-            HeaderSectionSettings(navController)
+            //HeaderSectionSettings(navController)
+
+
+            TopBar(
+                navController = navController,
+                title = Strings.empty,
+
+                modifier = Modifier
+                    .background(MaterialTheme.colors.background)
+                    .align(Alignment.CenterHorizontally)
+            )
+
+
+
 
             Text("Ustawienia aplikacji",
                 color = MaterialTheme.colors.onSurface,
