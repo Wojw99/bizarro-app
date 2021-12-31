@@ -28,7 +28,6 @@ class RecordRepository @Inject constructor(
         type: String?,
         category: String?,
     ) : Resource<List<Record>>{
-        delay(1000L)
         val response = try {
             api.getRecordList(limit, offset, name, city, province, type, category)
         } catch (e: Exception) {
@@ -40,7 +39,6 @@ class RecordRepository @Inject constructor(
     }
 
     suspend fun getRecordDetails(recordId: Long) : Resource<Record>{
-        delay(1000L)
         val response = try {
             api.getRecordDetails(recordId)
         } catch (e: Exception) {
@@ -52,7 +50,6 @@ class RecordRepository @Inject constructor(
     }
 
     suspend fun addRecord(record: Record) : Resource<Record> {
-        delay(1000L)
         val response = try {
             api.addRecord(record)
         } catch (e: Exception) {

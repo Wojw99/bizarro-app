@@ -31,49 +31,46 @@ import com.example.bizarro.utils.Strings
 
 @Composable
 fun UserProfileScreen(
-    navController:NavController,
-
+    navController: NavController,
     viewModel: UserProfileViewModel = hiltViewModel(),
-
 ) {
+    viewModel.appState.bottomMenuVisible.value = true
 
-BizarroTheme(
-    darkTheme = Constants.isDark.value
-) {
+    BizarroTheme(
+        darkTheme = Constants.isDark.value
+    ) {
+        Column(
 
-    Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .background(colors.background),
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
 
-        modifier = Modifier
-            .fillMaxSize()
-            .background(colors.background)
-        ,
-        horizontalAlignment = Alignment.CenterHorizontally) {
+            HeaderSectionUserProfile(navController)
 
-        HeaderSectionUserProfile(navController)
-
-        // * * * * * * ERROR TEXT * * * * * *
-        if(viewModel.loadError.value.isNotEmpty() && !viewModel.isLoading.value)
-        {
-            Column(
-                verticalArrangement = Arrangement.Center,
-                horizontalAlignment = Alignment.CenterHorizontally,
-                modifier = Modifier.fillMaxSize(),
-            ) {
-                Text(
-                    text = viewModel.loadError.value,
-                    color = colors.onSurface
-                )
-                Spacer(modifier = Modifier.height(Dimens.standardPadding))
-                Button(onClick = { viewModel.getUserProfile() }) {
+            // * * * * * * ERROR TEXT * * * * * *
+            if (viewModel.loadError.value.isNotEmpty() && !viewModel.isLoading.value) {
+                Column(
+                    verticalArrangement = Arrangement.Center,
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    modifier = Modifier.fillMaxSize(),
+                ) {
                     Text(
-                        text = Strings.refresh,
-                        color = kWhite
+                        text = viewModel.loadError.value,
+                        color = colors.onSurface
                     )
+                    Spacer(modifier = Modifier.height(Dimens.standardPadding))
+                    Button(onClick = { viewModel.getUserProfile() }) {
+                        Text(
+                            text = Strings.refresh,
+                            color = kWhite
+                        )
+                    }
                 }
             }
-        }
 
-        // * * * * * * EMPTY TEXT * * * * * *
+            // * * * * * * EMPTY TEXT * * * * * *
 //        if (viewModel.recordList.value.isEmpty()
 //            && !viewModel.isLoading.value
 //            && viewModel.loadError.value.isEmpty()
@@ -84,41 +81,38 @@ BizarroTheme(
 //            )
 //        }
 
-        // * * * * * * USER PROFILE * * * * * *
-        if (!viewModel.isLoading.value) {
-            //RecordList(navController = navController)
+            // * * * * * * USER PROFILE * * * * * *
+            if (!viewModel.isLoading.value) {
+                //RecordList(navController = navController)
 
-            UserInformation()
+                UserInformation()
 
-            Spacer(modifier = Modifier.height(50.dp))
+                Spacer(modifier = Modifier.height(50.dp))
 
-            UserButtonSection(navController)
+                UserButtonSection(navController)
+
+            }
+
+            // * * * * * * PROGRESS BAR * * * * * *
+            if (viewModel.isLoading.value) {
+                CircularProgressIndicator(modifier = Modifier.align(Alignment.CenterHorizontally))
+            }
+
 
         }
-
-        // * * * * * * PROGRESS BAR * * * * * *
-        if (viewModel.isLoading.value) {
-            CircularProgressIndicator(modifier = Modifier.align(Alignment.CenterHorizontally))
-        }
-
-
-
 
     }
-
-}
-
 
 
 }
 
 @Composable
-fun HeaderSectionUserProfile(navController: NavController)
-{
+fun HeaderSectionUserProfile(navController: NavController) {
     Box(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(12.dp)){
+            .padding(12.dp)
+    ) {
 
         IconButton(
 
@@ -140,8 +134,7 @@ fun HeaderSectionUserProfile(navController: NavController)
 }
 
 @Composable
-fun UserInformation(viewModel: UserProfileViewModel = hiltViewModel())
-{
+fun UserInformation(viewModel: UserProfileViewModel = hiltViewModel()) {
 
     Image(
         //painter = painterResource(id = R.drawable.ic_baseline_person_24),
@@ -156,66 +149,81 @@ fun UserInformation(viewModel: UserProfileViewModel = hiltViewModel())
             .border(3.dp, kBlueDark, RoundedCornerShape(10))
     )
 
-    Box(modifier = Modifier
-        .fillMaxWidth()
-        .padding(12.dp),
-        contentAlignment = Alignment.Center) {
+    Box(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(12.dp),
+        contentAlignment = Alignment.Center
+    ) {
     }
-    Row(verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.Center,)
+    Row(
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.Center,
+    )
     {
 
         Icon(Icons.Default.Person, "Icon description", tint = MaterialTheme.colors.onSurface)
 
         //Spacer(modifier = Modifier.width(15.dp))
 
-        Text(viewModel.nameUser,
+        Text(
+            viewModel.nameUser,
             style = TextStyle(
                 color = colors.onSurface,
                 fontSize = 30.sp,
                 fontFamily = FontFamily.Default,
                 fontWeight = FontWeight.Bold
-            ))
+            )
+        )
 
     }
 
 
 
-    Box(modifier = Modifier
-        .fillMaxWidth()
-        .padding(12.dp),
-        contentAlignment = Alignment.Center) {
+    Box(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(12.dp),
+        contentAlignment = Alignment.Center
+    ) {
 
-        Row(verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.Center,)
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.Center,
+        )
         {
             //Spacer(modifier = Modifier.width(25.dp))
 
-            Icon(Icons.Default.Email, "Icon description", tint = MaterialTheme.colors.onSurface )
+            Icon(Icons.Default.Email, "Icon description", tint = MaterialTheme.colors.onSurface)
 
             //Spacer(modifier = Modifier.width(15.dp))
 
-            Text(viewModel.emailUser,
+            Text(
+                viewModel.emailUser,
                 style = TextStyle(
                     color = colors.onSurface,
                     fontSize = 30.sp,
                     fontFamily = FontFamily.Default,
                     fontWeight = FontWeight.Normal
-                ))
+                )
+            )
         }
 
     }
 
 
 
-    Box(modifier = Modifier
-        .fillMaxWidth()
-        .padding(12.dp),
+    Box(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(12.dp),
         contentAlignment = Alignment.Center
     ) {
 
-        Row(verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.Center,)
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.Center,
+        )
         {
             //Spacer(modifier = Modifier.width(85.dp))
 
@@ -223,13 +231,15 @@ fun UserInformation(viewModel: UserProfileViewModel = hiltViewModel())
 
             //Spacer(modifier = Modifier.width(10.dp))
 
-            Text(viewModel.phoneUser,
+            Text(
+                viewModel.phoneUser,
                 style = TextStyle(
                     color = colors.onSurface,
                     fontSize = 30.sp,
                     fontFamily = FontFamily.Default,
                     fontWeight = FontWeight.Normal
-                ))
+                )
+            )
         }
 
     }
@@ -252,10 +262,9 @@ fun UserInformation(viewModel: UserProfileViewModel = hiltViewModel())
 }
 
 @Composable
-fun UserButtonSection(navController: NavController)
-{
+fun UserButtonSection(navController: NavController) {
     Button(
-        onClick ={
+        onClick = {
             navController.navigate(route = Screen.EditProfile.route)
         },
         Modifier.size(width = 180.dp, height = 40.dp),
@@ -263,7 +272,8 @@ fun UserButtonSection(navController: NavController)
         colors = ButtonDefaults.buttonColors(backgroundColor = colors.primary)
     )
     {
-        Text(text = "Edytuj profil",
+        Text(
+            text = "Edytuj profil",
             color = kWhite
             //style = MaterialTheme.typography.button
         )
@@ -272,7 +282,7 @@ fun UserButtonSection(navController: NavController)
     Spacer(modifier = Modifier.height(30.dp))
 
     Button(
-        onClick ={
+        onClick = {
             navController.navigate(route = Screen.SeeYourOpinionsScreen.route)
 
             //Toast.makeText(context, viewModel.nameUser, Toast.LENGTH_SHORT).show()
@@ -281,9 +291,10 @@ fun UserButtonSection(navController: NavController)
         Modifier.size(width = 180.dp, height = 40.dp),
         colors = ButtonDefaults.buttonColors(backgroundColor = colors.primary),
 
-    )
+        )
     {
-        Text(text = "Zobacz opinie",
+        Text(
+            text = "Zobacz opinie",
             //style = MaterialTheme.typography.button
         )
     }
@@ -291,31 +302,33 @@ fun UserButtonSection(navController: NavController)
 
 
 @Composable
-fun DescriptionHeader()
-{
-    Box(modifier = Modifier
-        .fillMaxWidth()
-        .padding(12.dp),
+fun DescriptionHeader() {
+    Box(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(12.dp),
         contentAlignment = Alignment.Center
-    ){
+    ) {
         Row(
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.Center,
 
-        ) {
+            ) {
 
             //Spacer(modifier = Modifier.width(120.dp))
 
             Icon(Icons.Default.Info, "Icon description", tint = MaterialTheme.colors.onSurface)
 
-            Text(text = "Opis profilu:",
+            Text(
+                text = "Opis profilu:",
                 style = TextStyle(
                     color = colors.onSurface,
                     fontSize = 25.sp,
                     fontFamily = FontFamily.Default,
                     fontWeight = FontWeight.Bold,
                     textAlign = TextAlign.Start
-                ),)
+                ),
+            )
         }
 
     }

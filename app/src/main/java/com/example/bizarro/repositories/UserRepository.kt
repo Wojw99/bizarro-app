@@ -19,7 +19,6 @@ class UserRepository @Inject constructor(
     val userId: Long = 0
 
     suspend fun getUserProfile(userId: Long) : Resource<UserProfile> {
-        delay(1000L)
         val response = try {
             api.getUserProfile(userId)
         } catch (e: Exception) {
@@ -30,7 +29,6 @@ class UserRepository @Inject constructor(
     }
 
     suspend fun getUserOpinions(userId: Long) : Resource<List<Opinion>> {
-        delay(1000L)
         val response = try {
             api.getUserOpinions(userId)
         } catch (e: Exception) {
@@ -41,7 +39,6 @@ class UserRepository @Inject constructor(
     }
 
     suspend fun getUserRecords(userId: Long) : Resource<List<Record>> {
-        delay(1000L)
         val response = try {
             api.getUserRecords(userId)
         } catch (e: Exception) {
@@ -52,7 +49,6 @@ class UserRepository @Inject constructor(
     }
 
     suspend fun addUserOpinion(opinion: Opinion) : Resource<Opinion> {
-        delay(1000L)
         val response = try {
             api.addUserOpinion(opinion)
         } catch (e: Exception) {

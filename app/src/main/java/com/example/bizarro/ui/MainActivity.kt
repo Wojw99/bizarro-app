@@ -15,6 +15,7 @@ import androidx.navigation.compose.rememberNavController
 import com.example.bizarro.ui.components.BottomNavItem
 import com.example.bizarro.ui.components.BottomNavigationBar
 import com.example.bizarro.ui.theme.BizarroTheme
+import com.example.bizarro.utils.Strings
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -39,24 +40,19 @@ class MainActivity : ComponentActivity() {
                             BottomNavigationBar(
                                 items = listOf(
                                     BottomNavItem(
-                                        Screen.Compare.name,
-                                        Screen.Compare.route,
-                                        icon = Icons.Default.Check,
-                                    ),
-                                    BottomNavItem(
-                                        Screen.UserRecordList.name,
+                                        Strings.home,
                                         Screen.UserRecordList.route,
-                                        icon = Icons.Default.List,
-                                    ),
-                                    BottomNavItem(
-                                        Screen.Home.name,
-                                        Screen.Home.route,
                                         icon = Icons.Default.Home,
                                     ),
                                     BottomNavItem(
                                         Screen.Search.name,
                                         Screen.Search.route,
                                         icon = Icons.Default.Search,
+                                    ),
+                                    BottomNavItem(
+                                        Screen.Compare.name,
+                                        Screen.Compare.route,
+                                        icon = Icons.Default.CheckCircle,
                                     ),
                                     BottomNavItem(
                                         Screen.UserProfile.name,

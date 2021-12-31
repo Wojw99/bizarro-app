@@ -32,29 +32,36 @@ import com.example.bizarro.utils.Strings
 
 @ExperimentalFoundationApi
 @Composable
-fun SeeYourOpinionsScreen(navController: NavController,
-                          viewModel: UserProfileViewModel = hiltViewModel()
+fun SeeYourOpinionsScreen(
+    navController: NavController,
+    viewModel: UserProfileViewModel = hiltViewModel()
 ) {
+    viewModel.appState.bottomMenuVisible.value = false
 
     BizarroTheme(
         darkTheme = Constants.isDark.value
     ) {
-        Column(modifier = Modifier
-            .fillMaxSize()
-            .background(MaterialTheme.colors.background),
-            horizontalAlignment = Alignment.CenterHorizontally) {
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .background(MaterialTheme.colors.background),
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
 
             HeaderSectionSeeOpinionUserProfile(navController)
 
-            Text("Opinie o Tobie:",
+            Text(
+                "Opinie o Tobie:",
                 style = MaterialTheme.typography.caption,
-                color = MaterialTheme.colors.onSurface)
+                color = MaterialTheme.colors.onSurface
+            )
 
 
             Spacer(modifier = Modifier.height(30.dp))
 
             if (viewModel.loadError.value.isNotEmpty()
-                && !viewModel.isLoading.value) {
+                && !viewModel.isLoading.value
+            ) {
                 Column(
                     verticalArrangement = Arrangement.Center,
                     horizontalAlignment = Alignment.CenterHorizontally,
@@ -104,17 +111,15 @@ fun SeeYourOpinionsScreen(navController: NavController,
     }
 
 
-
-
 }
 
 @Composable
-fun HeaderSectionSeeOpinionUserProfile(navController: NavController)
-{
+fun HeaderSectionSeeOpinionUserProfile(navController: NavController) {
     Box(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(12.dp)){
+            .padding(12.dp)
+    ) {
         IconButton(
             onClick = {
                 navController.popBackStack()
@@ -136,13 +141,12 @@ fun HeaderSectionSeeOpinionUserProfile(navController: NavController)
 fun LoggedUserOpinionsList(
     viewModel: UserProfileViewModel = hiltViewModel(),
     modifier: Modifier = Modifier,
-)
-{
+) {
     LazyColumn(
         modifier = Modifier
             .fillMaxSize()
             .background(MaterialTheme.colors.surface)
-    ){
+    ) {
 
         val opinionList = viewModel.userLoggedOpinionList.value
         val opinionListCount = opinionList.size
@@ -164,45 +168,50 @@ fun LoggedUserOpinionsList(
 }
 
 @Composable
-fun OpinionBox(opinion: Opinion, modifier: Modifier = Modifier,)
-{
-    Box(modifier = modifier
-        .shadow(5.dp, RoundedCornerShape(Dimens.cornerRadius))
-        .clip(RoundedCornerShape(Dimens.cornerRadius))
-        .background(kWhite)
-        .fillMaxHeight()
-        .fillMaxWidth())
+fun OpinionBox(opinion: Opinion, modifier: Modifier = Modifier) {
+    Box(
+        modifier = modifier
+            .shadow(5.dp, RoundedCornerShape(Dimens.cornerRadius))
+            .clip(RoundedCornerShape(Dimens.cornerRadius))
+            .background(kWhite)
+            .fillMaxHeight()
+            .fillMaxWidth()
+    )
     {
 
-        Column(horizontalAlignment = Alignment.Start,
+        Column(
+            horizontalAlignment = Alignment.Start,
             verticalArrangement = Arrangement.SpaceBetween,
-            modifier = Modifier.fillMaxSize(),)
+            modifier = Modifier.fillMaxSize(),
+        )
         {
-            Row(verticalAlignment = Alignment.CenterVertically,
-            modifier = Modifier
-                .wrapContentHeight()
-                .fillMaxWidth()
-                .background(kWhite))
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                modifier = Modifier
+                    .wrapContentHeight()
+                    .fillMaxWidth()
+                    .background(kWhite)
+            )
             {
                 Text(
-                text = "Ocena: ${opinion.rating}",
-                style = TextStyle(
-                    fontSize = 20.sp,
-                    fontWeight = FontWeight.Bold,
-                    color = kBlack,
+                    text = "Ocena: ${opinion.rating}",
+                    style = TextStyle(
+                        fontSize = 20.sp,
+                        fontWeight = FontWeight.Bold,
+                        color = kBlack,
+                    )
                 )
-            )
 
-            Spacer(modifier = Modifier.width(30.dp))
+                Spacer(modifier = Modifier.width(30.dp))
 
-            Text(
-                text = "Data: ${opinion.creationDate}",
-                style = TextStyle(
-                    fontSize = 20.sp,
-                    fontWeight = FontWeight.Bold,
-                    color = kBlack,
+                Text(
+                    text = "Data: ${opinion.creationDate}",
+                    style = TextStyle(
+                        fontSize = 20.sp,
+                        fontWeight = FontWeight.Bold,
+                        color = kBlack,
+                    )
                 )
-            )
 
             }
 

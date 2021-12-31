@@ -152,12 +152,12 @@ fun RecordDetailsBody(
         // * * * * * * * * TITLE SECTION * * * * * * * *
         Box(
             modifier = Modifier
-                .background(colors.background)
+                .background(colors.secondaryVariant)
                 .fillMaxWidth()
         ) {
             Box(
                 modifier = Modifier
-                    .background(colors.secondaryVariant, RoundedCornerShape(bottomStart = 16.dp, bottomEnd = 16.dp))
+                    .background(colors.background, RoundedCornerShape(bottomStart = 16.dp, bottomEnd = 16.dp))
                     .fillMaxWidth()
             ) {
                 Column(
@@ -203,7 +203,7 @@ fun RecordDetailsBody(
             modifier = Modifier
                 .height(25.dp)
                 .fillMaxWidth()
-                .background(colors.background)
+                .background(colors.secondaryVariant)
         )
 
         val sectionsPaddingHorizontal = 24.dp
@@ -299,7 +299,7 @@ fun RecordDetailsBody(
             Text(
                 text = viewModel.recordGeneralOpinion.value,
                 style = TextStyle(
-                    color = kBlueDark,
+                    color = if (Constants.isDark.value) kBlueLight else kBlueDark,
                     fontSize = 18.sp,
                     fontWeight = FontWeight.SemiBold,
                 ),
@@ -347,7 +347,7 @@ fun RecordDetailsBody(
             Text(
                 text = viewModel.recordCategory.value,
                 style = TextStyle(
-                    color = kBlueDark,
+                    color = if (Constants.isDark.value) kBlueLight else kBlueDark,
                     fontSize = 18.sp,
                     fontWeight = FontWeight.SemiBold,
                 ),
@@ -396,7 +396,7 @@ fun RecordDetailsBody(
             Text(
                 text = viewModel.recordAddress.value,
                 style = TextStyle(
-                    color = kBlueDark,
+                    color = if (Constants.isDark.value) kBlueLight else kBlueDark,
                     fontSize = 18.sp,
                     fontWeight = FontWeight.SemiBold,
                 ),
@@ -404,7 +404,7 @@ fun RecordDetailsBody(
             )
 
             // * * * MAP * * *
-            Spacer(modifier = Modifier.height(64.dp))
+            // Spacer(modifier = Modifier.height(64.dp))
         }
 
 

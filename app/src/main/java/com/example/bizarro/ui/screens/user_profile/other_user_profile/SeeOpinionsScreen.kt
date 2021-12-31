@@ -34,17 +34,21 @@ import com.example.bizarro.utils.Strings
 
 @ExperimentalFoundationApi
 @Composable
-fun SeeOpinionsScreen(navController: NavController,
-                      viewModel: OtherUserViewModel = hiltViewModel())
-{
+fun SeeOpinionsScreen(
+    navController: NavController,
+    viewModel: OtherUserViewModel = hiltViewModel()
+) {
+    viewModel.appState.bottomMenuVisible.value = false
 
     BizarroTheme(
         darkTheme = Constants.isDark.value
     ) {
-        Column(modifier = Modifier
-            .fillMaxSize()
-            .background(MaterialTheme.colors.background),
-            horizontalAlignment = Alignment.CenterHorizontally) {
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .background(MaterialTheme.colors.background),
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
 
 
             TopBar(
@@ -55,19 +59,20 @@ fun SeeOpinionsScreen(navController: NavController,
                     .align(Alignment.CenterHorizontally)
             )
 
-
-//            Text("Opinie o użytkowniku:",
-//                style = MaterialTheme.typography.caption,
-//                color =  MaterialTheme.colors.onSurface)
-
-            Text("Opinie o użytkowniku ${viewModel.nameUser}!",
-                style = TextStyle(textAlign = TextAlign.Center, fontSize = 21.sp, fontFamily = FontFamily.Serif,),
+            Text(
+                "Opinie o użytkowniku ${viewModel.nameUser}!",
+                style = TextStyle(
+                    textAlign = TextAlign.Center,
+                    fontSize = 21.sp,
+                    fontFamily = FontFamily.Serif,
+                ),
                 color = MaterialTheme.colors.onSurface,
                 modifier = Modifier.padding(horizontal = 24.dp),
             )
 
             if (viewModel.loadError.value.isNotEmpty()
-                && !viewModel.isLoading.value) {
+                && !viewModel.isLoading.value
+            ) {
                 Column(
                     verticalArrangement = Arrangement.Center,
                     horizontalAlignment = Alignment.CenterHorizontally,
@@ -116,13 +121,13 @@ fun SeeOpinionsScreen(navController: NavController,
 }
 
 @Composable
-fun HeaderSectionSeeOpinionOtherUser(navController: NavController)
-{
+fun HeaderSectionSeeOpinionOtherUser(navController: NavController) {
     Box(
 
         modifier = Modifier
             .fillMaxWidth()
-            .padding(12.dp)){
+            .padding(12.dp)
+    ) {
 
 
         IconButton(
@@ -147,14 +152,13 @@ fun HeaderSectionSeeOpinionOtherUser(navController: NavController)
 fun UserOpinionsList(
     viewModel: OtherUserViewModel = hiltViewModel(),
     modifier: Modifier = Modifier,
-)
-{
+) {
     LazyColumn(
         modifier = Modifier
             .fillMaxSize()
             .background(MaterialTheme.colors.secondaryVariant)
 
-    ){
+    ) {
 
         val otherUserOpinionList = viewModel.userOtherOpinionList.value
         val otherUserOpinionListCount = otherUserOpinionList.size
@@ -176,28 +180,32 @@ fun UserOpinionsList(
 }
 
 @Composable
-fun OtherOpinionBox(opinion: Opinion, modifier: Modifier = Modifier,)
-{
-    Box(modifier = modifier
-        .shadow(5.dp, RoundedCornerShape(Dimens.cornerRadius))
-        .clip(RoundedCornerShape(Dimens.cornerRadius))
-        .background(kWhite)
-        .fillMaxHeight()
-        .fillMaxWidth())
+fun OtherOpinionBox(opinion: Opinion, modifier: Modifier = Modifier) {
+    Box(
+        modifier = modifier
+            .shadow(5.dp, RoundedCornerShape(Dimens.cornerRadius))
+            .clip(RoundedCornerShape(Dimens.cornerRadius))
+            .background(kWhite)
+            .fillMaxHeight()
+            .fillMaxWidth()
+    )
     {
 
-        Column(horizontalAlignment = Alignment.Start,
+        Column(
+            horizontalAlignment = Alignment.Start,
             verticalArrangement = Arrangement.SpaceBetween,
-            modifier = Modifier.fillMaxSize(),)
+            modifier = Modifier.fillMaxSize(),
+        )
         {
-            Row(verticalAlignment = Alignment.CenterVertically,
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
 
                 modifier = Modifier
                     .wrapContentHeight()
                     .fillMaxWidth()
                     .background(kWhite)
 
-                    )
+            )
             {
                 Text(
                     text = "Ocena: ${opinion.rating}",

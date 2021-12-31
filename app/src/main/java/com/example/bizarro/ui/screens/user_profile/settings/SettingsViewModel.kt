@@ -9,13 +9,9 @@ import javax.inject.Inject
 
 @HiltViewModel
 class SettingsViewModel @Inject constructor(
-    appState: AppState
+    val appState: AppState
 ): ViewModel()
 {
-    init {
-        appState.bottomMenuVisible.value = false
-    }
-
     val helpList = mutableStateOf<List<String>>(listOf(
 
         "zamienię - oznacza, że dany użytkownik chciałby się wymienić " +

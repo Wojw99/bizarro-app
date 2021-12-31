@@ -16,6 +16,8 @@ object Strings {
     const val success2 = "Sukces!"
     const val settings = "Ustawienia"
     const val empty = ""
+    const val userRecords = "Twoje ogłoszenia"
+    const val home = "Home"
 
     // * * * * * * * * SEARCH SCREEN * * * * * * * *
     const val recordImage = "Zdjęcie ogłoszenia."

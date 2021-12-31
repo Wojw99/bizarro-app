@@ -35,17 +35,22 @@ import com.example.bizarro.utils.Dimens
 import com.example.bizarro.utils.Strings
 
 @Composable
-fun HelpScreen(navController: NavController,
-               viewModel: SettingsViewModel = hiltViewModel(),)
-{
+fun HelpScreen(
+    navController: NavController,
+    viewModel: SettingsViewModel = hiltViewModel(),
+) {
+    viewModel.appState.bottomMenuVisible.value = false
+
     BizarroTheme(
         darkTheme = Constants.isDark.value
     ) {
 
-        Column(modifier = Modifier
-            .fillMaxSize()
-            .background(MaterialTheme.colors.background),
-            horizontalAlignment = Alignment.CenterHorizontally)
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .background(MaterialTheme.colors.background),
+            horizontalAlignment = Alignment.CenterHorizontally
+        )
         {
 
             TopBar(
@@ -56,16 +61,20 @@ fun HelpScreen(navController: NavController,
                     .align(Alignment.CenterHorizontally)
             )
 
-            Text("Pomoc",
+            Text(
+                "Pomoc",
                 style = MaterialTheme.typography.caption,
-                color = MaterialTheme.colors.onSurface)
+                color = MaterialTheme.colors.onSurface
+            )
 
 
             Spacer(modifier = Modifier.height(20.dp))
 
-            Text("Główne pomocne zagadnienia:",
+            Text(
+                "Główne pomocne zagadnienia:",
                 style = MaterialTheme.typography.h5,
-                color = MaterialTheme.colors.onSurface)
+                color = MaterialTheme.colors.onSurface
+            )
 
 
             HelpList()
@@ -80,14 +89,13 @@ fun HelpScreen(navController: NavController,
 fun HelpList(
     viewModel: SettingsViewModel = hiltViewModel(),
     modifier: Modifier = Modifier,
-)
-{
+) {
     LazyColumn(
         modifier = Modifier
             .fillMaxSize()
             .background(MaterialTheme.colors.secondaryVariant)
 
-    ){
+    ) {
 
         val helpList = viewModel.helpList.value
         val helpListCount = helpList.size
@@ -109,22 +117,26 @@ fun HelpList(
 }
 
 @Composable
-fun OtherOpinionBox(ask: String, modifier: Modifier = Modifier,)
-{
-    Box(modifier = modifier
-        .shadow(5.dp, RoundedCornerShape(Dimens.cornerRadius))
-        .clip(RoundedCornerShape(Dimens.cornerRadius))
-        .background(kWhite)
-        .fillMaxHeight()
-        .fillMaxWidth()
-        .padding(12.dp))
+fun OtherOpinionBox(ask: String, modifier: Modifier = Modifier) {
+    Box(
+        modifier = modifier
+            .shadow(5.dp, RoundedCornerShape(Dimens.cornerRadius))
+            .clip(RoundedCornerShape(Dimens.cornerRadius))
+            .background(kWhite)
+            .fillMaxHeight()
+            .fillMaxWidth()
+            .padding(12.dp)
+    )
     {
 
-        Column(horizontalAlignment = Alignment.Start,
+        Column(
+            horizontalAlignment = Alignment.Start,
             verticalArrangement = Arrangement.SpaceBetween,
-            modifier = Modifier.fillMaxSize(),)
+            modifier = Modifier.fillMaxSize(),
+        )
         {
-            Row(verticalAlignment = Alignment.CenterVertically,
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
 
                 modifier = Modifier
                     .wrapContentHeight()
@@ -135,12 +147,13 @@ fun OtherOpinionBox(ask: String, modifier: Modifier = Modifier,)
             {
 
 
-                Text(ask,
+                Text(
+                    ask,
                     style = MaterialTheme.typography.h6,
-                    color = kBlack)
+                    color = kBlack
+                )
 
             }
-
 
 
         }

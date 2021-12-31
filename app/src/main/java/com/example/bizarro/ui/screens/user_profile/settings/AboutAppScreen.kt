@@ -32,8 +32,11 @@ import com.example.bizarro.utils.Constants
 import com.example.bizarro.utils.Strings
 
 @Composable
-fun AboutAppScreen(navController: NavController,
-                   viewModel: SettingsViewModel = hiltViewModel(),) {
+fun AboutAppScreen(
+    navController: NavController,
+    viewModel: SettingsViewModel = hiltViewModel(),
+) {
+    viewModel.appState.bottomMenuVisible.value = false
 
     BizarroTheme(
         darkTheme = Constants.isDark.value
@@ -97,39 +100,63 @@ fun AboutAppScreen(navController: NavController,
 
             Spacer(modifier = Modifier.height(20.dp))
 
-            Box(modifier = Modifier
-                .fillMaxWidth()
-                .padding(12.dp),
-                contentAlignment = Alignment.Center) {
-                Row(verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.Center)
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(12.dp),
+                contentAlignment = Alignment.Center
+            ) {
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.Center
+                )
                 {
-                    Icon(Icons.Default.Person, "Icon description", tint = MaterialTheme.colors.onSurface)
-                    Text("Adam Wojtala",color = MaterialTheme.colors.onSurface)
+                    Icon(
+                        Icons.Default.Person,
+                        "Icon description",
+                        tint = MaterialTheme.colors.onSurface
+                    )
+                    Text("Adam Wojtala", color = MaterialTheme.colors.onSurface)
                 }
             }
 
-            Box(modifier = Modifier
-                .fillMaxWidth()
-                .padding(12.dp),
-                contentAlignment = Alignment.Center) {
-                Row(verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.Center)
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(12.dp),
+                contentAlignment = Alignment.Center
+            ) {
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.Center
+                )
                 {
-                    Icon(Icons.Default.Person, "Icon description", tint = MaterialTheme.colors.onSurface)
-                    Text("Wojciech Wojtasek",color = MaterialTheme.colors.onSurface)
+                    Icon(
+                        Icons.Default.Person,
+                        "Icon description",
+                        tint = MaterialTheme.colors.onSurface
+                    )
+                    Text("Wojciech Wojtasek", color = MaterialTheme.colors.onSurface)
                 }
             }
 
-            Box(modifier = Modifier
-                .fillMaxWidth()
-                .padding(12.dp),
-                contentAlignment = Alignment.Center) {
-                Row(verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.Center)
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(12.dp),
+                contentAlignment = Alignment.Center
+            ) {
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.Center
+                )
                 {
-                    Icon(Icons.Default.Person, "Icon description", tint = MaterialTheme.colors.onSurface)
-                    Text("Konrad Matuszewski",color = MaterialTheme.colors.onSurface)
+                    Icon(
+                        Icons.Default.Person,
+                        "Icon description",
+                        tint = MaterialTheme.colors.onSurface
+                    )
+                    Text("Konrad Matuszewski", color = MaterialTheme.colors.onSurface)
                 }
             }
         }

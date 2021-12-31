@@ -1,4 +1,4 @@
- package com.example.bizarro.ui.screens.user_profile
+package com.example.bizarro.ui.screens.user_profile
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -34,9 +34,11 @@ import com.example.bizarro.utils.Dimens
 import com.example.bizarro.utils.Strings
 
 @Composable
-fun OtherUserProfileScreen(navController: NavController,
-                           viewModel: OtherUserViewModel = hiltViewModel(),)
-{
+fun OtherUserProfileScreen(
+    navController: NavController,
+    viewModel: OtherUserViewModel = hiltViewModel(),
+) {
+    viewModel.appState.bottomMenuVisible.value = false
 
     BizarroTheme(
         darkTheme = Constants.isDark.value
@@ -58,8 +60,7 @@ fun OtherUserProfileScreen(navController: NavController,
             )
 
             // * * * * * * ERROR TEXT * * * * * *
-            if(viewModel.loadError.value.isNotEmpty() && !viewModel.isLoading.value)
-            {
+            if (viewModel.loadError.value.isNotEmpty() && !viewModel.isLoading.value) {
                 Column(
                     verticalArrangement = Arrangement.Center,
                     horizontalAlignment = Alignment.CenterHorizontally,
@@ -111,13 +112,11 @@ fun OtherUserProfileScreen(navController: NavController,
     }
 
 
-
 }
 
 
 @Composable
-fun OtherUserInfo(viewModel: OtherUserViewModel = hiltViewModel())
-{
+fun OtherUserInfo(viewModel: OtherUserViewModel = hiltViewModel()) {
 
     Image(
         painter = rememberImagePainter(viewModel.userImage),
@@ -129,12 +128,16 @@ fun OtherUserInfo(viewModel: OtherUserViewModel = hiltViewModel())
             .border(3.dp, kBlueDark, RoundedCornerShape(10))
     )
 
-    Box(modifier = Modifier
-        .fillMaxWidth()
-        .padding(12.dp),
-        contentAlignment = Alignment.Center) {
-        Row(verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.Center)
+    Box(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(12.dp),
+        contentAlignment = Alignment.Center
+    ) {
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.Center
+        )
         {
             //Spacer(modifier = Modifier.width(55.dp))
 
@@ -142,7 +145,8 @@ fun OtherUserInfo(viewModel: OtherUserViewModel = hiltViewModel())
 
             //Spacer(modifier = Modifier.width(15.dp))
 
-            Text(viewModel.nameUser,
+            Text(
+                viewModel.nameUser,
                 style = TextStyle(
                     fontSize = 30.sp,
                     fontFamily = FontFamily.Default,
@@ -153,12 +157,16 @@ fun OtherUserInfo(viewModel: OtherUserViewModel = hiltViewModel())
         }
     }
 
-    Box(modifier = Modifier
-        .fillMaxWidth()
-        .padding(12.dp),
-        contentAlignment = Alignment.Center) {
-        Row(verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.Center)
+    Box(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(12.dp),
+        contentAlignment = Alignment.Center
+    ) {
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.Center
+        )
         {
             //Spacer(modifier = Modifier.width(25.dp))
 
@@ -166,7 +174,8 @@ fun OtherUserInfo(viewModel: OtherUserViewModel = hiltViewModel())
 
             //Spacer(modifier = Modifier.width(15.dp))
 
-            Text(viewModel.emailUser,
+            Text(
+                viewModel.emailUser,
                 style = TextStyle(
                     fontSize = 30.sp,
                     fontFamily = FontFamily.Default,
@@ -178,12 +187,16 @@ fun OtherUserInfo(viewModel: OtherUserViewModel = hiltViewModel())
     }
 
 
-    Box(modifier = Modifier
-        .fillMaxWidth()
-        .padding(12.dp),
-        contentAlignment = Alignment.Center) {
-        Row(verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.Center)
+    Box(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(12.dp),
+        contentAlignment = Alignment.Center
+    ) {
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.Center
+        )
         {
             //Spacer(modifier = Modifier.width(85.dp))
 
@@ -191,7 +204,8 @@ fun OtherUserInfo(viewModel: OtherUserViewModel = hiltViewModel())
 
             //Spacer(modifier = Modifier.width(15.dp))
 
-            Text(viewModel.phoneUser,
+            Text(
+                viewModel.phoneUser,
                 style = TextStyle(
                     fontSize = 30.sp,
                     fontFamily = FontFamily.Default,
@@ -213,14 +227,13 @@ fun OtherUserInfo(viewModel: OtherUserViewModel = hiltViewModel())
             fontWeight = FontWeight.Bold,
             textAlign = TextAlign.Center,
             color = MaterialTheme.colors.onSurface
-            )
+        )
     )
 
 }
 
 @Composable
-fun OtherUserButtonSection(navController: NavController)
-{
+fun OtherUserButtonSection(navController: NavController) {
     Button(
         onClick = {
 
@@ -232,19 +245,21 @@ fun OtherUserButtonSection(navController: NavController)
         }) {
         Image(
             painterResource(R.drawable.ic_baseline_star_24),
-            contentDescription ="Dodaj opinie",
+            contentDescription = "Dodaj opinie",
             modifier = Modifier.size(35.dp),
         )
 
-        Text(text = "Dodaj opinię",
+        Text(
+            text = "Dodaj opinię",
             Modifier.padding(start = 10.dp),
-            color = kWhite)
+            color = kWhite
+        )
     }
 
     Spacer(modifier = Modifier.height(30.dp))
 
     Button(
-        onClick ={
+        onClick = {
             OtherUserViewModel.otherUserId = RecordDetailsViewModel.userId!!
             navController.navigate(route = Screen.SeeOpinionOtherUser.route)
         },
@@ -252,7 +267,8 @@ fun OtherUserButtonSection(navController: NavController)
         colors = ButtonDefaults.buttonColors(backgroundColor = MaterialTheme.colors.onSurface),
     )
     {
-        Text(text = "Zobacz opinie",
+        Text(
+            text = "Zobacz opinie",
             style = MaterialTheme.typography.button,
             color = MaterialTheme.colors.background
         )
@@ -260,8 +276,7 @@ fun OtherUserButtonSection(navController: NavController)
 }
 
 @Composable
-fun UserDescriptionHeader()
-{
+fun UserDescriptionHeader() {
     Box(
         modifier = Modifier
             .fillMaxWidth()
@@ -276,11 +291,14 @@ fun UserDescriptionHeader()
 
             //Spacer(modifier = Modifier.width(110.dp))
 
-            Icon(Icons.Default.Info,
+            Icon(
+                Icons.Default.Info,
                 "Icon description",
-                tint = MaterialTheme.colors.onSurface)
+                tint = MaterialTheme.colors.onSurface
+            )
 
-            Text(text = "Opis profilu:",
+            Text(
+                text = "Opis profilu:",
                 style = TextStyle(
                     fontSize = 25.sp,
                     fontFamily = FontFamily.Default,

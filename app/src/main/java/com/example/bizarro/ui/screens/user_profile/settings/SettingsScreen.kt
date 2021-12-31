@@ -21,18 +21,21 @@ import com.example.bizarro.utils.Strings
 import com.example.bizarro.utils.models.TopBarAction
 
 @Composable
-fun SettingsScreen(navController: NavController,
-                   viewModel: SettingsViewModel = hiltViewModel(),
-)
-{
+fun SettingsScreen(
+    navController: NavController,
+    viewModel: SettingsViewModel = hiltViewModel(),
+) {
+    viewModel.appState.bottomMenuVisible.value = false
+
     BizarroTheme(
         darkTheme = Constants.isDark.value
     ) {
-        Column(modifier = Modifier
-            .fillMaxSize()
-            .background(MaterialTheme.colors.background)
-            ,
-            horizontalAlignment = Alignment.CenterHorizontally) {
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .background(MaterialTheme.colors.background),
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
 
             //HeaderSectionSettings(navController)
 
@@ -46,24 +49,24 @@ fun SettingsScreen(navController: NavController,
                     .align(Alignment.CenterHorizontally)
             )
 
-
-
-
-            Text("Ustawienia aplikacji",
+            Text(
+                "Ustawienia aplikacji",
                 color = MaterialTheme.colors.onSurface,
-                style = MaterialTheme.typography.caption)
+                style = MaterialTheme.typography.caption
+            )
 
             Spacer(modifier = Modifier.height(80.dp))
 
             Button(
-                onClick ={
+                onClick = {
                     navController.navigate(route = Screen.AboutAppScreen.route)
                 },
                 Modifier.size(width = 300.dp, height = 50.dp),
                 //colors = ButtonDefaults.buttonColors(backgroundColor = MaterialTheme.colors.onSurface),
 
-                ) {
-                Text(text = "Informacje o aplikacji",
+            ) {
+                Text(
+                    text = "Informacje o aplikacji",
                     color = kWhite,
                     style = MaterialTheme.typography.button
                 )
@@ -72,14 +75,15 @@ fun SettingsScreen(navController: NavController,
             Spacer(modifier = Modifier.height(20.dp))
 
             Button(
-                onClick ={
+                onClick = {
                     navController.navigate(route = Screen.HelpScreen.route)
                 },
                 Modifier.size(width = 300.dp, height = 50.dp),
                 //colors = ButtonDefaults.buttonColors(backgroundColor = kBlueDark),
 
-                ) {
-                Text(text = "Pomoc",
+            ) {
+                Text(
+                    text = "Pomoc",
                     style = MaterialTheme.typography.button
                 )
             }
@@ -87,15 +91,16 @@ fun SettingsScreen(navController: NavController,
             Spacer(modifier = Modifier.height(20.dp))
 
             Button(
-                onClick ={
+                onClick = {
                     navController.navigate(route = Screen.PrivacyPolicyScreen.route)
 
                 },
                 Modifier.size(width = 300.dp, height = 50.dp),
                 //colors = ButtonDefaults.buttonColors(backgroundColor = kBlueDark),
 
-                ) {
-                Text(text = "Polityka prywatności",
+            ) {
+                Text(
+                    text = "Polityka prywatności",
                     style = MaterialTheme.typography.button
                 )
             }
@@ -113,7 +118,8 @@ fun SettingsScreen(navController: NavController,
                 colors = ButtonDefaults.buttonColors(backgroundColor = MaterialTheme.colors.onSurface),
 
                 ) {
-                Text(text = "Tryb ciemny/jasny",
+                Text(
+                    text = "Tryb ciemny/jasny",
                     color = MaterialTheme.colors.background,
                     style = MaterialTheme.typography.button
                 )
@@ -122,14 +128,15 @@ fun SettingsScreen(navController: NavController,
             Spacer(modifier = Modifier.height(50.dp))
 
             Button(
-                onClick ={
+                onClick = {
                     navController.navigate(route = Screen.SignIn.route)
                 },
                 Modifier.size(width = 250.dp, height = 50.dp),
                 colors = ButtonDefaults.buttonColors(backgroundColor = MaterialTheme.colors.onSurface),
 
                 ) {
-                Text(text = "Wyloguj",
+                Text(
+                    text = "Wyloguj",
                     color = MaterialTheme.colors.background,
                     style = MaterialTheme.typography.button
                 )
@@ -139,18 +146,16 @@ fun SettingsScreen(navController: NavController,
 }
 
 @Composable
-fun HeaderSectionSettings(navController: NavController)
-{
+fun HeaderSectionSettings(navController: NavController) {
     Box(
 
         modifier = Modifier
             .fillMaxWidth()
-            .padding(12.dp)){
-
-
+            .padding(12.dp)
+    ) {
         IconButton(
             onClick = {
-                navController.navigate(route = Screen.UserProfile.route)
+                navController.popBackStack()
             },
             modifier = Modifier.align(Alignment.CenterStart)
         ) {

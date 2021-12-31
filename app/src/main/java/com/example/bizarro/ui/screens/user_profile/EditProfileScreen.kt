@@ -37,12 +37,11 @@ import timber.log.Timber
 import java.io.ByteArrayOutputStream
 
 @Composable
-fun EditProfileScreen(navController: NavController,
-                      viewModel: UserProfileViewModel = hiltViewModel(),)
-{
-    val context = LocalContext.current
-    //val scope = rememberCoroutineScope()
-    //var imageToEdit = viewModel.userImage
+fun EditProfileScreen(
+    navController: NavController,
+    viewModel: UserProfileViewModel = hiltViewModel(),
+) {
+    viewModel.appState.bottomMenuVisible.value = false
 
     BizarroTheme(
         darkTheme = Constants.isDark.value
@@ -51,13 +50,13 @@ fun EditProfileScreen(navController: NavController,
             modifier = Modifier
                 .fillMaxSize()
                 .background(MaterialTheme.colors.background),
-            horizontalAlignment = Alignment.CenterHorizontally) {
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
 
             HeaderEditProfileScreen(navController)
 
             // * * * * * * ERROR TEXT * * * * * *
-            if(viewModel.loadError.value.isNotEmpty() && !viewModel.isLoading.value)
-            {
+            if (viewModel.loadError.value.isNotEmpty() && !viewModel.isLoading.value) {
                 Column(
                     verticalArrangement = Arrangement.Center,
                     horizontalAlignment = Alignment.CenterHorizontally,
@@ -108,22 +107,18 @@ fun EditProfileScreen(navController: NavController,
     }
 
 
-
 }
 
 @Composable
 fun ImagePicker(
     viewModel: UserProfileViewModel = hiltViewModel()
-)
-{
+) {
 
     //val loading:ImageLoader = ImageLoader(LocalContext.current)
     //val request = ImageRequest.Builder(LocalContext.current).data(viewModel.userImage)
-        //.build()
+    //.build()
 
     ///val result:Drawable = (loading.execute(request) as SuccessResult).drawable
-
-
 
 
     var imageUrl by remember { mutableStateOf<Uri?>(null) }
@@ -131,7 +126,8 @@ fun ImagePicker(
     val bitmap = remember { mutableStateOf<Bitmap?>(null) }
 
     val launcher = rememberLauncherForActivityResult(
-        contract = ActivityResultContracts.GetContent()) { uri: Uri? ->
+        contract = ActivityResultContracts.GetContent()
+    ) { uri: Uri? ->
         imageUrl = uri
     }
 
@@ -204,10 +200,8 @@ fun ImagePicker(
 //}
 
 
-
 @Composable
-fun EditFieldsSection(viewModel: UserProfileViewModel = hiltViewModel())
-{
+fun EditFieldsSection(viewModel: UserProfileViewModel = hiltViewModel()) {
 
     //val newPainter = rememberImagePainter(viewModel.userImage)
 
@@ -218,7 +212,8 @@ fun EditFieldsSection(viewModel: UserProfileViewModel = hiltViewModel())
     val bitmap = remember { mutableStateOf<Bitmap?>(null) }
 
     val launcher = rememberLauncherForActivityResult(
-        contract = ActivityResultContracts.GetContent()) { uri: Uri? ->
+        contract = ActivityResultContracts.GetContent()
+    ) { uri: Uri? ->
         imageUrl = uri
     }
 
@@ -241,7 +236,7 @@ fun EditFieldsSection(viewModel: UserProfileViewModel = hiltViewModel())
                 //painter = painterResource(id = R.drawable.ic_baseline_person_24),
                 //painter = newPainter,
 
-                bitmap =  bitmap.asImageBitmap(),
+                bitmap = bitmap.asImageBitmap(),
 
 
                 //val painter = rememberImagePainter(
@@ -253,7 +248,6 @@ fun EditFieldsSection(viewModel: UserProfileViewModel = hiltViewModel())
                     .clip(RoundedCornerShape(10))
                     .border(3.dp, kBlueDark, RoundedCornerShape(10))
             )
-
 
 
         }
@@ -307,13 +301,16 @@ fun EditFieldsSection(viewModel: UserProfileViewModel = hiltViewModel())
         },
 
         leadingIcon = {
-            Icon(imageVector = Icons.Default.Person, contentDescription = "PersonIcon",
-                tint = MaterialTheme.colors.onSurface)
+            Icon(
+                imageVector = Icons.Default.Person, contentDescription = "PersonIcon",
+                tint = MaterialTheme.colors.onSurface
+            )
         },
         colors = TextFieldDefaults.outlinedTextFieldColors(
             focusedBorderColor = MaterialTheme.colors.onSurface,
             unfocusedBorderColor = MaterialTheme.colors.onSurface,
-            textColor = MaterialTheme.colors.onSurface)
+            textColor = MaterialTheme.colors.onSurface
+        )
 
     )
 
@@ -327,13 +324,16 @@ fun EditFieldsSection(viewModel: UserProfileViewModel = hiltViewModel())
         },
 
         leadingIcon = {
-            Icon(imageVector = Icons.Default.Email, contentDescription = "EmailIcon",
-                tint = MaterialTheme.colors.onSurface)
+            Icon(
+                imageVector = Icons.Default.Email, contentDescription = "EmailIcon",
+                tint = MaterialTheme.colors.onSurface
+            )
         },
         colors = TextFieldDefaults.outlinedTextFieldColors(
             focusedBorderColor = MaterialTheme.colors.onSurface,
             unfocusedBorderColor = MaterialTheme.colors.onSurface,
-            textColor = MaterialTheme.colors.onSurface)
+            textColor = MaterialTheme.colors.onSurface
+        )
 
     )
 
@@ -346,13 +346,16 @@ fun EditFieldsSection(viewModel: UserProfileViewModel = hiltViewModel())
         },
 
         leadingIcon = {
-            Icon(imageVector = Icons.Default.Phone, contentDescription = "PhoneIcon",
-            tint = MaterialTheme.colors.onSurface)
+            Icon(
+                imageVector = Icons.Default.Phone, contentDescription = "PhoneIcon",
+                tint = MaterialTheme.colors.onSurface
+            )
         },
         colors = TextFieldDefaults.outlinedTextFieldColors(
             focusedBorderColor = MaterialTheme.colors.onSurface,
             unfocusedBorderColor = MaterialTheme.colors.onSurface,
-            textColor = MaterialTheme.colors.onSurface)
+            textColor = MaterialTheme.colors.onSurface
+        )
 
     )
 
@@ -361,17 +364,20 @@ fun EditFieldsSection(viewModel: UserProfileViewModel = hiltViewModel())
     TextField(
         value = viewModel.userDescription,
         onValueChange = {
-            viewModel.userDescription= it
+            viewModel.userDescription = it
         },
 
         leadingIcon = {
-            Icon(imageVector = Icons.Default.Info, contentDescription = "InfoIcon",
-                tint = MaterialTheme.colors.onSurface)
+            Icon(
+                imageVector = Icons.Default.Info, contentDescription = "InfoIcon",
+                tint = MaterialTheme.colors.onSurface
+            )
         },
         colors = TextFieldDefaults.outlinedTextFieldColors(
-            focusedBorderColor =  MaterialTheme.colors.onSurface,
+            focusedBorderColor = MaterialTheme.colors.onSurface,
             unfocusedBorderColor = MaterialTheme.colors.onSurface,
-            textColor = MaterialTheme.colors.onSurface),
+            textColor = MaterialTheme.colors.onSurface
+        ),
         modifier = Modifier.width(300.dp)
 
     )
@@ -379,21 +385,25 @@ fun EditFieldsSection(viewModel: UserProfileViewModel = hiltViewModel())
     Spacer(modifier = Modifier.height(40.dp))
 
     Button(
-        onClick ={
-                Timber.d("UserName: ${viewModel.nameUser}")
+        onClick = {
+            Timber.d("UserName: ${viewModel.nameUser}")
             //viewModel.updateName(editDataName.text)
 
-            if(bitmap.value!=null)
-            {
+            if (bitmap.value != null) {
 
                 val bytes = ByteArrayOutputStream()
                 bitmap.value!!.compress(Bitmap.CompressFormat.JPEG, 100, bytes)
-                val path = MediaStore.Images.Media.insertImage(context.contentResolver, bitmap.value!!, "UserAddedPhoto", null)
+                val path = MediaStore.Images.Media.insertImage(
+                    context.contentResolver,
+                    bitmap.value!!,
+                    "UserAddedPhoto",
+                    null
+                )
                 val resultPath = Uri.parse(path.toString())
 
                 Timber.d("Photo: $resultPath")
 
-               // Timber.d("Photo: ${getImageUriFromBitmap(context,bitmap.value!!)}")
+                // Timber.d("Photo: ${getImageUriFromBitmap(context,bitmap.value!!)}")
             }
 
 
@@ -411,26 +421,27 @@ fun EditFieldsSection(viewModel: UserProfileViewModel = hiltViewModel())
         colors = ButtonDefaults.buttonColors(backgroundColor = MaterialTheme.colors.onSurface),
 
         ) {
-        Text(text = "Zapisz",
+        Text(
+            text = "Zapisz",
             style = MaterialTheme.typography.button,
             color = MaterialTheme.colors.background,
 
-        )
+            )
     }
 }
 
 @Composable
-fun HeaderEditProfileScreen(navController: NavController)
-{
+fun HeaderEditProfileScreen(navController: NavController) {
     Box(
 
         modifier = Modifier
             .fillMaxWidth()
-            .padding(5.dp)){
+            .padding(5.dp)
+    ) {
 
         IconButton(
             onClick = {
-                navController.navigate(route = Screen.UserProfile.route)
+                navController.popBackStack()
             },
             modifier = Modifier.align(Alignment.CenterStart)
         ) {

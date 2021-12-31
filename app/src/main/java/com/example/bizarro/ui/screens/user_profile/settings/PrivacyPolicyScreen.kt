@@ -21,16 +21,21 @@ import com.example.bizarro.utils.Constants
 import com.example.bizarro.utils.Strings
 
 @Composable
-fun PrivacyPolicyScreen(navController: NavController,
-                        viewModel: SettingsViewModel = hiltViewModel(),)
-{
+fun PrivacyPolicyScreen(
+    navController: NavController,
+    viewModel: SettingsViewModel = hiltViewModel(),
+) {
+    viewModel.appState.bottomMenuVisible.value = false
+
     BizarroTheme(
         darkTheme = Constants.isDark.value
     ) {
-        Column(modifier = Modifier
-            .fillMaxSize()
-            .background(MaterialTheme.colors.background),
-            horizontalAlignment = Alignment.CenterHorizontally)
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .background(MaterialTheme.colors.background),
+            horizontalAlignment = Alignment.CenterHorizontally
+        )
         {
 
             TopBar(
@@ -41,9 +46,10 @@ fun PrivacyPolicyScreen(navController: NavController,
                     .align(Alignment.CenterHorizontally)
             )
 
-            Text("Polityka prywatności",
+            Text(
+                "Polityka prywatności",
                 style = MaterialTheme.typography.caption,
-            color = MaterialTheme.colors.onSurface
+                color = MaterialTheme.colors.onSurface
             )
 
         }
@@ -52,13 +58,13 @@ fun PrivacyPolicyScreen(navController: NavController,
 }
 
 @Composable
-fun HeaderSectionPolicyPrivacy(navController: NavController)
-{
+fun HeaderSectionPolicyPrivacy(navController: NavController) {
     Box(
 
         modifier = Modifier
             .fillMaxWidth()
-            .padding(12.dp)){
+            .padding(12.dp)
+    ) {
 
         IconButton(
             onClick = {

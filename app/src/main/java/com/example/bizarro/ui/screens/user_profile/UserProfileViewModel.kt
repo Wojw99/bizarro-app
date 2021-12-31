@@ -16,7 +16,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class UserProfileViewModel @Inject constructor(
-    appState: AppState,
+    val appState: AppState,
     private val repository: UserRepository,) : ViewModel()
 {
 
