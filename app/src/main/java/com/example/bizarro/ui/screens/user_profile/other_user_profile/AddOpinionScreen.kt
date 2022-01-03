@@ -305,7 +305,11 @@ fun RadioButtonDemo(
 
 
         },
-        Modifier.size(width = 250.dp, height = 50.dp),
+
+
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(Dimens.standardPadding),
         colors = ButtonDefaults.buttonColors(backgroundColor = MaterialTheme.colors.onSurface),
 
         ) {

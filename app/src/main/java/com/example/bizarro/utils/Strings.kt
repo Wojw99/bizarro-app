@@ -18,6 +18,8 @@ object Strings {
     const val empty = ""
     const val userRecords = "Twoje ogłoszenia"
     const val home = "Home"
+    const val edit_profile = "Edytuj profil"
+    const val see_opinions = "Zobacz opinie"
 
     // * * * * * * * * SEARCH SCREEN * * * * * * * *
     const val recordImage = "Zdjęcie ogłoszenia."

@@ -35,70 +35,107 @@ fun UserRecordListScreen(
 
     BizarroTheme(darkTheme = Constants.isDark.value)
     {
-        Box(
+
+        Column(
             modifier = Modifier
-                .fillMaxSize()
-                .background(colors.background)
-                .padding(Dimens.standardPadding)
-        ) {
-            // * * * * * * ERROR TEXT * * * * * *
-            if (viewModel.loadError.value.isNotEmpty()
-                && !viewModel.isLoading.value
+            .fillMaxSize()
+            .background(MaterialTheme.colors.background),
+            horizontalAlignment = Alignment.CenterHorizontally
+        )
+        {
+
+            Spacer(modifier = Modifier.height(30.dp))
+
+            Text("Witaj w Bizarro!",
+            style = MaterialTheme.typography.caption,
+            color = MaterialTheme.colors.onError
+            )
+
+            Spacer(modifier = Modifier.height(30.dp))
+
+            Text("Twoje ogłoszenia:",
+                style = MaterialTheme.typography.body2,
+                color = MaterialTheme.colors.onSurface
+            )
+
+            Spacer(modifier = Modifier.height(10.dp))
+
+            Box(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .background(colors.background)
+                    .padding(Dimens.standardPadding)
             ) {
-                Column(
-                    verticalArrangement = Arrangement.Center,
-                    horizontalAlignment = Alignment.CenterHorizontally,
-                    modifier = Modifier.fillMaxSize(),
+
+
+
+                // * * * * * * ERROR TEXT * * * * * *
+                if (viewModel.loadError.value.isNotEmpty()
+                    && !viewModel.isLoading.value
                 ) {
-                    Text(
-                        text = viewModel.loadError.value,
-                    )
-                    Spacer(modifier = Modifier.height(Dimens.standardPadding))
-                    Button(onClick = { viewModel.updateRecordList() }) {
+                    Column(
+                        verticalArrangement = Arrangement.Center,
+                        horizontalAlignment = Alignment.CenterHorizontally,
+                        modifier = Modifier.fillMaxSize(),
+                    ) {
                         Text(
-                            text = Strings.refresh,
-                            color = colors.onSurface
+                            text = viewModel.loadError.value,
                         )
+                        Spacer(modifier = Modifier.height(Dimens.standardPadding))
+                        Button(onClick = { viewModel.updateRecordList() }) {
+                            Text(
+                                text = Strings.refresh,
+                                color = colors.onSurface
+                            )
+                        }
                     }
                 }
-            }
 
-            // * * * * * * EMPTY TEXT * * * * * *
-            if (viewModel.recordList.value.isEmpty()
-                && !viewModel.isLoading.value
-                && viewModel.loadError.value.isEmpty()
-            ) {
-                Text(
-                    text = Strings.listIsEmpty,
-                    modifier = Modifier.align(Alignment.Center),
-                    color = colors.onSurface
-                )
-            }
+                // * * * * * * EMPTY TEXT * * * * * *
+                if (viewModel.recordList.value.isEmpty()
+                    && !viewModel.isLoading.value
+                    && viewModel.loadError.value.isEmpty()
+                ) {
+                    Text(
+                        text = Strings.listIsEmpty,
+                        modifier = Modifier.align(Alignment.Center),
+                        color = colors.onSurface
+                    )
+                }
 
-            // * * * * * * RECORD LIST * * * * * *
-            if (viewModel.recordList.value.isNotEmpty() && !viewModel.isLoading.value) {
-                RecordList(navController = navController)
-            }
+                // * * * * * * RECORD LIST * * * * * *
+                if (viewModel.recordList.value.isNotEmpty() && !viewModel.isLoading.value) {
+                    RecordList(navController = navController)
+                }
 
-            // * * * * * * ADD BUTTON * * * * * * *
-            FloatingActionButton(
-                onClick = {
-                    navController.navigate(Screen.AddRecord.route)
-                },
-                modifier = Modifier
-                    .align(Alignment.BottomEnd)
-                    .padding(bottom = 64.dp),
-                contentColor = kWhite,
-                backgroundColor = kBlueDark,
-            ) {
-                Icon(Icons.Default.Add, contentDescription = Strings.add)
-            }
+                // * * * * * * ADD BUTTON * * * * * * *
+                FloatingActionButton(
+                    onClick = {
+                        navController.navigate(Screen.AddRecord.route)
+                    },
+                    modifier = Modifier
+                        .align(Alignment.BottomEnd)
+                        .padding(bottom = 64.dp),
+                    contentColor = kWhite,
+                    backgroundColor = kBlueDark,
+                ) {
+                    Icon(Icons.Default.Add, contentDescription = Strings.add)
+                }
 
-            // * * * * * * PROGRESS BAR * * * * * *
-            if (viewModel.isLoading.value) {
-                CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
+                // * * * * * * PROGRESS BAR * * * * * *
+                if (viewModel.isLoading.value) {
+                    CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
+                }
             }
         }
+
+        //Spacer(modifier = Modifier.height(30.dp))
+
+
+
+
+
+
     }
 
 }

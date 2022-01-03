@@ -18,9 +18,12 @@ import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.example.bizarro.ui.Screen
 import com.example.bizarro.ui.components.CustomOutlinedTextField
 import com.example.bizarro.ui.theme.BizarroTheme
+import com.example.bizarro.ui.theme.kWhite
 import com.example.bizarro.utils.Constants
+import com.example.bizarro.utils.Dimens
 import com.example.bizarro.utils.Strings
 
 
@@ -44,7 +47,7 @@ fun SignInScreen(navController: NavController,
          Spacer(modifier = Modifier.height(100.dp))
 
 
-         Text("Witaj w Bizarro!",
+         Text("Zaloguj się do Bizarro!",
             style = MaterialTheme.typography.caption,
             color = MaterialTheme.colors.onSurface
          )
@@ -70,6 +73,9 @@ fun loginFields(navController: NavController,
       onValueChange ={
          viewModel.emailLoginText.value = it
       },
+      modifier = Modifier
+         .fillMaxWidth()
+         .padding(Dimens.standardPadding),
       placeholder = { Text(text = "Podaj swój email") },
       leadingIcon = {
          Icon(imageVector = Icons.Default.Email, contentDescription = "EmailIcon",
@@ -88,6 +94,9 @@ fun loginFields(navController: NavController,
       onValueChange ={
          viewModel.passwordLoginText.value = it
       },
+      modifier = Modifier
+         .fillMaxWidth()
+         .padding(Dimens.standardPadding),
       placeholder = { Text(text = "Podaj swoje hasło") },
       leadingIcon = {
          Icon(imageVector = Icons.Default.Lock, contentDescription = "PasswordIcon",
@@ -99,24 +108,45 @@ fun loginFields(navController: NavController,
          textColor = MaterialTheme.colors.onSurface)
    )
 
-   Spacer(modifier = Modifier.height(80.dp))
+   Spacer(modifier = Modifier.height(50.dp))
+
+//   Button(
+//      onClick ={
+//         navController.navigate(route = com.example.bizarro.ui.Screen.Compare.route)
+//      },
+//      Modifier.size(width = 250.dp, height = 50.dp),
+//      colors = ButtonDefaults.buttonColors(backgroundColor = MaterialTheme.colors.onSurface),
+//
+//      ) {
+//      Text(text = "Zaloguj",
+//         style = MaterialTheme.typography.button,
+//         color = MaterialTheme.colors.background,
+//      )
+//
+//   }
+
 
    Button(
-      onClick ={
-         navController.navigate(route = com.example.bizarro.ui.Screen.Compare.route)
+      onClick = {
+         navController.navigate(route = Screen.UserRecordList.route)
       },
-      Modifier.size(width = 250.dp, height = 50.dp),
-      colors = ButtonDefaults.buttonColors(backgroundColor = MaterialTheme.colors.onSurface),
+      modifier = Modifier
+         .fillMaxWidth()
+         .padding(Dimens.standardPadding),
 
-      ) {
-      Text(text = "Zaloguj",
+      colors = ButtonDefaults.buttonColors(backgroundColor = MaterialTheme.colors.onSurface),
+   ) {
+
+      Text(
+         text = "Zaloguj",
          style = MaterialTheme.typography.button,
          color = MaterialTheme.colors.background,
       )
-
    }
 
-   Spacer(modifier = Modifier.height(20.dp))
+
+
+   Spacer(modifier = Modifier.height(10.dp))
 
    Text("ALBO",
       style = TextStyle(
@@ -127,20 +157,41 @@ fun loginFields(navController: NavController,
       ))
 
 
-   Spacer(modifier = Modifier.height(20.dp))
+   Spacer(modifier = Modifier.height(10.dp))
+
+//   Button(
+//      onClick ={
+//         navController.navigate(route = com.example.bizarro.ui.Screen.SignUp.route)
+//
+//      },
+//      Modifier.size(width = 250.dp, height = 50.dp),
+//      colors = ButtonDefaults.buttonColors(backgroundColor = MaterialTheme.colors.onSurface),
+//   )
+//   {
+//      Text(text = "Zapisz się",
+//         style = MaterialTheme.typography.button,
+//         color = MaterialTheme.colors.background,
+//      )
+//   }
+
 
    Button(
-      onClick ={
-         navController.navigate(route = com.example.bizarro.ui.Screen.SignUp.route)
-
+      onClick = {
+         navController.navigate(route = Screen.SignUp.route)
       },
-      Modifier.size(width = 250.dp, height = 50.dp),
+      modifier = Modifier
+         .fillMaxWidth()
+         .padding(Dimens.standardPadding),
+
       colors = ButtonDefaults.buttonColors(backgroundColor = MaterialTheme.colors.onSurface),
-   )
-   {
-      Text(text = "Zapisz się",
+   ) {
+
+      Text(
+         text = "Zapisz się",
          style = MaterialTheme.typography.button,
          color = MaterialTheme.colors.background,
       )
    }
+
+
 }

@@ -15,8 +15,10 @@ import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
+import com.example.bizarro.ui.Screen
 import com.example.bizarro.ui.theme.BizarroTheme
 import com.example.bizarro.utils.Constants
+import com.example.bizarro.utils.Dimens
 
 
 @Composable
@@ -62,6 +64,9 @@ fun RegisterFields(navController: NavController,
         onValueChange ={
             viewModel.emailRegisterText.value = it
         },
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(Dimens.standardPadding),
         placeholder = { Text(text = "Podaj swój email") },
         leadingIcon = {
             Icon(imageVector = Icons.Default.Email, contentDescription = "EmailIcon",
@@ -82,6 +87,9 @@ fun RegisterFields(navController: NavController,
         onValueChange ={
             viewModel.passwordRegisterText.value = it
         },
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(Dimens.standardPadding),
         placeholder = { Text(text = "Podaj swoje hasło") },
         leadingIcon = {
             Icon(imageVector = Icons.Default.Lock, contentDescription = "PasswordIcon",
@@ -93,38 +101,74 @@ fun RegisterFields(navController: NavController,
             textColor = MaterialTheme.colors.onSurface)
     )
 
-    Spacer(modifier = Modifier.height(80.dp))
-
-    Button(
-        onClick ={
-            Toast.makeText(context, "Zarejestrowano", Toast.LENGTH_SHORT).show()
-        },
-        Modifier.size(width = 250.dp, height = 50.dp),
-        colors = ButtonDefaults.buttonColors(backgroundColor = MaterialTheme.colors.onSurface),
-    )
-    {
-        Text(text = "Zarejestruj",
-            style = MaterialTheme.typography.button,
-            color = MaterialTheme.colors.background
-        )
-
-    }
-
     Spacer(modifier = Modifier.height(50.dp))
 
+//    Button(
+//        onClick ={
+//            Toast.makeText(context, "Zarejestrowano", Toast.LENGTH_SHORT).show()
+//        },
+//        Modifier.size(width = 250.dp, height = 50.dp),
+//        colors = ButtonDefaults.buttonColors(backgroundColor = MaterialTheme.colors.onSurface),
+//    )
+//    {
+//        Text(text = "Zarejestruj",
+//            style = MaterialTheme.typography.button,
+//            color = MaterialTheme.colors.background
+//        )
+//
+//    }
+
     Button(
-        onClick ={
-            navController.navigate(route = com.example.bizarro.ui.Screen.SignIn.route)
-
+        onClick = {
+            Toast.makeText(context, "Zarejestrowano", Toast.LENGTH_SHORT).show()
         },
-        Modifier.size(width = 250.dp, height = 50.dp),
-        colors = ButtonDefaults.buttonColors(backgroundColor = MaterialTheme.colors.onSurface),
-    )
-    {
-        Text(text = "Logowanie",
-            style = MaterialTheme.typography.button,
-            color = MaterialTheme.colors.background
-        )
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(Dimens.standardPadding),
 
+        colors = ButtonDefaults.buttonColors(backgroundColor = MaterialTheme.colors.onSurface),
+    ) {
+
+        Text(
+            text = "Zarejestruj",
+            style = MaterialTheme.typography.button,
+            color = MaterialTheme.colors.background,
+        )
+    }
+
+    Spacer(modifier = Modifier.height(20.dp))
+
+//    Button(
+//        onClick ={
+//            navController.navigate(route = com.example.bizarro.ui.Screen.SignIn.route)
+//
+//        },
+//        Modifier.size(width = 250.dp, height = 50.dp),
+//        colors = ButtonDefaults.buttonColors(backgroundColor = MaterialTheme.colors.onSurface),
+//    )
+//    {
+//        Text(text = "Logowanie",
+//            style = MaterialTheme.typography.button,
+//            color = MaterialTheme.colors.background
+//        )
+//
+//    }
+
+    Button(
+        onClick = {
+            navController.navigate(route = Screen.SignIn.route)
+        },
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(Dimens.standardPadding),
+
+        colors = ButtonDefaults.buttonColors(backgroundColor = MaterialTheme.colors.onSurface),
+    ) {
+
+        Text(
+            text = "Logowanie",
+            style = MaterialTheme.typography.button,
+            color = MaterialTheme.colors.background,
+        )
     }
 }

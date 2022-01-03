@@ -4,6 +4,11 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/Users/AdamW/Documents/GitHub/bizarro-app/app/src/main/res/drawable/ic_baseline_person_24.xml" value="0.1" />
+        <entry key="..\:/Users/AdamW/OneDrive/Dokumenty/GitHub/bizarro-app/app/src/main/res/drawable/ic_baseline_help_24.xml" value="0.1" />
+        <entry key="..\:/Users/AdamW/OneDrive/Dokumenty/GitHub/bizarro-app/app/src/main/res/drawable/ic_baseline_info_24.xml" value="0.1" />
+        <entry key="..\:/Users/AdamW/OneDrive/Dokumenty/GitHub/bizarro-app/app/src/main/res/drawable/ic_baseline_person_24.xml" value="0.1" />
+        <entry key="..\:/Users/AdamW/OneDrive/Dokumenty/GitHub/bizarro-app/app/src/main/res/drawable/ic_baseline_privacy_tip_24.xml" value="0.1" />
+        <entry key="..\:/Users/AdamW/OneDrive/Dokumenty/GitHub/bizarro-app/app/src/main/res/drawable/ic_baseline_star_24.xml" value="0.1" />
       </map>
     </option>
   </component>

@@ -14,6 +14,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
@@ -23,6 +24,7 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import coil.compose.rememberImagePainter
+import com.example.bizarro.R
 import com.example.bizarro.ui.Screen
 import com.example.bizarro.ui.theme.*
 import com.example.bizarro.utils.Constants
@@ -87,7 +89,7 @@ fun UserProfileScreen(
 
                 UserInformation()
 
-                Spacer(modifier = Modifier.height(50.dp))
+                //Spacer(modifier = Modifier.height(10.dp))
 
                 UserButtonSection(navController)
 
@@ -149,66 +151,148 @@ fun UserInformation(viewModel: UserProfileViewModel = hiltViewModel()) {
             .border(3.dp, kBlueDark, RoundedCornerShape(10))
     )
 
+    Spacer(modifier = Modifier.size(20.dp))
+
     Box(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(12.dp),
+            .padding(12.dp)
+            .background(colors.secondaryVariant),
+
         contentAlignment = Alignment.Center
     ) {
-    }
-    Row(
-        verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.Center,
-    )
-    {
 
-        Icon(Icons.Default.Person, "Icon description", tint = MaterialTheme.colors.onSurface)
+        Column(
+            //modifier = Modifier
+//            .background(MaterialTheme.colors.background),
+            horizontalAlignment = Alignment.CenterHorizontally) {
 
-        //Spacer(modifier = Modifier.width(15.dp))
-
-        Text(
-            viewModel.nameUser,
-            style = TextStyle(
-                color = colors.onSurface,
-                fontSize = 30.sp,
-                fontFamily = FontFamily.Default,
-                fontWeight = FontWeight.Bold
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.Center,
             )
-        )
+            {
 
-    }
+                Icon(Icons.Default.Person, "Icon description", tint = MaterialTheme.colors.onSurface)
+
+                //Spacer(modifier = Modifier.width(15.dp))
+
+                Text(
+                    viewModel.nameUser,
+                    style = TextStyle(
+                        color = colors.onSurface,
+                        fontSize = 30.sp,
+                        fontFamily = FontFamily.Default,
+                        fontWeight = FontWeight.Bold
+                    )
+                )
+
+            }
+            Spacer(modifier = Modifier.size(20.dp))
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.Center,
+            )
+            {
+                //Spacer(modifier = Modifier.width(25.dp))
+
+                Icon(Icons.Default.Email, "Icon description", tint = MaterialTheme.colors.onSurface)
+
+                //Spacer(modifier = Modifier.width(15.dp))
+
+                Text(
+                    viewModel.emailUser,
+                    style = TextStyle(
+                        color = colors.onSurface,
+                        fontSize = 30.sp,
+                        fontFamily = FontFamily.Default,
+                        fontWeight = FontWeight.Normal
+                    )
+                )
+            }
+            Spacer(modifier = Modifier.size(20.dp))
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.Center,
+            )
+            {
+                //Spacer(modifier = Modifier.width(85.dp))
+
+                Icon(Icons.Default.Phone, "Icon description", tint = MaterialTheme.colors.onSurface)
+
+                //Spacer(modifier = Modifier.width(10.dp))
+
+                Text(
+                    viewModel.phoneUser,
+                    style = TextStyle(
+                        color = colors.onSurface,
+                        fontSize = 30.sp,
+                        fontFamily = FontFamily.Default,
+                        fontWeight = FontWeight.Normal
+                    )
+                )
+            }
+            Spacer(modifier = Modifier.size(20.dp))
 
 
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.Center,
 
-    Box(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(12.dp),
-        contentAlignment = Alignment.Center
-    ) {
+                ) {
 
-        Row(
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.Center,
-        )
-        {
-            //Spacer(modifier = Modifier.width(25.dp))
+                //Spacer(modifier = Modifier.width(120.dp))
 
-            Icon(Icons.Default.Email, "Icon description", tint = MaterialTheme.colors.onSurface)
+                Icon(Icons.Default.Info, "Icon description", tint = MaterialTheme.colors.onSurface)
 
-            //Spacer(modifier = Modifier.width(15.dp))
+                Text(
+                    text = "Opis profilu:",
+                    style = TextStyle(
+                        color = colors.onSurface,
+                        fontSize = 25.sp,
+                        fontFamily = FontFamily.Default,
+                        fontWeight = FontWeight.Bold,
+                        textAlign = TextAlign.Start
+                    ),
+                )
+            }
 
+            Spacer(modifier = Modifier.size(20.dp))
             Text(
-                viewModel.emailUser,
+                text = viewModel.userDescription,
                 style = TextStyle(
                     color = colors.onSurface,
-                    fontSize = 30.sp,
+                    fontSize = 15.sp,
                     fontFamily = FontFamily.Default,
-                    fontWeight = FontWeight.Normal
-                )
+                    fontWeight = FontWeight.Bold,
+                    textAlign = TextAlign.Center,
+
+                    )
             )
         }
 
+
+
+
+
+
+
+
+    }
+
+
+
+
+    Box(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(12.dp)
+            .background(colors.secondaryVariant),
+        contentAlignment = Alignment.Center
+    ) {
+
+
+
     }
 
 
@@ -216,88 +300,109 @@ fun UserInformation(viewModel: UserProfileViewModel = hiltViewModel()) {
     Box(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(12.dp),
+            .padding(12.dp)
+            .background(colors.secondaryVariant),
         contentAlignment = Alignment.Center
     ) {
 
-        Row(
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.Center,
-        )
-        {
-            //Spacer(modifier = Modifier.width(85.dp))
 
-            Icon(Icons.Default.Phone, "Icon description", tint = MaterialTheme.colors.onSurface)
-
-            //Spacer(modifier = Modifier.width(10.dp))
-
-            Text(
-                viewModel.phoneUser,
-                style = TextStyle(
-                    color = colors.onSurface,
-                    fontSize = 30.sp,
-                    fontFamily = FontFamily.Default,
-                    fontWeight = FontWeight.Normal
-                )
-            )
-        }
 
     }
 
-    DescriptionHeader()
+    //DescriptionHeader()
 
-    Text(
-        text = viewModel.userDescription,
-        style = TextStyle(
-            color = colors.onSurface,
-            fontSize = 15.sp,
-            fontFamily = FontFamily.Default,
-            fontWeight = FontWeight.Bold,
-            textAlign = TextAlign.Center,
-
-            )
-    )
+//    Text(
+//        text = viewModel.userDescription,
+//        style = TextStyle(
+//            color = colors.onSurface,
+//            fontSize = 15.sp,
+//            fontFamily = FontFamily.Default,
+//            fontWeight = FontWeight.Bold,
+//            textAlign = TextAlign.Center,
+//
+//            )
+//    )
 
 
 }
 
 @Composable
 fun UserButtonSection(navController: NavController) {
+
+
     Button(
         onClick = {
             navController.navigate(route = Screen.EditProfile.route)
         },
-        Modifier.size(width = 180.dp, height = 40.dp),
-        //colors = ButtonDefaults.buttonColors(backgroundColor = darkColor),
-        colors = ButtonDefaults.buttonColors(backgroundColor = colors.primary)
-    )
-    {
-        Text(
-            text = "Edytuj profil",
-            color = kWhite
-            //style = MaterialTheme.typography.button
-        )
-    }
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(Dimens.standardPadding)
+    ) {
 
-    Spacer(modifier = Modifier.height(30.dp))
+//        Image(
+//            painterResource(R.drawable.ic_baseline_person_24),
+//            contentDescription = "Edytuj profil",
+//            modifier = Modifier.size(30.dp),
+//        )
+
+        Text(text = Strings.edit_profile)
+    }
 
     Button(
         onClick = {
             navController.navigate(route = Screen.SeeYourOpinionsScreen.route)
-
-            //Toast.makeText(context, viewModel.nameUser, Toast.LENGTH_SHORT).show()
-
         },
-        Modifier.size(width = 180.dp, height = 40.dp),
-        colors = ButtonDefaults.buttonColors(backgroundColor = colors.primary),
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(Dimens.standardPadding)
+    ) {
 
+        Image(
+            painterResource(R.drawable.ic_baseline_star_24),
+            contentDescription = "Zobacz opinie o sobie",
+            modifier = Modifier.size(30.dp),
         )
-    {
-        Text(
-            text = "Zobacz opinie",
-            //style = MaterialTheme.typography.button
-        )
+
+        Text(text = Strings.see_opinions)
     }
+
+//    Button(
+//        onClick = {
+//            navController.navigate(route = Screen.EditProfile.route)
+//        },
+//        Modifier.size(width = 180.dp, height = 40.dp),
+//        //colors = ButtonDefaults.buttonColors(backgroundColor = darkColor),
+//        colors = ButtonDefaults.buttonColors(backgroundColor = colors.primary)
+//    )
+//    {
+//        Text(
+//            text = "Edytuj profil",
+//            color = kWhite
+//            //style = MaterialTheme.typography.button
+//        )
+//    }
+
+
+
+    Spacer(modifier = Modifier.height(30.dp))
+
+//    Button(
+//        onClick = {
+//            navController.navigate(route = Screen.SeeYourOpinionsScreen.route)
+//
+//            //Toast.makeText(context, viewModel.nameUser, Toast.LENGTH_SHORT).show()
+//
+//        },
+//        Modifier.size(width = 180.dp, height = 40.dp),
+//        colors = ButtonDefaults.buttonColors(backgroundColor = colors.primary),
+//
+//        )
+//    {
+//        Text(
+//            text = "Zobacz opinie",
+//            //style = MaterialTheme.typography.button
+//        )
+//    }
 }
 
 
@@ -306,30 +411,11 @@ fun DescriptionHeader() {
     Box(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(12.dp),
+            .padding(12.dp)
+            .background(colors.secondaryVariant),
         contentAlignment = Alignment.Center
     ) {
-        Row(
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.Center,
 
-            ) {
-
-            //Spacer(modifier = Modifier.width(120.dp))
-
-            Icon(Icons.Default.Info, "Icon description", tint = MaterialTheme.colors.onSurface)
-
-            Text(
-                text = "Opis profilu:",
-                style = TextStyle(
-                    color = colors.onSurface,
-                    fontSize = 25.sp,
-                    fontFamily = FontFamily.Default,
-                    fontWeight = FontWeight.Bold,
-                    textAlign = TextAlign.Start
-                ),
-            )
-        }
 
     }
 }

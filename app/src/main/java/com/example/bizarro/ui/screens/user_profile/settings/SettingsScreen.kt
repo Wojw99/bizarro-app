@@ -1,22 +1,28 @@
 package com.example.bizarro.ui.screens.user_profile
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Clear
+import androidx.compose.material.icons.filled.Person
+import androidx.compose.material.icons.filled.Refresh
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
+import com.example.bizarro.R
 import com.example.bizarro.ui.Screen
 import com.example.bizarro.ui.components.TopBar
 import com.example.bizarro.ui.screens.user_profile.settings.SettingsViewModel
 import com.example.bizarro.ui.theme.*
 import com.example.bizarro.utils.Constants
+import com.example.bizarro.utils.Dimens
 import com.example.bizarro.utils.Strings
 import com.example.bizarro.utils.models.TopBarAction
 
@@ -61,12 +67,99 @@ fun SettingsScreen(
                 onClick = {
                     navController.navigate(route = Screen.AboutAppScreen.route)
                 },
-                Modifier.size(width = 300.dp, height = 50.dp),
-                //colors = ButtonDefaults.buttonColors(backgroundColor = MaterialTheme.colors.onSurface),
-
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(Dimens.standardPadding)
             ) {
+
+                Image(
+                    painterResource(R.drawable.ic_baseline_info_24),
+                    contentDescription = "Informacje o aplikacji",
+                    modifier = Modifier.size(30.dp),
+                )
+
+                Spacer(modifier = Modifier.width(10.dp))
+
                 Text(
                     text = "Informacje o aplikacji",
+                    color = kWhite,
+                    style = MaterialTheme.typography.button
+                )
+            }
+
+
+//            Button(
+//                onClick = {
+//                    navController.navigate(route = Screen.AboutAppScreen.route)
+//                },
+//                Modifier.size(width = 300.dp, height = 50.dp),
+//                //colors = ButtonDefaults.buttonColors(backgroundColor = MaterialTheme.colors.onSurface),
+//
+//            ) {
+//                Text(
+//                    text = "Informacje o aplikacji",
+//                    color = kWhite,
+//                    style = MaterialTheme.typography.button
+//                )
+//            }
+
+            //Spacer(modifier = Modifier.height(20.dp))
+
+
+
+
+
+//            Button(
+//                onClick = {
+//                    navController.navigate(route = Screen.HelpScreen.route)
+//                },
+//                Modifier.size(width = 300.dp, height = 50.dp),
+//                //colors = ButtonDefaults.buttonColors(backgroundColor = kBlueDark),
+//
+//            ) {
+//                Text(
+//                    text = "Pomoc",
+//                    style = MaterialTheme.typography.button
+//                )
+//            }
+
+            Spacer(modifier = Modifier.height(20.dp))
+
+//            Button(
+//                onClick = {
+//                    navController.navigate(route = Screen.PrivacyPolicyScreen.route)
+//
+//                },
+//                Modifier.size(width = 300.dp, height = 50.dp),
+//                //colors = ButtonDefaults.buttonColors(backgroundColor = kBlueDark),
+//
+//            ) {
+//                Text(
+//                    text = "Polityka prywatności",
+//                    style = MaterialTheme.typography.button
+//                )
+//            }
+
+
+            Button(
+                onClick = {
+                    navController.navigate(route = Screen.PrivacyPolicyScreen.route)
+                },
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(Dimens.standardPadding)
+            ) {
+
+                Image(
+                    painterResource(R.drawable.ic_baseline_privacy_tip_24),
+                    contentDescription = "privacy policy",
+                    modifier = Modifier.size(30.dp),
+                )
+
+                Spacer(modifier = Modifier.width(10.dp))
+
+                Text(
+                    text = "Polityka prywatności",
                     color = kWhite,
                     style = MaterialTheme.typography.button
                 )
@@ -78,34 +171,26 @@ fun SettingsScreen(
                 onClick = {
                     navController.navigate(route = Screen.HelpScreen.route)
                 },
-                Modifier.size(width = 300.dp, height = 50.dp),
-                //colors = ButtonDefaults.buttonColors(backgroundColor = kBlueDark),
-
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(Dimens.standardPadding)
             ) {
+
+                Image(
+                    painterResource(R.drawable.ic_baseline_help_24),
+                    contentDescription = "Pomoc",
+                    modifier = Modifier.size(30.dp),
+                )
+
+                Spacer(modifier = Modifier.width(10.dp))
+
+
                 Text(
                     text = "Pomoc",
+                    color = kWhite,
                     style = MaterialTheme.typography.button
                 )
             }
-
-            Spacer(modifier = Modifier.height(20.dp))
-
-            Button(
-                onClick = {
-                    navController.navigate(route = Screen.PrivacyPolicyScreen.route)
-
-                },
-                Modifier.size(width = 300.dp, height = 50.dp),
-                //colors = ButtonDefaults.buttonColors(backgroundColor = kBlueDark),
-
-            ) {
-                Text(
-                    text = "Polityka prywatności",
-                    style = MaterialTheme.typography.button
-                )
-            }
-
-
 
 
             Spacer(modifier = Modifier.height(100.dp))
@@ -114,10 +199,17 @@ fun SettingsScreen(
                 onClick = {
                     Constants.checkIsDark()
                 },
-                Modifier.size(width = 250.dp, height = 50.dp),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(Dimens.standardPadding),
                 colors = ButtonDefaults.buttonColors(backgroundColor = MaterialTheme.colors.onSurface),
 
                 ) {
+
+                Icon(Icons.Default.Refresh, "Icon description", tint = MaterialTheme.colors.background)
+
+                Spacer(modifier = Modifier.width(10.dp))
+
                 Text(
                     text = "Tryb ciemny/jasny",
                     color = MaterialTheme.colors.background,
@@ -131,7 +223,9 @@ fun SettingsScreen(
                 onClick = {
                     navController.navigate(route = Screen.SignIn.route)
                 },
-                Modifier.size(width = 250.dp, height = 50.dp),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(Dimens.standardPadding),
                 colors = ButtonDefaults.buttonColors(backgroundColor = MaterialTheme.colors.onSurface),
 
                 ) {
