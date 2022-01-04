@@ -77,17 +77,6 @@ fun UserProfileScreen(
                 }
             }
 
-            // * * * * * * EMPTY TEXT * * * * * *
-//        if (viewModel.recordList.value.isEmpty()
-//            && !viewModel.isLoading.value
-//            && viewModel.loadError.value.isEmpty()
-//        ) {
-//            Text(
-//                text = Strings.listIsEmpty,
-//                modifier = Modifier.align(Alignment.Center)
-//            )
-//        }
-
             // * * * * * * USER PROFILE * * * * * *
             if (!viewModel.isLoading.value) {
                 //RecordList(navController = navController)
@@ -168,8 +157,7 @@ fun UserInformation(viewModel: UserProfileViewModel = hiltViewModel()) {
     ) {
 
         Column(
-            //modifier = Modifier
-//            .background(MaterialTheme.colors.background),
+
             horizontalAlignment = Alignment.CenterHorizontally) {
 
             Row(
@@ -179,8 +167,6 @@ fun UserInformation(viewModel: UserProfileViewModel = hiltViewModel()) {
             {
 
                 Icon(Icons.Default.Person, "Icon description", tint = MaterialTheme.colors.onSurface)
-
-                //Spacer(modifier = Modifier.width(15.dp))
 
                 Text(
                     viewModel.nameUser,
@@ -199,11 +185,9 @@ fun UserInformation(viewModel: UserProfileViewModel = hiltViewModel()) {
                 horizontalArrangement = Arrangement.Center,
             )
             {
-                //Spacer(modifier = Modifier.width(25.dp))
 
                 Icon(Icons.Default.Email, "Icon description", tint = MaterialTheme.colors.onSurface)
 
-                //Spacer(modifier = Modifier.width(15.dp))
 
                 Text(
                     viewModel.emailUser,
@@ -221,11 +205,8 @@ fun UserInformation(viewModel: UserProfileViewModel = hiltViewModel()) {
                 horizontalArrangement = Arrangement.Center,
             )
             {
-                //Spacer(modifier = Modifier.width(85.dp))
 
                 Icon(Icons.Default.Phone, "Icon description", tint = MaterialTheme.colors.onSurface)
-
-                //Spacer(modifier = Modifier.width(10.dp))
 
                 Text(
                     viewModel.phoneUser,
@@ -245,8 +226,6 @@ fun UserInformation(viewModel: UserProfileViewModel = hiltViewModel()) {
                 horizontalArrangement = Arrangement.Center,
 
                 ) {
-
-                //Spacer(modifier = Modifier.width(120.dp))
 
                 Icon(Icons.Default.Info, "Icon description", tint = MaterialTheme.colors.onSurface)
 
@@ -276,16 +255,7 @@ fun UserInformation(viewModel: UserProfileViewModel = hiltViewModel()) {
             )
         }
 
-
-
-
-
-
-
-
     }
-
-
 
 }
 
@@ -302,11 +272,13 @@ fun UserButtonSection(navController: NavController) {
             .padding(Dimens.standardPadding)
     ) {
 
-//        Image(
-//            painterResource(R.drawable.ic_baseline_person_24),
-//            contentDescription = "Edytuj profil",
-//            modifier = Modifier.size(30.dp),
-//        )
+        Image(
+            painterResource(R.drawable.ic_baseline_person_24),
+            contentDescription = "Edytuj profil",
+            modifier = Modifier.size(30.dp),
+        )
+
+        Spacer(modifier = Modifier.width(10.dp))
 
         Text(text = Strings.edit_profile)
     }
@@ -329,43 +301,9 @@ fun UserButtonSection(navController: NavController) {
         Text(text = Strings.see_opinions)
     }
 
-//    Button(
-//        onClick = {
-//            navController.navigate(route = Screen.EditProfile.route)
-//        },
-//        Modifier.size(width = 180.dp, height = 40.dp),
-//        //colors = ButtonDefaults.buttonColors(backgroundColor = darkColor),
-//        colors = ButtonDefaults.buttonColors(backgroundColor = colors.primary)
-//    )
-//    {
-//        Text(
-//            text = "Edytuj profil",
-//            color = kWhite
-//            //style = MaterialTheme.typography.button
-//        )
-//    }
-
-
-
     Spacer(modifier = Modifier.height(30.dp))
 
-//    Button(
-//        onClick = {
-//            navController.navigate(route = Screen.SeeYourOpinionsScreen.route)
-//
-//            //Toast.makeText(context, viewModel.nameUser, Toast.LENGTH_SHORT).show()
-//
-//        },
-//        Modifier.size(width = 180.dp, height = 40.dp),
-//        colors = ButtonDefaults.buttonColors(backgroundColor = colors.primary),
-//
-//        )
-//    {
-//        Text(
-//            text = "Zobacz opinie",
-//            //style = MaterialTheme.typography.button
-//        )
-//    }
+
 }
 
 
