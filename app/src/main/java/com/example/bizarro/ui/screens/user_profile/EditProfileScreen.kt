@@ -29,6 +29,7 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.example.bizarro.ui.Screen
+import com.example.bizarro.ui.components.TopBar
 import com.example.bizarro.ui.theme.*
 import com.example.bizarro.utils.Constants
 import com.example.bizarro.utils.Dimens
@@ -53,7 +54,15 @@ fun EditProfileScreen(
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
 
-            HeaderEditProfileScreen(navController)
+            //HeaderEditProfileScreen(navController)
+
+            TopBar(
+                navController = navController,
+                title = Strings.empty,
+                modifier = Modifier
+                    .background(MaterialTheme.colors.background)
+                    .align(Alignment.CenterHorizontally)
+            )
 
             // * * * * * * ERROR TEXT * * * * * *
             if (viewModel.loadError.value.isNotEmpty() && !viewModel.isLoading.value) {
@@ -430,28 +439,4 @@ fun EditFieldsSection(viewModel: UserProfileViewModel = hiltViewModel()) {
     }
 }
 
-@Composable
-fun HeaderEditProfileScreen(navController: NavController) {
-    Box(
 
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(5.dp)
-    ) {
-
-        IconButton(
-            onClick = {
-                navController.popBackStack()
-            },
-            modifier = Modifier.align(Alignment.CenterStart)
-        ) {
-            Icon(
-                imageVector = Icons.Default.ArrowBack,
-                contentDescription = "Back to user profile ",
-                Modifier.size(30.dp),
-                tint = MaterialTheme.colors.onSurface
-            )
-        }
-
-    }
-}

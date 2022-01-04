@@ -370,16 +370,3 @@ fun OtherUserButtonSection(navController: NavController) {
 
 }
 
-@Composable
-fun UserDescriptionHeader() {
-    Box(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(12.dp)
-            .background(MaterialTheme.colors.secondaryVariant),
-        contentAlignment = Alignment.Center
-
-    ) {
-
-    }
-}

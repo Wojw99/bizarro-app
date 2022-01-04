@@ -20,6 +20,7 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.example.bizarro.ui.Screen
+import com.example.bizarro.ui.components.TopBar
 import com.example.bizarro.ui.screens.user_profile.other_user_profile.OtherUserViewModel
 import com.example.bizarro.ui.theme.BizarroTheme
 import com.example.bizarro.ui.theme.kWhite
@@ -44,7 +45,16 @@ fun AddOpinionScreen(
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
 
-            HeaderSectionAddOpinion(navController)
+            //HeaderSectionAddOpinion(navController)
+
+            TopBar(
+                navController = navController,
+                title = Strings.empty,
+                modifier = Modifier
+                    .background(colors.background)
+                    .align(Alignment.CenterHorizontally)
+            )
+
 
             Text(
                 "Dodaj opinię o użytkowniku ${viewModel.nameUser}!",
@@ -126,33 +136,6 @@ fun AddOpinionScreen(
 }
 
 
-@Composable
-fun HeaderSectionAddOpinion(navController: NavController) {
-    Box(
-
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(12.dp)
-    ) {
-
-
-        IconButton(
-            onClick = {
-                navController.popBackStack()
-            },
-            modifier = Modifier.align(Alignment.CenterStart)
-        ) {
-            Icon(
-                imageVector = Icons.Default.ArrowBack,
-                contentDescription = "Back to user profile ",
-                Modifier.size(30.dp),
-                tint = MaterialTheme.colors.onSurface
-            )
-        }
-
-
-    }
-}
 
 
 @Composable

@@ -239,28 +239,5 @@ fun SettingsScreen(
     }
 }
 
-@Composable
-fun HeaderSectionSettings(navController: NavController) {
-    Box(
 
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(12.dp)
-    ) {
-        IconButton(
-            onClick = {
-                navController.popBackStack()
-            },
-            modifier = Modifier.align(Alignment.CenterStart)
-        ) {
-            Icon(
-                imageVector = Icons.Default.ArrowBack,
-                contentDescription = "Back to user profile ",
-                Modifier.size(30.dp),
-                tint = MaterialTheme.colors.onSurface
-            )
-        }
-
-    }
-}
 

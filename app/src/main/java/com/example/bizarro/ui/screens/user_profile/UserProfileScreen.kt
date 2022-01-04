@@ -26,10 +26,15 @@ import androidx.navigation.NavController
 import coil.compose.rememberImagePainter
 import com.example.bizarro.R
 import com.example.bizarro.ui.Screen
+import com.example.bizarro.ui.components.TopBar
+import com.example.bizarro.ui.screens.add_record.AddRecordViewModel
+import com.example.bizarro.ui.screens.record_details.RecordDetailsViewModel
+import com.example.bizarro.ui.screens.user_profile.other_user_profile.OtherUserViewModel
 import com.example.bizarro.ui.theme.*
 import com.example.bizarro.utils.Constants
 import com.example.bizarro.utils.Dimens
 import com.example.bizarro.utils.Strings
+import com.example.bizarro.utils.models.TopBarAction
 
 @Composable
 fun UserProfileScreen(
@@ -282,48 +287,6 @@ fun UserInformation(viewModel: UserProfileViewModel = hiltViewModel()) {
 
 
 
-
-    Box(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(12.dp)
-            .background(colors.secondaryVariant),
-        contentAlignment = Alignment.Center
-    ) {
-
-
-
-    }
-
-
-
-    Box(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(12.dp)
-            .background(colors.secondaryVariant),
-        contentAlignment = Alignment.Center
-    ) {
-
-
-
-    }
-
-    //DescriptionHeader()
-
-//    Text(
-//        text = viewModel.userDescription,
-//        style = TextStyle(
-//            color = colors.onSurface,
-//            fontSize = 15.sp,
-//            fontFamily = FontFamily.Default,
-//            fontWeight = FontWeight.Bold,
-//            textAlign = TextAlign.Center,
-//
-//            )
-//    )
-
-
 }
 
 @Composable
@@ -406,19 +369,6 @@ fun UserButtonSection(navController: NavController) {
 }
 
 
-@Composable
-fun DescriptionHeader() {
-    Box(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(12.dp)
-            .background(colors.secondaryVariant),
-        contentAlignment = Alignment.Center
-    ) {
-
-
-    }
-}
 
 
 

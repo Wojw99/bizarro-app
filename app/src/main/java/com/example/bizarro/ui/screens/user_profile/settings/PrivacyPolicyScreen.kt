@@ -57,27 +57,3 @@ fun PrivacyPolicyScreen(
 
 }
 
-@Composable
-fun HeaderSectionPolicyPrivacy(navController: NavController) {
-    Box(
-
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(12.dp)
-    ) {
-
-        IconButton(
-            onClick = {
-                navController.navigate(route = Screen.Settings.route)
-            },
-            modifier = Modifier.align(Alignment.CenterStart)
-        ) {
-            Icon(
-                imageVector = Icons.Default.ArrowBack,
-                contentDescription = "Back to user profile ",
-                Modifier.size(30.dp),
-                tint = MaterialTheme.colors.onSurface
-            )
-        }
-    }
-}
