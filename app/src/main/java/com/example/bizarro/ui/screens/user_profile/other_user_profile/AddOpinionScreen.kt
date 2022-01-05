@@ -244,23 +244,6 @@ fun RadioButtonDemo(
 
     var fullOpinion by remember { mutableStateOf("") }
 
-//    TextField(
-//        value = textOpinion,
-//        onValueChange = {
-//            textOpinion = it
-//        },
-//        placeholder = {
-//            Text(
-//                text = "Wpisz swój komentarz",
-//                color = MaterialTheme.colors.onSurface
-//            )
-//        },
-//        colors = TextFieldDefaults.textFieldColors(
-//            textColor = MaterialTheme.colors.onSurface
-//        )
-//
-//        //modifier = Modifier.align(Alignment.Horizontal)
-//    )
 
     OutlinedTextField(
         value = textOpinion,

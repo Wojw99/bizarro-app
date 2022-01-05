@@ -3,6 +3,8 @@ package com.example.bizarro.ui.screens.user_profile
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.CutCornerShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
@@ -67,9 +69,15 @@ fun SettingsScreen(
                 onClick = {
                     navController.navigate(route = Screen.AboutAppScreen.route)
                 },
+                elevation =  ButtonDefaults.elevation(
+                    defaultElevation = 30.dp,
+                    pressedElevation = 30.dp,
+                    disabledElevation = 0.dp
+                ),
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(Dimens.standardPadding)
+                    .padding(Dimens.standardPadding),
+                shape = RoundedCornerShape(50)
             ) {
 
                 Image(
@@ -145,9 +153,15 @@ fun SettingsScreen(
                 onClick = {
                     navController.navigate(route = Screen.PrivacyPolicyScreen.route)
                 },
+                elevation =  ButtonDefaults.elevation(
+                    defaultElevation = 30.dp,
+                    pressedElevation = 30.dp,
+                    disabledElevation = 0.dp
+                ),
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(Dimens.standardPadding)
+                    .padding(Dimens.standardPadding),
+                        shape = RoundedCornerShape(50)
             ) {
 
                 Image(
@@ -171,9 +185,15 @@ fun SettingsScreen(
                 onClick = {
                     navController.navigate(route = Screen.HelpScreen.route)
                 },
+                elevation =  ButtonDefaults.elevation(
+                    defaultElevation = 30.dp,
+                    pressedElevation = 30.dp,
+                    disabledElevation = 0.dp
+                ),
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(Dimens.standardPadding)
+                    .padding(Dimens.standardPadding),
+                shape = RoundedCornerShape(50)
             ) {
 
                 Image(
@@ -199,9 +219,15 @@ fun SettingsScreen(
                 onClick = {
                     Constants.checkIsDark()
                 },
+                elevation =  ButtonDefaults.elevation(
+                    defaultElevation = 30.dp,
+                    pressedElevation = 30.dp,
+                    disabledElevation = 0.dp
+                ),
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(Dimens.standardPadding),
+                shape = RoundedCornerShape(50),
                 colors = ButtonDefaults.buttonColors(backgroundColor = MaterialTheme.colors.onSurface),
 
                 ) {
@@ -224,10 +250,11 @@ fun SettingsScreen(
                     navController.navigate(route = Screen.SignIn.route)
                 },
                 modifier = Modifier
-                    .fillMaxWidth()
+                    .width(200.dp)
+                    //.fillMaxWidth()
                     .padding(Dimens.standardPadding),
+                shape = RoundedCornerShape(50),
                 colors = ButtonDefaults.buttonColors(backgroundColor = MaterialTheme.colors.onSurface),
-
                 ) {
                 Text(
                     text = "Wyloguj",
