@@ -1,16 +1,19 @@
 package com.example.bizarro.ui.screens.user_profile
 
 import android.widget.Toast
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
 import androidx.compose.material.MaterialTheme.colors
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.filled.Lock
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
@@ -19,6 +22,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
+import com.example.bizarro.R
 import com.example.bizarro.ui.Screen
 import com.example.bizarro.ui.components.TopBar
 import com.example.bizarro.ui.screens.user_profile.other_user_profile.OtherUserViewModel
@@ -240,25 +244,45 @@ fun RadioButtonDemo(
 
     var fullOpinion by remember { mutableStateOf("") }
 
-    TextField(
+//    TextField(
+//        value = textOpinion,
+//        onValueChange = {
+//            textOpinion = it
+//        },
+//        placeholder = {
+//            Text(
+//                text = "Wpisz swój komentarz",
+//                color = MaterialTheme.colors.onSurface
+//            )
+//        },
+//        colors = TextFieldDefaults.textFieldColors(
+//            textColor = MaterialTheme.colors.onSurface
+//        )
+//
+//        //modifier = Modifier.align(Alignment.Horizontal)
+//    )
+
+    OutlinedTextField(
         value = textOpinion,
-        onValueChange = {
+        onValueChange ={
             textOpinion = it
         },
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(Dimens.standardPadding),
+        placeholder = { Text(
+            text = "Wpisz swój komentarz",
+            color = MaterialTheme.colors.onSurface
 
-        //label = { Text(text = "Komentarz do oceny") },
-        placeholder = {
-            Text(
-                text = "Wpisz swój komentarz",
-                color = MaterialTheme.colors.onSurface
-            )
-        },
-        colors = TextFieldDefaults.textFieldColors(
-            textColor = MaterialTheme.colors.onSurface
-        )
+        ) },
 
-        //modifier = Modifier.align(Alignment.Horizontal)
+        colors = TextFieldDefaults.outlinedTextFieldColors(
+            focusedBorderColor = MaterialTheme.colors.onSurface,
+            unfocusedBorderColor = MaterialTheme.colors.onSurface,
+            textColor = MaterialTheme.colors.onSurface)
     )
+
+
 
     Spacer(modifier = Modifier.height(40.dp))
 
@@ -306,6 +330,14 @@ fun RadioButtonDemo(
             )
         )
     }
+
+    Spacer(modifier = Modifier.height(40.dp))
+
+//    Image(
+//        painter = painterResource(id = R.drawable.img),
+//        contentDescription = "Photo Opinion",
+//        modifier = Modifier.fillMaxWidth()
+//    )
 
 
 }
