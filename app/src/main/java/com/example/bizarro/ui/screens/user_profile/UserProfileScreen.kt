@@ -83,8 +83,6 @@ fun UserProfileScreen(
 
                 UserInformation()
 
-                //Spacer(modifier = Modifier.height(10.dp))
-
                 UserButtonSection(navController)
 
             }
@@ -133,10 +131,7 @@ fun HeaderSectionUserProfile(navController: NavController) {
 fun UserInformation(viewModel: UserProfileViewModel = hiltViewModel()) {
 
     Image(
-        //painter = painterResource(id = R.drawable.ic_baseline_person_24),
         painter = rememberImagePainter(viewModel.userImage),
-        //val painter = rememberImagePainter(
-        //record.imagePaths?.first() ?: Constants.RECORD_DEFAULT_IMG_URL
         contentDescription = "User Image",
         contentScale = ContentScale.Crop,
         modifier = Modifier
@@ -179,7 +174,9 @@ fun UserInformation(viewModel: UserProfileViewModel = hiltViewModel()) {
                 )
 
             }
+
             Spacer(modifier = Modifier.size(20.dp))
+
             Row(
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.Center,
@@ -199,7 +196,9 @@ fun UserInformation(viewModel: UserProfileViewModel = hiltViewModel()) {
                     )
                 )
             }
+
             Spacer(modifier = Modifier.size(20.dp))
+
             Row(
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.Center,
@@ -218,8 +217,8 @@ fun UserInformation(viewModel: UserProfileViewModel = hiltViewModel()) {
                     )
                 )
             }
-            Spacer(modifier = Modifier.size(20.dp))
 
+            Spacer(modifier = Modifier.size(20.dp))
 
             Row(
                 verticalAlignment = Alignment.CenterVertically,
@@ -242,6 +241,7 @@ fun UserInformation(viewModel: UserProfileViewModel = hiltViewModel()) {
             }
 
             Spacer(modifier = Modifier.size(20.dp))
+
             Text(
                 text = viewModel.userDescription,
                 style = TextStyle(

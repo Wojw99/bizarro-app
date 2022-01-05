@@ -129,13 +129,6 @@ fun UserRecordListScreen(
             }
         }
 
-        //Spacer(modifier = Modifier.height(30.dp))
-
-
-
-
-
-
     }
 
 }

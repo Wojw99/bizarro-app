@@ -31,7 +31,6 @@ import com.example.bizarro.utils.Strings
 fun SignInScreen(navController: NavController,
                  viewModel: AuthenticateViewModel = hiltViewModel(),)
 {
-
    BizarroTheme(
       darkTheme = Constants.isDark.value
    ) {
@@ -110,22 +109,6 @@ fun loginFields(navController: NavController,
 
    Spacer(modifier = Modifier.height(50.dp))
 
-//   Button(
-//      onClick ={
-//         navController.navigate(route = com.example.bizarro.ui.Screen.Compare.route)
-//      },
-//      Modifier.size(width = 250.dp, height = 50.dp),
-//      colors = ButtonDefaults.buttonColors(backgroundColor = MaterialTheme.colors.onSurface),
-//
-//      ) {
-//      Text(text = "Zaloguj",
-//         style = MaterialTheme.typography.button,
-//         color = MaterialTheme.colors.background,
-//      )
-//
-//   }
-
-
    Button(
       onClick = {
          navController.navigate(route = Screen.UserRecordList.route)
@@ -159,22 +142,6 @@ fun loginFields(navController: NavController,
 
    Spacer(modifier = Modifier.height(10.dp))
 
-//   Button(
-//      onClick ={
-//         navController.navigate(route = com.example.bizarro.ui.Screen.SignUp.route)
-//
-//      },
-//      Modifier.size(width = 250.dp, height = 50.dp),
-//      colors = ButtonDefaults.buttonColors(backgroundColor = MaterialTheme.colors.onSurface),
-//   )
-//   {
-//      Text(text = "Zapisz się",
-//         style = MaterialTheme.typography.button,
-//         color = MaterialTheme.colors.background,
-//      )
-//   }
-
-
    Button(
       onClick = {
          navController.navigate(route = Screen.SignUp.route)
@@ -192,6 +159,4 @@ fun loginFields(navController: NavController,
          color = MaterialTheme.colors.background,
       )
    }
-
-
 }

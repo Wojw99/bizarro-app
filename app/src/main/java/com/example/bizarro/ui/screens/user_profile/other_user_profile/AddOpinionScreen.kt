@@ -106,17 +106,6 @@ fun AddOpinionScreen(
                 }
             }
 
-            // * * * * * * EMPTY TEXT * * * * * *
-//        if (viewModel.recordList.value.isEmpty()
-//            && !viewModel.isLoading.value
-//            && viewModel.loadError.value.isEmpty()
-//        ) {
-//            Text(
-//                text = Strings.listIsEmpty,
-//                modifier = Modifier.align(Alignment.Center)
-//            )
-//        }
-
             // * * * * * * ADD OPINION TO USER * * * * * *
             if (!viewModel.isLoading.value && viewModel.loadError.value.isEmpty()) {
                 //RecordList(navController = navController)
@@ -124,7 +113,6 @@ fun AddOpinionScreen(
                 Spacer(modifier = Modifier.height(40.dp))
 
                 RadioButtonDemo()
-
 
             }
 
@@ -136,11 +124,7 @@ fun AddOpinionScreen(
         }
     }
 
-
 }
-
-
-
 
 @Composable
 fun RadioButtonDemo(
@@ -266,9 +250,7 @@ fun RadioButtonDemo(
     )
 
 
-
     Spacer(modifier = Modifier.height(40.dp))
-
 
     Button(
         onClick = {
@@ -286,16 +268,11 @@ fun RadioButtonDemo(
 
                     viewModel.addOpinion(textOpinion, selectedReview.value.toInt())
 
-
-                    //Toast.makeText(context, "Zapisano", Toast.LENGTH_SHORT).show()
-
-
                 }
             }
 
 
         },
-
 
         modifier = Modifier
             .fillMaxWidth()
@@ -316,15 +293,7 @@ fun RadioButtonDemo(
 
     Spacer(modifier = Modifier.height(40.dp))
 
-//    Image(
-//        painter = painterResource(id = R.drawable.img),
-//        contentDescription = "Photo Opinion",
-//        modifier = Modifier.fillMaxWidth()
-//    )
-
-
 }
-
 
 object Review {
     const val review1 = "1"

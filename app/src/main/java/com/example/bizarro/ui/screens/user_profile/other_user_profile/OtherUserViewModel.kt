@@ -38,29 +38,6 @@ class OtherUserViewModel @Inject constructor(
 
     val userOtherOpinionList = mutableStateOf<List<Opinion>>(listOf())
 
-//    val marks = Constants.marks
-//    val selectedMark = mutableStateOf("")
-
-    //val opinionOtherUserList = mutableStateListOf<String>()
-
-//    val opinionsOtherUser= mutableStateOf(listOf(
-//        "User1: 5, super produkty",
-//        "User2: 4, dobre produkty",
-//        "User3: 3, pozytywne produkty",
-//        "User4: 5, super produkty",
-//        "User5: 5, super produkty",
-//        "User6: 2, takie średnie produkty"
-//        ),
-//
-//        )
-
-//    var nameOtherUser by mutableStateOf("Tomasz Kowalski")
-//    var emailOtherUser by mutableStateOf("tkowalski@gmail.com")
-//    var phoneOtherUser by mutableStateOf("987 654 321")
-//    var userOtherDescription by mutableStateOf("Użytkownik zajmujący się głównie wypożyczaniem rowerów turystycznych")
-
-
-
     init {
         appState.bottomMenuVisible.value = false
 
@@ -74,7 +51,6 @@ class OtherUserViewModel @Inject constructor(
 
     fun addOpinion(opinionContent: String, opinionRating: Int){
 
-        //val localDate = LocalDate.now()
         if(isLoading.value) return
 
         viewModelScope.launch {
@@ -100,14 +76,9 @@ class OtherUserViewModel @Inject constructor(
 
                     loadError.value = repository.addUserOpinion(Opinion(-1, otherUserId, LocalDate.now(), opinionRating, opinionContent)).message ?: ""
                 }
-
-
             }
 
-
         }
-
-
 
     }
 
@@ -118,8 +89,6 @@ class OtherUserViewModel @Inject constructor(
         viewModelScope.launch {
 
             isLoading.value = true
-
-
 
             val resource = repository.getUserProfile(otherUserId)
             val resource2 = repository.getUserOpinions(otherUserId)

@@ -80,24 +80,11 @@ fun OtherUserProfileScreen(
                 }
             }
 
-            // * * * * * * EMPTY TEXT * * * * * *
-//        if (viewModel.recordList.value.isEmpty()
-//            && !viewModel.isLoading.value
-//            && viewModel.loadError.value.isEmpty()
-//        ) {
-//            Text(
-//                text = Strings.listIsEmpty,
-//                modifier = Modifier.align(Alignment.Center)
-//            )
-//        }
 
             // * * * * * * USER PROFILE * * * * * *
             if (!viewModel.isLoading.value) {
-                //RecordList(navController = navController)
 
                 OtherUserInfo()
-
-                //Spacer(modifier = Modifier.height(50.dp))
 
                 OtherUserButtonSection(navController)
 
@@ -110,10 +97,7 @@ fun OtherUserProfileScreen(
 
         }
     }
-
-
 }
-
 
 @Composable
 fun OtherUserInfo(viewModel: OtherUserViewModel = hiltViewModel()) {
@@ -146,11 +130,8 @@ fun OtherUserInfo(viewModel: OtherUserViewModel = hiltViewModel()) {
                 horizontalArrangement = Arrangement.Center
             )
             {
-                //Spacer(modifier = Modifier.width(55.dp))
 
                 Icon(Icons.Default.Person, "Icon description", tint = MaterialTheme.colors.onSurface)
-
-                //Spacer(modifier = Modifier.width(15.dp))
 
                 Text(
                     viewModel.nameUser,
@@ -170,11 +151,8 @@ fun OtherUserInfo(viewModel: OtherUserViewModel = hiltViewModel()) {
                 horizontalArrangement = Arrangement.Center
             )
             {
-                //Spacer(modifier = Modifier.width(25.dp))
 
                 Icon(Icons.Default.Email, "Icon description", tint = MaterialTheme.colors.onSurface)
-
-                //Spacer(modifier = Modifier.width(15.dp))
 
                 Text(
                     viewModel.emailUser,
@@ -194,11 +172,8 @@ fun OtherUserInfo(viewModel: OtherUserViewModel = hiltViewModel()) {
                 horizontalArrangement = Arrangement.Center
             )
             {
-                //Spacer(modifier = Modifier.width(85.dp))
 
                 Icon(Icons.Default.Phone, "Icon description", tint = MaterialTheme.colors.onSurface)
-
-                //Spacer(modifier = Modifier.width(15.dp))
 
                 Text(
                     viewModel.phoneUser,
@@ -217,8 +192,6 @@ fun OtherUserInfo(viewModel: OtherUserViewModel = hiltViewModel()) {
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.Center,
             ) {
-
-                //Spacer(modifier = Modifier.width(110.dp))
 
                 Icon(
                     Icons.Default.Info,
@@ -251,10 +224,8 @@ fun OtherUserInfo(viewModel: OtherUserViewModel = hiltViewModel()) {
                 )
             )
 
-
         }
 
-
     }
 
     Box(
@@ -277,34 +248,11 @@ fun OtherUserInfo(viewModel: OtherUserViewModel = hiltViewModel()) {
     ) {
 
     }
-
-
-    //UserDescriptionHeader()
-
-
 
 }
 
 @Composable
 fun OtherUserButtonSection(navController: NavController) {
-//    Button(
-//        onClick = {
-//            OtherUserViewModel.otherUserId = RecordDetailsViewModel.userId!!
-//            navController.navigate(route = Screen.AddOpinion.route)
-//
-//        }) {
-//        Image(
-//            painterResource(R.drawable.ic_baseline_star_24),
-//            contentDescription = "Dodaj opinie",
-//            modifier = Modifier.size(35.dp),
-//        )
-//
-//        Text(
-//            text = "Dodaj opinię",
-//            Modifier.padding(start = 10.dp),
-//            color = kWhite
-//        )
-//    }
 
     Button(
         onClick = {
@@ -330,23 +278,6 @@ fun OtherUserButtonSection(navController: NavController) {
     }
 
     Spacer(modifier = Modifier.height(10.dp))
-
-//    Button(
-//        onClick = {
-//            OtherUserViewModel.otherUserId = RecordDetailsViewModel.userId!!
-//            navController.navigate(route = Screen.SeeOpinionOtherUser.route)
-//        },
-//        Modifier.size(width = 200.dp, height = 60.dp),
-//        colors = ButtonDefaults.buttonColors(backgroundColor = MaterialTheme.colors.onSurface),
-//    )
-//    {
-//        Text(
-//            text = "Zobacz opinie",
-//            style = MaterialTheme.typography.button,
-//            color = MaterialTheme.colors.background
-//        )
-//    }
-
 
     Button(
         onClick = {

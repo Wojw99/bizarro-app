@@ -25,7 +25,6 @@ import com.example.bizarro.utils.Dimens
 fun SignUpScreen(navController: NavController,
                  viewModel: AuthenticateViewModel = hiltViewModel(),)
 {
-
     BizarroTheme(
         darkTheme = Constants.isDark.value
     ) {
@@ -48,8 +47,6 @@ fun SignUpScreen(navController: NavController,
 
         }
     }
-
-
 }
 
 @Composable
@@ -103,21 +100,6 @@ fun RegisterFields(navController: NavController,
 
     Spacer(modifier = Modifier.height(50.dp))
 
-//    Button(
-//        onClick ={
-//            Toast.makeText(context, "Zarejestrowano", Toast.LENGTH_SHORT).show()
-//        },
-//        Modifier.size(width = 250.dp, height = 50.dp),
-//        colors = ButtonDefaults.buttonColors(backgroundColor = MaterialTheme.colors.onSurface),
-//    )
-//    {
-//        Text(text = "Zarejestruj",
-//            style = MaterialTheme.typography.button,
-//            color = MaterialTheme.colors.background
-//        )
-//
-//    }
-
     Button(
         onClick = {
             Toast.makeText(context, "Zarejestrowano", Toast.LENGTH_SHORT).show()
@@ -137,22 +119,6 @@ fun RegisterFields(navController: NavController,
     }
 
     Spacer(modifier = Modifier.height(20.dp))
-
-//    Button(
-//        onClick ={
-//            navController.navigate(route = com.example.bizarro.ui.Screen.SignIn.route)
-//
-//        },
-//        Modifier.size(width = 250.dp, height = 50.dp),
-//        colors = ButtonDefaults.buttonColors(backgroundColor = MaterialTheme.colors.onSurface),
-//    )
-//    {
-//        Text(text = "Logowanie",
-//            style = MaterialTheme.typography.button,
-//            color = MaterialTheme.colors.background
-//        )
-//
-//    }
 
     Button(
         onClick = {

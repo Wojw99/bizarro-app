@@ -45,8 +45,6 @@ fun SettingsScreen(
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
 
-            //HeaderSectionSettings(navController)
-
 
             TopBar(
                 navController = navController,
@@ -95,59 +93,7 @@ fun SettingsScreen(
                 )
             }
 
-
-//            Button(
-//                onClick = {
-//                    navController.navigate(route = Screen.AboutAppScreen.route)
-//                },
-//                Modifier.size(width = 300.dp, height = 50.dp),
-//                //colors = ButtonDefaults.buttonColors(backgroundColor = MaterialTheme.colors.onSurface),
-//
-//            ) {
-//                Text(
-//                    text = "Informacje o aplikacji",
-//                    color = kWhite,
-//                    style = MaterialTheme.typography.button
-//                )
-//            }
-
-            //Spacer(modifier = Modifier.height(20.dp))
-
-
-
-
-
-//            Button(
-//                onClick = {
-//                    navController.navigate(route = Screen.HelpScreen.route)
-//                },
-//                Modifier.size(width = 300.dp, height = 50.dp),
-//                //colors = ButtonDefaults.buttonColors(backgroundColor = kBlueDark),
-//
-//            ) {
-//                Text(
-//                    text = "Pomoc",
-//                    style = MaterialTheme.typography.button
-//                )
-//            }
-
             Spacer(modifier = Modifier.height(20.dp))
-
-//            Button(
-//                onClick = {
-//                    navController.navigate(route = Screen.PrivacyPolicyScreen.route)
-//
-//                },
-//                Modifier.size(width = 300.dp, height = 50.dp),
-//                //colors = ButtonDefaults.buttonColors(backgroundColor = kBlueDark),
-//
-//            ) {
-//                Text(
-//                    text = "Polityka prywatności",
-//                    style = MaterialTheme.typography.button
-//                )
-//            }
-
 
             Button(
                 onClick = {

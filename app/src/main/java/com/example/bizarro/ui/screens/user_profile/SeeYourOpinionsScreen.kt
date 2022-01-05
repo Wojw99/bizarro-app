@@ -49,8 +49,6 @@ fun SeeYourOpinionsScreen(
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
 
-            //HeaderSectionSeeOpinionUserProfile(navController)
-
             TopBar(
                 navController = navController,
                 title = Strings.empty,
