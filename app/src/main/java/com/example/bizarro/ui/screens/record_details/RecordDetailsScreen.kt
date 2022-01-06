@@ -64,7 +64,9 @@ fun RecordDetailsScreen(
                 Column(
                     verticalArrangement = Arrangement.Center,
                     horizontalAlignment = Alignment.CenterHorizontally,
-                    modifier = Modifier.fillMaxSize(),
+                    modifier = Modifier.fillMaxSize()
+                        .background(colors.background),
+
                 ) {
                     Text(
                         text = viewModel.loadError.value,

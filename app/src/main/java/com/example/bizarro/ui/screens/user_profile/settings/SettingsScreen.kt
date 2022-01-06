@@ -166,8 +166,8 @@ fun SettingsScreen(
                     Constants.checkIsDark()
                 },
                 elevation =  ButtonDefaults.elevation(
-                    defaultElevation = 30.dp,
-                    pressedElevation = 30.dp,
+                    defaultElevation = 20.dp,
+                    pressedElevation = 25.dp,
                     disabledElevation = 0.dp
                 ),
                 modifier = Modifier
