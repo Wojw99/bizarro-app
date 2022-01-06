@@ -280,7 +280,7 @@ fun UserButtonSection(navController: NavController) {
 
         Spacer(modifier = Modifier.width(10.dp))
 
-        Text(text = Strings.edit_profile)
+        Text(text = Strings.edit_profile, color = kWhite)
     }
 
     Button(
@@ -298,7 +298,7 @@ fun UserButtonSection(navController: NavController) {
             modifier = Modifier.size(30.dp),
         )
 
-        Text(text = Strings.see_opinions)
+        Text(text = Strings.see_opinions, color = kWhite)
     }
 
     Spacer(modifier = Modifier.height(30.dp))

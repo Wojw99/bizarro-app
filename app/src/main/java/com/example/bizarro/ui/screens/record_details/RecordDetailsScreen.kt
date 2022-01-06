@@ -77,7 +77,7 @@ fun RecordDetailsScreen(
                     }) {
                         Text(
                             text = Strings.refresh,
-                            color = colors.onSurface
+                            color = kWhite
                         )
                     }
                 }

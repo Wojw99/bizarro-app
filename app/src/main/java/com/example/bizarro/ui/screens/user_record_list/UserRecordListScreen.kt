@@ -80,12 +80,13 @@ fun UserRecordListScreen(
                     ) {
                         Text(
                             text = viewModel.loadError.value,
+                            color = MaterialTheme.colors.onSurface
                         )
                         Spacer(modifier = Modifier.height(Dimens.standardPadding))
                         Button(onClick = { viewModel.updateRecordList() }) {
                             Text(
                                 text = Strings.refresh,
-                                color = colors.onSurface
+                                color = kWhite
                             )
                         }
                     }

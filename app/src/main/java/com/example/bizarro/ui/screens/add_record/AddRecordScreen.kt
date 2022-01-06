@@ -166,7 +166,7 @@ fun AddRecordScreen(
                     .align(Alignment.BottomCenter)
                     .padding(Dimens.standardPadding)
             ) {
-                Text(text = Strings.confirm)
+                Text(text = Strings.confirm, color = kWhite)
             }
 
             // * * * * * * TOP BAR * * * * * *
