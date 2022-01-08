@@ -1,8 +1,7 @@
 package com.example.bizarro.ui.screens.user_record_list
 
 import androidx.compose.runtime.mutableStateOf
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
 import com.example.bizarro.api.models.Record
 import com.example.bizarro.repositories.RecordRepository
 import com.example.bizarro.repositories.UserRepository
@@ -18,20 +17,32 @@ import javax.inject.Inject
 @HiltViewModel
 class UserRecordListViewModel @Inject constructor(
     val appState: AppState,
-    private val repository: UserRepository,
+    private val recordRepository: RecordRepository,
 ) : NetworkingViewModel() {
     val recordList = mutableStateOf<List<Record>>(listOf())
 
+//    private val observer: Observer<Boolean> = Observer {
+//        signal.value = false
+//        if (it) updateRecordList()
+//    }
+
     init {
         updateRecordList()
+        //signal.observeForever(observer)
     }
 
-    fun updateRecordList(){
+    override fun onCleared() {
+        super.onCleared()
+        //signal.removeObserver(observer)
+    }
+
+    fun updateRecordList() {
         if (isLoading.value) return
+
         viewModelScope.launch {
             startLoading()
 
-            val resource = repository.getUserRecords(repository.userId)
+            val resource = recordRepository.getUserRecords()
 
             when (resource) {
                 is Resource.Success -> {
@@ -45,4 +56,12 @@ class UserRecordListViewModel @Inject constructor(
             }
         }
     }
+
+//    companion object {
+//        val signal = MutableLiveData(false)
+//
+//        fun signalUpdate() {
+//            signal.value = true
+//        }
+//    }
 }

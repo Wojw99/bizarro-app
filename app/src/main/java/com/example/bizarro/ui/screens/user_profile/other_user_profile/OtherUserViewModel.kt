@@ -2,12 +2,15 @@ package com.example.bizarro.ui.screens.user_profile.other_user_profile
 
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.bizarro.api.models.Opinion
+import com.example.bizarro.repositories.OpinionsRepository
 import com.example.bizarro.repositories.UserRepository
 import com.example.bizarro.ui.AppState
+import com.example.bizarro.ui.screens.user_profile.Review
 import com.example.bizarro.utils.Constants
 import com.example.bizarro.utils.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -19,9 +22,9 @@ import javax.inject.Inject
 class OtherUserViewModel @Inject constructor(
     val appState: AppState,
     private val repository: UserRepository,
-): ViewModel()
-{
-    companion object{
+    private val opinionsRepository: OpinionsRepository,
+) : ViewModel() {
+    companion object {
         var otherUserId = 1L
     }
 
@@ -37,6 +40,8 @@ class OtherUserViewModel @Inject constructor(
     var userImage by mutableStateOf(Constants.RECORD_DEFAULT_IMG_URL)
 
     val userOtherOpinionList = mutableStateOf<List<Opinion>>(listOf())
+
+    val selectedReview = mutableStateOf(Review.review3)
 
 //    val marks = Constants.marks
 //    val selectedMark = mutableStateOf("")
@@ -60,11 +65,10 @@ class OtherUserViewModel @Inject constructor(
 //    var userOtherDescription by mutableStateOf("Użytkownik zajmujący się głównie wypożyczaniem rowerów turystycznych")
 
 
-
     init {
         appState.bottomMenuVisible.value = false
 
-        getOtherUserProfile()
+        //getOtherUserProfile()
     }
 
     override fun onCleared() {
@@ -72,22 +76,24 @@ class OtherUserViewModel @Inject constructor(
         otherUserId = 1L
     }
 
-    fun addOpinion(opinionContent: String, opinionRating: Int){
+    fun addOpinion(opinionContent: String, opinionRating: Int) {
 
         //val localDate = LocalDate.now()
-        if(isLoading.value) return
+        if (isLoading.value) return
 
         viewModelScope.launch {
 
             isLoading.value = true
 
-            when (repository.addUserOpinion(
-                Opinion(-1, otherUserId,
-                LocalDate.now()
-                //CommonMethods.convertToRecordBoxDateFormat(localDate)
-                ,
-                opinionRating, opinionContent)
-            )){
+            when (opinionsRepository.addUserOpinion(
+                Opinion(
+                    -1, otherUserId,
+                    LocalDate.now()
+                    //CommonMethods.convertToRecordBoxDateFormat(localDate)
+                    ,
+                    opinionRating, opinionContent
+                )
+            )) {
 
                 is Resource.Success -> {
 
@@ -98,7 +104,15 @@ class OtherUserViewModel @Inject constructor(
 
                     isLoading.value = false
 
-                    loadError.value = repository.addUserOpinion(Opinion(-1, otherUserId, LocalDate.now(), opinionRating, opinionContent)).message ?: ""
+                    loadError.value = opinionsRepository.addUserOpinion(
+                        Opinion(
+                            -1,
+                            otherUserId,
+                            LocalDate.now(),
+                            opinionRating,
+                            opinionContent
+                        )
+                    ).message ?: ""
                 }
 
 
@@ -108,21 +122,17 @@ class OtherUserViewModel @Inject constructor(
         }
 
 
-
     }
 
-    fun getOtherUserProfile()
-    {
+    fun getOtherUserProfile() {
         if (isLoading.value) return
 
         viewModelScope.launch {
 
             isLoading.value = true
 
-
-
-            val resource = repository.getUserProfile(otherUserId)
-            val resource2 = repository.getUserOpinions(otherUserId)
+            val resource = opinionsRepository.getOtherUserProfile(otherUserId)
+            val resource2 = opinionsRepository.getUserOpinions(otherUserId)
 
             when (resource) {
                 is Resource.Success -> {

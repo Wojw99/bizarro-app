@@ -6,6 +6,7 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.bizarro.api.models.Opinion
+import com.example.bizarro.repositories.OpinionsRepository
 import com.example.bizarro.repositories.UserRepository
 import com.example.bizarro.ui.AppState
 import com.example.bizarro.utils.Constants
@@ -17,7 +18,9 @@ import javax.inject.Inject
 @HiltViewModel
 class UserProfileViewModel @Inject constructor(
     val appState: AppState,
-    private val repository: UserRepository,) : ViewModel()
+    private val repository: UserRepository,
+    private val opinionsRepository: OpinionsRepository,
+) : ViewModel()
 {
 
     val loadError = mutableStateOf("")
@@ -45,8 +48,8 @@ class UserProfileViewModel @Inject constructor(
 
             isLoading.value = true
 
-            val resource = repository.getUserProfile(repository.userId)
-            val resource2 = repository.getUserOpinions(repository.userId)
+            val resource = repository.getUserProfile()
+            val resource2 = opinionsRepository.getUserOpinions(repository.userId!!)
 
             when (resource) {
                 is Resource.Success -> {

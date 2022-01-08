@@ -29,6 +29,7 @@ import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.toLowerCase
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
@@ -47,6 +48,7 @@ import com.example.bizarro.ui.theme.*
 import com.example.bizarro.utils.*
 import com.example.bizarro.utils.Dimens
 import com.example.bizarro.utils.Strings
+import java.util.*
 
 val topRecordListMargin = 115.dp
 
@@ -294,26 +296,28 @@ fun TypeSpecificTitle(record: Record, modifier: Modifier = Modifier) {
     var h2 = ""
     var h1Size = 20.sp
 
-    when (record.type) {
+    val type = record.type.lowercase(Locale.getDefault()).trim()
+
+    when (type) {
         Constants.TYPE_SELL -> {
-            h1 = if (record.salePrice != null) {
-                CommonMethods.convertToPriceFormat(record.salePrice)
+            h1 = if (record.price != null) {
+                CommonMethods.convertToPriceFormat(record.price)
             } else {
                 Strings.undefined
             }
             h2 = Strings.sellPrice
         }
         Constants.TYPE_BUY -> {
-            h1 = if (record.purchasePrice != null) {
-                CommonMethods.convertToPriceFormat(record.purchasePrice)
+            h1 = if (record.price != null) {
+                CommonMethods.convertToPriceFormat(record.price)
             } else {
                 Strings.undefined
             }
             h2 = Strings.purchasePrice
         }
         Constants.TYPE_RENT -> {
-            h1 = if (record.rentalPeriod != null && record.rentalPrice != null) {
-                "${CommonMethods.convertToPriceFormat(record.rentalPrice)} - ${record.rentalPeriod} ${Strings.days}"
+            h1 = if (record.rentalPeriod != null && record.price != null) {
+                "${CommonMethods.convertToPriceFormat(record.price)} - ${record.rentalPeriod} ${Strings.days}"
             } else {
                 Strings.undefined
             }

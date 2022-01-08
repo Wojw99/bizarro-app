@@ -4,6 +4,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.viewModelScope
 import com.example.bizarro.api.models.Record
 import com.example.bizarro.api.models.UserProfile
+import com.example.bizarro.repositories.OpinionsRepository
 import com.example.bizarro.repositories.UserRepository
 import com.example.bizarro.ui.AppState
 import com.example.bizarro.ui.NetworkingViewModel
@@ -21,6 +22,7 @@ import javax.inject.Inject
 class RecordDetailsViewModel @Inject constructor(
     val appState: AppState,
     private val userRepository: UserRepository,
+    private val opinionsRepository: OpinionsRepository,
 ) : NetworkingViewModel() {
     companion object{
         var record: Record? = null
@@ -34,7 +36,7 @@ class RecordDetailsViewModel @Inject constructor(
     val recordHeader = mutableStateOf("")
     val recordLabel = mutableStateOf("")
     val recordCreationDateLabel = mutableStateOf("")
-    val recordImagePath = mutableStateOf("")
+    val recordImagePath = mutableStateOf<String?>(null)
 
     val recordBody = mutableStateOf("")
     val recordGeneralOpinion = mutableStateOf("")
@@ -63,28 +65,28 @@ class RecordDetailsViewModel @Inject constructor(
             return
         }
         recordName.value = record!!.name
-        recordCreationDateLabel.value = "Dodano - ${CommonMethods.convertToLabelDateFormat(record!!.creationDate)}"
+        recordCreationDateLabel.value = "${Strings.added} - ${CommonMethods.convertToLabelDateFormat(record!!.creationDate)}"
         if(record!!.imagePath != null)
             recordImagePath.value = record!!.imagePath.toString()
 
         if(record!!.type == Constants.TYPE_BUY) {
-            recordHeader.value = "${record!!.purchasePrice}${Strings.priceSuffix}"
+            recordHeader.value = "${record!!.price}${Strings.priceSuffix}"
             recordLabel.value = Strings.titleSectionPurchaseLabel
         } else if (record!!.type == Constants.TYPE_SELL) {
-            recordHeader.value = "${record!!.salePrice}${Strings.priceSuffix}"
+            recordHeader.value = "${record!!.price}${Strings.priceSuffix}"
             recordLabel.value = Strings.titleSectionSellLabel
         } else if (record!!.type == Constants.TYPE_SWAP) {
             recordHeader.value = "${record!!.swapObject}"
             recordLabel.value = Strings.titleSectionSwapLabel
         } else if (record!!.type == Constants.TYPE_RENT) {
-            recordHeader.value = "${record!!.rentalPrice}${Strings.priceSuffix}, ${record!!.rentalPeriod} ${Strings.days}"
+            recordHeader.value = "${record!!.price}${Strings.priceSuffix}, ${record!!.rentalPeriod} ${Strings.days}"
             recordLabel.value = Strings.titleSectionRentLabel
         }
 
         recordBody.value = record!!.body
-        recordCategory.value = record!!.category.name
-        recordCategoryDesc.value = record!!.category.description
-        recordAddress.value = "${record!!.address.city}, ${record!!.address.street} ${record!!.address.number}"
+        recordCategory.value = record!!.category
+        recordCategoryDesc.value = record!!.category
+        recordAddress.value = "${record!!.addressCity}, ${record!!.addressStreet} ${record!!.addressNumber}"
     }
 
     fun updateProfileInfo(){
@@ -95,26 +97,26 @@ class RecordDetailsViewModel @Inject constructor(
         }
 
         viewModelScope.launch {
-            startLoading()
-            val resource = userRepository.getUserProfile(userId!!)
-
-            when (resource) {
-                is Resource.Success -> {
-                    endLoading()
-
-                    val profile: UserProfile = resource.data ?: return@launch
-                    topBarTitle.value = "${profile.firstName} ${profile.lastName}"
-                    topBarImagePath.value = profile.imagePath
-                    recordGeneralOpinion.value = profile.generalOpinion.name
-                    recordGeneralOpinionDesc.value = profile.generalOpinion.description
-                }
-                is Resource.Error<*> -> {
-                    endLoadingWithError()
-
-                    topBarTitle.value = ""
-                    topBarImagePath.value = ""
-                }
-            }
+//            startLoading()
+//            val resource = opinionsRepository.getOtherUserProfile(userRepository.userId!!)
+//
+//            when (resource) {
+//                is Resource.Success -> {
+//                    endLoading()
+//
+//                    val profile: UserProfile = resource.data ?: return@launch
+//                    topBarTitle.value = "${profile.firstName} ${profile.lastName}"
+//                    topBarImagePath.value = profile.imagePath ?: Constants.USER_DEFAULT_IMG_URL
+//                    recordGeneralOpinion.value = profile.generalOpinion.name
+//                    recordGeneralOpinionDesc.value = profile.generalOpinion.description
+//                }
+//                is Resource.Error<*> -> {
+//                    endLoadingWithError()
+//
+//                    topBarTitle.value = ""
+//                    topBarImagePath.value = ""
+//                }
+//            }
         }
     }
 }

@@ -122,7 +122,7 @@ fun AddOpinionScreen(
                 colors = ButtonDefaults.buttonColors(backgroundColor = MaterialTheme.colors.onSurface),
             ) {
                 Text(
-                    text = "Dodaj komentarz",
+                    text = Strings.confirm,
                     style = TextStyle(
                         fontSize = 20.sp,
                         fontFamily = FontFamily.Serif,
@@ -247,7 +247,7 @@ fun RadioButtonDemo(
             focusedBorderColor = MaterialTheme.colors.onSurface,
             unfocusedBorderColor = MaterialTheme.colors.onSurface,
             textColor = MaterialTheme.colors.onSurface
-        )
+        ),
     )
     
     Spacer(modifier = Modifier.height(Dimens.topBarHeight))

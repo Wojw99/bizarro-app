@@ -12,12 +12,18 @@ object Strings {
     const val confirm = "Zatwierdź"
     const val edit = "Edytuj"
     const val add = "Dodaj"
+    const val select = "Wybierz"
     const val error = "Błąd!"
     const val success2 = "Sukces!"
     const val settings = "Ustawienia"
     const val empty = ""
     const val userRecords = "Twoje ogłoszenia"
     const val home = "Home"
+    const val errorIncorrectEmailOrPassword = "Nieprawidłowy email lub hasło!"
+    const val userNotSignedInError = "Użytkownik nie jest zalogowany!"
+    const val emptyFieldsError = "Część z wymaganych pól jest pusta!"
+    const val confirmLogin = "Pomyślnie zalogowano."
+    const val photo = "Zdjęcie"
 
     // * * * * * * * * SEARCH SCREEN * * * * * * * *
     const val recordImage = "Zdjęcie ogłoszenia."

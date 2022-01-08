@@ -1,5 +1,12 @@
 package com.example.bizarro.ui.screens.add_record
 
+import android.graphics.ImageDecoder
+import android.net.Uri
+import android.os.Build
+import android.provider.MediaStore
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
@@ -12,22 +19,26 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.navigation.NavGraph.Companion.findStartDestination
+import coil.compose.rememberImagePainter
 import com.example.bizarro.ui.Screen
 import com.example.bizarro.ui.components.*
 import com.example.bizarro.ui.screens.filter.headerModifier
 import com.example.bizarro.ui.screens.filter.headerStyle
-import com.example.bizarro.ui.theme.BizarroTheme
-import com.example.bizarro.ui.theme.kGray
-import com.example.bizarro.ui.theme.kWhite
+import com.example.bizarro.ui.screens.user_record_list.UserRecordListViewModel
+import com.example.bizarro.ui.theme.*
 import com.example.bizarro.utils.Constants
 import com.example.bizarro.utils.Dimens
 import com.example.bizarro.utils.Strings
 import com.example.bizarro.utils.models.TopBarAction
+
+val textFieldModifier = Modifier.fillMaxWidth()
 
 @ExperimentalComposeUiApi
 @Composable
@@ -36,6 +47,24 @@ fun AddRecordScreen(
     navController: NavController,
 ) {
     viewModel.appState.bottomMenuVisible.value = false
+
+    val context = LocalContext.current
+
+    val launcher = rememberLauncherForActivityResult(
+        ActivityResultContracts.GetContent()
+    ) { uri: Uri? ->
+        if (uri == null) return@rememberLauncherForActivityResult
+
+        viewModel.imageUri.value = uri
+
+        if (Build.VERSION.SDK_INT < 28) {
+            viewModel.imageBitmap.value =
+                MediaStore.Images.Media.getBitmap(context.contentResolver, uri)
+        } else {
+            val source = ImageDecoder.createSource(context.contentResolver, uri!!)
+            viewModel.imageBitmap.value = ImageDecoder.decodeBitmap(source)
+        }
+    }
 
     BizarroTheme(darkTheme = Constants.isDark.value)
     {
@@ -49,8 +78,6 @@ fun AddRecordScreen(
                     .fillMaxSize()
                     .verticalScroll(rememberScrollState())
             ) {
-                val textFieldModifier = Modifier.fillMaxWidth()
-
                 // * * * * * RECORD TITLE * * * * *
                 Text(
                     modifier = headerModifier,
@@ -61,8 +88,7 @@ fun AddRecordScreen(
                 CustomOutlinedTextField(
                     value = viewModel.titleText.value,
                     onValueChange = { viewModel.titleText.value = it },
-                    labelText = Strings.title,
-
+                    placeholderText = Strings.title,
                     keyboardType = KeyboardType.Text,
                     modifier = textFieldModifier,
                 )
@@ -77,7 +103,7 @@ fun AddRecordScreen(
                 CustomOutlinedTextField(
                     value = viewModel.descriptionText.value,
                     onValueChange = { viewModel.descriptionText.value = it },
-                    labelText = Strings.recordDescription,
+                    placeholderText = Strings.recordDescription,
                     keyboardType = KeyboardType.Text,
                     modifier = textFieldModifier,
                 )
@@ -152,6 +178,35 @@ fun AddRecordScreen(
                     modifier = textFieldModifier,
                 )
 
+                // * * * * * PHOTO * * * * *
+                Text(
+                    modifier = headerModifier,
+                    text = Strings.photo,
+                    style = headerStyle,
+                    color = colors.onSurface
+                )
+                Spacer(modifier = Modifier.height(8.dp))
+
+                if (viewModel.imageUri.value != null) {
+                    val painter = rememberImagePainter(viewModel.imageUri.value)
+                    Image(
+                        painter = painter,
+                        contentDescription = Strings.photo,
+                        modifier = textFieldModifier.height(250.dp),
+                    )
+                    Spacer(modifier = Modifier.height(8.dp))
+                }
+
+                Button(
+                    onClick = {
+                        // launch only for images
+                        launcher.launch("image/*")
+                    },
+                    modifier = textFieldModifier,
+                ) {
+                    Text(text = Strings.select)
+                }
+
                 Spacer(modifier = Modifier.height(128.dp))
             }
 
@@ -159,7 +214,7 @@ fun AddRecordScreen(
             // * * * * * ACCEPT BUTTON * * * * *
             Button(
                 onClick = {
-                    viewModel.confirmAdding()
+                    viewModel.confirmAdding(context)
                 },
                 modifier = Modifier
                     .fillMaxWidth()
@@ -172,7 +227,7 @@ fun AddRecordScreen(
             // * * * * * * TOP BAR * * * * * *
             TopBar(
                 navController = navController,
-                title = if(viewModel.isEditScreen.value) Strings.editRecord else Strings.addRecord,
+                title = if (viewModel.isEditScreen.value) Strings.editRecord else Strings.addRecord,
                 actions = listOf(
                     TopBarAction(
                         onClick = { viewModel.cleanStates() },
@@ -198,12 +253,13 @@ fun AddRecordScreen(
             if (viewModel.isSuccess.value) {
                 ConfirmAlertDialog(
                     onDismiss = {
-                        navController.navigate(Screen.Search.route) {
-                            // remove all previous screen in the stack
-                            popUpTo(navController.graph.findStartDestination().id) {
-                                inclusive = true
-                            }
-                        }
+//                        navController.navigate(Screen.Search.route) {
+//                            // remove all previous screen in the stack
+//                            popUpTo(navController.graph.findStartDestination().id) {
+//                                inclusive = true
+//                            }
+//                        }
+                        navController.popBackStack()
                     },
                     title = Strings.success2,
                     body = Strings.success,
@@ -216,7 +272,6 @@ fun AddRecordScreen(
             }
         }
     }
-
 
 
 }
@@ -259,8 +314,9 @@ fun TypeDependentSection(
             CustomOutlinedTextField(
                 value = viewModel.priceText.value,
                 onValueChange = { viewModel.priceText.value = it },
-                labelText = Strings.price,
+                placeholderText = Strings.price,
                 keyboardType = KeyboardType.Number,
+                modifier = textFieldModifier,
             )
         }
 
@@ -275,8 +331,9 @@ fun TypeDependentSection(
             CustomOutlinedTextField(
                 value = viewModel.rentPeriodText.value,
                 onValueChange = { viewModel.rentPeriodText.value = it },
-                labelText = Strings.rentHint,
+                placeholderText = Strings.rentHint,
                 keyboardType = KeyboardType.Number,
+                modifier = textFieldModifier,
             )
         }
 
@@ -291,8 +348,9 @@ fun TypeDependentSection(
             CustomOutlinedTextField(
                 value = viewModel.swapObjectText.value,
                 onValueChange = { viewModel.swapObjectText.value = it },
-                labelText = Strings.swapHint,
+                placeholderText = Strings.swapHint,
                 keyboardType = KeyboardType.Text,
+                modifier = textFieldModifier,
             )
         }
     }

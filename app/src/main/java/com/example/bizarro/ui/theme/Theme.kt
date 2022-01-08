@@ -14,7 +14,7 @@ import androidx.compose.ui.unit.sp
 
 private val DarkColorPalette = darkColors(
 
-    primary = kBlueDark,
+    primary = kBlueLight,
     primaryVariant = kBlueLight,
     onPrimary = kWhite,
     secondary = kBlack,

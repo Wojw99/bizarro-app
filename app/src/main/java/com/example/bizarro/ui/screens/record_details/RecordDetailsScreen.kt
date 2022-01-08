@@ -16,6 +16,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -24,12 +25,14 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import coil.compose.ImagePainter
 import coil.compose.rememberImagePainter
+import com.example.bizarro.R
 import com.example.bizarro.ui.Screen
 import com.example.bizarro.ui.components.LoadingBox
 import com.example.bizarro.ui.components.TopBar
 import com.example.bizarro.ui.screens.add_record.AddRecordViewModel
 import com.example.bizarro.ui.screens.user_profile.other_user_profile.OtherUserViewModel
 import com.example.bizarro.ui.theme.*
+import com.example.bizarro.utils.CommonMethods
 import com.example.bizarro.utils.Constants
 import com.example.bizarro.utils.Dimens
 import com.example.bizarro.utils.Strings
@@ -131,9 +134,19 @@ fun RecordDetailsBody(
     ) {
         // * * * * * * * * IMAGE * * * * * * * *
         Box {
-            val painter = rememberImagePainter(
-                viewModel.recordImagePath.value
-            )
+            var painter = painterResource(id = R.drawable.bike_default)
+
+            if(viewModel.recordImagePath.value != null) {
+                painter = rememberImagePainter(
+                    CommonMethods.getUrlForImage(viewModel.recordImagePath.value!!)
+                )
+
+                if (painter.state is ImagePainter.State.Loading) {
+                    CircularProgressIndicator()
+                } else if (painter.state is ImagePainter.State.Error) {
+                    painter = painterResource(id = R.drawable.bike_default)
+                }
+            }
 
             Image(
                 painter = painter,
@@ -143,10 +156,6 @@ fun RecordDetailsBody(
                     .fillMaxWidth()
                     .height(300.dp),
             )
-
-            if (painter.state is ImagePainter.State.Loading) {
-                CircularProgressIndicator()
-            }
         }
 
         // * * * * * * * * TITLE SECTION * * * * * * * *
@@ -197,7 +206,6 @@ fun RecordDetailsBody(
             }
         }
 
-
         // * * * * * * * * SPACER * * * * * * * *
         Box(
             modifier = Modifier
@@ -209,6 +217,7 @@ fun RecordDetailsBody(
         val sectionsPaddingHorizontal = 24.dp
         val sectionsPaddingVertical = 12.dp
         val sectionsTextModifier = Modifier.padding(horizontal = 0.dp)
+
         // * * * * * * DESCRIPTION * * * * * *
         Column(
             modifier = Modifier.padding(

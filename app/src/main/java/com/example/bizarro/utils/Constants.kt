@@ -3,8 +3,10 @@ package com.example.bizarro.utils
 import androidx.compose.runtime.mutableStateOf
 
 object Constants {
-    const val BASE_URL = "http://10.0.2.2:3000/api/"
-    const val RECORD_DEFAULT_IMG_URL = "http://10.0.2.2:3000/images/record_image_default.png"
+    const val BASE_URL = "https://bike-app-1.herokuapp.com/"
+    // const val BASE_URL = "http://10.0.2.2:3000/api/"
+    const val RECORD_DEFAULT_IMG_URL = "https://upload.wikimedia.org/wikipedia/commons/0/04/Bike_icon.png"
+    const val USER_DEFAULT_IMG_URL = "https://upload.wikimedia.org/wikipedia/commons/7/70/User_icon_BLACK-01.png"
 
     const val FILTER_CITY = "city"
     const val FILTER_PROVINCE = "province"

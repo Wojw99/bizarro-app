@@ -14,6 +14,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.TextUnit
@@ -22,6 +23,7 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import coil.compose.ImagePainter
 import coil.compose.rememberImagePainter
+import com.example.bizarro.R
 import com.example.bizarro.api.models.Record
 import com.example.bizarro.ui.Screen
 import com.example.bizarro.ui.screens.record_details.RecordDetailsViewModel
@@ -51,9 +53,19 @@ fun RecordBox(
         Row {
             // * * * * * * * * IMAGE BOX * * * * * * * *
             Box(modifier = Modifier.weight(12f), contentAlignment = Alignment.Center) {
-                val painter = rememberImagePainter(
-                    record.imagePath ?: Constants.RECORD_DEFAULT_IMG_URL
-                )
+                var painter = painterResource(id = R.drawable.bike_default)
+
+                if(record.imagePath != null) {
+                    painter = rememberImagePainter(
+                        CommonMethods.getUrlForImage(record.imagePath)
+                    )
+
+                    if (painter.state is ImagePainter.State.Loading) {
+                        CircularProgressIndicator()
+                    } else if (painter.state is ImagePainter.State.Error) {
+                        painter = painterResource(id = R.drawable.bike_default)
+                    }
+                }
 
                 Image(
                     painter = painter,
@@ -61,10 +73,6 @@ fun RecordBox(
                     contentScale = ContentScale.Crop,
                     modifier = Modifier.fillMaxSize(),
                 )
-
-                if (painter.state is ImagePainter.State.Loading) {
-                    CircularProgressIndicator()
-                }
             }
 
             // * * * * * * * * CONTENT BOX * * * * * * * *
@@ -93,7 +101,7 @@ fun RecordBox(
 
                     // * * * * * * * * ADDRESS, DATE * * * * * * * *
                     Text(
-                        text = "${record.address.city}, ${CommonMethods.convertToRecordBoxDateFormat(record.creationDate)}",
+                        text = "${record.addressCity}, ${CommonMethods.convertToRecordBoxDateFormat(record.creationDate)}",
                         style = TextStyle(fontSize = 12.sp, color = colors.onSurface)
                     )
                 }
@@ -101,7 +109,6 @@ fun RecordBox(
         }
     }
 }
-
 
 private fun countTextSizeForName(text: String): TextUnit {
     return if (text.length < 30) 16.sp

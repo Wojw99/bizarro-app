@@ -9,6 +9,8 @@ import java.time.format.DateTimeFormatter
 
 class CustomDateDeserializer : JsonDeserializer<LocalDate> {
     private var formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy")
+    private var isoFormatter = DateTimeFormatter.ISO_DATE_TIME
+
 
     override fun deserialize(
         json: JsonElement?,
@@ -19,6 +21,6 @@ class CustomDateDeserializer : JsonDeserializer<LocalDate> {
             throw Exception("Cannot deserialize a json object!")
         }
 
-        return LocalDate.parse(json.asString, formatter)
+        return LocalDate.parse(json.asString, isoFormatter)
     }
 }

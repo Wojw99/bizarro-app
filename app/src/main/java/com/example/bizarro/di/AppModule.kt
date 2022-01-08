@@ -3,6 +3,8 @@ package com.example.bizarro.di
 import com.example.bizarro.api.BizarroApi
 import com.example.bizarro.api.deserializers.CustomDateDeserializer
 import com.example.bizarro.api.deserializers.CustomDateSerializer
+import com.example.bizarro.managers.TokenManager
+import com.example.bizarro.repositories.OpinionsRepository
 import com.example.bizarro.repositories.RecordRepository
 import com.example.bizarro.repositories.UserRepository
 import com.example.bizarro.ui.AppState
@@ -13,6 +15,8 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import okhttp3.OkHttpClient
+import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.time.LocalDate
@@ -38,14 +42,30 @@ class AppModule {
 
     @Singleton
     @Provides
-    fun provideRecordRepository(api: BizarroApi): RecordRepository {
-        return RecordRepository(api)
+    fun provideTokenManager(): TokenManager {
+        return TokenManager()
     }
 
     @Singleton
     @Provides
-    fun provideUserRepository(api: BizarroApi): UserRepository {
-        return UserRepository(api)
+    fun provideRecordRepository(
+        api: BizarroApi,
+        userRepository: UserRepository,
+        tokenManager: TokenManager
+    ): RecordRepository {
+        return RecordRepository(api, userRepository, tokenManager)
+    }
+
+    @Singleton
+    @Provides
+    fun provideUserRepository(api: BizarroApi, tokenManager: TokenManager): UserRepository {
+        return UserRepository(api, tokenManager)
+    }
+
+    @Singleton
+    @Provides
+    fun provideOpinionsRepository(api: BizarroApi): OpinionsRepository {
+        return OpinionsRepository(api)
     }
 
     @Singleton
@@ -56,9 +76,16 @@ class AppModule {
             .registerTypeAdapter(LocalDate::class.java, CustomDateSerializer())
             .create()
 
+        val httpLoggingInterceptor = HttpLoggingInterceptor()
+        httpLoggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY)
+
+        val httpClient = OkHttpClient.Builder()
+        httpClient.addInterceptor(httpLoggingInterceptor)
+
         return Retrofit.Builder()
             .addConverterFactory(GsonConverterFactory.create(customGson))
             .baseUrl(Constants.BASE_URL)
+            .client(httpClient.build())
             .build()
             .create(BizarroApi::class.java)
     }

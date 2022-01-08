@@ -29,13 +29,13 @@ class CompareViewModel @Inject constructor(
 
     fun getHeader(record: Record): String {
         if(record.type == Constants.TYPE_BUY) {
-            return "${record.purchasePrice}${Strings.priceSuffix}"
+            return "${record.price}${Strings.priceSuffix}"
         } else if (record.type == Constants.TYPE_SELL) {
-            return "${record.salePrice}${Strings.priceSuffix}"
+            return "${record.price}${Strings.priceSuffix}"
         } else if (record.type == Constants.TYPE_SWAP) {
             return "${record.swapObject}"
         } else if (record.type == Constants.TYPE_RENT) {
-            return "${record.rentalPrice}${Strings.priceSuffix}, ${record.rentalPeriod} ${Strings.days}"
+            return "${record.price}${Strings.priceSuffix}, ${record.rentalPeriod} ${Strings.days}"
         }
         throw IllegalArgumentException("Unrecognized type!")
     }
@@ -53,7 +53,7 @@ class CompareViewModel @Inject constructor(
         throw IllegalArgumentException("Unrecognized type!")
     }
 
-    private fun updateRecordList() {
+    fun updateRecordList() {
         if (isLoading.value) return
         viewModelScope.launch {
             startLoading()

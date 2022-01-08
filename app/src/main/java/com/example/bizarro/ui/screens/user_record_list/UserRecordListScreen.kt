@@ -31,7 +31,7 @@ fun UserRecordListScreen(
     navController: NavController,
     viewModel: UserRecordListViewModel = hiltViewModel(),
 ) {
-    viewModel.appState.bottomMenuVisible.value = true
+    viewModel.appState.showBottomMenu()
 
     BizarroTheme(darkTheme = Constants.isDark.value)
     {

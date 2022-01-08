@@ -1,26 +1,61 @@
 package com.example.bizarro.repositories
 
 import com.example.bizarro.api.BizarroApi
-import com.example.bizarro.api.models.Opinion
-import com.example.bizarro.api.models.Record
-import com.example.bizarro.api.models.UserProfile
+import com.example.bizarro.api.models.*
+import com.example.bizarro.managers.TokenManager
+import com.example.bizarro.ui.AppState
 import com.example.bizarro.utils.Resource
 import com.example.bizarro.utils.Strings
 import dagger.hilt.android.scopes.ActivityScoped
-import kotlinx.coroutines.delay
+import retrofit2.HttpException
 import timber.log.Timber
 import java.lang.Exception
 import javax.inject.Inject
+import javax.inject.Singleton
 
 @ActivityScoped
 class UserRepository @Inject constructor(
-    private val api: BizarroApi
+    private val api: BizarroApi,
+    private val tokenManager: TokenManager,
 ) {
-    val userId: Long = 0
+    var userId: Long? = null
+    var accessToken: String? = null
 
-    suspend fun getUserProfile(userId: Long) : Resource<UserProfile> {
+    /**
+     * Post login values and fill appState's access token with response access token.
+     */
+    suspend fun login(username: String, password: String): Resource<Token> {
         val response = try {
-            api.getUserProfile(userId)
+            Timber.d("Login...")
+            api.login(username, password)
+        } catch (e: Exception) {
+            Timber.e(e)
+            val errorText = parseLoginError(e)
+            return Resource.Error(errorText)
+        }
+        // TODO: Should it be here?
+        // TODO: Remove log
+        Timber.d("Successfully signed in! Token: ${response.accessToken}")
+        tokenManager.saveAccessToken(response.accessToken)
+        return Resource.Success(response)
+    }
+
+    private fun parseLoginError(e: Exception): String {
+        if (e is HttpException) {
+            if (e.code() == 401) {
+                return Strings.errorIncorrectEmailOrPassword
+            }
+        }
+        return Strings.unknownError;
+    }
+
+    /**
+     * Get user profile data and fill appState's userId with response userId.
+     * TODO: Deal with arguments (accordingly to endpoint info)
+     */
+    suspend fun getUserProfile(): Resource<UserProfile> {
+        val response = try {
+            api.getUserProfile()
         } catch (e: Exception) {
             Timber.e(e)
             return Resource.Error(Strings.unknownError)
@@ -28,33 +63,8 @@ class UserRepository @Inject constructor(
         return Resource.Success(response)
     }
 
-    suspend fun getUserOpinions(userId: Long) : Resource<List<Opinion>> {
-        val response = try {
-            api.getUserOpinions(userId)
-        } catch (e: Exception) {
-            Timber.e(e)
-            return Resource.Error(Strings.unknownError)
-        }
-        return Resource.Success(response)
-    }
-
-    suspend fun getUserRecords(userId: Long) : Resource<List<Record>> {
-        val response = try {
-            api.getUserRecords(userId)
-        } catch (e: Exception) {
-            Timber.e(e)
-            return Resource.Error(Strings.unknownError)
-        }
-        return Resource.Success(response)
-    }
-
-    suspend fun addUserOpinion(opinion: Opinion) : Resource<Opinion> {
-        val response = try {
-            api.addUserOpinion(opinion)
-        } catch (e: Exception) {
-            Timber.e(e)
-            return Resource.Error(Strings.unknownError)
-        }
-        return Resource.Success(response)
+    fun isSignedIn(): Boolean {
+        if(accessToken != null && userId != null) return true
+        return false
     }
 }

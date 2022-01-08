@@ -52,7 +52,6 @@ fun CompareScreen(
 ) {
     viewModel.appState.bottomMenuVisible.value = true
 
-
     BizarroTheme(darkTheme = Constants.isDark.value)
     {
         Box {
@@ -60,7 +59,7 @@ fun CompareScreen(
             Column(
                 modifier = Modifier
                     .fillMaxSize()
-                    .background(colors.background)
+                    .background(colors.secondaryVariant)
             ) {
                 // * * * * * * * TOP BAR * * * * * * *
                 Box(
@@ -97,32 +96,37 @@ fun CompareScreen(
                 }
 
                 // * * * * * * * COMPARE LIST * * * * * * *
-                LazyRow {
-                    val recordList = viewModel.recordList.value
-                    val itemCount = recordList.size
+                //CompareTable(navController = navController)
+                CompareList(navController = navController)
 
-                    items(itemCount) { index ->
-                        RecordCompareBox(
-                            record = recordList[index],
-                            onGoClick = {
-                                RecordDetailsViewModel.record = recordList[index]
-                                RecordDetailsViewModel.userId = recordList[index].userId
-                                navController.navigate(Screen.RecordDetails.route)
-                            },
-                            onDeleteClick = {
-
-                            },
-                        )
-
-                        if (index == recordList.size - 1)
-                            Spacer(modifier = Modifier.width(Dimens.standardPadding))
-                    }
-                }
             }
 
             // * * * * * * PROGRESS BAR * * * * * *
             if (viewModel.isLoading.value) {
                 LoadingBox()
+            }
+
+            // * * * * * * ERROR TEXT * * * * * *
+            if (viewModel.loadError.value.isNotEmpty()
+                && !viewModel.isLoading.value
+            ) {
+                Column(
+                    verticalArrangement = Arrangement.Center,
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    modifier = Modifier.fillMaxSize(),
+                ) {
+                    Text(
+                        text = viewModel.loadError.value,
+                        color = colors.onSurface
+                    )
+                    Spacer(modifier = Modifier.height(Dimens.standardPadding))
+                    Button(onClick = { viewModel.updateRecordList() }) {
+                        Text(
+                            text = Strings.refresh,
+                            color = colors.onSurface
+                        )
+                    }
+                }
             }
         }
     }
@@ -130,9 +134,115 @@ fun CompareScreen(
 
 }
 
+@Composable
+fun CompareTable(
+    navController: NavController,
+    viewModel: CompareViewModel = hiltViewModel(),
+) {
+    LazyRow {
+        val recordList = viewModel.recordList.value
+        val itemCount = recordList.size
+
+        items(itemCount) { index ->
+            CompareTableItem(record = recordList[index])
+        }
+    }
+}
+
+@Composable
+fun CompareTableItem(
+    modifier: Modifier = Modifier,
+    record: Record,
+    onGoClick: () -> Unit = {},
+    onDeleteClick: () -> Unit = {},
+    viewModel: CompareViewModel = hiltViewModel(),
+) {
+    val configuration = LocalConfiguration.current
+    val screenHeight = configuration.screenHeightDp.dp
+    val screenWidth = configuration.screenWidthDp.dp
+    val spaceSize = 4.dp
+    val spacerModifier = Modifier.height(spaceSize).fillMaxWidth().background(colors.secondaryVariant)
+
+    Box(modifier = Modifier.padding(start = spaceSize)) {
+        Column(
+            modifier = Modifier
+                .background(colors.background)
+                .width(screenWidth / 2)
+                .height(screenHeight),
+        ) {
+            // * * * * * NAME * * * * *
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .weight(1f),
+            ) {
+                Text(
+                    text = record.name,
+                    modifier = Modifier.align(Alignment.CenterStart).padding(spaceSize)
+                )
+            }
+
+            Box(modifier = spacerModifier)
+
+            // * * * * * NAME * * * * *
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .weight(1f),
+            ) {
+                Text(
+                    text = viewModel.getHeader(record),
+                    modifier = Modifier.align(Alignment.CenterStart).padding(spaceSize)
+                )
+            }
+            Box(modifier = spacerModifier)
+
+            // * * * * * NAME * * * * *
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .weight(1f),
+            ) {
+                Text(
+                    text = CommonMethods.convertToRecordBoxDateFormat(record.creationDate),
+                    modifier = Modifier.align(Alignment.CenterStart).padding(spaceSize)
+                )
+            }
+        }
+    }
+}
+
+@Composable
+fun CompareList(
+    navController: NavController,
+    viewModel: CompareViewModel = hiltViewModel(),
+) {
+    LazyRow {
+        val recordList = viewModel.recordList.value
+        val itemCount = recordList.size
+
+        items(itemCount) { index ->
+            CompareListItem(
+                record = recordList[index],
+                onGoClick = {
+                    RecordDetailsViewModel.record = recordList[index]
+                    RecordDetailsViewModel.userId = recordList[index].userId
+                    navController.navigate(Screen.RecordDetails.route)
+                },
+                onDeleteClick = {
+
+                },
+            )
+
+            if (index == recordList.size - 1)
+                Spacer(modifier = Modifier.width(Dimens.standardPadding))
+        }
+    }
+}
+
 @ExperimentalCoilApi
 @Composable
-fun RecordCompareBox(
+fun CompareListItem(
     modifier: Modifier = Modifier,
     record: Record,
     onGoClick: () -> Unit = {},
@@ -153,7 +263,7 @@ fun RecordCompareBox(
             modifier = modifier
                 .width(screenWidth - Dimens.standardPadding * 2)
                 .fillMaxHeight()
-                .background(colors.secondaryVariant, RoundedCornerShape(Dimens.cornerRadius))
+                .background(colors.background, RoundedCornerShape(Dimens.cornerRadius))
         ) {
             // * * * * * BODY * * * * *
             Column() {
@@ -199,7 +309,7 @@ fun RecordCompareBox(
                             color = colors.onSurface,
                             fontWeight = FontWeight.Bold,
 
-                        ),
+                            ),
                     )
 
                     Text(
@@ -212,11 +322,11 @@ fun RecordCompareBox(
 
                     val style1 = TextStyle(
                         fontSize = 15.sp,
-                        color =  colors.onSurface,
+                        color = colors.onSurface,
                     )
                     val style2 = TextStyle(
                         fontSize = 19.sp,
-                        color =  colors.onSurface,
+                        color = colors.onSurface,
                         fontWeight = FontWeight.Bold,
                     )
                     val spacerHeight = 8.dp
@@ -226,31 +336,31 @@ fun RecordCompareBox(
                     Text(
                         text = CommonMethods.convertToLabelDateFormat(record.creationDate),
                         style = style2,
-                        color =  colors.onSurface
+                        color = colors.onSurface
                     )
                     Spacer(modifier = Modifier.height(spacerHeight))
 
                     // * * * * * * * * CATEGORY * * * * * * * *
                     Text(text = Strings.category, style = style1, color = colors.onSurface)
                     Text(
-                        text = record.category.name,
+                        text = record.category,
                         style = style2,
-                       color = colors.onSurface
+                        color = colors.onSurface
                     )
                     Spacer(modifier = Modifier.height(spacerHeight))
 
                     // * * * * * * * * PROVINCE * * * * * * * *
                     Text(text = Strings.province, style = style1, color = colors.onSurface)
                     Text(
-                        text = record.address.province,
+                        text = record.addressProvince,
                         style = style2,
                     )
                     Spacer(modifier = Modifier.height(spacerHeight))
 
                     // * * * * * * * * ADDRESS * * * * * * * *
-                    Text(text = Strings.address, style = style1, color = colors.onSurface )
+                    Text(text = Strings.address, style = style1, color = colors.onSurface)
                     Text(
-                        text = "${record.address.city}, ${record.address.street} ${record.address.number}",
+                        text = "${record.addressCity}, ${record.addressStreet} ${record.addressNumber}",
                         style = style2,
                         color = colors.onSurface
                     )
@@ -279,7 +389,11 @@ fun RecordCompareBox(
                     },
                     modifier = Modifier.background(kBlueDark, shape = CircleShape),
                 ) {
-                    Icon(Icons.Default.ArrowForward, contentDescription = Strings.details, tint = kWhite)
+                    Icon(
+                        Icons.Default.ArrowForward,
+                        contentDescription = Strings.details,
+                        tint = kWhite
+                    )
                 }
             }
         }

@@ -1,9 +1,20 @@
 package com.example.bizarro.utils
 
+import android.content.Context
+import android.content.ContextWrapper
+import android.graphics.Bitmap
+import java.io.File
+import java.io.FileOutputStream
+import java.io.IOException
+import java.io.OutputStream
 import java.time.LocalDate
 import java.util.*
 
 object CommonMethods {
+    fun getUrlForImage(imgUrlClosure: String): String {
+        return Constants.BASE_URL + imgUrlClosure
+    }
+
     fun formatRecordTypeText(text: String) : String {
         val lowerCase = text.lowercase(Locale.getDefault())
         val firstLetter = lowerCase[0].uppercaseChar()
@@ -43,5 +54,25 @@ object CommonMethods {
         val year = date.year.toString()
 
         return "$dayOfMonth.$monthValue.$year"
+    }
+
+    fun convertBitmapToFile(bitmap: Bitmap, context: Context): File {
+        val wrapper = ContextWrapper(context)
+
+        // Initialize a new file instance to save bitmap object
+        var file = wrapper.getDir("Images", Context.MODE_PRIVATE)
+        file = File(file,"${UUID.randomUUID()}.jpg")
+
+        try{
+            // Compress the bitmap and save in jpg format
+            val stream: OutputStream = FileOutputStream(file)
+            bitmap.compress(Bitmap.CompressFormat.JPEG,100,stream)
+            stream.flush()
+            stream.close()
+        }catch (e: IOException){
+            e.printStackTrace()
+        }
+
+        return file
     }
 }

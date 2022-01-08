@@ -1,6 +1,5 @@
 package com.example.bizarro.ui.screens.authenticate
 
-import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
@@ -9,122 +8,148 @@ import androidx.compose.material.icons.filled.Email
 import androidx.compose.material.icons.filled.Lock
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.text.input.TextFieldValue
+import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
+import androidx.navigation.NavGraph.Companion.findStartDestination
+import com.example.bizarro.ui.Screen
+import com.example.bizarro.ui.components.ConfirmAlertDialog
+import com.example.bizarro.ui.components.CustomOutlinedTextField
+import com.example.bizarro.ui.components.LoadingBox
 import com.example.bizarro.ui.theme.BizarroTheme
 import com.example.bizarro.utils.Constants
+import com.example.bizarro.utils.Strings
 
-
+@ExperimentalComposeUiApi
 @Composable
-fun SignUpScreen(navController: NavController,
-                 viewModel: AuthenticateViewModel = hiltViewModel(),)
-{
+fun SignUpScreen(
+    navController: NavController,
+    viewModel: AuthenticateViewModel = hiltViewModel(),
+) {
+    viewModel.appState.hideBottomMenu()
 
     BizarroTheme(
         darkTheme = Constants.isDark.value
     ) {
-        Column(
+        Box{
+            // * * * * * BODY * * * * *
+            Column(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .background(MaterialTheme.colors.background),
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                Spacer(modifier = Modifier.height(100.dp))
 
-            modifier = Modifier
-                .fillMaxSize()
-                .background(MaterialTheme.colors.background),
-            horizontalAlignment = Alignment.CenterHorizontally) {
+                Text(
+                    "Zapisz się do Bizarro!",
+                    style = MaterialTheme.typography.caption,
+                    color = MaterialTheme.colors.onSurface
+                )
 
-            Spacer(modifier = Modifier.height(100.dp))
+                Spacer(modifier = Modifier.height(80.dp))
 
-            Text("Zapisz się do Bizarro!",
-                style = MaterialTheme.typography.caption,
-                color = MaterialTheme.colors.onSurface)
+                RegisterFields(navController)
+            }
 
-            Spacer(modifier = Modifier.height(80.dp))
+            // * * * * * * ERROR DIALOG * * * * * *
+            if (viewModel.loadError.value.isNotEmpty()) {
+                ConfirmAlertDialog(
+                    onDismiss = { viewModel.clearError() },
+                    title = Strings.error,
+                    body = viewModel.loadError.value,
+                )
+            }
 
-            RegisterFields(navController)
+            // * * * * * * SUCCESS * * * * * *
+            if (viewModel.successfullyLogin.value) {
+                navController.popBackStack()
+            }
 
+            // * * * * * * PROGRESS BAR * * * * * *
+            if (viewModel.isLoading.value) {
+                LoadingBox()
+            }
         }
     }
-
-
 }
 
+@ExperimentalComposeUiApi
 @Composable
-fun RegisterFields(navController: NavController,
-                   viewModel: AuthenticateViewModel = hiltViewModel())
-{
-
-    val context = LocalContext.current
-
-    OutlinedTextField(
-        value =viewModel.emailRegisterText.value,
-        onValueChange ={
+fun RegisterFields(
+    navController: NavController,
+    viewModel: AuthenticateViewModel = hiltViewModel()
+) {
+    CustomOutlinedTextField(
+        value = viewModel.emailRegisterText.value,
+        onValueChange = {
             viewModel.emailRegisterText.value = it
         },
-        placeholder = { Text(text = "Podaj swój email") },
+        placeholderText = "Podaj swój email",
+        labelText = "Email",
+        keyboardType = KeyboardType.Text,
         leadingIcon = {
-            Icon(imageVector = Icons.Default.Email, contentDescription = "EmailIcon",
-            tint =  MaterialTheme.colors.onSurface)
+            Icon(
+                imageVector = Icons.Default.Email, contentDescription = "EmailIcon",
+                tint = MaterialTheme.colors.onSurface
+            )
         },
-        colors = TextFieldDefaults.outlinedTextFieldColors(
-            focusedBorderColor = MaterialTheme.colors.onSurface,
-            unfocusedBorderColor = MaterialTheme.colors.onSurface,
-            textColor = MaterialTheme.colors.onSurface
-        )
     )
 
     Spacer(modifier = Modifier.height(20.dp))
 
-
-    OutlinedTextField(
+    CustomOutlinedTextField(
         value = viewModel.passwordRegisterText.value,
-        onValueChange ={
+        onValueChange = {
             viewModel.passwordRegisterText.value = it
         },
-        placeholder = { Text(text = "Podaj swoje hasło") },
+        placeholderText = "Podaj swoje hasło",
+        labelText = "Hasło",
+        keyboardType = KeyboardType.Password,
         leadingIcon = {
-            Icon(imageVector = Icons.Default.Lock, contentDescription = "PasswordIcon",
-            tint = MaterialTheme.colors.onSurface)
+            Icon(
+                imageVector = Icons.Default.Lock, contentDescription = "PasswordIcon",
+                tint = MaterialTheme.colors.onSurface
+            )
         },
-        colors = TextFieldDefaults.outlinedTextFieldColors(
-            focusedBorderColor = MaterialTheme.colors.onSurface,
-            unfocusedBorderColor = MaterialTheme.colors.onSurface,
-            textColor = MaterialTheme.colors.onSurface)
+        visualTransformation = PasswordVisualTransformation(),
     )
 
     Spacer(modifier = Modifier.height(80.dp))
 
     Button(
-        onClick ={
-            Toast.makeText(context, "Zarejestrowano", Toast.LENGTH_SHORT).show()
+        onClick = {
+            viewModel.register()
         },
         Modifier.size(width = 250.dp, height = 50.dp),
         colors = ButtonDefaults.buttonColors(backgroundColor = MaterialTheme.colors.onSurface),
     )
     {
-        Text(text = "Zarejestruj",
+        Text(
+            text = "Zarejestruj",
             style = MaterialTheme.typography.button,
             color = MaterialTheme.colors.background
         )
-
     }
 
     Spacer(modifier = Modifier.height(50.dp))
 
     Button(
-        onClick ={
-            navController.navigate(route = com.example.bizarro.ui.Screen.SignIn.route)
-
+        onClick = {
+            navController.popBackStack()
         },
         Modifier.size(width = 250.dp, height = 50.dp),
         colors = ButtonDefaults.buttonColors(backgroundColor = MaterialTheme.colors.onSurface),
     )
     {
-        Text(text = "Logowanie",
+        Text(
+            text = "Logowanie",
             style = MaterialTheme.typography.button,
             color = MaterialTheme.colors.background
         )
-
     }
 }
