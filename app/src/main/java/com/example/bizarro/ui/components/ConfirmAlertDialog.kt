@@ -9,6 +9,7 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import com.example.bizarro.ui.theme.kWhite
 
 @Composable
 fun ConfirmAlertDialog(
@@ -26,7 +27,7 @@ fun ConfirmAlertDialog(
                     onClick = onDismiss,
                     modifier = Modifier.align(Alignment.BottomEnd)
                 ) {
-                    Text(text = "OK", color = colors.onSurface)
+                    Text(text = "OK", color = kWhite)
                 }
             }
         },

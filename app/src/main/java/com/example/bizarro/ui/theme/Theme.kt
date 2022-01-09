@@ -24,7 +24,8 @@ private val DarkColorPalette = darkColors(
     onBackground = kWhite,
     surface = kDarkGrey,
     onSurface = kWhite,
-
+    onError = kBlueLight,
+    error = kLightGray
 )
 
 
@@ -40,7 +41,8 @@ private val LightColorPalette = lightColors(
     onBackground = kBlack,
     surface = kWhite,
     onSurface = kBlack,
-
+    onError = kBlueDark,
+    error = kDarkGrey
 )
 
 @Composable

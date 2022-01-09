@@ -21,6 +21,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.example.bizarro.api.models.Opinion
 import com.example.bizarro.ui.Screen
+import com.example.bizarro.ui.components.TopBar
 import com.example.bizarro.ui.screens.search.topRecordListMargin
 import com.example.bizarro.ui.theme.BizarroTheme
 import com.example.bizarro.ui.theme.kBlack
@@ -48,7 +49,13 @@ fun SeeYourOpinionsScreen(
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
 
-            HeaderSectionSeeOpinionUserProfile(navController)
+            TopBar(
+                navController = navController,
+                title = Strings.empty,
+                modifier = Modifier
+                    .background(MaterialTheme.colors.background)
+                    .align(Alignment.CenterHorizontally)
+            )
 
             Text(
                 "Opinie o Tobie:",
@@ -113,28 +120,6 @@ fun SeeYourOpinionsScreen(
 
 }
 
-@Composable
-fun HeaderSectionSeeOpinionUserProfile(navController: NavController) {
-    Box(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(12.dp)
-    ) {
-        IconButton(
-            onClick = {
-                navController.popBackStack()
-            },
-            modifier = Modifier.align(Alignment.CenterStart)
-        ) {
-            Icon(
-                imageVector = Icons.Default.ArrowBack,
-                contentDescription = "Back to user profile ",
-                Modifier.size(30.dp),
-                tint = MaterialTheme.colors.onSurface
-            )
-        }
-    }
-}
 
 @ExperimentalFoundationApi
 @Composable
@@ -145,7 +130,7 @@ fun LoggedUserOpinionsList(
     LazyColumn(
         modifier = Modifier
             .fillMaxSize()
-            .background(MaterialTheme.colors.surface)
+            .background(MaterialTheme.colors.secondaryVariant)
     ) {
 
         val opinionList = viewModel.userLoggedOpinionList.value

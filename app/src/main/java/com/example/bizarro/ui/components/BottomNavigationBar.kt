@@ -2,6 +2,7 @@ package com.example.bizarro.ui.components
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.material.*
+import androidx.compose.material.MaterialTheme.colors
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -22,7 +23,7 @@ fun BottomNavigationBar(
     modifier: Modifier = Modifier,
 ) {
     val backStackEntry = navController.currentBackStackEntryAsState()
-    BottomNavigation(modifier = modifier, backgroundColor = kBlack, elevation = 5.dp) {
+    BottomNavigation(modifier = modifier, backgroundColor = colors.error, elevation = 5.dp) {
         for (item in items) {
             val selected = item.route == backStackEntry.value?.destination?.route
             BottomNavigationItem(

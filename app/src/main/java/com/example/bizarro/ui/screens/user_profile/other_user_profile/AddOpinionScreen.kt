@@ -55,6 +55,17 @@ fun AddOpinionScreen(
                 //HeaderSectionAddOpinion(navController)
                 Spacer(modifier = Modifier.padding(top = Dimens.topBarHeight))
 
+//                Text(
+//                    "Dodaj opinię o użytkowniku ${viewModel.nameUser}!",
+//                    style = TextStyle(
+//                        textAlign = TextAlign.Center,
+//                        fontSize = 21.sp,
+//                        fontFamily = FontFamily.Serif,
+//                    ),
+//                    color = colors.onSurface,
+//                    modifier = Modifier.padding(horizontal = 24.dp),
+//                )
+
                 BikerImage()
 
                 // * * * * * * ADD OPINION TO USER * * * * * *
@@ -249,7 +260,7 @@ fun RadioButtonDemo(
             textColor = MaterialTheme.colors.onSurface
         ),
     )
-    
+
     Spacer(modifier = Modifier.height(Dimens.topBarHeight))
 }
 

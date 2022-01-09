@@ -27,7 +27,9 @@ import com.example.bizarro.ui.components.ConfirmAlertDialog
 import com.example.bizarro.ui.components.CustomOutlinedTextField
 import com.example.bizarro.ui.components.LoadingBox
 import com.example.bizarro.ui.theme.BizarroTheme
+import com.example.bizarro.ui.theme.kWhite
 import com.example.bizarro.utils.Constants
+import com.example.bizarro.utils.Dimens
 import com.example.bizarro.utils.Strings
 
 @ExperimentalComposeUiApi
@@ -109,6 +111,9 @@ fun LoginFields(
                 tint = MaterialTheme.colors.onSurface
             )
         },
+       modifier = Modifier
+          .fillMaxWidth()
+          .padding(Dimens.standardPadding),
     )
 
     Spacer(modifier = Modifier.height(20.dp))
@@ -127,14 +132,20 @@ fun LoginFields(
                 tint = MaterialTheme.colors.onSurface
             )
         },
+       modifier = Modifier
+          .fillMaxWidth()
+          .padding(Dimens.standardPadding),
         visualTransformation = PasswordVisualTransformation(),
     )
 
-    Spacer(modifier = Modifier.height(80.dp))
+    Spacer(modifier = Modifier.height(50.dp))
 
     Button(
         onClick = { viewModel.login() },
-        Modifier.size(width = 250.dp, height = 50.dp),
+        Modifier
+           .size(width = 250.dp, height = 50.dp)
+           .fillMaxWidth()
+           .padding(Dimens.standardPadding),
         colors = ButtonDefaults.buttonColors(backgroundColor = MaterialTheme.colors.onSurface),
     ) {
         Text(
@@ -144,7 +155,7 @@ fun LoginFields(
         )
     }
 
-    Spacer(modifier = Modifier.height(20.dp))
+   Spacer(modifier = Modifier.height(10.dp))
 
     Text(
         "ALBO",
@@ -156,13 +167,16 @@ fun LoginFields(
         )
     )
 
-    Spacer(modifier = Modifier.height(20.dp))
+    Spacer(modifier = Modifier.height(10.dp))
 
     Button(
         onClick = {
             navController.navigate(route = Screen.SignUp.route)
         },
-        Modifier.size(width = 250.dp, height = 50.dp),
+        Modifier
+           .size(width = 250.dp, height = 50.dp)
+           .fillMaxWidth()
+           .padding(Dimens.standardPadding),
         colors = ButtonDefaults.buttonColors(backgroundColor = MaterialTheme.colors.onSurface),
     )
     {

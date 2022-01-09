@@ -80,24 +80,11 @@ fun OtherUserProfileScreen(
                 }
             }
 
-            // * * * * * * EMPTY TEXT * * * * * *
-//        if (viewModel.recordList.value.isEmpty()
-//            && !viewModel.isLoading.value
-//            && viewModel.loadError.value.isEmpty()
-//        ) {
-//            Text(
-//                text = Strings.listIsEmpty,
-//                modifier = Modifier.align(Alignment.Center)
-//            )
-//        }
 
             // * * * * * * USER PROFILE * * * * * *
             if (!viewModel.isLoading.value) {
-                //RecordList(navController = navController)
 
                 OtherUserInfo()
-
-                Spacer(modifier = Modifier.height(50.dp))
 
                 OtherUserButtonSection(navController)
 
@@ -110,10 +97,7 @@ fun OtherUserProfileScreen(
 
         }
     }
-
-
 }
-
 
 @Composable
 fun OtherUserInfo(viewModel: OtherUserViewModel = hiltViewModel()) {
@@ -128,125 +112,162 @@ fun OtherUserInfo(viewModel: OtherUserViewModel = hiltViewModel()) {
             .border(3.dp, kBlueDark, RoundedCornerShape(10))
     )
 
+    Spacer(modifier = Modifier.size(20.dp))
+
     Box(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(12.dp),
+            .padding(12.dp)
+            .background(MaterialTheme.colors.secondaryVariant),
         contentAlignment = Alignment.Center
     ) {
-        Row(
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.Center
-        )
+
+        Column(horizontalAlignment = Alignment.CenterHorizontally)
         {
-            //Spacer(modifier = Modifier.width(55.dp))
 
-            Icon(Icons.Default.Person, "Icon description", tint = MaterialTheme.colors.onSurface)
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.Center
+            )
+            {
 
-            //Spacer(modifier = Modifier.width(15.dp))
+                Icon(Icons.Default.Person, "Icon description", tint = MaterialTheme.colors.onSurface)
+
+                Text(
+                    viewModel.nameUser,
+                    style = TextStyle(
+                        fontSize = 30.sp,
+                        fontFamily = FontFamily.Default,
+                        fontWeight = FontWeight.Bold,
+                        color = MaterialTheme.colors.onSurface
+                    )
+                )
+            }
+
+            Spacer(modifier = Modifier.size(20.dp))
+
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.Center
+            )
+            {
+
+                Icon(Icons.Default.Email, "Icon description", tint = MaterialTheme.colors.onSurface)
+
+                Text(
+                    viewModel.emailUser,
+                    style = TextStyle(
+                        fontSize = 30.sp,
+                        fontFamily = FontFamily.Default,
+                        fontWeight = FontWeight.Normal,
+                        color = MaterialTheme.colors.onSurface
+                    )
+                )
+            }
+
+            Spacer(modifier = Modifier.size(20.dp))
+
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.Center
+            )
+            {
+
+                Icon(Icons.Default.Phone, "Icon description", tint = MaterialTheme.colors.onSurface)
+
+                Text(
+                    viewModel.phoneUser,
+                    style = TextStyle(
+                        fontSize = 30.sp,
+                        fontFamily = FontFamily.Default,
+                        fontWeight = FontWeight.Normal,
+                        color = MaterialTheme.colors.onSurface
+                    )
+                )
+            }
+
+            Spacer(modifier = Modifier.size(20.dp))
+
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.Center,
+            ) {
+
+                Icon(
+                    Icons.Default.Info,
+                    "Icon description",
+                    tint = MaterialTheme.colors.onSurface
+                )
+
+                Text(
+                    text = "Opis profilu:",
+                    style = TextStyle(
+                        fontSize = 25.sp,
+                        fontFamily = FontFamily.Default,
+                        fontWeight = FontWeight.Bold,
+                        textAlign = TextAlign.Start,
+                        color = MaterialTheme.colors.onSurface
+                    ),
+                )
+            }
+
+            Spacer(modifier = Modifier.size(20.dp))
 
             Text(
-                viewModel.nameUser,
+                text = viewModel.userDescription,
                 style = TextStyle(
-                    fontSize = 30.sp,
+                    fontSize = 15.sp,
                     fontFamily = FontFamily.Default,
                     fontWeight = FontWeight.Bold,
+                    textAlign = TextAlign.Center,
                     color = MaterialTheme.colors.onSurface
                 )
             )
+
         }
+
     }
 
     Box(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(12.dp),
+            .padding(12.dp)
+            .background(MaterialTheme.colors.secondaryVariant),
         contentAlignment = Alignment.Center
     ) {
-        Row(
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.Center
-        )
-        {
-            //Spacer(modifier = Modifier.width(25.dp))
 
-            Icon(Icons.Default.Email, "Icon description", tint = MaterialTheme.colors.onSurface)
-
-            //Spacer(modifier = Modifier.width(15.dp))
-
-            Text(
-                viewModel.emailUser,
-                style = TextStyle(
-                    fontSize = 30.sp,
-                    fontFamily = FontFamily.Default,
-                    fontWeight = FontWeight.Normal,
-                    color = MaterialTheme.colors.onSurface
-                )
-            )
-        }
     }
 
 
     Box(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(12.dp),
+            .padding(12.dp)
+            .background(MaterialTheme.colors.secondaryVariant),
         contentAlignment = Alignment.Center
     ) {
-        Row(
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.Center
-        )
-        {
-            //Spacer(modifier = Modifier.width(85.dp))
 
-            Icon(Icons.Default.Phone, "Icon description", tint = MaterialTheme.colors.onSurface)
-
-            //Spacer(modifier = Modifier.width(15.dp))
-
-            Text(
-                viewModel.phoneUser,
-                style = TextStyle(
-                    fontSize = 30.sp,
-                    fontFamily = FontFamily.Default,
-                    fontWeight = FontWeight.Normal,
-                    color = MaterialTheme.colors.onSurface
-                )
-            )
-        }
     }
-
-
-    UserDescriptionHeader()
-
-    Text(
-        text = viewModel.userDescription,
-        style = TextStyle(
-            fontSize = 15.sp,
-            fontFamily = FontFamily.Default,
-            fontWeight = FontWeight.Bold,
-            textAlign = TextAlign.Center,
-            color = MaterialTheme.colors.onSurface
-        )
-    )
 
 }
 
 @Composable
 fun OtherUserButtonSection(navController: NavController) {
+
     Button(
         onClick = {
-
-
             OtherUserViewModel.otherUserId = RecordDetailsViewModel.userId!!
             navController.navigate(route = Screen.AddOpinion.route)
+        },
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(Dimens.standardPadding)
+    ) {
 
-
-        }) {
         Image(
             painterResource(R.drawable.ic_baseline_star_24),
-            contentDescription = "Dodaj opinie",
-            modifier = Modifier.size(35.dp),
+            contentDescription = "Dodaj opinię",
+            modifier = Modifier.size(30.dp),
         )
 
         Text(
@@ -256,57 +277,27 @@ fun OtherUserButtonSection(navController: NavController) {
         )
     }
 
-    Spacer(modifier = Modifier.height(30.dp))
+    Spacer(modifier = Modifier.height(10.dp))
 
     Button(
         onClick = {
             OtherUserViewModel.otherUserId = RecordDetailsViewModel.userId!!
             navController.navigate(route = Screen.SeeOpinionOtherUser.route)
         },
-        Modifier.size(width = 200.dp, height = 60.dp),
-        colors = ButtonDefaults.buttonColors(backgroundColor = MaterialTheme.colors.onSurface),
-    )
-    {
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(Dimens.standardPadding),
+        colors = ButtonDefaults.buttonColors(backgroundColor = MaterialTheme.colors.onSurface)
+    ) {
+
+
         Text(
             text = "Zobacz opinie",
             style = MaterialTheme.typography.button,
             color = MaterialTheme.colors.background
         )
     }
+
+
 }
 
-@Composable
-fun UserDescriptionHeader() {
-    Box(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(12.dp),
-        contentAlignment = Alignment.Center
-
-    ) {
-        Row(
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.Center,
-        ) {
-
-            //Spacer(modifier = Modifier.width(110.dp))
-
-            Icon(
-                Icons.Default.Info,
-                "Icon description",
-                tint = MaterialTheme.colors.onSurface
-            )
-
-            Text(
-                text = "Opis profilu:",
-                style = TextStyle(
-                    fontSize = 25.sp,
-                    fontFamily = FontFamily.Default,
-                    fontWeight = FontWeight.Bold,
-                    textAlign = TextAlign.Start,
-                    color = MaterialTheme.colors.onSurface
-                ),
-            )
-        }
-    }
-}

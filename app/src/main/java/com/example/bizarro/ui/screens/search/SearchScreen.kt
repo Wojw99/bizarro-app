@@ -85,7 +85,7 @@ fun SearchScreen(
                         Button(onClick = { viewModel.updateRecordList() }) {
                             Text(
                                 text = Strings.refresh,
-                                color = colors.onSurface
+                                color = kWhite
                             )
                         }
                     }

@@ -23,6 +23,7 @@ import com.example.bizarro.ui.components.LoadingBox
 import com.example.bizarro.ui.theme.BizarroTheme
 import com.example.bizarro.utils.Constants
 import com.example.bizarro.utils.Strings
+import com.example.bizarro.utils.Dimens
 
 @ExperimentalComposeUiApi
 @Composable
@@ -92,6 +93,9 @@ fun RegisterFields(
         placeholderText = "Podaj swój email",
         labelText = "Email",
         keyboardType = KeyboardType.Text,
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(Dimens.standardPadding),
         leadingIcon = {
             Icon(
                 imageVector = Icons.Default.Email, contentDescription = "EmailIcon",
@@ -110,6 +114,9 @@ fun RegisterFields(
         placeholderText = "Podaj swoje hasło",
         labelText = "Hasło",
         keyboardType = KeyboardType.Password,
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(Dimens.standardPadding),
         leadingIcon = {
             Icon(
                 imageVector = Icons.Default.Lock, contentDescription = "PasswordIcon",
@@ -119,37 +126,41 @@ fun RegisterFields(
         visualTransformation = PasswordVisualTransformation(),
     )
 
-    Spacer(modifier = Modifier.height(80.dp))
+    Spacer(modifier = Modifier.height(50.dp))
 
     Button(
         onClick = {
             viewModel.register()
         },
-        Modifier.size(width = 250.dp, height = 50.dp),
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(Dimens.standardPadding),
         colors = ButtonDefaults.buttonColors(backgroundColor = MaterialTheme.colors.onSurface),
     )
     {
         Text(
             text = "Zarejestruj",
             style = MaterialTheme.typography.button,
-            color = MaterialTheme.colors.background
+            color = MaterialTheme.colors.background,
         )
     }
 
-    Spacer(modifier = Modifier.height(50.dp))
+    Spacer(modifier = Modifier.height(20.dp))
 
     Button(
         onClick = {
             navController.popBackStack()
         },
-        Modifier.size(width = 250.dp, height = 50.dp),
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(Dimens.standardPadding),
         colors = ButtonDefaults.buttonColors(backgroundColor = MaterialTheme.colors.onSurface),
     )
     {
         Text(
             text = "Logowanie",
             style = MaterialTheme.typography.button,
-            color = MaterialTheme.colors.background
+            color = MaterialTheme.colors.background,
         )
     }
 }

@@ -43,28 +43,6 @@ class OtherUserViewModel @Inject constructor(
 
     val selectedReview = mutableStateOf(Review.review3)
 
-//    val marks = Constants.marks
-//    val selectedMark = mutableStateOf("")
-
-    //val opinionOtherUserList = mutableStateListOf<String>()
-
-//    val opinionsOtherUser= mutableStateOf(listOf(
-//        "User1: 5, super produkty",
-//        "User2: 4, dobre produkty",
-//        "User3: 3, pozytywne produkty",
-//        "User4: 5, super produkty",
-//        "User5: 5, super produkty",
-//        "User6: 2, takie średnie produkty"
-//        ),
-//
-//        )
-
-//    var nameOtherUser by mutableStateOf("Tomasz Kowalski")
-//    var emailOtherUser by mutableStateOf("tkowalski@gmail.com")
-//    var phoneOtherUser by mutableStateOf("987 654 321")
-//    var userOtherDescription by mutableStateOf("Użytkownik zajmujący się głównie wypożyczaniem rowerów turystycznych")
-
-
     init {
         appState.bottomMenuVisible.value = false
 
@@ -78,8 +56,7 @@ class OtherUserViewModel @Inject constructor(
 
     fun addOpinion(opinionContent: String, opinionRating: Int) {
 
-        //val localDate = LocalDate.now()
-        if (isLoading.value) return
+        if(isLoading.value) return
 
         viewModelScope.launch {
 
@@ -114,14 +91,8 @@ class OtherUserViewModel @Inject constructor(
                         )
                     ).message ?: ""
                 }
-
-
             }
-
-
         }
-
-
     }
 
     fun getOtherUserProfile() {
@@ -149,7 +120,6 @@ class OtherUserViewModel @Inject constructor(
                     userImage = resource.data?.imagePath.toString()
 
                     loadError.value = ""
-
                 }
                 is Resource.Error<*> -> {
 

@@ -22,6 +22,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
@@ -76,7 +77,12 @@ fun FilterScreen(
                 Text(
                     modifier = headerModifier,
                     text = Strings.recordType,
-                    style = headerStyle,
+                    style = TextStyle(
+                        color = colors.onSurface,
+                        fontSize = 20.sp,
+                        fontFamily = FontFamily.Default,
+                        fontWeight = FontWeight.Bold
+                    ),
                 )
                 RadioGroup(selectedLabel = viewModel.selectedType, labels = viewModel.typeLabels)
 
@@ -87,7 +93,13 @@ fun FilterScreen(
                 Text(
                     modifier = headerModifier,
                     text = Strings.category,
-                    style = headerStyle,
+                    style = TextStyle(
+                        color = colors.onSurface,
+                        fontSize = 20.sp,
+                        fontFamily = FontFamily.Default,
+                        fontWeight = FontWeight.Bold),
+
+
                 )
                 RadioGroup(
                     selectedLabel = viewModel.selectedCategory,
@@ -98,7 +110,11 @@ fun FilterScreen(
                 Text(
                     modifier = headerModifier,
                     text = Strings.province,
-                    style = headerStyle,
+                    style = TextStyle(
+                        color = colors.onSurface,
+                        fontSize = 20.sp,
+                        fontFamily = FontFamily.Default,
+                        fontWeight = FontWeight.Bold),
                 )
                 RadioGroup(
                     selectedLabel = viewModel.selectedProvince,
@@ -118,7 +134,7 @@ fun FilterScreen(
                     .align(Alignment.BottomCenter)
                     .padding(Dimens.standardPadding)
             ) {
-                Text(text = Strings.confirm)
+                Text(text = Strings.confirm, color = kWhite)
             }
 
             // * * * * * * TOP BAR * * * * * *
@@ -169,7 +185,11 @@ fun TypeDependentSection(
             Text(
                 modifier = headerModifier,
                 text = Strings.sellPriceHeader,
-                style = headerStyle,
+                style = TextStyle(
+                    color = colors.onSurface,
+                    fontSize = 30.sp,
+                    fontFamily = FontFamily.Default,
+                    fontWeight = FontWeight.Bold),
             )
         } else if (type == Constants.TYPE_BUY) {
             Text(

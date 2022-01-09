@@ -29,6 +29,7 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.example.bizarro.ui.Screen
+import com.example.bizarro.ui.components.TopBar
 import com.example.bizarro.ui.theme.*
 import com.example.bizarro.utils.Constants
 import com.example.bizarro.utils.Dimens
@@ -53,7 +54,13 @@ fun EditProfileScreen(
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
 
-            HeaderEditProfileScreen(navController)
+            TopBar(
+                navController = navController,
+                title = Strings.empty,
+                modifier = Modifier
+                    .background(MaterialTheme.colors.background)
+                    .align(Alignment.CenterHorizontally)
+            )
 
             // * * * * * * ERROR TEXT * * * * * *
             if (viewModel.loadError.value.isNotEmpty() && !viewModel.isLoading.value) {
@@ -76,16 +83,6 @@ fun EditProfileScreen(
                 }
             }
 
-            // * * * * * * EMPTY TEXT * * * * * *
-//        if (viewModel.recordList.value.isEmpty()
-//            && !viewModel.isLoading.value
-//            && viewModel.loadError.value.isEmpty()
-//        ) {
-//            Text(
-//                text = Strings.listIsEmpty,
-//                modifier = Modifier.align(Alignment.Center)
-//            )
-//        }
 
             // * * * * * * USER PROFILE EDIT SECTION * * * * * *
             if (!viewModel.isLoading.value) {
@@ -101,8 +98,6 @@ fun EditProfileScreen(
                 CircularProgressIndicator(modifier = Modifier.align(Alignment.CenterHorizontally))
             }
 
-            // ImagePicker()
-
         }
     }
 
@@ -113,13 +108,6 @@ fun EditProfileScreen(
 fun ImagePicker(
     viewModel: UserProfileViewModel = hiltViewModel()
 ) {
-
-    //val loading:ImageLoader = ImageLoader(LocalContext.current)
-    //val request = ImageRequest.Builder(LocalContext.current).data(viewModel.userImage)
-    //.build()
-
-    ///val result:Drawable = (loading.execute(request) as SuccessResult).drawable
-
 
     var imageUrl by remember { mutableStateOf<Uri?>(null) }
     val context = LocalContext.current
@@ -192,18 +180,8 @@ fun ImagePicker(
 }
 
 
-//fun getImageUriFromBitmap(context: Context, bitmap: Bitmap): Uri{
-//    val bytes = ByteArrayOutputStream()
-//    bitmap.compress(Bitmap.CompressFormat.JPEG, 100, bytes)
-//    val path = MediaStore.Images.Media.insertImage(context.contentResolver, bitmap, "UserAddedPhoto", null)
-//    return Uri.parse(path.toString())
-//}
-
-
 @Composable
 fun EditFieldsSection(viewModel: UserProfileViewModel = hiltViewModel()) {
-
-    //val newPainter = rememberImagePainter(viewModel.userImage)
 
     var imageUrl by remember { mutableStateOf<Uri?>(null) }
 
@@ -225,22 +203,11 @@ fun EditFieldsSection(viewModel: UserProfileViewModel = hiltViewModel()) {
             bitmap.value = ImageDecoder.decodeBitmap(source)
         }
 
-
-
         bitmap.value?.let { bitmap ->
 
-
-            //val bitmapValue = bitmap.asImageBitmap()
-
             Image(
-                //painter = painterResource(id = R.drawable.ic_baseline_person_24),
-                //painter = newPainter,
 
                 bitmap = bitmap.asImageBitmap(),
-
-
-                //val painter = rememberImagePainter(
-                //record.imagePaths?.first() ?: Constants.RECORD_DEFAULT_IMG_URL
                 contentDescription = "User Image to edit",
                 contentScale = ContentScale.Crop,
                 modifier = Modifier
@@ -248,32 +215,9 @@ fun EditFieldsSection(viewModel: UserProfileViewModel = hiltViewModel()) {
                     .clip(RoundedCornerShape(10))
                     .border(3.dp, kBlueDark, RoundedCornerShape(10))
             )
-
-
         }
     }
 
-
-    //        var editDataName by remember {
-//            mutableStateOf(TextFieldValue(viewModel.nameUser))
-//        }
-    //var editEmail by remember { mutableStateOf(TextFieldValue(viewModel.emailUser)) }
-    //var editPhoneNumber by remember { mutableStateOf(TextFieldValue(viewModel.phoneUser)) }
-
-    //var editUserDescription by remember { mutableStateOf(TextFieldValue(viewModel.userDescription)) }
-
-//    Image(
-//        //painter = painterResource(id = R.drawable.ic_baseline_person_24),
-//        painter = newPainter,
-//        //val painter = rememberImagePainter(
-//        //record.imagePaths?.first() ?: Constants.RECORD_DEFAULT_IMG_URL
-//        contentDescription = "User Image to edit",
-//        contentScale = ContentScale.Crop,
-//        modifier = Modifier
-//            .size(110.dp)
-//            .clip(RoundedCornerShape(10))
-//            .border(3.dp, kBlueDark, RoundedCornerShape(10))
-//    )
 
     Spacer(modifier = Modifier.height(10.dp))
 
@@ -406,16 +350,6 @@ fun EditFieldsSection(viewModel: UserProfileViewModel = hiltViewModel()) {
                 // Timber.d("Photo: ${getImageUriFromBitmap(context,bitmap.value!!)}")
             }
 
-
-//                navController.navigate(
-//                    route = Screen.UserProfile.route
-
-//                    navArgument("editName",){
-//                        type = NavType.StringType,
-//                        nullable = true
-//                    }
-            //)
-
         },
         Modifier.size(width = 250.dp, height = 50.dp),
         colors = ButtonDefaults.buttonColors(backgroundColor = MaterialTheme.colors.onSurface),
@@ -430,28 +364,4 @@ fun EditFieldsSection(viewModel: UserProfileViewModel = hiltViewModel()) {
     }
 }
 
-@Composable
-fun HeaderEditProfileScreen(navController: NavController) {
-    Box(
 
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(5.dp)
-    ) {
-
-        IconButton(
-            onClick = {
-                navController.popBackStack()
-            },
-            modifier = Modifier.align(Alignment.CenterStart)
-        ) {
-            Icon(
-                imageVector = Icons.Default.ArrowBack,
-                contentDescription = "Back to user profile ",
-                Modifier.size(30.dp),
-                tint = MaterialTheme.colors.onSurface
-            )
-        }
-
-    }
-}

@@ -25,6 +25,8 @@ object Strings {
     const val emptyFieldsError = "Część z wymaganych pól jest pusta!"
     const val confirmLogin = "Pomyślnie zalogowano."
     const val photo = "Zdjęcie"
+    const val edit_profile = "Edytuj profil"
+    const val see_opinions = "Zobacz opinie"
 
     // * * * * * * * * SEARCH SCREEN * * * * * * * *
     const val recordImage = "Zdjęcie ogłoszenia."
