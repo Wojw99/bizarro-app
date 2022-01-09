@@ -27,7 +27,6 @@ class RecordRepository @Inject constructor(
 ) : NetworkingRepository() {
     // TODO: prevent before multiple calling, here or in view models
 
-    // * * * NEW * * *
     suspend fun getUserRecords(): Resource<List<Record>> {
         if (tokenManager.isUserNotSignedIn()) return Resource.Error(Strings.userNotSignedInError)
 

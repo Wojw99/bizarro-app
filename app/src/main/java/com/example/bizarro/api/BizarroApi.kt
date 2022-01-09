@@ -19,6 +19,11 @@ interface BizarroApi {
         @Header("Authorization") authHeader: String,
     ): UserProfile
 
+    @GET("/user/{userId}")
+    suspend fun getOtherUser(
+        @Path("userId") userId: Long,
+    ): UserDetails
+
     // * * * * * POSTS * * * * *
     @GET("/user_posts")
     suspend fun getUserRecords(
@@ -78,15 +83,18 @@ interface BizarroApi {
         @Query("rentalPeriod") rentalPeriod: Int?,
     ): List<Record>
 
-    // * * * * * OLD * * * * *
-    @POST("/api/opinions")
-    suspend fun addUserOpinion(
-        @Body opinion: Opinion,
+    // * * * * * OPINIONS * * * * *
+    @POST("/user/{userId}/comment")
+    suspend fun createOpinion(
+        @Header("Authorization") authHeader: String,
+        @Path("userId") userId: Long,
+        @Body addOpinion: AddOpinion,
+        @Query("mark") mark: Int,
     ): Opinion
 
-    @GET("/api/users/{userId}/opinions")
-    suspend fun getUserOpinions(
-        @Path("userId") userId: Long
-    ): List<Opinion>
-
+    @POST("/user_comments/{userId}")
+    suspend fun getUserWithOpinions(
+        @Header("Authorization") authHeader: String,
+        @Path("userId") userId: Long,
+    ): UserWithOpinions
 }

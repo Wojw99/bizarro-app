@@ -2,7 +2,6 @@ package com.example.bizarro.ui.screens.user_profile.other_user_profile
 
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -10,12 +9,13 @@ import com.example.bizarro.api.models.Opinion
 import com.example.bizarro.repositories.OpinionsRepository
 import com.example.bizarro.repositories.UserRepository
 import com.example.bizarro.ui.AppState
-import com.example.bizarro.ui.screens.user_profile.Review
+import com.example.bizarro.ui.NetworkingViewModel
+import com.example.bizarro.ui.screens.search.SearchViewModel
+import com.example.bizarro.ui.screens.user_record_list.UserRecordListViewModel
 import com.example.bizarro.utils.Constants
 import com.example.bizarro.utils.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
-import java.time.LocalDate
 import javax.inject.Inject
 
 @HiltViewModel
@@ -23,15 +23,14 @@ class OtherUserViewModel @Inject constructor(
     val appState: AppState,
     private val repository: UserRepository,
     private val opinionsRepository: OpinionsRepository,
-) : ViewModel() {
+) : NetworkingViewModel() {
     companion object {
         var otherUserId = 1L
     }
 
     var addedOpinionOfUser = ""
 
-    val loadError = mutableStateOf("")
-    val isLoading = mutableStateOf(false)
+    val isSuccess = mutableStateOf(false)
 
     var nameUser by mutableStateOf("")
     var emailUser by mutableStateOf("")
@@ -39,14 +38,14 @@ class OtherUserViewModel @Inject constructor(
     var userDescription by mutableStateOf("")
     var userImage by mutableStateOf(Constants.RECORD_DEFAULT_IMG_URL)
 
-    val userOtherOpinionList = mutableStateOf<List<Opinion>>(listOf())
-
+    val textOpinion = mutableStateOf("")
     val selectedReview = mutableStateOf(Review.review3)
+
+    val userOtherOpinionList = mutableStateOf<List<Opinion>>(listOf())
 
     init {
         appState.bottomMenuVisible.value = false
-
-        //getOtherUserProfile()
+        getOtherUserProfile()
     }
 
     override fun onCleared() {
@@ -54,42 +53,23 @@ class OtherUserViewModel @Inject constructor(
         otherUserId = 1L
     }
 
-    fun addOpinion(opinionContent: String, opinionRating: Int) {
-
-        if(isLoading.value) return
-
+    fun addOpinion() {
         viewModelScope.launch {
+            startLoading()
 
-            isLoading.value = true
+            val resource = opinionsRepository.createOpinion(
+                otherUserId,
+                textOpinion.value,
+                selectedReview.value.toInt(),
+            )
 
-            when (opinionsRepository.addUserOpinion(
-                Opinion(
-                    -1, otherUserId,
-                    LocalDate.now()
-                    //CommonMethods.convertToRecordBoxDateFormat(localDate)
-                    ,
-                    opinionRating, opinionContent
-                )
-            )) {
-
+            when (resource) {
                 is Resource.Success -> {
-
-                    isLoading.value = false
-                    loadError.value = ""
+                    endLoading()
+                    isSuccess.value = true
                 }
                 is Resource.Error<*> -> {
-
-                    isLoading.value = false
-
-                    loadError.value = opinionsRepository.addUserOpinion(
-                        Opinion(
-                            -1,
-                            otherUserId,
-                            LocalDate.now(),
-                            opinionRating,
-                            opinionContent
-                        )
-                    ).message ?: ""
+                    endLoadingWithError(resource.message!!)
                 }
             }
         }
@@ -99,57 +79,39 @@ class OtherUserViewModel @Inject constructor(
         if (isLoading.value) return
 
         viewModelScope.launch {
-
-            isLoading.value = true
+            startLoading()
 
             val resource = opinionsRepository.getOtherUserProfile(otherUserId)
-            val resource2 = opinionsRepository.getUserOpinions(otherUserId)
+            val resource2 = opinionsRepository.getUserWithOpinions(otherUserId)
 
             when (resource) {
                 is Resource.Success -> {
-
-                    isLoading.value = false
-
-                    val firstNameUser = resource.data?.firstName.toString()
-                    val secondNameUser = resource.data?.lastName.toString()
+                    val firstNameUser = resource.data?.userProfile?.firstName.toString()
+                    val secondNameUser = resource.data?.userProfile?.lastName.toString()
 
                     nameUser = "$firstNameUser $secondNameUser"
-                    emailUser = resource.data?.email.toString()
-                    phoneUser = resource.data?.phone.toString()
-                    userDescription = resource.data?.description.toString()
-                    userImage = resource.data?.imagePath.toString()
+                    emailUser = resource.data?.userProfile?.email.toString()
+                    phoneUser = resource.data?.userProfile?.phone.toString()
+                    userDescription = resource.data?.userProfile?.description.toString()
+                    userImage = resource.data?.userProfile?.imagePath.toString()
 
-                    loadError.value = ""
+                    endLoading()
                 }
                 is Resource.Error<*> -> {
-
-                    isLoading.value = false
-
-                    loadError.value = resource.message ?: ""
+                    endLoadingWithError(resource.message!!)
                 }
             }
 
             when (resource2) {
                 is Resource.Success -> {
-
-                    isLoading.value = false
-
-                    userOtherOpinionList.value = resource2.data ?: listOf()
-
-                    loadError.value = ""
-
+                    userOtherOpinionList.value = resource2.data?.opinions ?: listOf()
+                    endLoading()
                 }
                 is Resource.Error<*> -> {
-
                     userOtherOpinionList.value = listOf()
-
-                    isLoading.value = false
-
-                    loadError.value = resource2.message ?: ""
+                    endLoadingWithError(resource.message!!)
                 }
             }
-
         }
     }
-
 }

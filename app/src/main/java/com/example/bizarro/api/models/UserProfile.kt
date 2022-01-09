@@ -21,19 +21,3 @@ data class UserProfile (
     @SerializedName("phone")
     val phone: String?,
 )
-
-//{
-//    "id": 1,
-//    "username": "admin",
-//    "description": "ble ble ble",
-//    "email": "konmat@wp.pl",
-//    "url": null,
-//    "address_city": "Konrad",
-//    "address_province": "Konrad",
-//    "address_street": "Konrad",
-//    "address_number": "Konrad",
-//    "created_date": "2022-01-02T15:30:58.098493",
-//    "phone": "791588490",
-//    "firstName": "Konrad",
-//    "lastName": "Konrad"
-//}

@@ -1,4 +1,4 @@
-package com.example.bizarro.ui.screens.user_profile
+package com.example.bizarro.ui.screens.user_profile.other_user_profile
 
 import android.widget.Toast
 import androidx.compose.foundation.Image
@@ -8,9 +8,6 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.*
 import androidx.compose.material.MaterialTheme.colors
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBack
-import androidx.compose.material.icons.filled.Lock
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -19,15 +16,12 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.example.bizarro.R
-import com.example.bizarro.ui.Screen
 import com.example.bizarro.ui.components.TopBar
-import com.example.bizarro.ui.screens.user_profile.other_user_profile.OtherUserViewModel
 import com.example.bizarro.ui.theme.BizarroTheme
 import com.example.bizarro.ui.theme.kWhite
 import com.example.bizarro.utils.Constants
@@ -39,7 +33,13 @@ fun AddOpinionScreen(
     navController: NavController,
     viewModel: OtherUserViewModel = hiltViewModel()
 ) {
+    val context = LocalContext.current
     viewModel.appState.bottomMenuVisible.value = false
+
+    if(viewModel.isSuccess.value) {
+        viewModel.isSuccess.value = false
+        navController.popBackStack()
+    }
 
     BizarroTheme(
         darkTheme = Constants.isDark.value
@@ -113,18 +113,17 @@ fun AddOpinionScreen(
             // * * * * * * ADD BUTTON * * * * * *
             Button(
                 onClick = {
-//                    when {
-//                        viewModel.selectedReview.value == "" -> {
-//                            Toast.makeText(context, "Ocena jest wymagana", Toast.LENGTH_SHORT).show()
-//                        }
-//                        textOpinion == "" -> {
-//                            Toast.makeText(context, "Komentarz jest wymagany", Toast.LENGTH_SHORT).show()
-//                        }
-//                        else -> {
-//                            fullOpinion = "${viewModel.selectedReview.value} $textOpinion"
-//                            viewModel.addOpinion(textOpinion, viewModel.selectedReview.value.toInt())
-//                        }
-//                    }
+                    when {
+                        viewModel.selectedReview.value == "" -> {
+                            Toast.makeText(context, "Ocena jest wymagana", Toast.LENGTH_SHORT).show()
+                        }
+                        viewModel.textOpinion.value == "" -> {
+                            Toast.makeText(context, "Komentarz jest wymagany", Toast.LENGTH_SHORT).show()
+                        }
+                        else -> {
+                            viewModel.addOpinion()
+                        }
+                    }
                 },
                 modifier = Modifier
                     .fillMaxWidth()
@@ -236,13 +235,10 @@ fun RadioButtonDemo(
 
     }
 
-    var textOpinion by remember { mutableStateOf("") }
-    var fullOpinion by remember { mutableStateOf("") }
-
     OutlinedTextField(
-        value = textOpinion,
-        onValueChange = {
-            textOpinion = it
+        value = viewModel.textOpinion.value,
+        onValueChange = { text ->
+            viewModel.textOpinion.value = text
         },
         modifier = Modifier
             .fillMaxWidth()
@@ -251,7 +247,6 @@ fun RadioButtonDemo(
             Text(
                 text = "Wpisz swój komentarz",
                 color = MaterialTheme.colors.onSurface
-
             )
         },
         colors = TextFieldDefaults.outlinedTextFieldColors(

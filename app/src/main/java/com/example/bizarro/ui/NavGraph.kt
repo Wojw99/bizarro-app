@@ -15,6 +15,7 @@ import com.example.bizarro.ui.screens.home.HomeScreen
 import com.example.bizarro.ui.screens.record_details.RecordDetailsScreen
 import com.example.bizarro.ui.screens.search.SearchScreen
 import com.example.bizarro.ui.screens.user_profile.*
+import com.example.bizarro.ui.screens.user_profile.other_user_profile.AddOpinionScreen
 import com.example.bizarro.ui.screens.user_profile.settings.AboutAppScreen
 import com.example.bizarro.ui.screens.user_profile.settings.HelpScreen
 import com.example.bizarro.ui.screens.user_profile.settings.PrivacyPolicyScreen

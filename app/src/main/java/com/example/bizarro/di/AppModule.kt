@@ -3,6 +3,8 @@ package com.example.bizarro.di
 import com.example.bizarro.api.BizarroApi
 import com.example.bizarro.api.deserializers.CustomDateDeserializer
 import com.example.bizarro.api.deserializers.CustomDateSerializer
+import com.example.bizarro.api.deserializers.MarkInfoDeserializer
+import com.example.bizarro.api.models.MarkInfo
 import com.example.bizarro.managers.TokenManager
 import com.example.bizarro.repositories.OpinionsRepository
 import com.example.bizarro.repositories.RecordRepository
@@ -64,8 +66,8 @@ class AppModule {
 
     @Singleton
     @Provides
-    fun provideOpinionsRepository(api: BizarroApi): OpinionsRepository {
-        return OpinionsRepository(api)
+    fun provideOpinionsRepository(api: BizarroApi, tokenManager: TokenManager): OpinionsRepository {
+        return OpinionsRepository(api, tokenManager)
     }
 
     @Singleton
@@ -74,6 +76,7 @@ class AppModule {
         val customGson = GsonBuilder()
             .registerTypeAdapter(LocalDate::class.java, CustomDateDeserializer())
             .registerTypeAdapter(LocalDate::class.java, CustomDateSerializer())
+            .registerTypeAdapter(MarkInfo::class.java, MarkInfoDeserializer())
             .create()
 
         val httpLoggingInterceptor = HttpLoggingInterceptor()

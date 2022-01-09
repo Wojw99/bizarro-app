@@ -4,8 +4,10 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import androidx.lifecycle.viewModelScope
+import com.example.bizarro.api.models.MarkInfo
 import com.example.bizarro.api.models.Record
 import com.example.bizarro.api.models.RecordDetails
+import com.example.bizarro.api.models.UserProfile
 import com.example.bizarro.repositories.OpinionsRepository
 import com.example.bizarro.repositories.RecordRepository
 import com.example.bizarro.repositories.UserRepository
@@ -161,26 +163,27 @@ class RecordDetailsViewModel @Inject constructor(
         }
 
         viewModelScope.launch {
-//            startLoading()
-//            val resource = opinionsRepository.getOtherUserProfile(userRepository.userId!!)
-//
-//            when (resource) {
-//                is Resource.Success -> {
-//                    endLoading()
-//
-//                    val profile: UserProfile = resource.data ?: return@launch
-//                    topBarTitle.value = "${profile.firstName} ${profile.lastName}"
-//                    topBarImagePath.value = profile.imagePath ?: Constants.USER_DEFAULT_IMG_URL
-//                    recordGeneralOpinion.value = profile.generalOpinion.name
-//                    recordGeneralOpinionDesc.value = profile.generalOpinion.description
-//                }
-//                is Resource.Error<*> -> {
-//                    endLoadingWithError()
-//
-//                    topBarTitle.value = ""
-//                    topBarImagePath.value = ""
-//                }
-//            }
+            startLoading()
+            val resource = opinionsRepository.getOtherUserProfile(userId!!)
+
+            when (resource) {
+                is Resource.Success -> {
+                    endLoading()
+
+                    val profile: UserProfile = resource.data?.userProfile ?: return@launch
+                    val markInfo: MarkInfo = resource.data.markInfo
+                    topBarTitle.value = "${profile.firstName} ${profile.lastName}"
+                    topBarImagePath.value = profile.imagePath ?: Constants.USER_DEFAULT_IMG_URL
+                    recordGeneralOpinion.value = markInfo.textMark
+                    recordGeneralOpinionDesc.value = markInfo.textMark
+                }
+                is Resource.Error<*> -> {
+                    endLoadingWithError()
+
+                    topBarTitle.value = ""
+                    topBarImagePath.value = ""
+                }
+            }
         }
     }
 }
