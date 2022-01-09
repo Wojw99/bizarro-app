@@ -22,6 +22,8 @@ class OpinionsRepository @Inject constructor(
             Timber.e(e)
             return Resource.Error(Strings.unknownError)
         }
+
+
         //return Resource.Success(response)
     }
 
