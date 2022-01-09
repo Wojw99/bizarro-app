@@ -21,7 +21,6 @@ import javax.inject.Inject
 @HiltViewModel
 class OtherUserViewModel @Inject constructor(
     val appState: AppState,
-    private val repository: UserRepository,
     private val opinionsRepository: OpinionsRepository,
 ) : NetworkingViewModel() {
     companion object {

@@ -9,6 +9,7 @@ import com.example.bizarro.api.models.Opinion
 import com.example.bizarro.repositories.OpinionsRepository
 import com.example.bizarro.repositories.UserRepository
 import com.example.bizarro.ui.AppState
+import com.example.bizarro.ui.NetworkingViewModel
 import com.example.bizarro.utils.Constants
 import com.example.bizarro.utils.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -20,12 +21,8 @@ class UserProfileViewModel @Inject constructor(
     val appState: AppState,
     private val repository: UserRepository,
     private val opinionsRepository: OpinionsRepository,
-) : ViewModel()
+) : NetworkingViewModel()
 {
-
-    val loadError = mutableStateOf("")
-    val isLoading = mutableStateOf(false)
-
     var nameUser by mutableStateOf("")
     var emailUser by mutableStateOf("")
     var phoneUser by mutableStateOf("")
@@ -36,26 +33,19 @@ class UserProfileViewModel @Inject constructor(
 
     init {
         appState.bottomMenuVisible.value = true
-
         getUserProfile()
-
     }
 
-    fun getUserProfile()
-    {
+    fun getUserProfile() {
         if (isLoading.value) return
         viewModelScope.launch {
-
-            isLoading.value = true
+            startLoading()
 
             val resource = repository.getUserMe()
-            //val resource2 = opinionsRepository.getUserOpinions(repository.userId!!)
+            val resource2 = opinionsRepository.getUserWithOpinions(repository.userId!!)
 
             when (resource) {
                 is Resource.Success -> {
-
-                    isLoading.value = false
-
                     val firstNameUser = resource.data?.firstName.toString()
                     val secondNameUser = resource.data?.lastName.toString()
 
@@ -65,34 +55,23 @@ class UserProfileViewModel @Inject constructor(
                     userDescription = resource.data?.description.toString()
                     userImage = resource.data?.imagePath.toString()
 
-                    loadError.value = ""
-
+                    endLoading()
                 }
                 is Resource.Error<*> -> {
-
-                    isLoading.value = false
-
-                    loadError.value = resource.message ?: ""
+                    endLoadingWithError(resource.message!!)
                 }
             }
 
-//            when(resource2){
-//                is Resource.Success -> {
-//                    isLoading.value = false
-//
-//                    userLoggedOpinionList.value = resource2.data ?: listOf()
-//                }
-//                is Resource.Error -> {
-//
-//                    isLoading.value = false
-//
-//                    userLoggedOpinionList.value = listOf()
-//
-//                    loadError.value = resource2.message ?: ""
-//                }
-//            }
-
+            when(resource2){
+                is Resource.Success -> {
+                    userLoggedOpinionList.value = resource2.data?.opinions ?: listOf()
+                    endLoading()
+                }
+                is Resource.Error -> {
+                    userLoggedOpinionList.value = listOf()
+                    endLoadingWithError(resource2.message!!)
+                }
+            }
         }
-
     }
 }

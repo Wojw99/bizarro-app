@@ -47,7 +47,6 @@ fun UserProfileScreen(
         darkTheme = Constants.isDark.value
     ) {
         Column(
-
             modifier = Modifier
                 .fillMaxSize()
                 .background(colors.background),
@@ -84,20 +83,14 @@ fun UserProfileScreen(
                 UserInformation()
 
                 UserButtonSection(navController)
-
             }
 
             // * * * * * * PROGRESS BAR * * * * * *
             if (viewModel.isLoading.value) {
                 CircularProgressIndicator(modifier = Modifier.align(Alignment.CenterHorizontally))
             }
-
-
         }
-
     }
-
-
 }
 
 @Composable
@@ -107,14 +100,11 @@ fun HeaderSectionUserProfile(navController: NavController) {
             .fillMaxWidth()
             .padding(12.dp)
     ) {
-
         IconButton(
-
             onClick = {
                 navController.navigate(route = Screen.Settings.route)
             },
             modifier = Modifier.align(Alignment.CenterEnd)
-
         ) {
             Icon(
                 imageVector = Icons.Default.Settings,
@@ -122,14 +112,12 @@ fun HeaderSectionUserProfile(navController: NavController) {
                 Modifier.size(30.dp),
                 tint = colors.onSurface
             )
-
         }
     }
 }
 
 @Composable
 fun UserInformation(viewModel: UserProfileViewModel = hiltViewModel()) {
-
     Image(
         painter = rememberImagePainter(viewModel.userImage),
         contentDescription = "User Image",
@@ -150,18 +138,18 @@ fun UserInformation(viewModel: UserProfileViewModel = hiltViewModel()) {
 
         contentAlignment = Alignment.Center
     ) {
-
         Column(
-
-            horizontalAlignment = Alignment.CenterHorizontally) {
-
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
             Row(
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.Center,
-            )
-            {
-
-                Icon(Icons.Default.Person, "Icon description", tint = MaterialTheme.colors.onSurface)
+            ) {
+                Icon(
+                    Icons.Default.Person,
+                    "Icon description",
+                    tint = MaterialTheme.colors.onSurface
+                )
 
                 Text(
                     viewModel.nameUser,
@@ -172,7 +160,6 @@ fun UserInformation(viewModel: UserProfileViewModel = hiltViewModel()) {
                         fontWeight = FontWeight.Bold
                     )
                 )
-
             }
 
             Spacer(modifier = Modifier.size(20.dp))
@@ -180,11 +167,8 @@ fun UserInformation(viewModel: UserProfileViewModel = hiltViewModel()) {
             Row(
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.Center,
-            )
-            {
-
+            ) {
                 Icon(Icons.Default.Email, "Icon description", tint = MaterialTheme.colors.onSurface)
-
 
                 Text(
                     viewModel.emailUser,
@@ -250,19 +234,14 @@ fun UserInformation(viewModel: UserProfileViewModel = hiltViewModel()) {
                     fontFamily = FontFamily.Default,
                     fontWeight = FontWeight.Bold,
                     textAlign = TextAlign.Center,
-
-                    )
+                )
             )
         }
-
     }
-
 }
 
 @Composable
 fun UserButtonSection(navController: NavController) {
-
-
     Button(
         onClick = {
             navController.navigate(route = Screen.EditProfile.route)
@@ -302,8 +281,6 @@ fun UserButtonSection(navController: NavController) {
     }
 
     Spacer(modifier = Modifier.height(30.dp))
-
-
 }
 
 
