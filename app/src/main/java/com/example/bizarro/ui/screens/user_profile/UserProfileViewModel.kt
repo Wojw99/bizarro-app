@@ -48,8 +48,8 @@ class UserProfileViewModel @Inject constructor(
 
             isLoading.value = true
 
-            val resource = repository.getUserProfile()
-            val resource2 = opinionsRepository.getUserOpinions(repository.userId!!)
+            val resource = repository.getUserMe()
+            //val resource2 = opinionsRepository.getUserOpinions(repository.userId!!)
 
             when (resource) {
                 is Resource.Success -> {
@@ -76,21 +76,21 @@ class UserProfileViewModel @Inject constructor(
                 }
             }
 
-            when(resource2){
-                is Resource.Success -> {
-                    isLoading.value = false
-
-                    userLoggedOpinionList.value = resource2.data ?: listOf()
-                }
-                is Resource.Error -> {
-
-                    isLoading.value = false
-
-                    userLoggedOpinionList.value = listOf()
-
-                    loadError.value = resource2.message ?: ""
-                }
-            }
+//            when(resource2){
+//                is Resource.Success -> {
+//                    isLoading.value = false
+//
+//                    userLoggedOpinionList.value = resource2.data ?: listOf()
+//                }
+//                is Resource.Error -> {
+//
+//                    isLoading.value = false
+//
+//                    userLoggedOpinionList.value = listOf()
+//
+//                    loadError.value = resource2.message ?: ""
+//                }
+//            }
 
         }
 

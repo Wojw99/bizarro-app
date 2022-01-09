@@ -5,7 +5,7 @@ import okhttp3.MultipartBody
 import retrofit2.http.*
 
 interface BizarroApi {
-    // * * * * * DEFAULT * * * * *
+    // * * * * * OTHER * * * * *
     @FormUrlEncoded
     @POST("token")
     suspend fun login(
@@ -15,7 +15,9 @@ interface BizarroApi {
 
     // * * * * * USER * * * * *
     @GET("/users/me")
-    suspend fun getUserProfile(): UserProfile
+    suspend fun getUserMe(
+        @Header("Authorization") authHeader: String,
+    ): UserProfile
 
     // * * * * * POSTS * * * * *
     @GET("/user_posts")

@@ -18,12 +18,12 @@ class OpinionsRepository @Inject constructor(
     suspend fun getOtherUserProfile(userId: Long): Resource<UserProfile> {
         return Resource.Error(Strings.unknownError)
         val response = try {
-            api.getUserProfile()
+            // api.getUserProfile()
         } catch (e: Exception) {
             Timber.e(e)
             return Resource.Error(Strings.unknownError)
         }
-        return Resource.Success(response)
+        //return Resource.Success(response)
     }
 
     suspend fun getUserOpinions(userId: Long): Resource<List<Opinion>> {

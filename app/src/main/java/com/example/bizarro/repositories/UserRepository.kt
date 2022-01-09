@@ -35,7 +35,6 @@ class UserRepository @Inject constructor(
         }
         // TODO: Should it be here?
         // TODO: Remove log
-        Timber.d("Successfully signed in! Token: ${response.accessToken}")
         tokenManager.saveAccessToken(response.accessToken)
         return Resource.Success(response)
     }
@@ -53,18 +52,15 @@ class UserRepository @Inject constructor(
      * Get user profile data and fill appState's userId with response userId.
      * TODO: Deal with arguments (accordingly to endpoint info)
      */
-    suspend fun getUserProfile(): Resource<UserProfile> {
+    suspend fun getUserMe(): Resource<UserProfile> {
+        if (tokenManager.isUserNotSignedIn()) return Resource.Error(Strings.userNotSignedInError)
+
         val response = try {
-            api.getUserProfile()
+            api.getUserMe(tokenManager.getAuthHeader())
         } catch (e: Exception) {
             Timber.e(e)
             return Resource.Error(Strings.unknownError)
         }
         return Resource.Success(response)
-    }
-
-    fun isSignedIn(): Boolean {
-        if(accessToken != null && userId != null) return true
-        return false
     }
 }

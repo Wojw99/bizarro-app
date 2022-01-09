@@ -12,14 +12,28 @@ data class UserProfile (
     val description: String?,
     @SerializedName("email")
     val email: String?,
-    @SerializedName("")
+    @SerializedName("firstName")
     val firstName: String?,
     @SerializedName("url")
     val imagePath: String?,
-    @SerializedName("")
+    @SerializedName("lastName")
     val lastName: String?,
-    @SerializedName("")
+    @SerializedName("phone")
     val phone: String?,
-    @SerializedName("general_opinion")
-    val generalOpinion: GeneralOpinion = GeneralOpinion("", 1, ""),
 )
+
+//{
+//    "id": 1,
+//    "username": "admin",
+//    "description": "ble ble ble",
+//    "email": "konmat@wp.pl",
+//    "url": null,
+//    "address_city": "Konrad",
+//    "address_province": "Konrad",
+//    "address_street": "Konrad",
+//    "address_number": "Konrad",
+//    "created_date": "2022-01-02T15:30:58.098493",
+//    "phone": "791588490",
+//    "firstName": "Konrad",
+//    "lastName": "Konrad"
+//}
