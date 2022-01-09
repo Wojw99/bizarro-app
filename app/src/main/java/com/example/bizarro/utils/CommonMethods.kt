@@ -11,56 +11,62 @@ import java.time.LocalDate
 import java.util.*
 
 object CommonMethods {
+    fun convertEmptyStringToNull(string: String?): String? {
+        if (string != null && string.isEmpty()) {
+            return null
+        }
+        return string
+    }
+
     fun getUrlForImage(imageUrl: String): String {
         return "https${imageUrl.substring(4)}"
     }
 
-    fun formatRecordTypeText(text: String) : String {
+    fun formatRecordTypeText(text: String): String {
         val lowerCase = text.lowercase(Locale.getDefault())
         val firstLetter = lowerCase[0].uppercaseChar()
         return firstLetter + lowerCase.substring(1)
     }
 
-    fun convertToPriceFormat(number: Double?) : String{
-        if(number == null) return Strings.undefined
+    fun convertToPriceFormat(number: Double?): String {
+        if (number == null) return Strings.undefined
 
         var str = number.toString()
         str += "zł"
-        str = str.replace('.', ',')
 
         return str
     }
 
-    fun convertToRentalPeriodFormat(number: Int?) : String{
-        if(number == null) return Strings.undefined
+    fun convertToRentalPeriodFormat(number: Int?): String {
+        if (number == null) return Strings.undefined
         return "$number${Strings.days}"
     }
 
-    fun convertToSwapObjectFormat(swapObject: String?) : String{
-        if(swapObject == null) return Strings.undefined
+    fun convertToSwapObjectFormat(swapObject: String?): String {
+        if (swapObject == null) return Strings.undefined
         return swapObject
     }
 
-    fun convertToRecordBoxDateFormat(date: LocalDate) : String{
+    fun convertToRecordBoxDateFormat(date: LocalDate): String {
         var monthValue = date.monthValue.toString()
         var dayOfMonth = date.dayOfMonth.toString()
         val year = date.year.toString()
 
         val dateNow = LocalDate.now()
         val diff = dateNow.minusDays(date.toEpochDay()).toEpochDay()
-        if(diff == 1L) return "wczoraj"
-        else if(diff == 0L) return "dzisiaj"
+        if (diff == 1L) return "wczoraj"
+        else if (diff == 0L) return "dzisiaj"
 
-        if(monthValue.length < 2) monthValue = "0$monthValue"
-        if(dayOfMonth.length < 2) dayOfMonth = "0$dayOfMonth"
+        if (monthValue.length < 2) monthValue = "0$monthValue"
+        if (dayOfMonth.length < 2) dayOfMonth = "0$dayOfMonth"
 
-        if(dateNow.year != date.year)
+        if (dateNow.year != date.year)
             return "$dayOfMonth.$monthValue.$year"
 
         return "$dayOfMonth.$monthValue"
     }
 
-    fun convertToLabelDateFormat(date: LocalDate) : String{
+    fun convertToLabelDateFormat(date: LocalDate): String {
         val monthValue = date.monthValue.toString()
         val dayOfMonth = date.dayOfMonth.toString()
         val year = date.year.toString()
@@ -73,15 +79,15 @@ object CommonMethods {
 
         // Initialize a new file instance to save bitmap object
         var file = wrapper.getDir("Images", Context.MODE_PRIVATE)
-        file = File(file,"${UUID.randomUUID()}.jpg")
+        file = File(file, "${UUID.randomUUID()}.jpg")
 
-        try{
+        try {
             // Compress the bitmap and save in jpg format
             val stream: OutputStream = FileOutputStream(file)
-            bitmap.compress(Bitmap.CompressFormat.JPEG,100,stream)
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream)
             stream.flush()
             stream.close()
-        }catch (e: IOException){
+        } catch (e: IOException) {
             e.printStackTrace()
         }
 

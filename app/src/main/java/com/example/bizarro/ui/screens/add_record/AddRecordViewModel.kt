@@ -18,6 +18,7 @@ import com.example.bizarro.repositories.RecordRepository
 import com.example.bizarro.ui.AppState
 import com.example.bizarro.ui.NetworkingViewModel
 import com.example.bizarro.ui.screens.record_details.RecordDetailsViewModel
+import com.example.bizarro.ui.screens.search.SearchViewModel
 import com.example.bizarro.ui.screens.user_record_list.UserRecordListViewModel
 import com.example.bizarro.utils.CommonMethods
 import com.example.bizarro.utils.Constants
@@ -181,6 +182,7 @@ class AddRecordViewModel @Inject constructor(
                     endLoading()
                     isSuccess.value = true
                     UserRecordListViewModel.signalUpdate()
+                    SearchViewModel.signalUpdate()
                 }
                 is Resource.Error<*> -> {
                     endLoadingWithError(resource.message!!)

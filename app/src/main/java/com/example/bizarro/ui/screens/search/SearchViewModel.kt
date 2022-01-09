@@ -1,12 +1,15 @@
 package com.example.bizarro.ui.screens.search
 
 import androidx.compose.runtime.mutableStateOf
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.bizarro.api.models.Record
 import com.example.bizarro.repositories.RecordRepository
 import com.example.bizarro.ui.AppState
 import com.example.bizarro.ui.NetworkingViewModel
+import com.example.bizarro.ui.screens.user_record_list.UserRecordListViewModel
 import com.example.bizarro.utils.Constants
 import com.example.bizarro.utils.Resource
 import com.example.bizarro.utils.models.Filter
@@ -21,40 +24,44 @@ class SearchViewModel @Inject constructor(
     private val repository: RecordRepository
 ) : NetworkingViewModel() {
     val recordList = mutableStateOf<List<Record>>(listOf())
-    val nameText = mutableStateOf("")
-    val filterList = mutableStateOf(appState.filters)
+    val filter = mutableStateOf(SearchViewModel.filter)
+
+    private val observer: Observer<Boolean> = Observer {
+        if(it) {
+            signal.value = false
+            filter.value = SearchViewModel.filter
+            updateRecordList()
+        }
+    }
+
+
+    fun getSearchBarInitialText(): String {
+        if (filter.value.title == null)
+            return ""
+        return filter.value.title!!
+    }
 
     init {
         updateRecordList()
+        signal.observeForever(observer)
     }
 
-    private fun getFilterValue(filter: String) : String? {
-        for(x in filterList.value) {
-            if(filter == x.name && x.values.isNotEmpty())
-                return x.values.first()
-        }
-        return null
+    override fun onCleared() {
+        super.onCleared()
+        signal.removeObserver(observer)
     }
 
-    fun hasFilters() : Boolean{
-        for(x in filterList.value) {
-            if(x.values.isNotEmpty())
-                return true
-        }
+    fun hasFilters(): Boolean {
+        if (
+            filter.value.type != null
+            || filter.value.category != null
+            || filter.value.minPrice != null
+            || filter.value.maxPrice != null
+            || filter.value.province != null
+            || filter.value.swapObject != null
+            || filter.value.rentalPeriod != null
+        ) return true
         return false
-    }
-
-    fun clearFilterAtIndex(index: Int) {
-        filterList.value[index].values = listOf()
-    }
-
-    fun addTestFilers() {
-        filterList.value = listOf(
-            Filter(Constants.FILTER_CITY, listOf()),
-            Filter(Constants.FILTER_PROVINCE, listOf("śląskie")),
-            Filter(Constants.FILTER_TYPE, listOf("sprzedam")),
-            Filter(Constants.FILTER_CATEGORY, listOf("górski")),
-        )
     }
 
     fun updateRecordList() {
@@ -62,16 +69,15 @@ class SearchViewModel @Inject constructor(
         viewModelScope.launch {
             startLoading()
 
-            Timber.d("Search for ${nameText.value}")
-
-            val resource = repository.getRecordList(
-                0,
-                0,
-                if (nameText.value == "") null else nameText.value,
-                getFilterValue(Constants.FILTER_CITY),
-                getFilterValue(Constants.FILTER_PROVINCE),
-                getFilterValue(Constants.FILTER_TYPE),
-                getFilterValue(Constants.FILTER_CATEGORY),
+            val resource = repository.getFilteredRecordList(
+                title = filter.value.title,
+                type = filter.value.type,
+                category = filter.value.category,
+                minPrice = filter.value.minPrice,
+                maxPrice = filter.value.maxPrice,
+                province = filter.value.province,
+                swapObject = filter.value.swapObject,
+                rentalPeriod = filter.value.rentalPeriod,
             )
 
             when (resource) {
@@ -84,6 +90,15 @@ class SearchViewModel @Inject constructor(
                     recordList.value = listOf()
                 }
             }
+        }
+    }
+
+    companion object{
+        var filter = Filter()
+        val signal = MutableLiveData(false)
+
+        fun signalUpdate() {
+            signal.value = true
         }
     }
 }

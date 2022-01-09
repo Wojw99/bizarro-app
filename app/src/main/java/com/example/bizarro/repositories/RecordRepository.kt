@@ -155,18 +155,27 @@ class RecordRepository @Inject constructor(
         return Resource.Success(response)
     }
 
-    // * * * OLD * * *
-    suspend fun getRecordList(
-        limit: Int?,
-        offset: Int?,
-        name: String?,
-        city: String?,
-        province: String?,
+    suspend fun getFilteredRecordList(
+        title: String?,
         type: String?,
         category: String?,
+        minPrice: Double?,
+        maxPrice: Double?,
+        province: String?,
+        swapObject: String?,
+        rentalPeriod: Int?,
     ): Resource<List<Record>> {
         val response = try {
-            api.getRecordList(limit, offset, name, city, province, type, category)
+            api.gerFilteredRecordList(
+                title = title,
+                type = type,
+                category = category,
+                minPrice = minPrice,
+                maxPrice = maxPrice,
+                province = province,
+                swapObject = swapObject,
+                rentalPeriod = rentalPeriod,
+            )
         } catch (e: Exception) {
             Timber.e(e)
             val errorText = parseError(e)

@@ -55,6 +55,10 @@ fun FilterScreen(
 ) {
     viewModel.appState.bottomMenuVisible.value = false
 
+    if(viewModel.savingFilterSuccess.value) {
+        viewModel.savingFilterSuccess.value = false
+        navController.popBackStack()
+    }
 
     BizarroTheme(darkTheme = Constants.isDark.value)
     {
@@ -108,12 +112,6 @@ fun FilterScreen(
             Button(
                 onClick = {
                     viewModel.saveFilters()
-//                navController.navigate(Screen.Search.route) {
-//                    // remove all previous screen in the stack
-//                    popUpTo(navController.graph.findStartDestination().id) {
-//                        inclusive = true
-//                    }
-//                }
                 },
                 modifier = Modifier
                     .fillMaxWidth()

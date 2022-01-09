@@ -9,13 +9,6 @@ import javax.inject.Singleton
 class AppState {
     val bottomMenuVisible = mutableStateOf(true)
 
-    var filters = listOf(
-        Filter(Constants.FILTER_CITY, listOf()),
-        Filter(Constants.FILTER_PROVINCE, listOf()),
-        Filter(Constants.FILTER_TYPE, listOf()),
-        Filter(Constants.FILTER_CATEGORY, listOf()),
-    )
-
     fun showBottomMenu() {
         if(!bottomMenuVisible.value) bottomMenuVisible.value = true
     }

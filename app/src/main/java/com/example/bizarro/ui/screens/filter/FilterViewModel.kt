@@ -1,10 +1,13 @@
 package com.example.bizarro.ui.screens.filter
 
+import android.widget.SearchView
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.bizarro.ui.AppState
 import com.example.bizarro.ui.NetworkingViewModel
+import com.example.bizarro.ui.screens.search.SearchViewModel
+import com.example.bizarro.utils.CommonMethods
 import com.example.bizarro.utils.Constants
 import com.example.bizarro.utils.models.Filter
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -24,11 +27,12 @@ class FilterViewModel @Inject constructor(
     val selectedCategory = mutableStateOf("")
     val selectedProvince = mutableStateOf("")
 
-    // TODO: Change it to type specific price handling
     val priceMinText = mutableStateOf("")
     val priceMaxText = mutableStateOf("")
     val swapObjectText = mutableStateOf("")
     val rentPeriodText = mutableStateOf("")
+
+    val savingFilterSuccess = mutableStateOf(false)
 
     init {
 
@@ -41,7 +45,6 @@ class FilterViewModel @Inject constructor(
         selectedCategory.value = empty
         selectedProvince.value = empty
 
-        // TODO: Change it to type specific price handling
         priceMinText.value = empty
         priceMaxText.value = empty
         swapObjectText.value = empty
@@ -49,10 +52,22 @@ class FilterViewModel @Inject constructor(
     }
 
     fun saveFilters() {
-        viewModelScope.launch {
-            startLoading()
-            delay(1000L)
-            endLoading()
-        }
+        val priceMin = if(priceMinText.value.isEmpty()) null else priceMinText.value.toDouble()
+        val priceMax = if(priceMaxText.value.isEmpty()) null else priceMaxText.value.toDouble()
+        val rentalPeriod = if(rentPeriodText.value.isEmpty()) null else rentPeriodText.value.toInt()
+
+        SearchViewModel.filter = Filter(
+            title = SearchViewModel.filter.title,
+            type = CommonMethods.convertEmptyStringToNull(selectedType.value),
+            category = CommonMethods.convertEmptyStringToNull(selectedCategory.value),
+            minPrice = priceMin,
+            maxPrice = priceMax,
+            province = CommonMethods.convertEmptyStringToNull(selectedProvince.value),
+            swapObject = CommonMethods.convertEmptyStringToNull(swapObjectText.value),
+            rentalPeriod = rentalPeriod,
+        )
+        SearchViewModel.signalUpdate()
+
+        savingFilterSuccess.value = true
     }
 }

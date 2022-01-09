@@ -1,8 +1,6 @@
 package com.example.bizarro.ui.screens.search
 
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
+import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
@@ -31,6 +29,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.toLowerCase
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -71,7 +70,8 @@ fun SearchScreen(
             ) {
                 // * * * * * * ERROR TEXT * * * * * *
                 if (viewModel.loadError.value.isNotEmpty()
-                    && !viewModel.isLoading.value) {
+                    && !viewModel.isLoading.value
+                ) {
                     Column(
                         verticalArrangement = Arrangement.Center,
                         horizontalAlignment = Alignment.CenterHorizontally,
@@ -113,10 +113,10 @@ fun SearchScreen(
                     SearchBar(
                         hint = Strings.search,
                         onSearch = { text ->
-                            viewModel.nameText.value = text
+                            viewModel.filter.value.title = text
                             viewModel.updateRecordList()
                         },
-                        initialText = viewModel.nameText.value,
+                        initialText = viewModel.getSearchBarInitialText(),
                     )
 
                     Spacer(modifier = Modifier.height(Dimens.standardPadding))
@@ -214,48 +214,140 @@ fun SearchBar(
 
 @Composable
 fun FilterList(
-    viewModel: SearchViewModel = hiltViewModel(),
     modifier: Modifier = Modifier,
+    viewModel: SearchViewModel = hiltViewModel(),
     navController: NavController,
 ) {
-    Row {
-        LazyRow {
-            val filterList = viewModel.filterList.value
-            val itemCount = filterList.size
+    Row(
+        modifier = modifier.horizontalScroll(rememberScrollState())
+    ) {
+        val spacerWidth = 10.dp
+        // * * * * * ADD FILTER * * * * *
+        CustomIconButton(
+            text = "",
+            iconVector = Icons.Default.Add,
+            contentDescription = "Add filer",
+            reverseColors = true,
+            onButtonClick = {
+                navController.navigate(Screen.Filter.route)
+            },
+        )
+        Spacer(modifier = Modifier.width(spacerWidth))
 
-            items(itemCount) { index ->
-                // * * * * * ADD FILTER * * * * *
-                if (index == 0) {
-                    CustomIconButton(
-                        text = "",
-                        iconVector = Icons.Default.Add,
-                        contentDescription = "Add filer",
-                        reverseColors = true,
-                        onButtonClick = {
-                            navController.navigate(Screen.Filter.route)
-                        },
-                    )
-                    Spacer(modifier = Modifier.width(10.dp))
+        // * * * * * TYPE * * * * *
+        FilterBox(
+            content = viewModel.filter.value.type,
+            spacerWidth = spacerWidth,
+            onClick = {
+                if (!viewModel.isLoading.value) {
+                    viewModel.filter.value.type = null
+                    viewModel.updateRecordList()
                 }
+            },
+        )
 
-                // * * * * * FILTER BUTTON * * * * *
-                val filter = filterList[index]
-                if (filter.values.isNotEmpty()) {
-                    CustomIconButton(
-                        text = filter.values.first(),
-                        iconVector = Icons.Default.Close,
-                        contentDescription = "Close icon",
-                        onButtonClick = {
-                            if (!viewModel.isLoading.value) {
-                                viewModel.clearFilterAtIndex(index)
-                                viewModel.updateRecordList()
-                            }
-                        }
-                    )
-                    Spacer(modifier = Modifier.width(10.dp))
+        // * * * * * CATEGORY * * * * *
+        FilterBox(
+            content = viewModel.filter.value.category,
+            spacerWidth = spacerWidth,
+            onClick = {
+                if (!viewModel.isLoading.value) {
+                    viewModel.filter.value.category = null
+                    viewModel.updateRecordList()
                 }
-            }
+            },
+        )
+
+        // * * * * * MIN PRICE * * * * *
+        if (viewModel.filter.value.minPrice != null) {
+            CustomIconButton(
+                text = "min ${viewModel.filter.value.minPrice}${Strings.priceSuffix}",
+                iconVector = Icons.Default.Close,
+                contentDescription = viewModel.filter.value.minPrice.toString(),
+                onButtonClick = {
+                    if (!viewModel.isLoading.value) {
+                        viewModel.filter.value.minPrice = null
+                        viewModel.updateRecordList()
+                    }
+                },
+            )
+            Spacer(modifier = Modifier.width(spacerWidth))
         }
+
+        // * * * * * MAX PRICE * * * * *
+        if (viewModel.filter.value.maxPrice != null) {
+            CustomIconButton(
+                text = "max ${viewModel.filter.value.maxPrice}${Strings.priceSuffix}",
+                iconVector = Icons.Default.Close,
+                contentDescription = viewModel.filter.value.maxPrice.toString(),
+                onButtonClick = {
+                    if (!viewModel.isLoading.value) {
+                        viewModel.filter.value.maxPrice = null
+                        viewModel.updateRecordList()
+                    }
+                },
+            )
+            Spacer(modifier = Modifier.width(spacerWidth))
+        }
+
+        // * * * * * PROVINCE * * * * *
+        FilterBox(
+            content = viewModel.filter.value.province,
+            spacerWidth = spacerWidth,
+            onClick = {
+                if (!viewModel.isLoading.value) {
+                    viewModel.filter.value.province = null
+                    viewModel.updateRecordList()
+                }
+            },
+        )
+
+        // * * * * * SWAP OBJECT * * * * *
+        FilterBox(
+            content = viewModel.filter.value.swapObject,
+            spacerWidth = spacerWidth,
+            onClick = {
+                if (!viewModel.isLoading.value) {
+                    viewModel.filter.value.swapObject = null
+                    viewModel.updateRecordList()
+                }
+            },
+        )
+
+        // * * * * * RENTAL PERIOD * * * * *
+        if (viewModel.filter.value.rentalPeriod != null) {
+            CustomIconButton(
+                text = "${viewModel.filter.value.rentalPeriod} ${Strings.days}",
+                iconVector = Icons.Default.Close,
+                contentDescription = viewModel.filter.value.rentalPeriod.toString(),
+                onButtonClick = {
+                    if (!viewModel.isLoading.value) {
+                        viewModel.filter.value.rentalPeriod = null
+                        viewModel.updateRecordList()
+                    }
+                },
+            )
+            Spacer(modifier = Modifier.width(spacerWidth))
+        }
+    }
+}
+
+@Composable
+fun FilterBox(
+    content: String?,
+    spacerWidth: Dp,
+    modifier: Modifier = Modifier,
+    viewModel: SearchViewModel = hiltViewModel(),
+    onClick: () -> Unit = {},
+) {
+    if (content != null) {
+        CustomIconButton(
+            text = content,
+            iconVector = Icons.Default.Close,
+            contentDescription = content,
+            onButtonClick = onClick,
+        )
+        Spacer(modifier = Modifier.width(spacerWidth))
     }
 }
 
@@ -344,7 +436,11 @@ fun TypeSpecificTitle(record: Record, modifier: Modifier = Modifier) {
                     color = MaterialTheme.colors.onSurface,
                 )
             )
-            Text(text = h2, style = TextStyle(fontSize = 13.sp), color = MaterialTheme.colors.onSurface)
+            Text(
+                text = h2,
+                style = TextStyle(fontSize = 13.sp),
+                color = MaterialTheme.colors.onSurface
+            )
         }
     }
 }

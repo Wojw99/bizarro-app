@@ -64,11 +64,6 @@ interface BizarroApi {
         @Body updateRecord: UpdateRecord,
     ): String
 
-//    curl -X 'POST' \
-//    'https://bike-app-1.herokuapp.com/search_post/?min_price=1000&max_price=4000' \
-//    -H 'accept: application/json' \
-//    -d ''
-
     @POST("/search_post")
     suspend fun gerFilteredRecordList(
         @Query("title") title: String?,
@@ -82,27 +77,6 @@ interface BizarroApi {
     ): List<Record>
 
     // * * * * * OLD * * * * *
-    @GET("records")
-    suspend fun getRecordList(
-        @Query("limit") limit: Int?,
-        @Query("offset") offset: Int?,
-        @Query("name") name: String?,
-        @Query("city") city: String?,
-        @Query("province") province: String?,
-        @Query("type") type: String?,
-        @Query("category") category: String?,
-    ): List<Record>
-
-    @POST("/api/records")
-    suspend fun addRecord(
-        @Body record: Record,
-    ): Record
-
-    @GET("/api/users/{userId}/records")
-    suspend fun getUserRecords(
-        @Path("userId") userId: Long
-    ): List<Record>
-
     @POST("/api/opinions")
     suspend fun addUserOpinion(
         @Body opinion: Opinion,

@@ -54,30 +54,6 @@ class CompareViewModel @Inject constructor(
     }
 
     fun updateRecordList() {
-        if (isLoading.value) return
-        viewModelScope.launch {
-            startLoading()
 
-            val resource = repository.getRecordList(
-                0,
-                0,
-                null,
-                null,
-                null,
-                null,
-                null,
-            )
-
-            when (resource) {
-                is Resource.Success -> {
-                    endLoading()
-                    recordList.value = resource.data ?: listOf()
-                }
-                is Resource.Error<*> -> {
-                    endLoadingWithError(resource.message!!)
-                    recordList.value = listOf()
-                }
-            }
-        }
     }
 }
