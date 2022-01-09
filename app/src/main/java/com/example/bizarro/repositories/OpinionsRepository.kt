@@ -11,7 +11,6 @@ import timber.log.Timber
 import java.lang.Exception
 import javax.inject.Inject
 
-@ActivityScoped
 class OpinionsRepository @Inject constructor(
     private val api: BizarroApi,
 ) {

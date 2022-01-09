@@ -20,7 +20,6 @@ import java.lang.Exception
 import java.net.ConnectException
 import javax.inject.Inject
 
-@ActivityScoped
 class RecordRepository @Inject constructor(
     private val api: BizarroApi,
     private val userRepository: UserRepository,

@@ -25,6 +25,9 @@ import com.example.bizarro.utils.Constants
 import com.example.bizarro.utils.Strings
 import com.example.bizarro.utils.Dimens
 
+val verticalPadding = Dimens.standardPadding
+val horizontalPadding = Dimens.standardPadding * 2
+
 @ExperimentalComposeUiApi
 @Composable
 fun SignUpScreen(
@@ -68,7 +71,9 @@ fun SignUpScreen(
 
             // * * * * * * SUCCESS * * * * * *
             if (viewModel.successfullyLogin.value) {
+                viewModel.successfullyLogin.value = false
                 navController.popBackStack()
+                navController.navigate(Screen.UserRecordList.route)
             }
 
             // * * * * * * PROGRESS BAR * * * * * *
@@ -95,7 +100,7 @@ fun RegisterFields(
         keyboardType = KeyboardType.Text,
         modifier = Modifier
             .fillMaxWidth()
-            .padding(Dimens.standardPadding),
+            .padding(horizontal = horizontalPadding, vertical = verticalPadding),
         leadingIcon = {
             Icon(
                 imageVector = Icons.Default.Email, contentDescription = "EmailIcon",
@@ -116,7 +121,7 @@ fun RegisterFields(
         keyboardType = KeyboardType.Password,
         modifier = Modifier
             .fillMaxWidth()
-            .padding(Dimens.standardPadding),
+            .padding(horizontal = horizontalPadding, vertical = verticalPadding),
         leadingIcon = {
             Icon(
                 imageVector = Icons.Default.Lock, contentDescription = "PasswordIcon",
@@ -134,7 +139,7 @@ fun RegisterFields(
         },
         modifier = Modifier
             .fillMaxWidth()
-            .padding(Dimens.standardPadding),
+            .padding(horizontal = horizontalPadding, vertical = verticalPadding),
         colors = ButtonDefaults.buttonColors(backgroundColor = MaterialTheme.colors.onSurface),
     )
     {
@@ -153,7 +158,7 @@ fun RegisterFields(
         },
         modifier = Modifier
             .fillMaxWidth()
-            .padding(Dimens.standardPadding),
+            .padding(horizontal = horizontalPadding, vertical = verticalPadding),
         colors = ButtonDefaults.buttonColors(backgroundColor = MaterialTheme.colors.onSurface),
     )
     {

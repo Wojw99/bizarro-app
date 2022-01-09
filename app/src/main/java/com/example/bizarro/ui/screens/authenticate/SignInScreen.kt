@@ -76,11 +76,9 @@ fun SignInScreen(
 
             // * * * * * * SUCCESS * * * * * *
             if (viewModel.successfullyLogin.value) {
-                ConfirmAlertDialog(
-                    onDismiss = { navController.navigate(Screen.UserRecordList.route) },
-                    title = Strings.success2,
-                    body = Strings.confirmLogin,
-                )
+                viewModel.successfullyLogin.value = false
+                navController.popBackStack()
+                navController.navigate(Screen.UserRecordList.route)
             }
 
             // * * * * * * PROGRESS BAR * * * * * *
@@ -111,9 +109,9 @@ fun LoginFields(
                 tint = MaterialTheme.colors.onSurface
             )
         },
-       modifier = Modifier
-          .fillMaxWidth()
-          .padding(Dimens.standardPadding),
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(horizontal = horizontalPadding, vertical = verticalPadding),
     )
 
     Spacer(modifier = Modifier.height(20.dp))
@@ -132,9 +130,9 @@ fun LoginFields(
                 tint = MaterialTheme.colors.onSurface
             )
         },
-       modifier = Modifier
-          .fillMaxWidth()
-          .padding(Dimens.standardPadding),
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(horizontal = horizontalPadding, vertical = verticalPadding),
         visualTransformation = PasswordVisualTransformation(),
     )
 
@@ -143,9 +141,8 @@ fun LoginFields(
     Button(
         onClick = { viewModel.login() },
         Modifier
-           .size(width = 250.dp, height = 50.dp)
-           .fillMaxWidth()
-           .padding(Dimens.standardPadding),
+            .fillMaxWidth()
+            .padding(horizontal = horizontalPadding, vertical = verticalPadding),
         colors = ButtonDefaults.buttonColors(backgroundColor = MaterialTheme.colors.onSurface),
     ) {
         Text(
@@ -155,7 +152,7 @@ fun LoginFields(
         )
     }
 
-   Spacer(modifier = Modifier.height(10.dp))
+    Spacer(modifier = Modifier.height(10.dp))
 
     Text(
         "ALBO",
@@ -174,9 +171,8 @@ fun LoginFields(
             navController.navigate(route = Screen.SignUp.route)
         },
         Modifier
-           .size(width = 250.dp, height = 50.dp)
-           .fillMaxWidth()
-           .padding(Dimens.standardPadding),
+            .fillMaxWidth()
+            .padding(horizontal = horizontalPadding, vertical = verticalPadding),
         colors = ButtonDefaults.buttonColors(backgroundColor = MaterialTheme.colors.onSurface),
     )
     {

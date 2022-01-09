@@ -253,12 +253,6 @@ fun AddRecordScreen(
             if (viewModel.isSuccess.value) {
                 ConfirmAlertDialog(
                     onDismiss = {
-//                        navController.navigate(Screen.Search.route) {
-//                            // remove all previous screen in the stack
-//                            popUpTo(navController.graph.findStartDestination().id) {
-//                                inclusive = true
-//                            }
-//                        }
                         navController.popBackStack()
                     },
                     title = Strings.success2,

@@ -13,7 +13,6 @@ import java.lang.Exception
 import javax.inject.Inject
 import javax.inject.Singleton
 
-@ActivityScoped
 class UserRepository @Inject constructor(
     private val api: BizarroApi,
     private val tokenManager: TokenManager,
@@ -22,7 +21,7 @@ class UserRepository @Inject constructor(
     var accessToken: String? = null
 
     /**
-     * Post login values and fill appState's access token with response access token.
+     * Post login values and save access token.
      */
     suspend fun login(username: String, password: String): Resource<Token> {
         val response = try {
@@ -49,7 +48,7 @@ class UserRepository @Inject constructor(
     }
 
     /**
-     * Get user profile data and fill appState's userId with response userId.
+     * Get user profile data and fill userId with response userId.
      * TODO: Deal with arguments (accordingly to endpoint info)
      */
     suspend fun getUserMe(): Resource<UserProfile> {
@@ -61,6 +60,7 @@ class UserRepository @Inject constructor(
             Timber.e(e)
             return Resource.Error(Strings.unknownError)
         }
+        userId = response.userId
         return Resource.Success(response)
     }
 }

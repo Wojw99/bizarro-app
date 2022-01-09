@@ -97,7 +97,7 @@ fun RecordDetailsScreen(
                 modifier = Modifier
                     .background(colors.background)
                     .align(Alignment.TopCenter),
-                actions = if (!viewModel.isCurrentUser.value) // TODO: Reverse it
+                actions = if (viewModel.isCurrentUser.value)
                     listOf(
                         TopBarAction(
                             onClick = {

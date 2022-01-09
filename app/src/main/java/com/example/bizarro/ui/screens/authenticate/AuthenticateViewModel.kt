@@ -33,6 +33,23 @@ class AuthenticateViewModel @Inject constructor(
 
             when (resource) {
                 is Resource.Success -> {
+                    getUserProfile()
+                }
+                is Resource.Error<*> -> {
+                    endLoadingWithError(resource.message!!)
+                }
+            }
+        }
+    }
+
+    fun getUserProfile() {
+        viewModelScope.launch {
+            startLoading()
+
+            val resource = userRepository.getUserMe()
+
+            when (resource) {
+                is Resource.Success -> {
                     endLoading()
                     successfullyLogin.value = true
                 }
