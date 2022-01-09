@@ -4,6 +4,7 @@ import com.example.bizarro.api.BizarroApi
 import com.example.bizarro.api.models.Opinion
 import com.example.bizarro.api.models.Record
 import com.example.bizarro.api.models.RecordDetails
+import com.example.bizarro.api.models.UpdateRecord
 import com.example.bizarro.managers.TokenManager
 import com.example.bizarro.utils.Constants
 import com.example.bizarro.utils.Resource
@@ -53,7 +54,7 @@ class RecordRepository @Inject constructor(
         addressNumber: String,
         price: Double?,
         swapObject: String?,
-        rentalPeriod: Double?,
+        rentalPeriod: Int?,
         image: MultipartBody,
     ): Resource<Record> {
         if (tokenManager.isUserNotSignedIn()) return Resource.Error(Strings.userNotSignedInError)
@@ -90,6 +91,63 @@ class RecordRepository @Inject constructor(
             api.getRecordDetails(recordId)
         } catch (e: Exception) {
             Timber.d(e)
+            val errorText = parseError(e)
+            return Resource.Error(errorText)
+        }
+
+        return Resource.Success(response)
+    }
+
+    suspend fun deleteRecord(recordId: Long): Resource<String> {
+        if (tokenManager.isUserNotSignedIn()) return Resource.Error(Strings.userNotSignedInError)
+
+        val response = try {
+            api.deleteRecord(tokenManager.getAuthHeader(), recordId)
+        } catch (e: Exception) {
+            Timber.d(e)
+            val errorText = parseError(e)
+            return Resource.Error(errorText)
+        }
+
+        return Resource.Success(response)
+    }
+
+    suspend fun updateRecord(
+        recordId: Long,
+        title: String,
+        body: String,
+        type: String,
+        category: String,
+        addressProvince: String,
+        addressCity: String,
+        addressStreet: String,
+        addressNumber: String,
+        price: Double?,
+        swapObject: String?,
+        rentalPeriod: Int?,
+    ): Resource<String> {
+        if (tokenManager.isUserNotSignedIn()) return Resource.Error(Strings.userNotSignedInError)
+
+        val response = try {
+            api.updateRecord(
+                tokenManager.getAuthHeader(),
+                recordId = recordId,
+                updateRecord = UpdateRecord(
+                    name = title,
+                    body = body,
+                    type = type,
+                    category = category,
+                    addressProvince = addressProvince,
+                    addressCity = addressCity,
+                    addressStreet = addressStreet,
+                    addressNumber = addressNumber,
+                    price = price,
+                    swapObject = swapObject,
+                    rentalPeriod = rentalPeriod,
+                )
+            )
+        } catch (e: Exception) {
+            Timber.e(e)
             val errorText = parseError(e)
             return Resource.Error(errorText)
         }

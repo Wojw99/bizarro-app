@@ -7,6 +7,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.material.MaterialTheme.colors
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.outlined.Info
 import androidx.compose.material.icons.outlined.LocationOn
@@ -27,6 +28,7 @@ import coil.compose.ImagePainter
 import coil.compose.rememberImagePainter
 import com.example.bizarro.R
 import com.example.bizarro.ui.Screen
+import com.example.bizarro.ui.components.ConfirmAlertDialog
 import com.example.bizarro.ui.components.LoadingBox
 import com.example.bizarro.ui.components.TopBar
 import com.example.bizarro.ui.screens.add_record.AddRecordViewModel
@@ -93,7 +95,7 @@ fun RecordDetailsScreen(
                 modifier = Modifier
                     .background(colors.background)
                     .align(Alignment.TopCenter),
-                actions = if (viewModel.isCurrentUser.value)
+                actions = if (!viewModel.isCurrentUser.value) // TODO: Reverse it
                     listOf(
                         TopBarAction(
                             onClick = {
@@ -102,6 +104,13 @@ fun RecordDetailsScreen(
                             },
                             icon = Icons.Default.Edit,
                             contentDescription = Strings.edit,
+                        ),
+                        TopBarAction(
+                            onClick = {
+                                viewModel.deleteRecord()
+                            },
+                            icon = Icons.Default.Delete,
+                            contentDescription = Strings.delete,
                         )
                     ) else listOf(),
                 onTitleClick = {
@@ -116,10 +125,19 @@ fun RecordDetailsScreen(
             if (viewModel.isLoading.value) {
                 LoadingBox()
             }
+
+            // * * * * * * SUCCESS DIALOG * * * * * *
+            if (viewModel.successfullyDeleted.value) {
+                ConfirmAlertDialog(
+                    onDismiss = {
+                        navController.popBackStack()
+                    },
+                    title = Strings.success2,
+                    body = Strings.success,
+                )
+            }
         }
     }
-
-
 }
 
 @Composable
@@ -140,7 +158,7 @@ fun RecordDetailsBody(
                 painter = rememberImagePainter(
                     CommonMethods.getUrlForImage(viewModel.recordImagePath.value!!)
                 )
-
+                val url = CommonMethods.getUrlForImage(viewModel.recordImagePath.value!!)
                 if (painter.state is ImagePainter.State.Loading) {
                     CircularProgressIndicator()
                 } else if (painter.state is ImagePainter.State.Error) {

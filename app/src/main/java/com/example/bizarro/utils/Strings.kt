@@ -6,6 +6,7 @@ object Strings {
     const val unknownError = "Wystąpił niezidentyfikowany problem!"
     const val networkError = "Wystąpił problem z połączeniem!"
     const val success = "Operacja przebiegła pomyślnie!"
+    const val successDelete = "Pomyślnie usunięto ogłoszenie."
     const val refresh = "Odśwież"
     const val iconBack = "Przycisk cofnięcia"
     const val accept = "Akceptuj"

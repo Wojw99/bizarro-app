@@ -214,7 +214,7 @@ fun AddRecordScreen(
             // * * * * * ACCEPT BUTTON * * * * *
             Button(
                 onClick = {
-                    viewModel.confirmAdding(context)
+                    viewModel.confirm(context)
                 },
                 modifier = Modifier
                     .fillMaxWidth()

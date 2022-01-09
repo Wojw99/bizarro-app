@@ -21,19 +21,21 @@ class UserRecordListViewModel @Inject constructor(
 ) : NetworkingViewModel() {
     val recordList = mutableStateOf<List<Record>>(listOf())
 
-//    private val observer: Observer<Boolean> = Observer {
-//        signal.value = false
-//        if (it) updateRecordList()
-//    }
+    private val observer: Observer<Boolean> = Observer {
+        if(it) {
+            signal.value = false
+            updateRecordList()
+        }
+    }
 
     init {
         updateRecordList()
-        //signal.observeForever(observer)
+        signal.observeForever(observer)
     }
 
     override fun onCleared() {
         super.onCleared()
-        //signal.removeObserver(observer)
+        signal.removeObserver(observer)
     }
 
     fun updateRecordList() {
@@ -57,11 +59,11 @@ class UserRecordListViewModel @Inject constructor(
         }
     }
 
-//    companion object {
-//        val signal = MutableLiveData(false)
-//
-//        fun signalUpdate() {
-//            signal.value = true
-//        }
-//    }
+    companion object {
+        val signal = MutableLiveData(false)
+
+        fun signalUpdate() {
+            signal.value = true
+        }
+    }
 }

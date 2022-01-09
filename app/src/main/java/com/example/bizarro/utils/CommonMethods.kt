@@ -11,8 +11,8 @@ import java.time.LocalDate
 import java.util.*
 
 object CommonMethods {
-    fun getUrlForImage(imgUrlClosure: String): String {
-        return Constants.BASE_URL + imgUrlClosure
+    fun getUrlForImage(imageUrl: String): String {
+        return "https${imageUrl.substring(4)}"
     }
 
     fun formatRecordTypeText(text: String) : String {
@@ -21,12 +21,24 @@ object CommonMethods {
         return firstLetter + lowerCase.substring(1)
     }
 
-    fun convertToPriceFormat(number: Double) : String{
+    fun convertToPriceFormat(number: Double?) : String{
+        if(number == null) return Strings.undefined
+
         var str = number.toString()
         str += "zł"
         str = str.replace('.', ',')
 
         return str
+    }
+
+    fun convertToRentalPeriodFormat(number: Int?) : String{
+        if(number == null) return Strings.undefined
+        return "$number${Strings.days}"
+    }
+
+    fun convertToSwapObjectFormat(swapObject: String?) : String{
+        if(swapObject == null) return Strings.undefined
+        return swapObject
     }
 
     fun convertToRecordBoxDateFormat(date: LocalDate) : String{

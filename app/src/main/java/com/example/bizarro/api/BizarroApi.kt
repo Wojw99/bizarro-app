@@ -46,10 +46,40 @@ interface BizarroApi {
 
         @Query("price") price: Double?,
         @Query("swapObject") swapObject: String?,
-        @Query("rentalPeriod") rentalPeriod: Double?,
+        @Query("rentalPeriod") rentalPeriod: Int?,
 
         @Body image: MultipartBody,
     ): Record
+
+    @DELETE("/post/{recordId}")
+    suspend fun deleteRecord(
+        @Header("Authorization") authHeader: String,
+        @Path("recordId") recordId: Long,
+    ): String
+
+    @PATCH("/post/{recordId}")
+    suspend fun updateRecord(
+        @Header("Authorization") authHeader: String,
+        @Path("recordId") recordId: Long,
+        @Body updateRecord: UpdateRecord,
+    ): String
+
+//    curl -X 'POST' \
+//    'https://bike-app-1.herokuapp.com/search_post/?min_price=1000&max_price=4000' \
+//    -H 'accept: application/json' \
+//    -d ''
+
+    @POST("/search_post")
+    suspend fun gerFilteredRecordList(
+        @Query("title") title: String?,
+        @Query("tape_of_service") type: String?,
+        @Query("category_of_bike") category: String?,
+        @Query("min_price") minPrice: Double?,
+        @Query("max_price") maxPrice: Double?,
+        @Query("address_province") province: String?,
+        @Query("swapObject") swapObject: String?,
+        @Query("rentalPeriod") rentalPeriod: Int?,
+    ): List<Record>
 
     // * * * * * OLD * * * * *
     @GET("records")

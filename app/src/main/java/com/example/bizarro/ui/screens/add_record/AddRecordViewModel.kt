@@ -17,6 +17,8 @@ import com.example.bizarro.api.models.Record
 import com.example.bizarro.repositories.RecordRepository
 import com.example.bizarro.ui.AppState
 import com.example.bizarro.ui.NetworkingViewModel
+import com.example.bizarro.ui.screens.record_details.RecordDetailsViewModel
+import com.example.bizarro.ui.screens.user_record_list.UserRecordListViewModel
 import com.example.bizarro.utils.CommonMethods
 import com.example.bizarro.utils.Constants
 import com.example.bizarro.utils.Resource
@@ -72,7 +74,7 @@ class AddRecordViewModel @Inject constructor(
 
     init {
         if (record != null) {
-            updateWithRecord(record!!)
+            updateViewWithRecord(record!!)
         }
     }
 
@@ -81,15 +83,14 @@ class AddRecordViewModel @Inject constructor(
         record = null
     }
 
-    private fun updateWithRecord(record: Record) {
+    private fun updateViewWithRecord(record: Record) {
         selectedType.value = record.type
         selectedCategory.value = record.category
         selectedProvince.value = record.addressProvince
 
-        // TODO: Change it to type specific price handling
-        priceText.value = record.price.toString()
-        swapObjectText.value = record.swapObject.toString()
-        rentPeriodText.value = record.rentalPeriod.toString()
+        priceText.value = if(record.price == null) "" else record.price.toString()
+        swapObjectText.value = if(record.swapObject == null) "" else record.swapObject.toString()
+        rentPeriodText.value = if(record.rentalPeriod == null) "" else record.rentalPeriod.toString()
 
         titleText.value = record.name
         descriptionText.value = record.body
@@ -98,12 +99,57 @@ class AddRecordViewModel @Inject constructor(
         numberText.value = record.addressNumber
     }
 
-    fun confirmAdding(context: Context) {
+    fun confirm(context: Context) {
         if (!allFieldsCorrect()) {
             endLoadingWithError(Strings.emptyFieldsError)
             return
         }
+        if(isEditScreen.value) {
+            updateRecord()
+        } else {
+            createRecord(context)
+        }
+    }
 
+    private fun updateRecord(){
+        if(record == null) {
+            Timber.e("Record companion object must be set before sending update!")
+            return
+        }
+
+        viewModelScope.launch {
+            startLoading()
+
+            val resource = repository.updateRecord(
+                recordId = record!!.id,
+                title = titleText.value,
+                body = descriptionText.value,
+                type = selectedType.value,
+                category = selectedCategory.value,
+                addressProvince = selectedProvince.value,
+                addressCity = cityText.value,
+                addressStreet = streetText.value,
+                addressNumber = numberText.value,
+                price = convertDouble(priceText),
+                swapObject = swapObjectText.value,
+                rentalPeriod = convertInteger(rentPeriodText),
+            )
+
+            when (resource) {
+                is Resource.Success -> {
+                    endLoading()
+                    isSuccess.value = true
+                    UserRecordListViewModel.signalUpdate()
+                    RecordDetailsViewModel.signalUpdate()
+                }
+                is Resource.Error<*> -> {
+                    endLoadingWithError(resource.message!!)
+                }
+            }
+        }
+    }
+
+    private fun createRecord(context: Context) {
         viewModelScope.launch {
             startLoading()
 
@@ -124,9 +170,9 @@ class AddRecordViewModel @Inject constructor(
                 addressCity = cityText.value,
                 addressStreet = streetText.value,
                 addressNumber = numberText.value,
-                price = convertNumber(priceText),
+                price = convertDouble(priceText),
                 swapObject = convertText(swapObjectText),
-                rentalPeriod = convertNumber(rentPeriodText),
+                rentalPeriod = convertInteger(rentPeriodText),
                 image = multipartBody,
             )
 
@@ -134,6 +180,7 @@ class AddRecordViewModel @Inject constructor(
                 is Resource.Success -> {
                     endLoading()
                     isSuccess.value = true
+                    UserRecordListViewModel.signalUpdate()
                 }
                 is Resource.Error<*> -> {
                     endLoadingWithError(resource.message!!)
@@ -163,9 +210,14 @@ class AddRecordViewModel @Inject constructor(
         return text.value
     }
 
-    private fun convertNumber(text: MutableState<String>): Double? {
-        if (text.value.isEmpty()) return null
+    private fun convertDouble(text: MutableState<String>): Double? {
+        if (text.value.isEmpty()) return 1.0
         return text.value.toDouble()
+    }
+
+    private fun convertInteger(text: MutableState<String>): Int? {
+        if (text.value.isEmpty()) return 1
+        return text.value.toInt()
     }
 
     fun cleanStates() {
@@ -175,7 +227,6 @@ class AddRecordViewModel @Inject constructor(
         selectedCategory.value = empty
         selectedProvince.value = empty
 
-        // TODO: Change it to type specific price handling
         priceText.value = empty
         swapObjectText.value = empty
         rentPeriodText.value = empty

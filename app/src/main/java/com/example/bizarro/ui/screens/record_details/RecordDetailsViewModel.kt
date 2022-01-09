@@ -1,14 +1,17 @@
 package com.example.bizarro.ui.screens.record_details
 
 import androidx.compose.runtime.mutableStateOf
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.Observer
 import androidx.lifecycle.viewModelScope
 import com.example.bizarro.api.models.Record
-import com.example.bizarro.api.models.UserProfile
+import com.example.bizarro.api.models.RecordDetails
 import com.example.bizarro.repositories.OpinionsRepository
+import com.example.bizarro.repositories.RecordRepository
 import com.example.bizarro.repositories.UserRepository
 import com.example.bizarro.ui.AppState
 import com.example.bizarro.ui.NetworkingViewModel
-import com.example.bizarro.ui.screens.add_record.AddRecordViewModel
+import com.example.bizarro.ui.screens.user_record_list.UserRecordListViewModel
 import com.example.bizarro.utils.CommonMethods
 import com.example.bizarro.utils.Constants
 import com.example.bizarro.utils.Resource
@@ -23,10 +26,17 @@ class RecordDetailsViewModel @Inject constructor(
     val appState: AppState,
     private val userRepository: UserRepository,
     private val opinionsRepository: OpinionsRepository,
+    private val recordRepository: RecordRepository,
 ) : NetworkingViewModel() {
     companion object{
         var record: Record? = null
         var userId: Long? = null
+
+        val signal = MutableLiveData(false)
+
+        fun signalUpdate() {
+            signal.value = true
+        }
     }
 
     val topBarTitle = mutableStateOf("")
@@ -46,16 +56,69 @@ class RecordDetailsViewModel @Inject constructor(
     val recordAddress = mutableStateOf("")
 
     val isCurrentUser = mutableStateOf(userId == userRepository.userId)
+    val successfullyDeleted = mutableStateOf(false)
+
+    private val observer: Observer<Boolean> = Observer {
+        if(it) {
+            signal.value = false
+            loadNewRecord()
+        }
+    }
 
     init{
         updateProfileInfo()
         updateRecordInfo()
+        signal.observeForever(observer)
     }
 
     override fun onCleared() {
         super.onCleared()
+        signal.removeObserver(observer)
         record = null
         userId = null
+    }
+
+    private fun loadNewRecord() {
+        viewModelScope.launch {
+            startLoading()
+            val resource = recordRepository.getRecordDetails(recordId = record!!.id)
+
+            when (resource) {
+                is Resource.Success -> {
+                    endLoading()
+                    val recordDetails = resource.data as RecordDetails
+                    record = recordDetails.postDetails
+                    updateRecordInfo()
+                }
+                is Resource.Error<*> -> {
+                    endLoadingWithError(resource.message!!)
+                }
+            }
+        }
+    }
+
+    fun deleteRecord() {
+        if(record == null) {
+            loadError.value = Strings.recordLoadError
+            Timber.e("Deleting record failed. Record companion object must be set before initializing this view model.")
+            return
+        }
+
+        viewModelScope.launch {
+            startLoading()
+            val resource = recordRepository.deleteRecord(recordId = record!!.id)
+
+            when (resource) {
+                is Resource.Success -> {
+                    endLoading()
+                    successfullyDeleted.value = true
+                    UserRecordListViewModel.signalUpdate()
+                }
+                is Resource.Error<*> -> {
+                    endLoadingWithError(resource.message!!)
+                }
+            }
+        }
     }
 
     fun updateRecordInfo() {
@@ -70,16 +133,17 @@ class RecordDetailsViewModel @Inject constructor(
             recordImagePath.value = record!!.imagePath.toString()
 
         if(record!!.type == Constants.TYPE_BUY) {
-            recordHeader.value = "${record!!.price}${Strings.priceSuffix}"
+            recordHeader.value = CommonMethods.convertToPriceFormat(record!!.price)
             recordLabel.value = Strings.titleSectionPurchaseLabel
         } else if (record!!.type == Constants.TYPE_SELL) {
-            recordHeader.value = "${record!!.price}${Strings.priceSuffix}"
+            recordHeader.value = CommonMethods.convertToPriceFormat(record!!.price)
             recordLabel.value = Strings.titleSectionSellLabel
         } else if (record!!.type == Constants.TYPE_SWAP) {
-            recordHeader.value = "${record!!.swapObject}"
+            recordHeader.value = CommonMethods.convertToSwapObjectFormat(record!!.swapObject)
             recordLabel.value = Strings.titleSectionSwapLabel
         } else if (record!!.type == Constants.TYPE_RENT) {
-            recordHeader.value = "${record!!.price}${Strings.priceSuffix}, ${record!!.rentalPeriod} ${Strings.days}"
+            recordHeader.value = "${CommonMethods.convertToPriceFormat(record!!.price)}, ${CommonMethods.convertToRentalPeriodFormat(
+                record!!.rentalPeriod)}"
             recordLabel.value = Strings.titleSectionRentLabel
         }
 
