@@ -19,7 +19,6 @@ class UserRepository @Inject constructor(
     private val tokenManager: TokenManager,
 ) {
     var userId: Long? = null
-    var accessToken: String? = null
 
     /**
      * Post login values and save access token.
@@ -33,9 +32,6 @@ class UserRepository @Inject constructor(
             val errorText = parseLoginError(e)
             return Resource.Error(errorText)
         }
-        // TODO: Should it be here?
-        // TODO: Remove log
-        tokenManager.saveAccessToken(response.accessToken)
         return Resource.Success(response)
     }
 
@@ -45,6 +41,7 @@ class UserRepository @Inject constructor(
                 return Strings.errorIncorrectEmailOrPassword
             }
         }
+
         return Strings.unknownError
     }
 
@@ -61,7 +58,7 @@ class UserRepository @Inject constructor(
             Timber.e(e)
             return Resource.Error(Strings.unknownError)
         }
-        userId = response.userId
+
         return Resource.Success(response)
     }
 

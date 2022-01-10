@@ -2,6 +2,7 @@ package com.example.bizarro.ui.screens.authenticate
 
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.viewModelScope
+import com.example.bizarro.managers.TokenManager
 import com.example.bizarro.repositories.UserRepository
 import com.example.bizarro.ui.AppState
 import com.example.bizarro.ui.NetworkingViewModel
@@ -9,7 +10,6 @@ import com.example.bizarro.utils.CommonMethods
 import com.example.bizarro.utils.Resource
 import com.example.bizarro.utils.Strings
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -17,6 +17,7 @@ import javax.inject.Inject
 class AuthenticateViewModel @Inject constructor(
     val appState: AppState,
     private val userRepository: UserRepository,
+    private val tokenManager: TokenManager,
 ) : NetworkingViewModel() {
     // TODO: remove it
     var userNameLoginText = mutableStateOf("admin")
@@ -30,6 +31,19 @@ class AuthenticateViewModel @Inject constructor(
     var successfullyLogin = mutableStateOf(false)
     var successfullyRegister = mutableStateOf(false)
 
+    init {
+        tryLoadToken()
+    }
+
+    private fun tryLoadToken(){
+        if(tokenManager.accessTokenExists()) {
+            tokenManager.loadAccessToken()
+            successfullyLogin.value = true
+        }
+        val token = tokenManager.accessToken
+        val str = ""
+    }
+
     fun login() {
         viewModelScope.launch {
             startLoading()
@@ -38,6 +52,7 @@ class AuthenticateViewModel @Inject constructor(
 
             when (resource) {
                 is Resource.Success -> {
+                    tokenManager.saveAccessToken(resource.data!!.accessToken)
                     getUserProfile()
                 }
                 is Resource.Error<*> -> {
@@ -47,7 +62,7 @@ class AuthenticateViewModel @Inject constructor(
         }
     }
 
-    fun getUserProfile() {
+    private fun getUserProfile() {
         viewModelScope.launch {
             startLoading()
 
@@ -56,6 +71,7 @@ class AuthenticateViewModel @Inject constructor(
             when (resource) {
                 is Resource.Success -> {
                     endLoading()
+                    userRepository.userId = resource.data!!.userId
                     successfullyLogin.value = true
                 }
                 is Resource.Error<*> -> {

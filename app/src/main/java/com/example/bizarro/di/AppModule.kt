@@ -1,5 +1,6 @@
 package com.example.bizarro.di
 
+import android.content.Context
 import com.example.bizarro.api.BizarroApi
 import com.example.bizarro.api.deserializers.CustomDateDeserializer
 import com.example.bizarro.api.deserializers.CustomDateSerializer
@@ -16,6 +17,7 @@ import com.google.gson.GsonBuilder
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -44,8 +46,10 @@ class AppModule {
 
     @Singleton
     @Provides
-    fun provideTokenManager(): TokenManager {
-        return TokenManager()
+    fun provideTokenManager(
+        @ApplicationContext appContext: Context
+    ): TokenManager {
+        return TokenManager(appContext)
     }
 
     @Singleton
