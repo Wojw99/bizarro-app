@@ -38,10 +38,8 @@ class AuthenticateViewModel @Inject constructor(
     private fun tryLoadToken(){
         if(tokenManager.accessTokenExists()) {
             tokenManager.loadAccessToken()
-            successfullyLogin.value = true
+            getUserProfile()
         }
-        val token = tokenManager.accessToken
-        val str = ""
     }
 
     fun login() {
