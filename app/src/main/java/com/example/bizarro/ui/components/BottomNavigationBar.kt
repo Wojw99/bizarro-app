@@ -14,6 +14,7 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.compose.currentBackStackEntryAsState
+import com.example.bizarro.ui.Screen
 import com.example.bizarro.ui.theme.*
 
 @Composable
@@ -30,7 +31,7 @@ fun BottomNavigationBar(
                 selected = selected,
                 onClick = {
                     navController.navigate(item.route) {
-                        popUpTo(navController.graph.findStartDestination().id) {
+                        popUpTo(Screen.UserRecordList.route) {
                             saveState = true
                         }
                         launchSingleTop = true
