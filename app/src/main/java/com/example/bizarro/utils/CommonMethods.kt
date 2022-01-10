@@ -3,6 +3,7 @@ package com.example.bizarro.utils
 import android.content.Context
 import android.content.ContextWrapper
 import android.graphics.Bitmap
+import android.text.TextUtils
 import java.io.File
 import java.io.FileOutputStream
 import java.io.IOException
@@ -11,6 +12,14 @@ import java.time.LocalDate
 import java.util.*
 
 object CommonMethods {
+    fun isValidEmail(email: String): Boolean{
+        if (TextUtils.isEmpty(email)) {
+            return false
+        } else {
+            return android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches();
+        }
+    }
+
     fun convertEmptyStringToNull(string: String?): String? {
         if (string != null && string.isEmpty()) {
             return null

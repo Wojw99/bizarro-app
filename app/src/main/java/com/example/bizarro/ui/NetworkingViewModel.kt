@@ -26,4 +26,8 @@ open class NetworkingViewModel : ViewModel() {
     fun clearError(){
         loadError.value = ""
     }
+
+    fun isError(): Boolean {
+        return loadError.value != ""
+    }
 }

@@ -6,10 +6,12 @@ import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Email
 import androidx.compose.material.icons.filled.Lock
+import androidx.compose.material.icons.filled.Person
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.navigation.NavController
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontFamily
@@ -26,7 +28,9 @@ import com.example.bizarro.ui.Screen
 import com.example.bizarro.ui.components.ConfirmAlertDialog
 import com.example.bizarro.ui.components.CustomOutlinedTextField
 import com.example.bizarro.ui.components.LoadingBox
+import com.example.bizarro.ui.screens.add_record.textFieldModifier
 import com.example.bizarro.ui.theme.BizarroTheme
+import com.example.bizarro.ui.theme.kGray
 import com.example.bizarro.ui.theme.kWhite
 import com.example.bizarro.utils.Constants
 import com.example.bizarro.utils.Dimens
@@ -45,25 +49,7 @@ fun SignInScreen(
     ) {
         Box {
             // * * * * * * BODY * * * * * *
-            Column(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .background(MaterialTheme.colors.background),
-                horizontalAlignment = Alignment.CenterHorizontally
-            ) {
-
-                Spacer(modifier = Modifier.height(100.dp))
-
-                Text(
-                    "Witaj w Bizarro!",
-                    style = MaterialTheme.typography.caption,
-                    color = MaterialTheme.colors.onSurface
-                )
-
-                Spacer(modifier = Modifier.height(80.dp))
-
-                LoginFields(navController)
-            }
+            SignInScreenBody(navController)
 
             // * * * * * * ERROR DIALOG * * * * * *
             if (viewModel.loadError.value.isNotEmpty()) {
@@ -91,95 +77,86 @@ fun SignInScreen(
 
 @ExperimentalComposeUiApi
 @Composable
-fun LoginFields(
+fun SignInScreenBody(
     navController: NavController,
-    viewModel: AuthenticateViewModel = hiltViewModel()
+    modifier: Modifier = Modifier,
+    viewModel: AuthenticateViewModel = hiltViewModel(),
 ) {
-    CustomOutlinedTextField(
-        value = viewModel.emailLoginText.value,
-        onValueChange = {
-            viewModel.emailLoginText.value = it
-        },
-        placeholderText = "Podaj swój email",
-        labelText = "Email",
-        keyboardType = KeyboardType.Text,
-        leadingIcon = {
-            Icon(
-                imageVector = Icons.Default.Email, contentDescription = "EmailIcon",
-                tint = MaterialTheme.colors.onSurface
-            )
-        },
+    Column(
         modifier = Modifier
-            .fillMaxWidth()
-            .padding(horizontal = horizontalPadding, vertical = verticalPadding),
-    )
-
-    Spacer(modifier = Modifier.height(20.dp))
-
-    CustomOutlinedTextField(
-        value = viewModel.passwordLoginText.value,
-        onValueChange = {
-            viewModel.passwordLoginText.value = it
-        },
-        placeholderText = "Podaj swoje hasło",
-        labelText = "Hasło",
-        keyboardType = KeyboardType.Password,
-        leadingIcon = {
-            Icon(
-                imageVector = Icons.Default.Lock, contentDescription = "PasswordIcon",
-                tint = MaterialTheme.colors.onSurface
-            )
-        },
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(horizontal = horizontalPadding, vertical = verticalPadding),
-        visualTransformation = PasswordVisualTransformation(),
-    )
-
-    Spacer(modifier = Modifier.height(50.dp))
-
-    Button(
-        onClick = { viewModel.login() },
-        Modifier
-            .fillMaxWidth()
-            .padding(horizontal = horizontalPadding, vertical = verticalPadding),
-        colors = ButtonDefaults.buttonColors(backgroundColor = MaterialTheme.colors.onSurface),
+            .fillMaxSize()
+            .background(MaterialTheme.colors.background)
+            .padding(horizontal = Dimens.standardPadding * 2),
+        horizontalAlignment = Alignment.CenterHorizontally
     ) {
+        val spacerHeight = 16.dp
+
+        Spacer(modifier = Modifier.height(100.dp))
+
         Text(
-            text = "Zaloguj",
-            style = MaterialTheme.typography.button,
-            color = MaterialTheme.colors.background,
-        )
-    }
-
-    Spacer(modifier = Modifier.height(10.dp))
-
-    Text(
-        "ALBO",
-        style = TextStyle(
-            fontSize = 20.sp,
-            fontFamily = FontFamily.Serif,
-            fontWeight = FontWeight.Bold,
+            Strings.welcomeToBizarro,
+            style = MaterialTheme.typography.caption,
             color = MaterialTheme.colors.onSurface
         )
-    )
 
-    Spacer(modifier = Modifier.height(10.dp))
+        Spacer(modifier = Modifier.height(spacerHeight * 4))
 
-    Button(
-        onClick = {
-            navController.navigate(route = Screen.SignUp.route)
-        },
-        Modifier
-            .fillMaxWidth()
-            .padding(horizontal = horizontalPadding, vertical = verticalPadding),
-        colors = ButtonDefaults.buttonColors(backgroundColor = MaterialTheme.colors.onSurface),
-    )
-    {
-        Text(
-            text = "Zarejestruj",
-            style = MaterialTheme.typography.button,
-            color = MaterialTheme.colors.background,
+        CustomOutlinedTextField(
+            value = viewModel.userNameLoginText.value,
+            onValueChange = { viewModel.userNameLoginText.value = it },
+            labelText = Strings.username,
+            keyboardType = KeyboardType.Text,
+            modifier = textFieldModifier,
+            leadingIcon = {
+                Icon(
+                    imageVector = Icons.Default.Person, contentDescription = "person icon",
+                    tint = MaterialTheme.colors.onSurface
+                )
+            }
         )
+
+        Spacer(modifier = Modifier.height(spacerHeight))
+
+        CustomOutlinedTextField(
+            value = viewModel.passwordLoginText.value,
+            onValueChange = { viewModel.passwordLoginText.value = it },
+            labelText = Strings.passwordRepeat,
+            keyboardType = KeyboardType.Text,
+            modifier = textFieldModifier,
+            leadingIcon = {
+                Icon(
+                    imageVector = Icons.Default.Lock, contentDescription = "lock icon",
+                    tint = MaterialTheme.colors.onSurface
+                )
+            },
+            visualTransformation = PasswordVisualTransformation(),
+        )
+
+        Spacer(modifier = Modifier.height(spacerHeight * 2))
+
+        // * * * * * ACCEPT BUTTON * * * * *
+        Button(
+            onClick = {
+                viewModel.login()
+            },
+            modifier = Modifier.fillMaxWidth(),
+            colors = ButtonDefaults.buttonColors(backgroundColor = MaterialTheme.colors.onSurface),
+        ) {
+            Text(text = Strings.login, color = kWhite)
+        }
+
+        Spacer(modifier = Modifier.height(spacerHeight * 4))
+
+        // * * * * * GO TO REGISTER BUTTON * * * * *
+        Button(
+            onClick = {
+                navController.navigate(route = Screen.SignUp.route)
+            },
+            modifier = Modifier.fillMaxWidth(),
+            colors = ButtonDefaults.buttonColors(backgroundColor = Color.Transparent),
+            elevation = null,
+        ) {
+            Text(text = Strings.goToRegister, color = kGray)
+        }
     }
 }

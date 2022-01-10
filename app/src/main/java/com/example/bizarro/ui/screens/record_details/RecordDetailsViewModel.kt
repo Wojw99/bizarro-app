@@ -172,7 +172,7 @@ class RecordDetailsViewModel @Inject constructor(
 
                     val profile: UserProfile = resource.data?.userProfile ?: return@launch
                     val markInfo: MarkInfo = resource.data.markInfo
-                    topBarTitle.value = "${profile.firstName} ${profile.lastName}"
+                    topBarTitle.value = profile.username
                     topBarImagePath.value = profile.imagePath ?: Constants.USER_DEFAULT_IMG_URL
                     recordGeneralOpinion.value = markInfo.textMark
                     recordGeneralOpinionDesc.value = markInfo.textMark

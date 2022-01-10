@@ -24,6 +24,11 @@ interface BizarroApi {
         @Path("userId") userId: Long,
     ): UserDetails
 
+    @POST("/users/")
+    suspend fun createUser(
+        @Body addUser: AddUser
+    ): UserProfile
+
     // * * * * * POSTS * * * * *
     @GET("/user_posts")
     suspend fun getUserRecords(

@@ -27,6 +27,20 @@ object Strings {
     const val photo = "Zdjęcie"
     const val edit_profile = "Edytuj profil"
     const val see_opinions = "Zobacz opinie"
+    const val welcomeToBizarro = "Witamy w Bizarro!"
+
+    // * * * * * * * * LOGIN/REGISTER * * * * * * * *
+    const val username = "Nazwa użytkownika"
+    const val password = "Hasło"
+    const val passwordRepeat = "Powtórz hasło"
+    const val email = "E-mail"
+    const val register = "Zarejestruj"
+    const val login = "Zaloguj"
+    const val returnToLogin = "Powrót do logowania"
+    const val goToRegister = "lub utwórz konto"
+
+    const val passwordNotEqualsError = "Hasła nie są takie same!"
+    const val emailIncorrectError = "E-mail nie jest poprawny!"
 
     // * * * * * * * * SEARCH SCREEN * * * * * * * *
     const val recordImage = "Zdjęcie ogłoszenia."

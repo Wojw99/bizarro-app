@@ -6,10 +6,12 @@ import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Email
 import androidx.compose.material.icons.filled.Lock
+import androidx.compose.material.icons.filled.Person
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
@@ -20,13 +22,15 @@ import com.example.bizarro.ui.Screen
 import com.example.bizarro.ui.components.ConfirmAlertDialog
 import com.example.bizarro.ui.components.CustomOutlinedTextField
 import com.example.bizarro.ui.components.LoadingBox
+import com.example.bizarro.ui.screens.add_record.textFieldModifier
+import com.example.bizarro.ui.screens.filter.headerModifier
+import com.example.bizarro.ui.screens.filter.headerStyle
 import com.example.bizarro.ui.theme.BizarroTheme
+import com.example.bizarro.ui.theme.kGray
+import com.example.bizarro.ui.theme.kWhite
 import com.example.bizarro.utils.Constants
 import com.example.bizarro.utils.Strings
 import com.example.bizarro.utils.Dimens
-
-val verticalPadding = Dimens.standardPadding
-val horizontalPadding = Dimens.standardPadding * 2
 
 @ExperimentalComposeUiApi
 @Composable
@@ -39,26 +43,9 @@ fun SignUpScreen(
     BizarroTheme(
         darkTheme = Constants.isDark.value
     ) {
-        Box{
+        Box {
             // * * * * * BODY * * * * *
-            Column(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .background(MaterialTheme.colors.background),
-                horizontalAlignment = Alignment.CenterHorizontally
-            ) {
-                Spacer(modifier = Modifier.height(100.dp))
-
-                Text(
-                    "Zapisz się do Bizarro!",
-                    style = MaterialTheme.typography.caption,
-                    color = MaterialTheme.colors.onSurface
-                )
-
-                Spacer(modifier = Modifier.height(80.dp))
-
-                RegisterFields(navController)
-            }
+            SignUpScreenBody(navController)
 
             // * * * * * * ERROR DIALOG * * * * * *
             if (viewModel.loadError.value.isNotEmpty()) {
@@ -70,10 +57,15 @@ fun SignUpScreen(
             }
 
             // * * * * * * SUCCESS * * * * * *
-            if (viewModel.successfullyLogin.value) {
-                viewModel.successfullyLogin.value = false
-                navController.popBackStack()
-                navController.navigate(Screen.UserRecordList.route)
+            if (viewModel.successfullyRegister.value) {
+                ConfirmAlertDialog(
+                    onDismiss = {
+                        viewModel.successfullyRegister.value = false
+                        navController.popBackStack()
+                    },
+                    title = Strings.success2,
+                    body = Strings.success,
+                )
             }
 
             // * * * * * * PROGRESS BAR * * * * * *
@@ -86,86 +78,119 @@ fun SignUpScreen(
 
 @ExperimentalComposeUiApi
 @Composable
-fun RegisterFields(
+fun SignUpScreenBody(
     navController: NavController,
-    viewModel: AuthenticateViewModel = hiltViewModel()
+    modifier: Modifier = Modifier,
+    viewModel: AuthenticateViewModel = hiltViewModel(),
 ) {
-    CustomOutlinedTextField(
-        value = viewModel.emailRegisterText.value,
-        onValueChange = {
-            viewModel.emailRegisterText.value = it
-        },
-        placeholderText = "Podaj swój email",
-        labelText = "Email",
-        keyboardType = KeyboardType.Text,
+    Column(
         modifier = Modifier
-            .fillMaxWidth()
-            .padding(horizontal = horizontalPadding, vertical = verticalPadding),
-        leadingIcon = {
-            Icon(
-                imageVector = Icons.Default.Email, contentDescription = "EmailIcon",
-                tint = MaterialTheme.colors.onSurface
-            )
-        },
-    )
+            .fillMaxSize()
+            .background(MaterialTheme.colors.background)
+            .padding(horizontal = Dimens.standardPadding * 2),
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        val spacerHeight = 16.dp
 
-    Spacer(modifier = Modifier.height(20.dp))
+        Spacer(modifier = Modifier.height(100.dp))
 
-    CustomOutlinedTextField(
-        value = viewModel.passwordRegisterText.value,
-        onValueChange = {
-            viewModel.passwordRegisterText.value = it
-        },
-        placeholderText = "Podaj swoje hasło",
-        labelText = "Hasło",
-        keyboardType = KeyboardType.Password,
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(horizontal = horizontalPadding, vertical = verticalPadding),
-        leadingIcon = {
-            Icon(
-                imageVector = Icons.Default.Lock, contentDescription = "PasswordIcon",
-                tint = MaterialTheme.colors.onSurface
-            )
-        },
-        visualTransformation = PasswordVisualTransformation(),
-    )
-
-    Spacer(modifier = Modifier.height(50.dp))
-
-    Button(
-        onClick = {
-            viewModel.register()
-        },
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(horizontal = horizontalPadding, vertical = verticalPadding),
-        colors = ButtonDefaults.buttonColors(backgroundColor = MaterialTheme.colors.onSurface),
-    )
-    {
         Text(
-            text = "Zarejestruj",
-            style = MaterialTheme.typography.button,
-            color = MaterialTheme.colors.background,
+            Strings.welcomeToBizarro,
+            style = MaterialTheme.typography.caption,
+            color = MaterialTheme.colors.onSurface
         )
-    }
 
-    Spacer(modifier = Modifier.height(20.dp))
+        Spacer(modifier = Modifier.height(spacerHeight * 4))
 
-    Button(
-        onClick = {
-            navController.popBackStack()
-        },
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(horizontal = horizontalPadding, vertical = verticalPadding),
-        colors = ButtonDefaults.buttonColors(backgroundColor = MaterialTheme.colors.onSurface),
-    )
-    {
-        Text(
-            text = "Logowanie",
-            style = MaterialTheme.typography.button,
-            color = MaterialTheme.colors.background,
+        CustomOutlinedTextField(
+            value = viewModel.userNameRegisterText.value,
+            onValueChange = { viewModel.userNameRegisterText.value = it },
+            labelText = Strings.username,
+            keyboardType = KeyboardType.Text,
+            modifier = textFieldModifier,
+            leadingIcon = {
+                Icon(
+                    imageVector = Icons.Default.Person, contentDescription = "person icon",
+                    tint = MaterialTheme.colors.onSurface
+                )
+            }
         )
+
+        Spacer(modifier = Modifier.height(spacerHeight))
+
+        CustomOutlinedTextField(
+            value = viewModel.emailRegisterText.value,
+            onValueChange = { viewModel.emailRegisterText.value = it },
+            labelText = Strings.email,
+            keyboardType = KeyboardType.Text,
+            modifier = textFieldModifier,
+            leadingIcon = {
+                Icon(
+                    imageVector = Icons.Default.Email, contentDescription = "email icon",
+                    tint = MaterialTheme.colors.onSurface
+                )
+            }
+        )
+
+        Spacer(modifier = Modifier.height(spacerHeight))
+
+        CustomOutlinedTextField(
+            value = viewModel.passwordRegisterText.value,
+            onValueChange = { viewModel.passwordRegisterText.value = it },
+            labelText = Strings.password,
+            keyboardType = KeyboardType.Text,
+            modifier = textFieldModifier,
+            leadingIcon = {
+                Icon(
+                    imageVector = Icons.Default.Lock, contentDescription = "lock icon",
+                    tint = MaterialTheme.colors.onSurface
+                )
+            },
+            visualTransformation = PasswordVisualTransformation(),
+        )
+
+        Spacer(modifier = Modifier.height(spacerHeight))
+
+        CustomOutlinedTextField(
+            value = viewModel.passwordRepeatRegisterText.value,
+            onValueChange = { viewModel.passwordRepeatRegisterText.value = it },
+            labelText = Strings.passwordRepeat,
+            keyboardType = KeyboardType.Text,
+            modifier = textFieldModifier,
+            leadingIcon = {
+                Icon(
+                    imageVector = Icons.Default.Lock, contentDescription = "lock icon",
+                    tint = MaterialTheme.colors.onSurface
+                )
+            },
+            visualTransformation = PasswordVisualTransformation(),
+        )
+
+        Spacer(modifier = Modifier.height(spacerHeight * 2))
+
+        // * * * * * ACCEPT BUTTON * * * * *
+        Button(
+            onClick = {
+                viewModel.register()
+            },
+            modifier = Modifier.fillMaxWidth(),
+            colors = ButtonDefaults.buttonColors(backgroundColor = MaterialTheme.colors.onSurface),
+        ) {
+            Text(text = Strings.register, color = kWhite)
+        }
+
+        Spacer(modifier = Modifier.height(spacerHeight * 4))
+
+        // * * * * * BACK BUTTON * * * * *
+        Button(
+            onClick = {
+                navController.popBackStack()
+            },
+            modifier = Modifier.fillMaxWidth(),
+            colors = ButtonDefaults.buttonColors(backgroundColor = Color.Transparent),
+            elevation = null,
+        ) {
+            Text(text = Strings.returnToLogin, color = kGray)
+        }
     }
 }

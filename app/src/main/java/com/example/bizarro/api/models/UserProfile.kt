@@ -6,6 +6,8 @@ import java.time.LocalDate
 data class UserProfile (
     @SerializedName("id")
     val userId: Long,
+    @SerializedName("username")
+    val username: String,
     @SerializedName("created_date")
     val creationDate: LocalDate,
     @SerializedName("description")
