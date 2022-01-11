@@ -1,5 +1,6 @@
 package com.example.bizarro.ui.screens.record_details
 
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
@@ -8,6 +9,7 @@ import com.example.bizarro.api.models.MarkInfo
 import com.example.bizarro.api.models.Record
 import com.example.bizarro.api.models.RecordDetails
 import com.example.bizarro.api.models.UserProfile
+import com.example.bizarro.repositories.CompareRepository
 import com.example.bizarro.repositories.OpinionsRepository
 import com.example.bizarro.repositories.RecordRepository
 import com.example.bizarro.repositories.UserRepository
@@ -20,6 +22,7 @@ import com.example.bizarro.utils.Resource
 import com.example.bizarro.utils.Strings
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import okhttp3.internal.notify
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -29,6 +32,7 @@ class RecordDetailsViewModel @Inject constructor(
     private val userRepository: UserRepository,
     private val opinionsRepository: OpinionsRepository,
     private val recordRepository: RecordRepository,
+    private val compareRepository: CompareRepository,
 ) : NetworkingViewModel() {
     companion object{
         var record: Record? = null
@@ -58,6 +62,7 @@ class RecordDetailsViewModel @Inject constructor(
     val recordAddress = mutableStateOf("")
 
     val isCurrentUser = mutableStateOf(userId == userRepository.userId)
+    val recordInCompareList = mutableStateOf(compareRepository.compareList.value.contains(record))
     val successfullyDeleted = mutableStateOf(false)
 
     private val observer: Observer<Boolean> = Observer {
@@ -96,6 +101,24 @@ class RecordDetailsViewModel @Inject constructor(
                     endLoadingWithError(resource.message!!)
                 }
             }
+        }
+    }
+
+    fun addToCompareList(){
+        if(record == null) {
+            Timber.e("Deleting record failed. Record companion object must be set before doing this operation.")
+        } else {
+            compareRepository.compareList.value.add(record!!)
+            recordInCompareList.value = true
+        }
+    }
+
+    fun removeFromCompareList() {
+        if(record == null) {
+            Timber.e("Deleting record failed. Record companion object must be set before doing this operation.")
+        } else {
+            compareRepository.compareList.value.remove(record!!)
+            recordInCompareList.value = false
         }
     }
 

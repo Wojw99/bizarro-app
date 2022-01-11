@@ -1,5 +1,6 @@
 package com.example.bizarro.ui.screens.record_details
 
+import android.widget.Toast
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.layout.Box
@@ -9,6 +10,8 @@ import androidx.compose.material.MaterialTheme.colors
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Edit
+import androidx.compose.material.icons.filled.Favorite
+import androidx.compose.material.icons.filled.FavoriteBorder
 import androidx.compose.material.icons.outlined.Info
 import androidx.compose.material.icons.outlined.LocationOn
 import androidx.compose.material.icons.outlined.Settings
@@ -17,6 +20,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
@@ -47,6 +51,8 @@ fun RecordDetailsScreen(
 ) {
     viewModel.appState.bottomMenuVisible.value = false
 
+    val context = LocalContext.current
+
     BizarroTheme(darkTheme = Constants.isDark.value)
     {
         Box {
@@ -69,10 +75,11 @@ fun RecordDetailsScreen(
                 Column(
                     verticalArrangement = Arrangement.Center,
                     horizontalAlignment = Alignment.CenterHorizontally,
-                    modifier = Modifier.fillMaxSize()
+                    modifier = Modifier
+                        .fillMaxSize()
                         .background(colors.background),
 
-                ) {
+                    ) {
                     Text(
                         text = viewModel.loadError.value,
                         color = colors.onSurface
@@ -97,7 +104,8 @@ fun RecordDetailsScreen(
                 modifier = Modifier
                     .background(colors.background)
                     .align(Alignment.TopCenter),
-                actions = if (viewModel.isCurrentUser.value)
+                actions =
+                if (viewModel.isCurrentUser.value)
                     listOf(
                         TopBarAction(
                             onClick = {
@@ -114,7 +122,36 @@ fun RecordDetailsScreen(
                             icon = Icons.Default.Delete,
                             contentDescription = Strings.delete,
                         )
-                    ) else listOf(),
+                    )
+                else if (!viewModel.recordInCompareList.value) listOf(
+                    TopBarAction(
+                        onClick = {
+                            viewModel.addToCompareList()
+                            Toast.makeText(
+                                context,
+                                Strings.addToCompareSuccessMessage,
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        },
+                        icon = Icons.Default.FavoriteBorder,
+                        contentDescription = "favorite border icon",
+                    )
+                )
+                else if (viewModel.recordInCompareList.value) listOf(
+                    TopBarAction(
+                        onClick = {
+                            viewModel.removeFromCompareList()
+                            Toast.makeText(
+                                context,
+                                Strings.removeFromCompareSuccessMessage,
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        },
+                        icon = Icons.Default.Favorite,
+                        contentDescription = "favorite icon",
+                    )
+                )
+                else listOf(),
                 onTitleClick = {
                     if (!viewModel.isCurrentUser.value) {
                         OtherUserViewModel.otherUserId = RecordDetailsViewModel.userId!!
@@ -156,11 +193,10 @@ fun RecordDetailsBody(
         Box {
             var painter = painterResource(id = R.drawable.bike_default)
 
-            if(viewModel.recordImagePath.value != null) {
+            if (viewModel.recordImagePath.value != null) {
                 painter = rememberImagePainter(
                     CommonMethods.getUrlForImage(viewModel.recordImagePath.value!!)
                 )
-                val url = CommonMethods.getUrlForImage(viewModel.recordImagePath.value!!)
                 if (painter.state is ImagePainter.State.Loading) {
                     CircularProgressIndicator()
                 } else if (painter.state is ImagePainter.State.Error) {
@@ -186,7 +222,10 @@ fun RecordDetailsBody(
         ) {
             Box(
                 modifier = Modifier
-                    .background(colors.background, RoundedCornerShape(bottomStart = 16.dp, bottomEnd = 16.dp))
+                    .background(
+                        colors.background,
+                        RoundedCornerShape(bottomStart = 16.dp, bottomEnd = 16.dp)
+                    )
                     .fillMaxWidth()
             ) {
                 Column(
@@ -304,7 +343,10 @@ fun RecordDetailsBody(
                     // Show opinion button only if record is not own by the logged user
                     Box(
                         modifier = Modifier
-                            .background(colors.primaryVariant, RoundedCornerShape(Dimens.cornerRadius))
+                            .background(
+                                colors.primaryVariant,
+                                RoundedCornerShape(Dimens.cornerRadius)
+                            )
                             .clickable {
                                 OtherUserViewModel.otherUserId = RecordDetailsViewModel.userId!!
                                 navController.navigate(Screen.AddOpinion.route)

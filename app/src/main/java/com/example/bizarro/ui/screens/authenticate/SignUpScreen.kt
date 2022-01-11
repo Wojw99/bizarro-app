@@ -17,14 +17,10 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
-import androidx.navigation.NavGraph.Companion.findStartDestination
-import com.example.bizarro.ui.Screen
 import com.example.bizarro.ui.components.ConfirmAlertDialog
 import com.example.bizarro.ui.components.CustomOutlinedTextField
 import com.example.bizarro.ui.components.LoadingBox
 import com.example.bizarro.ui.screens.add_record.textFieldModifier
-import com.example.bizarro.ui.screens.filter.headerModifier
-import com.example.bizarro.ui.screens.filter.headerStyle
 import com.example.bizarro.ui.theme.BizarroTheme
 import com.example.bizarro.ui.theme.kGray
 import com.example.bizarro.ui.theme.kWhite

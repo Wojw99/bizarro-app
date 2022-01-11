@@ -40,12 +40,6 @@ import com.example.bizarro.utils.Dimens
 import com.example.bizarro.utils.Strings
 import com.example.bizarro.utils.models.TopBarAction
 
-val headerStyle = TextStyle(
-    color = kBlack,
-    fontSize = 20.sp,
-    fontWeight = FontWeight.SemiBold,
-)
-
 val headerModifier = Modifier.padding(top = 15.dp, bottom = 5.dp)
 
 @ExperimentalComposeUiApi
@@ -55,6 +49,12 @@ fun FilterScreen(
     navController: NavController,
 ) {
     viewModel.appState.bottomMenuVisible.value = false
+
+    val headerStyle = TextStyle(
+        color = colors.onSurface,
+        fontSize = 20.sp,
+        fontWeight = FontWeight.SemiBold,
+    )
 
     if(viewModel.savingFilterSuccess.value) {
         viewModel.savingFilterSuccess.value = false
@@ -179,17 +179,20 @@ fun TypeDependentSection(
     viewModel: FilterViewModel = hiltViewModel()
 ) {
     val type = viewModel.selectedType.value
+
+    val headerStyle = TextStyle(
+        color = kBlack,
+        fontSize = 20.sp,
+        fontWeight = FontWeight.SemiBold,
+    )
+
     Column(modifier = modifier) {
         // * * * * * PRICE MIN-MAX HEADER * * * * *
         if (type == Constants.TYPE_SELL) {
             Text(
                 modifier = headerModifier,
                 text = Strings.sellPriceHeader,
-                style = TextStyle(
-                    color = colors.onSurface,
-                    fontSize = 30.sp,
-                    fontFamily = FontFamily.Default,
-                    fontWeight = FontWeight.Bold),
+                style = headerStyle,
             )
         } else if (type == Constants.TYPE_BUY) {
             Text(

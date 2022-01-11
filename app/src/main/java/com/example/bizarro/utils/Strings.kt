@@ -28,6 +28,7 @@ object Strings {
     const val edit_profile = "Edytuj profil"
     const val see_opinions = "Zobacz opinie"
     const val welcomeToBizarro = "Witamy w Bizarro!"
+    const val lack = "Brak"
 
     // * * * * * * * * LOGIN/REGISTER * * * * * * * *
     const val username = "Nazwa użytkownika"
@@ -88,6 +89,8 @@ object Strings {
     const val rate = "Oceń"
     const val recordLoadError = "Nie udało się wczytać ogłoszenia!"
     const val address = "Adres"
+    const val addToCompareSuccessMessage = "Pomyślnie dodano do porównywanych ogłoszeń!"
+    const val removeFromCompareSuccessMessage = "Pomyślnie usunięto z porównywanych ogłoszeń!"
 
     // * * * * * * * * ADD RECORD SCREEN * * * * * * * *
     const val addRecord = "Dodaj ogłoszenie"

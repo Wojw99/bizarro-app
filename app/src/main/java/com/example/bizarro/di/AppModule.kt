@@ -7,6 +7,7 @@ import com.example.bizarro.api.deserializers.CustomDateSerializer
 import com.example.bizarro.api.deserializers.MarkInfoDeserializer
 import com.example.bizarro.api.models.MarkInfo
 import com.example.bizarro.managers.TokenManager
+import com.example.bizarro.repositories.CompareRepository
 import com.example.bizarro.repositories.OpinionsRepository
 import com.example.bizarro.repositories.RecordRepository
 import com.example.bizarro.repositories.UserRepository
@@ -72,6 +73,12 @@ class AppModule {
     @Provides
     fun provideOpinionsRepository(api: BizarroApi, tokenManager: TokenManager): OpinionsRepository {
         return OpinionsRepository(api, tokenManager)
+    }
+
+    @Singleton
+    @Provides
+    fun provideCompareRepository(): CompareRepository {
+        return CompareRepository()
     }
 
     @Singleton

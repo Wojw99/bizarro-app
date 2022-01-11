@@ -21,17 +21,15 @@ import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
-import androidx.navigation.NavGraph.Companion.findStartDestination
 import coil.compose.rememberImagePainter
-import com.example.bizarro.ui.Screen
 import com.example.bizarro.ui.components.*
 import com.example.bizarro.ui.screens.filter.headerModifier
-import com.example.bizarro.ui.screens.filter.headerStyle
-import com.example.bizarro.ui.screens.user_record_list.UserRecordListViewModel
 import com.example.bizarro.ui.theme.*
 import com.example.bizarro.utils.Constants
 import com.example.bizarro.utils.Dimens
@@ -49,6 +47,12 @@ fun AddRecordScreen(
     viewModel.appState.bottomMenuVisible.value = false
 
     val context = LocalContext.current
+
+    val headerStyle = TextStyle(
+        color = kBlack,
+        fontSize = 20.sp,
+        fontWeight = FontWeight.SemiBold,
+    )
 
     val launcher = rememberLauncherForActivityResult(
         ActivityResultContracts.GetContent()
@@ -278,6 +282,12 @@ fun TypeDependentSection(
     viewModel: AddRecordViewModel = hiltViewModel()
 ) {
     val type = viewModel.selectedType.value
+    val headerStyle = TextStyle(
+        color = kBlack,
+        fontSize = 20.sp,
+        fontWeight = FontWeight.SemiBold,
+    )
+
     Column(modifier = modifier) {
         // * * * * * PRICE MIN-MAX HEADER * * * * *
         if (type == Constants.TYPE_SELL) {
