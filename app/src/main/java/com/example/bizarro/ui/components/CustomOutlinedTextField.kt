@@ -56,7 +56,7 @@ fun CustomOutlinedTextField(
             textColor = MaterialTheme.colors.onSurface,
             focusedLabelColor = MaterialTheme.colors.onSurface,
         ),
-        singleLine = true,
+        singleLine = false,
         visualTransformation = visualTransformation,
     )
 }

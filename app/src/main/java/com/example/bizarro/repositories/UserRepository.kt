@@ -8,6 +8,7 @@ import com.example.bizarro.utils.Resource
 import com.example.bizarro.utils.Strings
 import com.google.gson.annotations.SerializedName
 import dagger.hilt.android.scopes.ActivityScoped
+import okhttp3.MultipartBody
 import retrofit2.HttpException
 import timber.log.Timber
 import java.lang.Exception
@@ -62,6 +63,43 @@ class UserRepository @Inject constructor(
         return Resource.Success(response)
     }
 
+    suspend fun updateUser(
+        email: String,
+        firstName: String?,
+        lastName: String?,
+        phone: String?,
+        description: String?,
+        address: String?,
+    ): Resource<UpdateUserProfile>{
+        val response = try {
+            api.updateUser(
+                tokenManager.getAuthHeader(),
+                UpdateUserProfile(
+                    email = email,
+                    firstName = firstName,
+                    lastName = lastName,
+                    address = address,
+                    description = description,
+                    phone = phone,
+                ),
+            )
+        } catch (e: Exception) {
+            Timber.e(e)
+            return Resource.Error(e.message!!)
+        }
+        return Resource.Success(response)
+    }
+
+    suspend fun addUserPhoto(userId: Long, image: MultipartBody): Resource<String> {
+        val response = try {
+            api.addUserPhoto(userId, image)
+        } catch (e: Exception) {
+            return Resource.Error(e.message!!)
+        }
+
+        return Resource.Success(response)
+    }
+    
     suspend fun createUser(
         username: String,
         email: String,

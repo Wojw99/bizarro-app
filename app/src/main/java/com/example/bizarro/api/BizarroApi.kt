@@ -29,6 +29,18 @@ interface BizarroApi {
         @Body addUser: AddUser
     ): UserProfile
 
+    @PATCH("/update_user")
+    suspend fun updateUser(
+        @Header("Authorization") authHeader: String,
+        @Body updateUserProfile: UpdateUserProfile,
+    ): UpdateUserProfile
+
+    @POST("/add_user_photo/")
+    suspend fun addUserPhoto(
+        @Query("user_id") userId: Long,
+        @Body image: MultipartBody,
+    ): String
+
     // * * * * * POSTS * * * * *
     @GET("/user_posts")
     suspend fun getUserRecords(

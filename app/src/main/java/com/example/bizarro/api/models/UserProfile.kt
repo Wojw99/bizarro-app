@@ -22,4 +22,6 @@ data class UserProfile (
     val lastName: String?,
     @SerializedName("phone")
     val phone: String?,
+    @SerializedName("address_street")
+    val address: String?,
 )

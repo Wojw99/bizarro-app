@@ -3,15 +3,21 @@ package com.example.bizarro.ui.screens.user_profile
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.bizarro.api.models.Opinion
+import com.example.bizarro.api.models.UserProfile
 import com.example.bizarro.repositories.OpinionsRepository
 import com.example.bizarro.repositories.UserRepository
 import com.example.bizarro.ui.AppState
 import com.example.bizarro.ui.NetworkingViewModel
+import com.example.bizarro.ui.screens.search.SearchViewModel
+import com.example.bizarro.ui.screens.update_user_profile.UpdateUserProfileViewModel
 import com.example.bizarro.utils.Constants
 import com.example.bizarro.utils.Resource
+import com.example.bizarro.utils.models.Filter
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -27,13 +33,29 @@ class UserProfileViewModel @Inject constructor(
     var emailUser by mutableStateOf("")
     var phoneUser by mutableStateOf("")
     var userDescription by mutableStateOf("")
-    var userImage by mutableStateOf(Constants.RECORD_DEFAULT_IMG_URL)
+    var userImage = mutableStateOf<String?>(null)
 
     val userLoggedOpinionList = mutableStateOf<List<Opinion>>(listOf())
 
+    var userProfile: UserProfile? = null
+        private set
+
+    private val observer: Observer<Boolean> = Observer {
+        if(it) {
+            SearchViewModel.signal.value = false
+            getUserProfile()
+        }
+    }
+
+
     init {
-        appState.bottomMenuVisible.value = true
         getUserProfile()
+        signal.observeForever(observer)
+    }
+
+    override fun onCleared() {
+        super.onCleared()
+        signal.removeObserver(observer)
     }
 
     fun getUserProfile() {
@@ -53,7 +75,8 @@ class UserProfileViewModel @Inject constructor(
                     emailUser = resource.data?.email.toString()
                     phoneUser = resource.data?.phone.toString()
                     userDescription = resource.data?.description.toString()
-                    userImage = resource.data?.imagePath.toString()
+                    userImage.value = resource.data!!.imagePath
+                    userProfile = resource.data!!
 
                     endLoading()
                 }
@@ -72,6 +95,13 @@ class UserProfileViewModel @Inject constructor(
                     endLoadingWithError(resource2.message!!)
                 }
             }
+        }
+    }
+
+    companion object{
+        val signal = MutableLiveData(false)
+        fun signalUpdate() {
+            signal.value = true
         }
     }
 }

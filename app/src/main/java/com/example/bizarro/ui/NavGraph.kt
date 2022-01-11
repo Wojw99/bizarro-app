@@ -14,6 +14,7 @@ import com.example.bizarro.ui.screens.filter.FilterScreen
 import com.example.bizarro.ui.screens.home.HomeScreen
 import com.example.bizarro.ui.screens.record_details.RecordDetailsScreen
 import com.example.bizarro.ui.screens.search.SearchScreen
+import com.example.bizarro.ui.screens.update_user_profile.UpdateUserProfileScreen
 import com.example.bizarro.ui.screens.user_profile.*
 import com.example.bizarro.ui.screens.user_profile.other_user_profile.AddOpinionScreen
 import com.example.bizarro.ui.screens.user_profile.settings.AboutAppScreen
@@ -85,6 +86,9 @@ fun NavGraph(
         composable(route = Screen.AddRecord.route){
             AddRecordScreen(navController = navController)
         }
+        composable(route = Screen.UpdateUserProfile.route){
+            UpdateUserProfileScreen(navController = navController)
+        }
     }
 }
 
@@ -108,4 +112,5 @@ sealed class Screen(val route: String, val name: String){
     object PrivacyPolicyScreen: Screen(route = "user_privacy_policy_screen", name = "Polityka prywatności")
     object AboutAppScreen: Screen(route = "user_about_app_screen", name = "O aplikacji")
     object HelpScreen: Screen(route = "user_help_screen", name = "Pomoc")
+    object UpdateUserProfile: Screen(route = "update_user_profile_screen", name = "Edytuj profil")
 }

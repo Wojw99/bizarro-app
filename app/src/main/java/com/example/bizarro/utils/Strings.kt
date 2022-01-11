@@ -29,6 +29,11 @@ object Strings {
     const val see_opinions = "Zobacz opinie"
     const val welcomeToBizarro = "Witamy w Bizarro!"
     const val lack = "Brak"
+    const val firstname = "Imię"
+    const val lastname = "Nazwisko"
+    const val phoneNumber = "Numer telefonu"
+    const val profileDescription = "Opis profilu"
+    const val profileEdit = "Edytuj profil"
 
     // * * * * * * * * LOGIN/REGISTER * * * * * * * *
     const val username = "Nazwa użytkownika"

@@ -27,6 +27,14 @@ object CommonMethods {
         return string
     }
 
+    fun convertNullToEmptyString(string: String?): String {
+        if (string == null) {
+            return ""
+        }
+        return string
+    }
+
+
     fun getUrlForImage(imageUrl: String): String {
         return "https${imageUrl.substring(4)}"
     }

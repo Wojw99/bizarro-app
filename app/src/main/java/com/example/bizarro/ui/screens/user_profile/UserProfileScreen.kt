@@ -3,6 +3,7 @@ package com.example.bizarro.ui.screens.user_profile
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
@@ -13,6 +14,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
@@ -22,6 +24,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import coil.compose.rememberImagePainter
 import com.example.bizarro.R
@@ -29,8 +32,10 @@ import com.example.bizarro.ui.Screen
 import com.example.bizarro.ui.components.TopBar
 import com.example.bizarro.ui.screens.add_record.AddRecordViewModel
 import com.example.bizarro.ui.screens.record_details.RecordDetailsViewModel
+import com.example.bizarro.ui.screens.update_user_profile.UpdateUserProfileViewModel
 import com.example.bizarro.ui.screens.user_profile.other_user_profile.OtherUserViewModel
 import com.example.bizarro.ui.theme.*
+import com.example.bizarro.utils.CommonMethods
 import com.example.bizarro.utils.Constants
 import com.example.bizarro.utils.Dimens
 import com.example.bizarro.utils.Strings
@@ -41,7 +46,7 @@ fun UserProfileScreen(
     navController: NavController,
     viewModel: UserProfileViewModel = hiltViewModel(),
 ) {
-    viewModel.appState.bottomMenuVisible.value = true
+    viewModel.appState.showBottomMenu()
 
     BizarroTheme(
         darkTheme = Constants.isDark.value
@@ -118,8 +123,18 @@ fun HeaderSectionUserProfile(navController: NavController) {
 
 @Composable
 fun UserInformation(viewModel: UserProfileViewModel = hiltViewModel()) {
+
+    // * * * * * * IMAGE * * * * * *
+    var painter: Painter? = null
+
+    if(viewModel.userImage.value != null) {
+        painter = rememberImagePainter(CommonMethods.getUrlForImage(viewModel.userImage.value!!))
+    } else {
+        painter = painterResource(id = R.drawable.user_default)
+    }
+
     Image(
-        painter = rememberImagePainter(viewModel.userImage),
+        painter = painter,
         contentDescription = "User Image",
         contentScale = ContentScale.Crop,
         modifier = Modifier
@@ -241,10 +256,16 @@ fun UserInformation(viewModel: UserProfileViewModel = hiltViewModel()) {
 }
 
 @Composable
-fun UserButtonSection(navController: NavController) {
+fun UserButtonSection(
+    navController: NavController,
+    viewModel: UserProfileViewModel = hiltViewModel(),
+) {
     Button(
         onClick = {
-            navController.navigate(route = Screen.EditProfile.route)
+            if(viewModel.userProfile != null) {
+                UpdateUserProfileViewModel.userProfile = viewModel.userProfile
+                navController.navigate(route = Screen.UpdateUserProfile.route)
+            }
         },
         modifier = Modifier
             .fillMaxWidth()
