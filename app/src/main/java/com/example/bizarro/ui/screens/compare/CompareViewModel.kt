@@ -24,9 +24,14 @@ class CompareViewModel @Inject constructor(
     private val compareRepository: CompareRepository,
 ) : NetworkingViewModel() {
     val recordList = compareRepository.compareList
+    val tableView = mutableStateOf(true)
 
     init{
 
+    }
+
+    fun changeView() {
+        tableView.value = !tableView.value
     }
 
     fun getHeader(record: Record): String {

@@ -7,4 +7,5 @@ object Dimens {
     val standardPadding = 12.dp
     val barHeight = 40.dp
     val topBarHeight = 55.dp
+    val bottomBarHeight = 53.dp
 }

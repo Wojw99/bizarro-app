@@ -47,7 +47,6 @@ class UserProfileViewModel @Inject constructor(
         }
     }
 
-
     init {
         getUserProfile()
         signal.observeForever(observer)

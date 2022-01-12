@@ -12,20 +12,24 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.material.MaterialTheme.colors
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowForward
-import androidx.compose.material.icons.filled.Delete
+import androidx.compose.material.icons.filled.*
+import androidx.compose.material.icons.outlined.Info
+import androidx.compose.material.icons.outlined.List
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shadow
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -63,49 +67,56 @@ fun CompareScreen(
                     .fillMaxSize()
                     .background(colors.secondaryVariant)
             ) {
-                // * * * * * * * TOP BAR * * * * * * *
-                Box(
-                    modifier = Modifier
-                        .height(Dimens.topBarHeight)
-                        .fillMaxWidth()
-                        .padding(Dimens.standardPadding),
+                // * * * * * * * COMPARE LIST * * * * * * *
+                if (!viewModel.recordList.value.isEmpty()) {
+                    if (viewModel.tableView.value) {
+                        CompareTable(navController = navController)
+                    } else {
+                        CompareList(navController = navController)
+                    }
+                } else {
+                    Box(
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .padding(bottom = Dimens.barHeight)
+                    ) {
+                        Text(
+                            text = Strings.listIsEmpty,
+                            modifier = Modifier.align(Alignment.Center)
+                        )
+                    }
+                }
+            }
+
+            // * * * * * * * TOP BAR * * * * * * *
+            Row(
+                modifier = Modifier.padding(Dimens.standardPadding).fillMaxSize(),
+                horizontalArrangement = Arrangement.SpaceBetween,
+            ) {
+                FloatingActionButton(
+                    onClick = {
+                        viewModel.changeView()
+                    },
+                    backgroundColor = colors.primary,
+                    contentColor = colors.background,
                 ) {
-//                    Text(
-//                        text = "4 / 5",
-//                        modifier = Modifier.align(Alignment.Center),
-//                        style = TextStyle(
-//                            textAlign = TextAlign.Center,
-//                            fontSize = 18.sp,
-//                            fontWeight = FontWeight.SemiBold,
-//                            color = colors.primaryVariant,
-//                        ),
-//                    )
-//                    Box(modifier = Modifier
-//                        .align(Alignment.CenterEnd)
-//                        .fillMaxHeight()
-//                        .clickable { viewModel.cleanCompareList() }
-//                    ) {
-//                        Text(
-//                            modifier = Modifier.align(Alignment.Center),
-//                            text = Strings.clear,
-//                            style = TextStyle(
-//                                textAlign = TextAlign.End,
-//                                fontSize = 16.sp,
-//                                fontWeight = FontWeight.SemiBold,
-//                                color = colors.primaryVariant
-//                            ),
-//                        )
-//                    }
+                    if (viewModel.tableView.value) {
+                        Icon(Icons.Filled.Info, "arrow")
+                    } else {
+                        Icon(Icons.Outlined.Info, "arrow")
+                    }
                 }
 
-                // * * * * * * * COMPARE LIST * * * * * * *
-                if(!viewModel.recordList.value.isEmpty()) {
-                    //CompareTable(navController = navController)
-                    CompareList(navController = navController)
-                } else {
-                    Box(modifier = Modifier.fillMaxSize().padding(bottom = Dimens.barHeight)) {
-                        Text(text = Strings.listIsEmpty, modifier = Modifier.align(Alignment.Center))
-                    }
+                Spacer(modifier = Modifier.width(Dimens.standardPadding))
+
+                FloatingActionButton(
+                    onClick = {
+
+                    },
+                    backgroundColor = colors.primary,
+                    contentColor = colors.background,
+                ) {
+                    Icon(Icons.Filled.Clear, "clear icon")
                 }
             }
 
@@ -115,8 +126,6 @@ fun CompareScreen(
             }
         }
     }
-
-
 }
 
 @Composable
@@ -129,7 +138,184 @@ fun CompareTable(
         val itemCount = recordList.size
 
         items(itemCount) { index ->
-            CompareTableItem(record = recordList[index])
+            if (index == 0) {
+                CompareTableDescriptions()
+            }
+
+            CompareTableItem(
+                record = recordList[index],
+                onGoClick = {
+                    RecordDetailsViewModel.record = recordList[index]
+                    RecordDetailsViewModel.userId = recordList[index].userId
+                    navController.navigate(Screen.RecordDetails.route)
+                },
+            )
+
+            if (index == itemCount - 1) {
+                Spacer(modifier = Modifier.width(4.dp))
+            }
+        }
+    }
+}
+
+@Composable
+fun CompareTableDescriptions(
+    modifier: Modifier = Modifier,
+) {
+    val configuration = LocalConfiguration.current
+    val screenHeight = configuration.screenHeightDp.dp
+    val screenWidth = configuration.screenWidthDp.dp / 2
+    val spaceSize = 4.dp
+    val textStyle = TextStyle(fontWeight = FontWeight.Bold)
+
+    val spacerModifier =
+        Modifier
+            .height(spaceSize)
+            .fillMaxWidth()
+            .background(colors.secondaryVariant)
+
+    Box(
+        modifier = modifier
+            .padding(
+                start = spaceSize,
+                bottom = Dimens.bottomBarHeight + spaceSize,
+                top = spaceSize
+            )
+    ) {
+        Column(
+            modifier = Modifier
+                .background(colors.background)
+                .width(93.dp)
+                .height(screenHeight),
+        ) {
+            // * * * * * IMAGE * * * * *
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .background(colors.secondaryVariant)
+                    .height(200.dp),
+            ) {
+            }
+            Box(modifier = spacerModifier)
+
+            // * * * * * NAME * * * * *
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .weight(1f),
+            ) {
+                Text(
+                    text = "Tytuł",
+                    modifier = Modifier
+                        .align(Alignment.CenterStart)
+                        .padding(spaceSize),
+                    maxLines = 3,
+                    style = textStyle,
+                )
+            }
+            Box(modifier = spacerModifier)
+
+            // * * * * * HEADER * * * * *
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .weight(1f),
+            ) {
+                Text(
+                    text = "Nagłówek",
+                    modifier = Modifier
+                        .align(Alignment.CenterStart)
+                        .padding(spaceSize),
+                    maxLines = 3,
+                    style = textStyle,
+                )
+            }
+            Box(modifier = spacerModifier)
+
+            // * * * * * TYPE * * * * *
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .weight(1f),
+            ) {
+                Text(
+                    text = "Typ",
+                    modifier = Modifier
+                        .align(Alignment.CenterStart)
+                        .padding(spaceSize),
+                    maxLines = 3,
+                    style = textStyle,
+                )
+            }
+            Box(modifier = spacerModifier)
+
+            // * * * * * DESCRIPTION * * * * *
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .weight(1f),
+            ) {
+                Text(
+                    text = "Opis",
+                    modifier = Modifier
+                        .align(Alignment.CenterStart)
+                        .padding(spaceSize),
+                    maxLines = 3,
+                    style = textStyle,
+                )
+            }
+            Box(modifier = spacerModifier)
+
+            // * * * * * DATE * * * * *
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .weight(1f),
+            ) {
+                Text(
+                    text = "Data wystawienia",
+                    modifier = Modifier
+                        .align(Alignment.CenterStart)
+                        .padding(spaceSize),
+                    maxLines = 3,
+                    style = textStyle,
+                )
+            }
+            Box(modifier = spacerModifier)
+
+            // * * * * * CATEGORY * * * * *
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .weight(1f),
+            ) {
+                Text(
+                    text = "Kategoria",
+                    modifier = Modifier
+                        .align(Alignment.CenterStart)
+                        .padding(spaceSize),
+                    maxLines = 3,
+                    style = textStyle,
+                )
+            }
+            Box(modifier = spacerModifier)
+
+            // * * * * * ADDRESS * * * * *
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .weight(1f),
+            ) {
+                Text(
+                    text = "Adres",
+                    modifier = Modifier
+                        .align(Alignment.CenterStart)
+                        .padding(spaceSize),
+                    maxLines = 3,
+                    style = textStyle,
+                )
+            }
+            Box(modifier = spacerModifier)
         }
     }
 }
@@ -139,7 +325,6 @@ fun CompareTableItem(
     modifier: Modifier = Modifier,
     record: Record,
     onGoClick: () -> Unit = {},
-    onDeleteClick: () -> Unit = {},
     viewModel: CompareViewModel = hiltViewModel(),
 ) {
     val configuration = LocalConfiguration.current
@@ -152,13 +337,48 @@ fun CompareTableItem(
             .fillMaxWidth()
             .background(colors.secondaryVariant)
 
-    Box(modifier = Modifier.padding(start = spaceSize)) {
+    Box(
+        modifier = modifier
+            .padding(
+                start = spaceSize,
+                bottom = Dimens.bottomBarHeight + spaceSize,
+                top = spaceSize
+            )
+            .clickable { onGoClick() }
+    ) {
         Column(
             modifier = Modifier
                 .background(colors.background)
-                .width(screenWidth / 2)
+                .width(150.dp)
                 .height(screenHeight),
         ) {
+            // * * * * * IMAGE * * * * *
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(200.dp),
+            ) {
+                var painter = painterResource(id = R.drawable.bike_default)
+
+                if (record.imagePath != null) {
+                    painter = rememberImagePainter(CommonMethods.getUrlForImage(record.imagePath))
+
+                    if (painter.state is ImagePainter.State.Loading) {
+                        CircularProgressIndicator()
+                    } else if (painter.state is ImagePainter.State.Error) {
+                        painter = painterResource(id = R.drawable.bike_default)
+                    }
+                }
+
+                Image(
+                    painter = painter,
+                    contentDescription = Strings.recordImage,
+                    contentScale = ContentScale.Crop,
+                    modifier = Modifier.fillMaxSize(),
+                )
+            }
+            Box(modifier = spacerModifier)
+
             // * * * * * NAME * * * * *
             Box(
                 modifier = Modifier
@@ -169,13 +389,13 @@ fun CompareTableItem(
                     text = record.name,
                     modifier = Modifier
                         .align(Alignment.CenterStart)
-                        .padding(spaceSize)
+                        .padding(spaceSize),
+                    maxLines = 3,
                 )
             }
-
             Box(modifier = spacerModifier)
 
-            // * * * * * NAME * * * * *
+            // * * * * * HEADER * * * * *
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -185,12 +405,45 @@ fun CompareTableItem(
                     text = viewModel.getHeader(record),
                     modifier = Modifier
                         .align(Alignment.CenterStart)
-                        .padding(spaceSize)
+                        .padding(spaceSize),
+                    maxLines = 3,
                 )
             }
             Box(modifier = spacerModifier)
 
-            // * * * * * NAME * * * * *
+            // * * * * * DESCRIPTION * * * * *
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .weight(1f),
+            ) {
+                Text(
+                    text = record.type,
+                    modifier = Modifier
+                        .align(Alignment.CenterStart)
+                        .padding(spaceSize),
+                    maxLines = 3,
+                )
+            }
+            Box(modifier = spacerModifier)
+
+            // * * * * * DESCRIPTION * * * * *
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .weight(1f),
+            ) {
+                Text(
+                    text = record.body,
+                    modifier = Modifier
+                        .align(Alignment.CenterStart)
+                        .padding(spaceSize),
+                    maxLines = 3,
+                )
+            }
+            Box(modifier = spacerModifier)
+
+            // * * * * * DATE * * * * *
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -200,9 +453,43 @@ fun CompareTableItem(
                     text = CommonMethods.convertToRecordBoxDateFormat(record.creationDate),
                     modifier = Modifier
                         .align(Alignment.CenterStart)
-                        .padding(spaceSize)
+                        .padding(spaceSize),
+                    maxLines = 3,
                 )
             }
+            Box(modifier = spacerModifier)
+
+            // * * * * * CATEGORY * * * * *
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .weight(1f),
+            ) {
+                Text(
+                    text = record.category,
+                    modifier = Modifier
+                        .align(Alignment.CenterStart)
+                        .padding(spaceSize),
+                    maxLines = 3,
+                )
+            }
+            Box(modifier = spacerModifier)
+
+            // * * * * * ADDRESS * * * * *
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .weight(1f),
+            ) {
+                Text(
+                    text = "${record.addressCity}, ${record.addressProvince}",
+                    modifier = Modifier
+                        .align(Alignment.CenterStart)
+                        .padding(spaceSize),
+                    maxLines = 3,
+                )
+            }
+            Box(modifier = spacerModifier)
         }
     }
 }
@@ -238,14 +525,18 @@ fun CompareListItem(
     modifier: Modifier = Modifier,
     record: Record,
     onGoClick: () -> Unit = {},
-    onDeleteClick: () -> Unit = {},
     viewModel: CompareViewModel = hiltViewModel(),
 ) {
     Box(
-        modifier = Modifier.padding(
-            start = Dimens.standardPadding,
-            bottom = 60.dp + Dimens.standardPadding
-        )
+        modifier = Modifier
+            .padding(
+                start = Dimens.standardPadding,
+                bottom = Dimens.bottomBarHeight + Dimens.standardPadding,
+                top = Dimens.standardPadding
+            )
+            .clickable {
+                onGoClick()
+            }
     ) {
         val configuration = LocalConfiguration.current
         val screenHeight = configuration.screenHeightDp.dp
@@ -363,37 +654,6 @@ fun CompareListItem(
                     )
                 }
             }
-
-            // * * * * * BUTTONS * * * * *
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(Dimens.standardPadding),
-                horizontalArrangement = Arrangement.End,
-            ) {
-//                IconButton(
-//                    onClick = {
-//                        onDeleteClick()
-//                    },
-//                    modifier = Modifier.background(kBlueDark, shape = CircleShape),
-//                ) {
-//                    Icon(Icons.Default.Delete, contentDescription = Strings.delete, tint = kWhite)
-//                }
-                Spacer(modifier = Modifier.width(Dimens.standardPadding))
-                IconButton(
-                    onClick = {
-                        onGoClick()
-                    },
-                    modifier = Modifier.background(kBlueDark, shape = CircleShape),
-                ) {
-                    Icon(
-                        Icons.Default.ArrowForward,
-                        contentDescription = Strings.details,
-                        tint = kWhite
-                    )
-                }
-            }
         }
     }
-
 }
