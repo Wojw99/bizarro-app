@@ -62,10 +62,9 @@ class CompareViewModel @Inject constructor(
         return Strings.lack
     }
 
-//    fun cleanCompareList() {
-//        synchronized(compareRepository.compareList.value) {
-//            compareRepository.compareList.value.clear()
-//            compareRepository.compareList.value.notifyAll()
-//        }
-//    }
+    fun cleanCompareList() {
+        compareRepository.compareList.value.clear()
+        changeView()
+        changeView()
+    }
 }

@@ -111,7 +111,7 @@ fun CompareScreen(
 
                 FloatingActionButton(
                     onClick = {
-
+                        viewModel.cleanCompareList()
                     },
                     backgroundColor = colors.primary,
                     contentColor = colors.background,

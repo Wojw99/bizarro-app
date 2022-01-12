@@ -8,16 +8,4 @@ class CompareRepository {
     var compareList = mutableStateOf(
         mutableListOf<Record>()
     )
-
-    fun getCompareList() {
-
-    }
-
-    fun clearCompareList() {
-
-    }
-
-    fun addToCompareList(record: Record) {
-
-    }
 }
