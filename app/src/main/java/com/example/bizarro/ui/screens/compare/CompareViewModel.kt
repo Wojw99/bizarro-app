@@ -26,10 +26,6 @@ class CompareViewModel @Inject constructor(
     val recordList = compareRepository.compareList
     val tableView = mutableStateOf(true)
 
-    init{
-
-    }
-
     fun changeView() {
         tableView.value = !tableView.value
     }

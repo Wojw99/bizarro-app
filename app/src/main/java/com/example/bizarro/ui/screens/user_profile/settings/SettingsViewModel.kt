@@ -3,13 +3,15 @@ package com.example.bizarro.ui.screens.user_profile.settings
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import com.example.bizarro.api.models.Opinion
+import com.example.bizarro.managers.TokenManager
 import com.example.bizarro.ui.AppState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 @HiltViewModel
 class SettingsViewModel @Inject constructor(
-    val appState: AppState
+    val appState: AppState,
+    val tokenManager: TokenManager,
 ): ViewModel()
 {
     val helpList = mutableStateOf<List<String>>(listOf(
@@ -23,4 +25,7 @@ class SettingsViewModel @Inject constructor(
         "sprzedam - użytkownik chce sprzedać ogłoszony przez siebie produkt na konkretną cenę i szuka chętnych."
     ))
 
+    fun logout() {
+        tokenManager.clearAccessToken()
+    }
 }

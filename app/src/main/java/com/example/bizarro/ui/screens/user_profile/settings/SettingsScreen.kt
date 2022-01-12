@@ -1,4 +1,4 @@
-package com.example.bizarro.ui.screens.user_profile
+package com.example.bizarro.ui.screens.user_profile.settings
 
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
@@ -74,11 +74,8 @@ fun SettingsScreen(
                 .align(Alignment.CenterHorizontally)
             )
             {
-
-
                 Column()
                 {
-
                     Spacer(modifier = Modifier.height(5.dp))
 
                     Box(modifier = Modifier
@@ -216,11 +213,12 @@ fun SettingsScreen(
 
             Button(
                 onClick = {
-
-
-
-                          
-                    navController.navigate(route = Screen.SignIn.route)
+                    viewModel.logout()
+                    navController.navigate(Screen.SignIn.route) {
+                        popUpTo(Screen.UserRecordList.route) {
+                            inclusive = true
+                        }
+                    }
                 },
                 modifier = Modifier
                     .width(200.dp)

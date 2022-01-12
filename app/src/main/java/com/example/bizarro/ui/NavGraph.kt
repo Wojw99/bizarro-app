@@ -20,6 +20,7 @@ import com.example.bizarro.ui.screens.user_profile.other_user_profile.AddOpinion
 import com.example.bizarro.ui.screens.user_profile.settings.AboutAppScreen
 import com.example.bizarro.ui.screens.user_profile.settings.HelpScreen
 import com.example.bizarro.ui.screens.user_profile.settings.PrivacyPolicyScreen
+import com.example.bizarro.ui.screens.user_profile.settings.SettingsScreen
 import com.example.bizarro.ui.screens.user_record_list.UserRecordListScreen
 
 @ExperimentalFoundationApi

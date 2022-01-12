@@ -47,6 +47,15 @@ class TokenManager(
         }
     }
 
+    fun clearAccessToken() {
+        accessToken = null
+        val sharedPreferences = applicationContext.getSharedPreferences(sharedPreferencesKey, Context.MODE_PRIVATE)
+        with (sharedPreferences.edit()) {
+            remove(accessTokenKey)
+            apply()
+        }
+    }
+
     fun isUserSignedIn(): Boolean {
         if(accessToken == null) return false
         return true
