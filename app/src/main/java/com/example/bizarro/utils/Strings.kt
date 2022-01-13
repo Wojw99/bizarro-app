@@ -43,7 +43,12 @@ object Strings {
     const val register = "Zarejestruj"
     const val login = "Zaloguj"
     const val returnToLogin = "Powrót do logowania"
-    const val goToRegister = "lub utwórz konto"
+    const val goToRegister = "Utwórz konto"
+    const val passwordDontRemember = "Zapomniałem hasła"
+    const val passwordReset = "Resetuj hasło"
+    const val passwordRestInfo = "Wybierz opcję resetu, aby ustawić nowe hasło. Na twój adres email wysłany zostanie kod, umożliwiający nadanie nowego hasła."
+    const val passwordCodeInfo = "Wpisz kod otrzymany na maila i nadaj nowe hasło!"
+    const val code = "Kod"
 
     const val passwordNotEqualsError = "Hasła nie są takie same!"
     const val emailIncorrectError = "E-mail nie jest poprawny!"
@@ -108,6 +113,8 @@ object Strings {
 
     // * * * * * * ERRORS * * * * * *
     const val notFoundError = "Nie odnaleziono żądanego zasobu!"
+    const val internalServerError = "Błąd wewnętrzny serwera!"
+    const val error401 = "Użytkownik nie zalogowany!"
 
     // * * * * * * COMPARE * * * * * *
     const val clear = "Wyczyść"

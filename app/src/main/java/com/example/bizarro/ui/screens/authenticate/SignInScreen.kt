@@ -30,6 +30,7 @@ import com.example.bizarro.ui.components.CustomOutlinedTextField
 import com.example.bizarro.ui.components.LoadingBox
 import com.example.bizarro.ui.screens.add_record.textFieldModifier
 import com.example.bizarro.ui.theme.BizarroTheme
+import com.example.bizarro.ui.theme.kDarkGrey
 import com.example.bizarro.ui.theme.kGray
 import com.example.bizarro.ui.theme.kWhite
 import com.example.bizarro.utils.Constants
@@ -87,11 +88,10 @@ fun SignInScreenBody(
             .fillMaxSize()
             .background(MaterialTheme.colors.background)
             .padding(horizontal = Dimens.standardPadding * 2),
-        horizontalAlignment = Alignment.CenterHorizontally
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Center,
     ) {
         val spacerHeight = 16.dp
-
-        Spacer(modifier = Modifier.height(100.dp))
 
         Text(
             Strings.welcomeToBizarro,
@@ -145,7 +145,7 @@ fun SignInScreenBody(
             Text(text = Strings.login, color = kWhite)
         }
 
-        Spacer(modifier = Modifier.height(spacerHeight * 4))
+        Spacer(modifier = Modifier.height(spacerHeight * 6))
 
         // * * * * * GO TO REGISTER BUTTON * * * * *
         Button(
@@ -153,10 +153,22 @@ fun SignInScreenBody(
                 navController.navigate(route = Screen.SignUp.route)
             },
             modifier = Modifier.fillMaxWidth(),
-            colors = ButtonDefaults.buttonColors(backgroundColor = Color.Transparent),
-            elevation = null,
+            colors = ButtonDefaults.buttonColors(backgroundColor = kGray),
         ) {
-            Text(text = Strings.goToRegister, color = kGray)
+            Text(text = Strings.goToRegister, color = kWhite)
+        }
+
+        Spacer(modifier = Modifier.height(spacerHeight))
+
+        // * * * * * PASSWORD RESET * * * * *
+        Button(
+            onClick = {
+                navController.navigate(route = Screen.PasswordResetScreen.route)
+            },
+            modifier = Modifier.fillMaxWidth(),
+            colors = ButtonDefaults.buttonColors(backgroundColor = kGray),
+        ) {
+            Text(text = Strings.passwordDontRemember, color = kWhite)
         }
     }
 }

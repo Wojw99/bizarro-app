@@ -24,7 +24,7 @@ class RecordRepository @Inject constructor(
     private val api: BizarroApi,
     private val userRepository: UserRepository,
     private val tokenManager: TokenManager,
-) : NetworkingRepository() {
+) {
     // TODO: prevent before multiple calling, here or in view models
 
     suspend fun getUserRecords(): Resource<List<Record>> {
@@ -175,10 +175,27 @@ class RecordRepository @Inject constructor(
                 rentalPeriod = rentalPeriod,
             )
         } catch (e: Exception) {
-            Timber.e(e)
+            Timber.d(e)
             val errorText = parseError(e)
             return Resource.Error(errorText)
         }
         return Resource.Success(response)
+    }
+
+    private fun parseError(e: Exception): String {
+        if(e is ConnectException) {
+            return Strings.networkError
+        } else if (e is HttpException) {
+            if (e.code() == 404) {
+                return Strings.notFoundError
+            }
+            if (e.code() == 500) {
+                return Strings.internalServerError
+            }
+            if (e.code() == 401) {
+                return Strings.error401
+            }
+        }
+        return Strings.unknownError
     }
 }

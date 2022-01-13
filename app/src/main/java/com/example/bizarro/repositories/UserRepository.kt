@@ -3,17 +3,14 @@ package com.example.bizarro.repositories
 import com.example.bizarro.api.BizarroApi
 import com.example.bizarro.api.models.*
 import com.example.bizarro.managers.TokenManager
-import com.example.bizarro.ui.AppState
 import com.example.bizarro.utils.Resource
 import com.example.bizarro.utils.Strings
-import com.google.gson.annotations.SerializedName
-import dagger.hilt.android.scopes.ActivityScoped
 import okhttp3.MultipartBody
 import retrofit2.HttpException
 import timber.log.Timber
 import java.lang.Exception
+import java.net.ConnectException
 import javax.inject.Inject
-import javax.inject.Singleton
 
 class UserRepository @Inject constructor(
     private val api: BizarroApi,
@@ -34,16 +31,6 @@ class UserRepository @Inject constructor(
             return Resource.Error(errorText)
         }
         return Resource.Success(response)
-    }
-
-    private fun parseLoginError(e: Exception): String {
-        if (e is HttpException) {
-            if (e.code() == 401) {
-                return Strings.errorIncorrectEmailOrPassword
-            }
-        }
-
-        return Strings.unknownError
     }
 
     /**
@@ -85,7 +72,7 @@ class UserRepository @Inject constructor(
             )
         } catch (e: Exception) {
             Timber.e(e)
-            return Resource.Error(e.message!!)
+            return Resource.Error(Strings.unknownError)
         }
         return Resource.Success(response)
     }
@@ -94,7 +81,8 @@ class UserRepository @Inject constructor(
         val response = try {
             api.addUserPhoto(userId, image)
         } catch (e: Exception) {
-            return Resource.Error(e.message!!)
+            Timber.e(e)
+            return Resource.Error(Strings.unknownError)
         }
 
         return Resource.Success(response)
@@ -129,8 +117,54 @@ class UserRepository @Inject constructor(
             )
         } catch (e: Exception) {
             Timber.e(e)
-            return Resource.Error(e.message!!)
+            return Resource.Error(Strings.unknownError)
         }
         return Resource.Success(response)
+    }
+
+    suspend fun sendResetPasswordRequest(toEmail: String): Resource<ResetPasswordCode> {
+        val response = try {
+            api.sendResetPasswordRequest(toEmail)
+        } catch (e: Exception) {
+            Timber.e(e)
+            return Resource.Error(Strings.unknownError)
+        }
+        return Resource.Success(response)
+    }
+
+    suspend fun resetPassword(
+        token: String,
+        password: String,
+        passwordRepeat: String,
+    ): Resource<String> {
+        val response = try {
+            val resetPassword = ResetPassword(
+                resetPasswordToken = token,
+                newPassword = password,
+                confirmPassword = passwordRepeat,
+            )
+            api.resetPassword(resetPassword)
+        } catch (e: Exception) {
+            Timber.e(e)
+            return Resource.Error(Strings.unknownError)
+        }
+        return Resource.Success(response)
+    }
+
+    private fun parseLoginError(e: Exception): String {
+        if(e is ConnectException) {
+            return Strings.networkError
+        } else if (e is HttpException) {
+            if (e.code() == 404) {
+                return Strings.notFoundError
+            }
+            if (e.code() == 500) {
+                return Strings.internalServerError
+            }
+            if (e.code() == 401) {
+                return Strings.errorIncorrectEmailOrPassword
+            }
+        }
+        return Strings.unknownError
     }
 }

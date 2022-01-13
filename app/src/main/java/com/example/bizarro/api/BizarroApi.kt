@@ -41,6 +41,16 @@ interface BizarroApi {
         @Body image: MultipartBody,
     ): String
 
+    @POST("/email/{to_email}")
+    suspend fun sendResetPasswordRequest(
+        @Path("to_email") toEmail: String,
+    ): ResetPasswordCode
+
+    @PATCH("/reset_password/")
+    suspend fun resetPassword(
+        @Body resetPassword: ResetPassword,
+    ): String
+
     // * * * * * POSTS * * * * *
     @GET("/user_posts")
     suspend fun getUserRecords(
