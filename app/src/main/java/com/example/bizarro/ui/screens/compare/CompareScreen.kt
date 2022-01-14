@@ -198,6 +198,7 @@ fun CompareTableDescriptions(
                         .padding(spaceSize),
                     maxLines = 3,
                     style = textStyle,
+                    color = colors.onSurface
                 )
             }
             Box(modifier = spacerModifier)
@@ -215,6 +216,7 @@ fun CompareTableDescriptions(
                         .padding(spaceSize),
                     maxLines = 3,
                     style = textStyle,
+                    color = colors.onSurface
                 )
             }
             Box(modifier = spacerModifier)
@@ -232,6 +234,7 @@ fun CompareTableDescriptions(
                         .padding(spaceSize),
                     maxLines = 3,
                     style = textStyle,
+                    color = colors.onSurface
                 )
             }
             Box(modifier = spacerModifier)
@@ -249,6 +252,7 @@ fun CompareTableDescriptions(
                         .padding(spaceSize),
                     maxLines = 3,
                     style = textStyle,
+                    color = colors.onSurface
                 )
             }
             Box(modifier = spacerModifier)
@@ -266,6 +270,7 @@ fun CompareTableDescriptions(
                         .padding(spaceSize),
                     maxLines = 3,
                     style = textStyle,
+                    color = colors.onSurface
                 )
             }
             Box(modifier = spacerModifier)
@@ -283,6 +288,7 @@ fun CompareTableDescriptions(
                         .padding(spaceSize),
                     maxLines = 3,
                     style = textStyle,
+                    color = colors.onSurface
                 )
             }
             Box(modifier = spacerModifier)
@@ -300,6 +306,7 @@ fun CompareTableDescriptions(
                         .padding(spaceSize),
                     maxLines = 3,
                     style = textStyle,
+                    color = colors.onSurface
                 )
             }
             Box(modifier = spacerModifier)
@@ -378,6 +385,7 @@ fun CompareTableItem(
                         .align(Alignment.CenterStart)
                         .padding(spaceSize),
                     maxLines = 3,
+                    color = colors.onSurface
                 )
             }
             Box(modifier = spacerModifier)
@@ -394,6 +402,7 @@ fun CompareTableItem(
                         .align(Alignment.CenterStart)
                         .padding(spaceSize),
                     maxLines = 3,
+                    color = colors.onSurface
                 )
             }
             Box(modifier = spacerModifier)
@@ -410,6 +419,7 @@ fun CompareTableItem(
                         .align(Alignment.CenterStart)
                         .padding(spaceSize),
                     maxLines = 3,
+                    color = colors.onSurface
                 )
             }
             Box(modifier = spacerModifier)
@@ -426,6 +436,7 @@ fun CompareTableItem(
                         .align(Alignment.CenterStart)
                         .padding(spaceSize),
                     maxLines = 3,
+                    color = colors.onSurface
                 )
             }
             Box(modifier = spacerModifier)
@@ -442,6 +453,7 @@ fun CompareTableItem(
                         .align(Alignment.CenterStart)
                         .padding(spaceSize),
                     maxLines = 3,
+                    color = colors.onSurface
                 )
             }
             Box(modifier = spacerModifier)
@@ -458,6 +470,7 @@ fun CompareTableItem(
                         .align(Alignment.CenterStart)
                         .padding(spaceSize),
                     maxLines = 3,
+                    color = colors.onSurface
                 )
             }
             Box(modifier = spacerModifier)
@@ -474,6 +487,7 @@ fun CompareTableItem(
                         .align(Alignment.CenterStart)
                         .padding(spaceSize),
                     maxLines = 3,
+                    color = colors.onSurface
                 )
             }
             Box(modifier = spacerModifier)
