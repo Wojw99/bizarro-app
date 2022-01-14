@@ -1,9 +1,6 @@
 package com.example.bizarro.ui.screens.user_profile
 
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
-import androidx.compose.foundation.border
-import androidx.compose.foundation.clickable
+import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
@@ -54,11 +51,25 @@ fun UserProfileScreen(
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .background(colors.background),
-            horizontalAlignment = Alignment.CenterHorizontally
+                .background(colors.background)
+                .verticalScroll(rememberScrollState()),
+            horizontalAlignment = Alignment.CenterHorizontally,
         ) {
 
-            HeaderSectionUserProfile(navController)
+            // * * * * * * TOP BAR ICON * * * * * *
+            TopBar(
+                navController = navController,
+                actions = listOf(
+                    TopBarAction(
+                        onClick = {
+                            navController.navigate(route = Screen.Settings.route)
+                        },
+                        icon= Icons.Default.Settings,
+                        contentDescription = "settings icon",
+                    )
+                ),
+                showBackButton = false,
+            )
 
             // * * * * * * ERROR TEXT * * * * * *
             if (viewModel.loadError.value.isNotEmpty() && !viewModel.isLoading.value) {
@@ -83,10 +94,7 @@ fun UserProfileScreen(
 
             // * * * * * * USER PROFILE * * * * * *
             if (!viewModel.isLoading.value) {
-                //RecordList(navController = navController)
-
                 UserInformation()
-
                 UserButtonSection(navController)
             }
 
@@ -99,35 +107,14 @@ fun UserProfileScreen(
 }
 
 @Composable
-fun HeaderSectionUserProfile(navController: NavController) {
-    Box(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(12.dp)
-    ) {
-        IconButton(
-            onClick = {
-                navController.navigate(route = Screen.Settings.route)
-            },
-            modifier = Modifier.align(Alignment.CenterEnd)
-        ) {
-            Icon(
-                imageVector = Icons.Default.Settings,
-                contentDescription = "Settings Button",
-                Modifier.size(30.dp),
-                tint = colors.onSurface
-            )
-        }
-    }
-}
-
-@Composable
 fun UserInformation(viewModel: UserProfileViewModel = hiltViewModel()) {
-
     // * * * * * * IMAGE * * * * * *
     var painter: Painter? = null
+    val textSize = 20.sp
+    val iconSize = 19.dp
+    val textToIconSpace = 16.dp
 
-    if(viewModel.userImage.value != null) {
+    if (viewModel.userImage.value != null) {
         painter = rememberImagePainter(CommonMethods.getUrlForImage(viewModel.userImage.value!!))
     } else {
         painter = painterResource(id = R.drawable.user_default)
@@ -143,113 +130,112 @@ fun UserInformation(viewModel: UserProfileViewModel = hiltViewModel()) {
             .border(3.dp, kBlueDark, RoundedCornerShape(10))
     )
 
-    Spacer(modifier = Modifier.size(20.dp))
+    Spacer(modifier = Modifier.size(textToIconSpace / 2))
 
     Box(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(12.dp)
+            .padding(vertical = 12.dp)
             .background(colors.secondaryVariant),
-
         contentAlignment = Alignment.Center
     ) {
         Column(
-            horizontalAlignment = Alignment.CenterHorizontally
+            modifier = Modifier
+                .padding(horizontal = textToIconSpace * 2, vertical = textToIconSpace)
+                .fillMaxSize(),
+            horizontalAlignment = Alignment.CenterHorizontally,
         ) {
-            Row(
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.Center,
-            ) {
-                Icon(
-                    Icons.Default.Person,
-                    "Icon description",
-                    tint = MaterialTheme.colors.onSurface
-                )
-
-                Text(
-                    viewModel.nameUser,
-                    style = TextStyle(
-                        color = colors.onSurface,
-                        fontSize = 30.sp,
-                        fontFamily = FontFamily.Default,
-                        fontWeight = FontWeight.Bold
-                    )
-                )
-            }
-
-            Spacer(modifier = Modifier.size(20.dp))
-
-            Row(
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.Center,
-            ) {
-                Icon(Icons.Default.Email, "Icon description", tint = MaterialTheme.colors.onSurface)
-
-                Text(
-                    viewModel.emailUser,
-                    style = TextStyle(
-                        color = colors.onSurface,
-                        fontSize = 30.sp,
-                        fontFamily = FontFamily.Default,
-                        fontWeight = FontWeight.Normal
-                    )
-                )
-            }
-
-            Spacer(modifier = Modifier.size(20.dp))
-
-            Row(
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.Center,
+            // * * * * * * NAME * * * * * *
+            Icon(
+                Icons.Default.Person,
+                "Icon description",
+                tint = colors.primary,
+                modifier = Modifier.size(iconSize),
             )
-            {
-
-                Icon(Icons.Default.Phone, "Icon description", tint = MaterialTheme.colors.onSurface)
-
-                Text(
-                    viewModel.phoneUser,
-                    style = TextStyle(
-                        color = colors.onSurface,
-                        fontSize = 30.sp,
-                        fontFamily = FontFamily.Default,
-                        fontWeight = FontWeight.Normal
-                    )
+            Text(
+                viewModel.nameUser,
+                style = TextStyle(
+                    color = colors.onSurface,
+                    fontSize = textSize,
+                    fontFamily = FontFamily.Default,
+                    fontWeight = FontWeight.Bold
                 )
-            }
+            )
 
-            Spacer(modifier = Modifier.size(20.dp))
+            Spacer(modifier = Modifier.size(textToIconSpace))
 
-            Row(
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.Center,
-
-                ) {
-
-                Icon(Icons.Default.Info, "Icon description", tint = MaterialTheme.colors.onSurface)
-
-                Text(
-                    text = "Opis profilu:",
-                    style = TextStyle(
-                        color = colors.onSurface,
-                        fontSize = 25.sp,
-                        fontFamily = FontFamily.Default,
-                        fontWeight = FontWeight.Bold,
-                        textAlign = TextAlign.Start
-                    ),
+            // * * * * * * E_MAIL * * * * * *
+            Icon(
+                Icons.Default.Email,
+                "Icon description",
+                tint = colors.primary,
+                modifier = Modifier.size(iconSize),
+            )
+            Text(
+                viewModel.emailUser,
+                style = TextStyle(
+                    color = colors.onSurface,
+                    fontSize = textSize,
+                    fontFamily = FontFamily.Default,
+                    fontWeight = FontWeight.Normal
                 )
-            }
+            )
 
-            Spacer(modifier = Modifier.size(20.dp))
+            Spacer(modifier = Modifier.size(textToIconSpace))
 
+            // * * * * * * PHONE * * * * * *
+            Icon(
+                Icons.Default.Phone,
+                "Icon description",
+                tint = colors.primary,
+                modifier = Modifier.size(iconSize),
+            )
+            Text(
+                viewModel.phoneUser,
+                style = TextStyle(
+                    color = colors.onSurface,
+                    fontSize = textSize,
+                    fontFamily = FontFamily.Default,
+                    fontWeight = FontWeight.Normal
+                )
+            )
+
+            Spacer(modifier = Modifier.size(textToIconSpace))
+
+            // * * * * * * ADDRESS * * * * * *
+            Icon(
+                Icons.Default.LocationOn,
+                "Location description",
+                tint = colors.primary,
+                modifier = Modifier.size(iconSize),
+            )
+            Text(
+                text = viewModel.address,
+                style = TextStyle(
+                    color = colors.onSurface,
+                    fontSize = textSize,
+                    fontFamily = FontFamily.Default,
+                    textAlign = TextAlign.Start
+                ),
+            )
+
+            Spacer(modifier = Modifier.size(textToIconSpace))
+
+            // * * * * * * DESCRIPTION * * * * * *
+            Icon(
+                Icons.Default.Info,
+                "Icon description",
+                tint = colors.primary,
+                modifier = Modifier.size(iconSize),
+            )
             Text(
                 text = viewModel.userDescription,
                 style = TextStyle(
                     color = colors.onSurface,
-                    fontSize = 15.sp,
+                    fontSize = textSize,
                     fontFamily = FontFamily.Default,
-                    fontWeight = FontWeight.Bold,
-                    textAlign = TextAlign.Center,
-                )
+                    textAlign = TextAlign.Start
+                ),
             )
         }
     }
@@ -262,7 +248,7 @@ fun UserButtonSection(
 ) {
     Button(
         onClick = {
-            if(viewModel.userProfile != null) {
+            if (viewModel.userProfile != null) {
                 UpdateUserProfileViewModel.userProfile = viewModel.userProfile
                 navController.navigate(route = Screen.UpdateUserProfile.route)
             }
@@ -271,15 +257,6 @@ fun UserButtonSection(
             .fillMaxWidth()
             .padding(Dimens.standardPadding)
     ) {
-
-        Image(
-            painterResource(R.drawable.ic_baseline_person_24),
-            contentDescription = "Edytuj profil",
-            modifier = Modifier.size(30.dp),
-        )
-
-        Spacer(modifier = Modifier.width(10.dp))
-
         Text(text = Strings.edit_profile, color = kWhite)
     }
 
@@ -291,17 +268,8 @@ fun UserButtonSection(
             .fillMaxWidth()
             .padding(Dimens.standardPadding)
     ) {
-
-        Image(
-            painterResource(R.drawable.ic_baseline_star_24),
-            contentDescription = "Zobacz opinie o sobie",
-            modifier = Modifier.size(30.dp),
-        )
-
         Text(text = Strings.see_opinions, color = kWhite)
     }
-
-    Spacer(modifier = Modifier.height(30.dp))
 }
 
 

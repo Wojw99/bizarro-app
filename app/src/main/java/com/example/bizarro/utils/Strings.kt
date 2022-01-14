@@ -20,7 +20,7 @@ object Strings {
     const val empty = ""
     const val userRecords = "Twoje ogłoszenia"
     const val home = "Home"
-    const val errorIncorrectEmailOrPassword = "Nieprawidłowy email lub hasło!"
+    const val errorIncorrectEmailOrPassword = "Nieprawidłowy login lub hasło!"
     const val userNotSignedInError = "Użytkownik nie jest zalogowany!"
     const val emptyFieldsError = "Część z wymaganych pól jest pusta!"
     const val confirmLogin = "Pomyślnie zalogowano."
@@ -37,6 +37,12 @@ object Strings {
     const val type = "Typ"
     const val header = "Nagłówek"
     const val startDate = "Data wystawienia"
+
+    const val emptyUserEmail = "Nie podano adresu e-mail"
+    const val emptyUserPhone = "Nie podano numeru telefonu"
+    const val emptyUserDescription = "Brak opisu"
+    const val emptyUserAddress = "Nie podano adresu"
+    const val emptyUserNames = "Nie podano imienia i nazwiska"
 
     // * * * * * * * * LOGIN/REGISTER * * * * * * * *
     const val username = "Nazwa użytkownika"

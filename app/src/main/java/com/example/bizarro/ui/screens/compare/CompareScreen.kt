@@ -597,7 +597,6 @@ fun CompareListItem(
                             fontSize = 26.sp,
                             color = colors.onSurface,
                             fontWeight = FontWeight.Bold,
-
                             ),
                     )
 

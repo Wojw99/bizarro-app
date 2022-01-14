@@ -17,6 +17,7 @@ import com.example.bizarro.ui.screens.search.SearchViewModel
 import com.example.bizarro.ui.screens.update_user_profile.UpdateUserProfileViewModel
 import com.example.bizarro.utils.Constants
 import com.example.bizarro.utils.Resource
+import com.example.bizarro.utils.Strings
 import com.example.bizarro.utils.models.Filter
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -33,6 +34,7 @@ class UserProfileViewModel @Inject constructor(
     var emailUser by mutableStateOf("")
     var phoneUser by mutableStateOf("")
     var userDescription by mutableStateOf("")
+    var address by mutableStateOf("")
     var userImage = mutableStateOf<String?>(null)
 
     val userLoggedOpinionList = mutableStateOf<List<Opinion>>(listOf())
@@ -67,13 +69,23 @@ class UserProfileViewModel @Inject constructor(
 
             when (resource) {
                 is Resource.Success -> {
-                    val firstNameUser = resource.data?.firstName.toString()
-                    val secondNameUser = resource.data?.lastName.toString()
+                    val firstNameUser = resource.data?.firstName
+                    val secondNameUser = resource.data?.lastName
 
-                    nameUser = "$firstNameUser $secondNameUser"
-                    emailUser = resource.data?.email.toString()
-                    phoneUser = resource.data?.phone.toString()
-                    userDescription = resource.data?.description.toString()
+                    if(firstNameUser == null && secondNameUser == null) {
+                        nameUser = Strings.emptyUserNames
+                    } else if(firstNameUser == null && secondNameUser != null) {
+                        nameUser = "$$secondNameUser"
+                    } else if(firstNameUser != null && secondNameUser == null) {
+                        nameUser = "$firstNameUser"
+                    } else {
+                        nameUser = "$firstNameUser $secondNameUser"
+                    }
+
+                    emailUser = resource.data?.email ?: Strings.emptyUserEmail
+                    phoneUser = resource.data?.phone ?: Strings.emptyUserPhone
+                    userDescription = resource.data?.description ?: Strings.emptyUserDescription
+                    address = resource.data?.address ?: Strings.emptyUserAddress
                     userImage.value = resource.data!!.imagePath
                     userProfile = resource.data!!
 

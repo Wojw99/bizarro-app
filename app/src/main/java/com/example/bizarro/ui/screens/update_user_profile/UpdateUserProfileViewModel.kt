@@ -15,6 +15,7 @@ import com.example.bizarro.ui.screens.user_profile.UserProfileViewModel
 import com.example.bizarro.ui.screens.user_record_list.UserRecordListViewModel
 import com.example.bizarro.utils.CommonMethods
 import com.example.bizarro.utils.Resource
+import com.example.bizarro.utils.Strings
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
@@ -59,6 +60,9 @@ class UpdateUserProfileViewModel @Inject constructor(
     }
 
     fun updateProfile(context: Context) {
+        validateEmail()
+        if(isError()) return
+
         viewModelScope.launch {
             startLoading()
 
@@ -110,6 +114,14 @@ class UpdateUserProfileViewModel @Inject constructor(
                     endLoadingWithError(resource.message!!)
                 }
             }
+        }
+    }
+
+    private fun validateEmail() {
+        if(email.value.isEmpty()) {
+            loadError.value = Strings.emptyUserEmail
+        } else if(!CommonMethods.isValidEmail(email.value)) {
+            loadError.value = Strings.emailIncorrectError
         }
     }
 
