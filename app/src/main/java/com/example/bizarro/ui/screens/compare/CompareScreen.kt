@@ -46,7 +46,7 @@ fun CompareScreen(
 ) {
     viewModel.appState.bottomMenuVisible.value = true
 
-    BizarroTheme(darkTheme = Constants.isDark.value)
+    BizarroTheme(darkTheme = viewModel.appState.isDarkTheme.value)
     {
         Box {
             // * * * * * * BODY * * * * * *
@@ -77,9 +77,8 @@ fun CompareScreen(
             }
 
             // * * * * * * * TOP BAR * * * * * * *
-            Row(
+            Column(
                 modifier = Modifier.padding(Dimens.standardPadding).fillMaxSize(),
-                horizontalArrangement = Arrangement.SpaceBetween,
             ) {
                 FloatingActionButton(
                     onClick = {
@@ -95,7 +94,7 @@ fun CompareScreen(
                     }
                 }
 
-                Spacer(modifier = Modifier.width(Dimens.standardPadding))
+                Spacer(modifier = Modifier.height(Dimens.standardPadding))
 
                 FloatingActionButton(
                     onClick = {
@@ -193,7 +192,7 @@ fun CompareTableDescriptions(
                     .weight(1f),
             ) {
                 Text(
-                    text = "Tytuł",
+                    text = Strings.title,
                     modifier = Modifier
                         .align(Alignment.CenterStart)
                         .padding(spaceSize),
@@ -210,7 +209,7 @@ fun CompareTableDescriptions(
                     .weight(1f),
             ) {
                 Text(
-                    text = "Nagłówek",
+                    text = Strings.header,
                     modifier = Modifier
                         .align(Alignment.CenterStart)
                         .padding(spaceSize),
@@ -227,7 +226,7 @@ fun CompareTableDescriptions(
                     .weight(1f),
             ) {
                 Text(
-                    text = "Typ",
+                    text = Strings.type,
                     modifier = Modifier
                         .align(Alignment.CenterStart)
                         .padding(spaceSize),
@@ -244,7 +243,7 @@ fun CompareTableDescriptions(
                     .weight(1f),
             ) {
                 Text(
-                    text = "Opis",
+                    text = Strings.description,
                     modifier = Modifier
                         .align(Alignment.CenterStart)
                         .padding(spaceSize),
@@ -261,7 +260,7 @@ fun CompareTableDescriptions(
                     .weight(1f),
             ) {
                 Text(
-                    text = "Data wystawienia",
+                    text = Strings.startDate,
                     modifier = Modifier
                         .align(Alignment.CenterStart)
                         .padding(spaceSize),
@@ -278,7 +277,7 @@ fun CompareTableDescriptions(
                     .weight(1f),
             ) {
                 Text(
-                    text = "Kategoria",
+                    text = Strings.category,
                     modifier = Modifier
                         .align(Alignment.CenterStart)
                         .padding(spaceSize),
@@ -295,7 +294,7 @@ fun CompareTableDescriptions(
                     .weight(1f),
             ) {
                 Text(
-                    text = "Adres",
+                    text = Strings.address,
                     modifier = Modifier
                         .align(Alignment.CenterStart)
                         .padding(spaceSize),

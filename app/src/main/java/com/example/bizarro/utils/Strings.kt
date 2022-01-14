@@ -34,6 +34,9 @@ object Strings {
     const val phoneNumber = "Numer telefonu"
     const val profileDescription = "Opis profilu"
     const val profileEdit = "Edytuj profil"
+    const val type = "Typ"
+    const val header = "Nagłówek"
+    const val startDate = "Data wystawienia"
 
     // * * * * * * * * LOGIN/REGISTER * * * * * * * *
     const val username = "Nazwa użytkownika"

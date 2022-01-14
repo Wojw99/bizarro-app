@@ -49,7 +49,7 @@ fun UserProfileScreen(
     viewModel.appState.showBottomMenu()
 
     BizarroTheme(
-        darkTheme = Constants.isDark.value
+        darkTheme = viewModel.appState.isDarkTheme.value
     ) {
         Column(
             modifier = Modifier

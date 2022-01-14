@@ -42,7 +42,7 @@ fun AddOpinionScreen(
     }
 
     BizarroTheme(
-        darkTheme = Constants.isDark.value
+        darkTheme = viewModel.appState.isDarkTheme.value
     ) {
         Box{
             Column(

@@ -70,7 +70,7 @@ fun AddRecordScreen(
         }
     }
 
-    BizarroTheme(darkTheme = Constants.isDark.value)
+    BizarroTheme(darkTheme = viewModel.appState.isDarkTheme.value)
     {
         Box {
             // * * * * * * BODY * * * * * *

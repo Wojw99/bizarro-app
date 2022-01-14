@@ -50,7 +50,7 @@ fun UpdateUserProfileScreen(
     viewModel.appState.hideBottomMenu()
 
     BizarroTheme(
-        darkTheme = Constants.isDark.value
+        darkTheme = viewModel.appState.isDarkTheme.value
     ) {
         Box {
             // * * * * * BODY * * * * *

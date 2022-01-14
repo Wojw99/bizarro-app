@@ -43,7 +43,7 @@ fun SettingsScreen(
     viewModel.appState.bottomMenuVisible.value = false
 
     BizarroTheme(
-        darkTheme = Constants.isDark.value
+        darkTheme = viewModel.appState.isDarkTheme.value
     ) {
         Column(
             modifier = Modifier
@@ -179,7 +179,7 @@ fun SettingsScreen(
                     Box(modifier = Modifier
                         .background(colors.background)
                         .clickable {
-                            Constants.checkIsDark()
+                            viewModel.appState.toggleDarkMode()
                         }
                         .height(80.dp)
                         .fillMaxWidth()

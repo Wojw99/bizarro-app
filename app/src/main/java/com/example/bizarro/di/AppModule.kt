@@ -41,8 +41,10 @@ class AppModule {
 
     @Singleton
     @Provides
-    fun provideAppState(): AppState {
-        return AppState()
+    fun provideAppState(
+        @ApplicationContext appContext: Context
+    ): AppState {
+        return AppState(appContext)
     }
 
     @Singleton

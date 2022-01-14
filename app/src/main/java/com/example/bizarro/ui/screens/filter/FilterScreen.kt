@@ -61,7 +61,7 @@ fun FilterScreen(
         navController.popBackStack()
     }
 
-    BizarroTheme(darkTheme = Constants.isDark.value)
+    BizarroTheme(darkTheme = viewModel.appState.isDarkTheme.value)
     {
         Box {
             // * * * * * * BODY * * * * * *

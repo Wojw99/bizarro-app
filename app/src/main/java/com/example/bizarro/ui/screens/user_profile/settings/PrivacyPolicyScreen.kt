@@ -28,7 +28,7 @@ fun PrivacyPolicyScreen(
     viewModel.appState.bottomMenuVisible.value = false
 
     BizarroTheme(
-        darkTheme = Constants.isDark.value
+        darkTheme = viewModel.appState.isDarkTheme.value
     ) {
         Column(
             modifier = Modifier

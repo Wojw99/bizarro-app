@@ -53,7 +53,7 @@ fun RecordDetailsScreen(
 
     val context = LocalContext.current
 
-    BizarroTheme(darkTheme = Constants.isDark.value)
+    BizarroTheme(darkTheme = viewModel.appState.isDarkTheme.value)
     {
         Box {
             // * * * * * * BODY * * * * * *
@@ -370,7 +370,7 @@ fun RecordDetailsBody(
             Text(
                 text = viewModel.recordGeneralOpinion.value,
                 style = TextStyle(
-                    color = if (Constants.isDark.value) kBlueLight else kBlueDark,
+                    color = if (viewModel.appState.isDarkTheme.value) kBlueLight else kBlueDark,
                     fontSize = 18.sp,
                     fontWeight = FontWeight.SemiBold,
                 ),
@@ -418,7 +418,7 @@ fun RecordDetailsBody(
             Text(
                 text = viewModel.recordCategory.value,
                 style = TextStyle(
-                    color = if (Constants.isDark.value) kBlueLight else kBlueDark,
+                    color = if (viewModel.appState.isDarkTheme.value) kBlueLight else kBlueDark,
                     fontSize = 18.sp,
                     fontWeight = FontWeight.SemiBold,
                 ),
@@ -467,7 +467,7 @@ fun RecordDetailsBody(
             Text(
                 text = viewModel.recordAddress.value,
                 style = TextStyle(
-                    color = if (Constants.isDark.value) kBlueLight else kBlueDark,
+                    color = if (viewModel.appState.isDarkTheme.value) kBlueLight else kBlueDark,
                     fontSize = 18.sp,
                     fontWeight = FontWeight.SemiBold,
                 ),

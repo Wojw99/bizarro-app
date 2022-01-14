@@ -59,7 +59,7 @@ fun SearchScreen(
 ) {
     viewModel.appState.bottomMenuVisible.value = true
 
-    BizarroTheme(darkTheme = Constants.isDark.value)
+    BizarroTheme(darkTheme = viewModel.appState.isDarkTheme.value)
     {
         Surface {
             Box(

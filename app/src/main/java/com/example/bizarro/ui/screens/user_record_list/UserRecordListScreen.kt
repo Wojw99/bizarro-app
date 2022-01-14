@@ -33,7 +33,7 @@ fun UserRecordListScreen(
 ) {
     viewModel.appState.showBottomMenu()
 
-    BizarroTheme(darkTheme = Constants.isDark.value)
+    BizarroTheme(darkTheme = viewModel.appState.isDarkTheme.value)
     {
         Box(
             modifier = Modifier

@@ -7,6 +7,7 @@ object Constants {
     // const val BASE_URL = "http://10.0.2.2:3000/api/"
     const val RECORD_DEFAULT_IMG_URL = "https://upload.wikimedia.org/wikipedia/commons/0/04/Bike_icon.png"
     const val USER_DEFAULT_IMG_URL = "https://upload.wikimedia.org/wikipedia/commons/7/70/User_icon_BLACK-01.png"
+    const val SHARED_PREFERENCES_KEY  = "bizarro_shared_prefs_key$%!@#_key2323"
 
     const val FILTER_CITY = "city"
     const val FILTER_PROVINCE = "province"
@@ -52,19 +53,4 @@ object Constants {
         TYPE_SWAP,
         TYPE_RENT,
     )
-
-    val marks = listOf(
-        Review_1,
-        Review_2,
-        Review_3,
-        Review_4,
-        Review_5
-    )
-
-    val isDark = mutableStateOf(false)
-
-    fun checkIsDark()
-    {
-        isDark.value = !isDark.value
-    }
 }
