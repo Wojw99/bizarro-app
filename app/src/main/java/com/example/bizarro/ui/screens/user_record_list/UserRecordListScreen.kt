@@ -18,10 +18,7 @@ import com.example.bizarro.ui.components.RecordBox
 import com.example.bizarro.ui.screens.record_details.RecordDetailsViewModel
 import com.example.bizarro.ui.screens.search.SearchViewModel
 import com.example.bizarro.ui.screens.search.topRecordListMargin
-import com.example.bizarro.ui.theme.BizarroTheme
-import com.example.bizarro.ui.theme.kBlueDark
-import com.example.bizarro.ui.theme.kLightGray
-import com.example.bizarro.ui.theme.kWhite
+import com.example.bizarro.ui.theme.*
 import com.example.bizarro.utils.Constants
 import com.example.bizarro.utils.Dimens
 import com.example.bizarro.utils.Strings
@@ -31,6 +28,7 @@ fun UserRecordListScreen(
     navController: NavController,
     viewModel: UserRecordListViewModel = hiltViewModel(),
 ) {
+    val backgroundColor = if (viewModel.appState.isDarkTheme.value) colors.background else kLightGray
     viewModel.appState.showBottomMenu()
 
     BizarroTheme(darkTheme = viewModel.appState.isDarkTheme.value)
@@ -38,7 +36,7 @@ fun UserRecordListScreen(
         Box(
             modifier = Modifier
                 .fillMaxSize()
-                .background(colors.background)
+                .background(backgroundColor)
                 .padding(Dimens.standardPadding)
         ) {
             // * * * * * * ERROR TEXT * * * * * *
@@ -109,7 +107,7 @@ fun RecordList(
     viewModel: UserRecordListViewModel = hiltViewModel(),
     navController: NavController,
 ) {
-    LazyColumn(modifier = modifier.background(colors.background)) {
+    LazyColumn {
         val recordList = viewModel.recordList.value
         val itemCount = recordList.size
 

@@ -37,6 +37,7 @@ interface BizarroApi {
 
     @POST("/add_user_photo/")
     suspend fun addUserPhoto(
+        @Header("Authorization") authHeader: String,
         @Query("user_id") userId: Long,
         @Body image: MultipartBody,
     ): String

@@ -1,5 +1,6 @@
 package com.example.bizarro.ui.screens.user_profile
 
+import android.widget.Space
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -8,9 +9,12 @@ import androidx.compose.material.MaterialTheme.colors
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.shadow
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
@@ -43,6 +47,9 @@ fun UserProfileScreen(
     navController: NavController,
     viewModel: UserProfileViewModel = hiltViewModel(),
 ) {
+    val backgroundColor = if (viewModel.appState.isDarkTheme.value) colors.secondaryVariant else kVeryLightGray
+    val primaryColor = getPrimaryColor(viewModel.colorIndex.value)
+
     viewModel.appState.showBottomMenu()
 
     BizarroTheme(
@@ -51,7 +58,7 @@ fun UserProfileScreen(
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .background(colors.background)
+                .background(backgroundColor)
                 .verticalScroll(rememberScrollState()),
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
@@ -94,26 +101,31 @@ fun UserProfileScreen(
 
             // * * * * * * USER PROFILE * * * * * *
             if (!viewModel.isLoading.value) {
-                UserInformation()
-                UserButtonSection(navController)
+                UserInformation(primaryColor = primaryColor)
+                UserButtonSection(navController = navController)
             }
 
             // * * * * * * PROGRESS BAR * * * * * *
             if (viewModel.isLoading.value) {
                 CircularProgressIndicator(modifier = Modifier.align(Alignment.CenterHorizontally))
             }
+
+            Spacer(modifier = Modifier.height(Dimens.bottomBarHeight))
         }
     }
 }
 
 @Composable
-fun UserInformation(viewModel: UserProfileViewModel = hiltViewModel()) {
-    // * * * * * * IMAGE * * * * * *
-    var painter: Painter? = null
-    val textSize = 20.sp
-    val iconSize = 19.dp
+fun UserInformation(
+    viewModel: UserProfileViewModel = hiltViewModel(),
+    primaryColor: Color = colors.primary,
+) {
+    val textSize = 18.sp
+    val iconSize = 20.dp
     val textToIconSpace = 16.dp
 
+    // * * * * * * IMAGE * * * * * *
+    var painter: Painter? = null
     if (viewModel.userImage.value != null) {
         painter = rememberImagePainter(CommonMethods.getUrlForImage(viewModel.userImage.value!!))
     } else {
@@ -127,7 +139,7 @@ fun UserInformation(viewModel: UserProfileViewModel = hiltViewModel()) {
         modifier = Modifier
             .size(128.dp)
             .clip(RoundedCornerShape(10))
-            .border(3.dp, kBlueDark, RoundedCornerShape(10))
+            .border(3.dp, colors.primary, RoundedCornerShape(10))
     )
 
     Spacer(modifier = Modifier.size(textToIconSpace / 2))
@@ -135,8 +147,13 @@ fun UserInformation(viewModel: UserProfileViewModel = hiltViewModel()) {
     Box(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(vertical = 12.dp)
-            .background(colors.secondaryVariant),
+            .padding(vertical = 12.dp, horizontal = Dimens.standardPadding)
+            .shadow(5.dp, RoundedCornerShape(Dimens.cornerRadius))
+            .clip(RoundedCornerShape(Dimens.cornerRadius))
+            .background(colors.surface)
+            .clickable {
+                viewModel.changeColorIndex()
+            },
         contentAlignment = Alignment.Center
     ) {
         Column(
@@ -149,14 +166,14 @@ fun UserInformation(viewModel: UserProfileViewModel = hiltViewModel()) {
             Icon(
                 Icons.Default.Person,
                 "Icon description",
-                tint = colors.primary,
+                tint = primaryColor,
                 modifier = Modifier.size(iconSize),
             )
             Text(
                 viewModel.nameUser,
                 style = TextStyle(
                     color = colors.onSurface,
-                    fontSize = textSize,
+                    fontSize = 20.sp,
                     fontFamily = FontFamily.Default,
                     fontWeight = FontWeight.Bold
                 )
@@ -168,7 +185,7 @@ fun UserInformation(viewModel: UserProfileViewModel = hiltViewModel()) {
             Icon(
                 Icons.Default.Email,
                 "Icon description",
-                tint = colors.primary,
+                tint = primaryColor,
                 modifier = Modifier.size(iconSize),
             )
             Text(
@@ -187,7 +204,7 @@ fun UserInformation(viewModel: UserProfileViewModel = hiltViewModel()) {
             Icon(
                 Icons.Default.Phone,
                 "Icon description",
-                tint = colors.primary,
+                tint = primaryColor,
                 modifier = Modifier.size(iconSize),
             )
             Text(
@@ -206,7 +223,7 @@ fun UserInformation(viewModel: UserProfileViewModel = hiltViewModel()) {
             Icon(
                 Icons.Default.LocationOn,
                 "Location description",
-                tint = colors.primary,
+                tint = primaryColor,
                 modifier = Modifier.size(iconSize),
             )
             Text(
@@ -225,7 +242,7 @@ fun UserInformation(viewModel: UserProfileViewModel = hiltViewModel()) {
             Icon(
                 Icons.Default.Info,
                 "Icon description",
-                tint = colors.primary,
+                tint = primaryColor,
                 modifier = Modifier.size(iconSize),
             )
             Text(
@@ -234,7 +251,7 @@ fun UserInformation(viewModel: UserProfileViewModel = hiltViewModel()) {
                     color = colors.onSurface,
                     fontSize = textSize,
                     fontFamily = FontFamily.Default,
-                    textAlign = TextAlign.Start
+                    textAlign = TextAlign.Center
                 ),
             )
         }
@@ -272,6 +289,19 @@ fun UserButtonSection(
     }
 }
 
+private fun getPrimaryColor(index: Int): Color {
+    if (index == 0) {
+        return kBlueDark
+    } else if (index == 1) {
+        return kRed
+    } else if (index == 2) {
+        return kYellow
+    } else if (index == 3) {
+        return kGreen
+    } else {
+        return kPurple
+    }
+}
 
 
 

@@ -57,6 +57,8 @@ fun SearchScreen(
     viewModel: SearchViewModel = hiltViewModel(),
     navController: NavController,
 ) {
+    val backgroundColor = if (viewModel.appState.isDarkTheme.value) colors.background else kLightGray
+
     viewModel.appState.bottomMenuVisible.value = true
 
     BizarroTheme(darkTheme = viewModel.appState.isDarkTheme.value)
@@ -65,7 +67,7 @@ fun SearchScreen(
             Box(
                 modifier = Modifier
                     .fillMaxSize()
-                    .background(colors.background)
+                    .background(backgroundColor)
                     .padding(horizontal = Dimens.standardPadding)
             ) {
                 // * * * * * * ERROR TEXT * * * * * *
@@ -357,7 +359,7 @@ fun RecordList(
     viewModel: SearchViewModel = hiltViewModel(),
     navController: NavController,
 ) {
-    LazyColumn(modifier = modifier.background(colors.background)) {
+    LazyColumn {
         val recordList = viewModel.recordList.value
         val itemCount = recordList.size
 

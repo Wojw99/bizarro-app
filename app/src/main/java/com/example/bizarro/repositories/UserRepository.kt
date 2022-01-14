@@ -78,8 +78,10 @@ class UserRepository @Inject constructor(
     }
 
     suspend fun addUserPhoto(userId: Long, image: MultipartBody): Resource<String> {
+        if (tokenManager.isUserNotSignedIn()) return Resource.Error(Strings.userNotSignedInError)
+
         val response = try {
-            api.addUserPhoto(userId, image)
+            api.addUserPhoto(tokenManager.getAuthHeader(), userId, image)
         } catch (e: Exception) {
             Timber.e(e)
             return Resource.Error(Strings.unknownError)

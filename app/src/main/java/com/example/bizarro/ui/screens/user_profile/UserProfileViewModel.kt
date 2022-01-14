@@ -49,6 +49,8 @@ class UserProfileViewModel @Inject constructor(
         }
     }
 
+    val colorIndex = mutableStateOf(0)
+
     init {
         getUserProfile()
         signal.observeForever(observer)
@@ -57,6 +59,11 @@ class UserProfileViewModel @Inject constructor(
     override fun onCleared() {
         super.onCleared()
         signal.removeObserver(observer)
+    }
+
+    fun changeColorIndex(){
+        if(colorIndex.value < 4) colorIndex.value += 1
+        else colorIndex.value = 0
     }
 
     fun getUserProfile() {

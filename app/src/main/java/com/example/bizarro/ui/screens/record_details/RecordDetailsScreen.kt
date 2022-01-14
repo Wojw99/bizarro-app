@@ -19,6 +19,8 @@ import androidx.compose.material.icons.outlined.Star
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
@@ -49,9 +51,11 @@ fun RecordDetailsScreen(
     navController: NavController,
     viewModel: RecordDetailsViewModel = hiltViewModel(),
 ) {
+    val backgroundColor = if (viewModel.appState.isDarkTheme.value) colors.background else kVeryLightGray
+    val context = LocalContext.current
+
     viewModel.appState.bottomMenuVisible.value = false
 
-    val context = LocalContext.current
 
     BizarroTheme(darkTheme = viewModel.appState.isDarkTheme.value)
     {
@@ -62,7 +66,7 @@ fun RecordDetailsScreen(
                     navController = navController,
                     modifier = Modifier
                         .fillMaxSize()
-                        .background(colors.background)
+                        .background(backgroundColor)
                         .padding(top = Dimens.topBarHeight)
                         .verticalScroll(rememberScrollState()),
                 )
@@ -217,60 +221,52 @@ fun RecordDetailsBody(
         // * * * * * * * * TITLE SECTION * * * * * * * *
         Box(
             modifier = Modifier
-                .background(colors.secondaryVariant)
                 .fillMaxWidth()
+                .shadow(5.dp, RoundedCornerShape(Dimens.cornerRadius))
+                .clip(RoundedCornerShape(Dimens.cornerRadius))
+                .background(colors.surface),
         ) {
-            Box(
-                modifier = Modifier
-                    .background(
-                        colors.background,
-                        RoundedCornerShape(bottomStart = 16.dp, bottomEnd = 16.dp)
-                    )
-                    .fillMaxWidth()
+            Column(
+                modifier = Modifier.padding(
+                    horizontal = Dimens.standardPadding * 2,
+                    vertical = Dimens.standardPadding
+                )
             ) {
-                Column(
-                    modifier = Modifier.padding(
-                        horizontal = Dimens.standardPadding * 2,
-                        vertical = Dimens.standardPadding
-                    )
-                ) {
-                    Text(
-                        text = viewModel.recordName.value,
-                        style = TextStyle(fontSize = 20.sp, color = colors.onSurface),
-                    )
+                Text(
+                    text = viewModel.recordName.value,
+                    style = TextStyle(fontSize = 20.sp, color = colors.onSurface),
+                )
 
-                    Spacer(modifier = Modifier.height(8.dp))
+                Spacer(modifier = Modifier.height(8.dp))
 
-                    Text(
-                        text = viewModel.recordHeader.value,
-                        style = TextStyle(
-                            fontSize = 36.sp,
-                            color = colors.onSurface,
-                            fontWeight = FontWeight.Bold
-                        ),
-                    )
+                Text(
+                    text = viewModel.recordHeader.value,
+                    style = TextStyle(
+                        fontSize = 36.sp,
+                        color = colors.onSurface,
+                        fontWeight = FontWeight.Bold
+                    ),
+                )
 
-                    Text(
-                        text = viewModel.recordLabel.value,
-                        style = TextStyle(fontSize = 18.sp, color = colors.onSurface),
-                    )
+                Text(
+                    text = viewModel.recordLabel.value,
+                    style = TextStyle(fontSize = 18.sp, color = colors.onSurface),
+                )
 
-                    Spacer(modifier = Modifier.height(8.dp))
+                Spacer(modifier = Modifier.height(8.dp))
 
-                    Text(
-                        text = viewModel.recordCreationDateLabel.value,
-                        style = TextStyle(fontSize = 16.sp, color = colors.onSurface),
-                    )
-                }
+                Text(
+                    text = viewModel.recordCreationDateLabel.value,
+                    style = TextStyle(fontSize = 16.sp, color = colors.onSurface),
+                )
             }
         }
 
         // * * * * * * * * SPACER * * * * * * * *
-        Box(
+        Spacer(
             modifier = Modifier
-                .height(25.dp)
+                .height(20.dp)
                 .fillMaxWidth()
-                .background(colors.secondaryVariant)
         )
 
         val sectionsPaddingHorizontal = 24.dp
