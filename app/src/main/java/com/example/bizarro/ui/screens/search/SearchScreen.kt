@@ -57,12 +57,12 @@ fun SearchScreen(
     viewModel: SearchViewModel = hiltViewModel(),
     navController: NavController,
 ) {
-    val backgroundColor = if (viewModel.appState.isDarkTheme.value) colors.background else kLightGray
-
     viewModel.appState.bottomMenuVisible.value = true
 
     BizarroTheme(darkTheme = viewModel.appState.isDarkTheme.value)
     {
+        val backgroundColor = if (viewModel.appState.isDarkTheme.value) colors.background else kLightGray
+
         Surface {
             Box(
                 modifier = Modifier

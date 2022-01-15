@@ -14,6 +14,7 @@ import com.example.bizarro.ui.screens.search.SearchViewModel
 import com.example.bizarro.ui.screens.user_record_list.UserRecordListViewModel
 import com.example.bizarro.utils.Constants
 import com.example.bizarro.utils.Resource
+import com.example.bizarro.utils.Strings
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -32,10 +33,12 @@ class OtherUserViewModel @Inject constructor(
     val isSuccess = mutableStateOf(false)
 
     var nameUser by mutableStateOf("")
+    var userName by mutableStateOf("")
     var emailUser by mutableStateOf("")
     var phoneUser by mutableStateOf("")
     var userDescription by mutableStateOf("")
-    var userImage by mutableStateOf(Constants.RECORD_DEFAULT_IMG_URL)
+    var address by mutableStateOf("")
+    var userImage = mutableStateOf<String?>(Constants.RECORD_DEFAULT_IMG_URL)
 
     val textOpinion = mutableStateOf("")
     val selectedReview = mutableStateOf(Review.review3)
@@ -85,14 +88,26 @@ class OtherUserViewModel @Inject constructor(
 
             when (resource) {
                 is Resource.Success -> {
-                    val firstNameUser = resource.data?.userProfile?.firstName.toString()
-                    val secondNameUser = resource.data?.userProfile?.lastName.toString()
+                    val profile = resource.data!!.userProfile
+                    val firstNameUser = profile.firstName
+                    val secondNameUser = profile.lastName
 
-                    nameUser = "$firstNameUser $secondNameUser"
-                    emailUser = resource.data?.userProfile?.email.toString()
-                    phoneUser = resource.data?.userProfile?.phone.toString()
-                    userDescription = resource.data?.userProfile?.description.toString()
-                    userImage = resource.data?.userProfile?.imagePath.toString()
+                    if(firstNameUser.isNullOrEmpty() && secondNameUser.isNullOrEmpty()) {
+                        nameUser = Strings.emptyUserNames
+                    } else if(firstNameUser.isNullOrEmpty() && !secondNameUser.isNullOrEmpty()) {
+                        nameUser = "$$secondNameUser"
+                    } else if(!firstNameUser.isNullOrEmpty() && secondNameUser.isNullOrEmpty()) {
+                        nameUser = "$firstNameUser"
+                    } else {
+                        nameUser = "$firstNameUser $secondNameUser"
+                    }
+
+                    userName = profile.username
+                    emailUser = if (profile.email.isNullOrEmpty()) Strings.emptyUserEmail else profile.email
+                    phoneUser = if (profile.phone.isNullOrEmpty()) Strings.emptyUserPhone else profile.phone
+                    userDescription = if (profile.description.isNullOrEmpty()) Strings.emptyUserDescription else profile.description
+                    address = if (profile.address.isNullOrEmpty()) Strings.emptyUserAddress else profile.address
+                    userImage.value = profile.imagePath
 
                     endLoading()
                 }

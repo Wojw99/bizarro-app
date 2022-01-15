@@ -129,6 +129,8 @@ class UserRepository @Inject constructor(
             api.sendResetPasswordRequest(toEmail)
         } catch (e: Exception) {
             Timber.e(e)
+            if (e is HttpException && e.code() == 404)
+                return Resource.Error(Strings.emailNotFoundError)
             return Resource.Error(Strings.unknownError)
         }
         return Resource.Success(response)

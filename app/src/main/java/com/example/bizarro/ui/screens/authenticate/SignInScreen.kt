@@ -3,6 +3,7 @@ package com.example.bizarro.ui.screens.authenticate
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
+import androidx.compose.material.MaterialTheme.colors
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Email
 import androidx.compose.material.icons.filled.Lock
@@ -29,10 +30,8 @@ import com.example.bizarro.ui.components.ConfirmAlertDialog
 import com.example.bizarro.ui.components.CustomOutlinedTextField
 import com.example.bizarro.ui.components.LoadingBox
 import com.example.bizarro.ui.screens.add_record.textFieldModifier
-import com.example.bizarro.ui.theme.BizarroTheme
-import com.example.bizarro.ui.theme.kDarkGrey
+import com.example.bizarro.ui.theme.*
 import com.example.bizarro.ui.theme.kGray
-import com.example.bizarro.ui.theme.kWhite
 import com.example.bizarro.utils.Constants
 import com.example.bizarro.utils.Dimens
 import com.example.bizarro.utils.Strings
@@ -140,9 +139,9 @@ fun SignInScreenBody(
                 viewModel.login()
             },
             modifier = Modifier.fillMaxWidth(),
-            colors = ButtonDefaults.buttonColors(backgroundColor = MaterialTheme.colors.onSurface),
+            colors = ButtonDefaults.buttonColors(backgroundColor = colors.onSurface),
         ) {
-            Text(text = Strings.login, color = kWhite)
+            Text(text = Strings.login, color = colors.surface)
         }
 
         Spacer(modifier = Modifier.height(spacerHeight * 6))
@@ -153,9 +152,9 @@ fun SignInScreenBody(
                 navController.navigate(route = Screen.SignUp.route)
             },
             modifier = Modifier.fillMaxWidth(),
-            colors = ButtonDefaults.buttonColors(backgroundColor = kGray),
+            colors = ButtonDefaults.buttonColors(backgroundColor = kLightGray),
         ) {
-            Text(text = Strings.goToRegister, color = kWhite)
+            Text(text = Strings.goToRegister, color = kBlack)
         }
 
         Spacer(modifier = Modifier.height(spacerHeight))
@@ -166,9 +165,9 @@ fun SignInScreenBody(
                 navController.navigate(route = Screen.PasswordResetScreen.route)
             },
             modifier = Modifier.fillMaxWidth(),
-            colors = ButtonDefaults.buttonColors(backgroundColor = kGray),
+            colors = ButtonDefaults.buttonColors(backgroundColor = kLightGray),
         ) {
-            Text(text = Strings.passwordDontRemember, color = kWhite)
+            Text(text = Strings.passwordDontRemember, color = kBlack)
         }
     }
 }

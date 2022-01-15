@@ -51,14 +51,13 @@ fun RecordDetailsScreen(
     navController: NavController,
     viewModel: RecordDetailsViewModel = hiltViewModel(),
 ) {
-    val backgroundColor = if (viewModel.appState.isDarkTheme.value) colors.background else kVeryLightGray
-    val context = LocalContext.current
-
     viewModel.appState.bottomMenuVisible.value = false
-
 
     BizarroTheme(darkTheme = viewModel.appState.isDarkTheme.value)
     {
+        val backgroundColor = if (viewModel.appState.isDarkTheme.value) colors.background else kVeryLightGray
+        val context = LocalContext.current
+
         Box {
             // * * * * * * BODY * * * * * *
             if (viewModel.loadError.value.isEmpty()) {

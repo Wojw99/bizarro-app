@@ -47,14 +47,14 @@ fun UserProfileScreen(
     navController: NavController,
     viewModel: UserProfileViewModel = hiltViewModel(),
 ) {
-    val backgroundColor = if (viewModel.appState.isDarkTheme.value) colors.secondaryVariant else kVeryLightGray
-    val primaryColor = getPrimaryColor(viewModel.colorIndex.value)
-
     viewModel.appState.showBottomMenu()
 
     BizarroTheme(
         darkTheme = viewModel.appState.isDarkTheme.value
     ) {
+        val backgroundColor = if (viewModel.appState.isDarkTheme.value) colors.background else kVeryLightGray
+        val primaryColor = getPrimaryColor(viewModel.colorIndex.value)
+
         Column(
             modifier = Modifier
                 .fillMaxSize()
@@ -162,6 +162,19 @@ fun UserInformation(
                 .fillMaxSize(),
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
+            // * * * * * * USERNAME * * * * * *
+            Text(
+                viewModel.userName,
+                style = TextStyle(
+                    color = colors.onSurface,
+                    fontSize = 20.sp,
+                    fontFamily = FontFamily.Default,
+                    fontWeight = FontWeight.Bold
+                )
+            )
+
+            Spacer(modifier = Modifier.size(textToIconSpace))
+
             // * * * * * * NAME * * * * * *
             Icon(
                 Icons.Default.Person,
@@ -173,9 +186,8 @@ fun UserInformation(
                 viewModel.nameUser,
                 style = TextStyle(
                     color = colors.onSurface,
-                    fontSize = 20.sp,
+                    fontSize = textSize,
                     fontFamily = FontFamily.Default,
-                    fontWeight = FontWeight.Bold
                 )
             )
 

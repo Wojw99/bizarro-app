@@ -28,11 +28,12 @@ fun UserRecordListScreen(
     navController: NavController,
     viewModel: UserRecordListViewModel = hiltViewModel(),
 ) {
-    val backgroundColor = if (viewModel.appState.isDarkTheme.value) colors.background else kLightGray
     viewModel.appState.showBottomMenu()
 
     BizarroTheme(darkTheme = viewModel.appState.isDarkTheme.value)
     {
+        val backgroundColor = if (viewModel.appState.isDarkTheme.value) colors.background else kLightGray
+
         Box(
             modifier = Modifier
                 .fillMaxSize()

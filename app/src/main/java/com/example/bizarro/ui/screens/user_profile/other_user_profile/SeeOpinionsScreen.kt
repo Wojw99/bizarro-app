@@ -60,7 +60,7 @@ fun SeeOpinionsScreen(
             )
 
             Text(
-                "Opinie o użytkowniku ${viewModel.nameUser}!",
+                "Opinie o użytkowniku ${viewModel.userName}!",
                 style = TextStyle(
                     textAlign = TextAlign.Center,
                     fontSize = 21.sp,

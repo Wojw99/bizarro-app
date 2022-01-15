@@ -172,7 +172,7 @@ fun SignUpScreenBody(
             modifier = Modifier.fillMaxWidth(),
             colors = ButtonDefaults.buttonColors(backgroundColor = MaterialTheme.colors.onSurface),
         ) {
-            Text(text = Strings.register, color = kWhite)
+            Text(text = Strings.register, color = MaterialTheme.colors.surface)
         }
 
         Spacer(modifier = Modifier.height(spacerHeight * 4))

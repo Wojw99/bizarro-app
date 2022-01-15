@@ -61,6 +61,7 @@ object Strings {
 
     const val passwordNotEqualsError = "Hasła nie są takie same!"
     const val emailIncorrectError = "E-mail nie jest poprawny!"
+    const val emailNotFoundError = "Taki email nie istnieje w naszej bazie danych!"
 
     // * * * * * * * * SEARCH SCREEN * * * * * * * *
     const val recordImage = "Zdjęcie ogłoszenia."

@@ -16,6 +16,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -48,29 +49,27 @@ fun AddOpinionScreen(
             Column(
                 modifier = Modifier
                     .fillMaxSize()
-                    .background(MaterialTheme.colors.background)
+                    .background(colors.background)
                     .verticalScroll(rememberScrollState()),
                 horizontalAlignment = Alignment.CenterHorizontally,
             ) {
-                //HeaderSectionAddOpinion(navController)
-                Spacer(modifier = Modifier.padding(top = Dimens.topBarHeight))
+                Spacer(modifier = Modifier.padding(top = Dimens.topBarHeight + Dimens.standardPadding))
 
-//                Text(
-//                    "Dodaj opinię o użytkowniku ${viewModel.nameUser}!",
-//                    style = TextStyle(
-//                        textAlign = TextAlign.Center,
-//                        fontSize = 21.sp,
-//                        fontFamily = FontFamily.Serif,
-//                    ),
-//                    color = colors.onSurface,
-//                    modifier = Modifier.padding(horizontal = 24.dp),
-//                )
+                Text(
+                    "Co sądzisz o użytkowniku ${viewModel.userName}?",
+                    style = TextStyle(
+                        textAlign = TextAlign.Center,
+                        fontSize = 21.sp,
+                        fontFamily = FontFamily.Serif,
+                    ),
+                    color = colors.onSurface,
+                    modifier = Modifier.padding(horizontal = 24.dp),
+                )
 
                 BikerImage()
 
                 // * * * * * * ADD OPINION TO USER * * * * * *
                 if (!viewModel.isLoading.value && viewModel.loadError.value.isEmpty()) {
-                    //RecordList(navController = navController)
                     RadioButtonDemo()
                 }
             }
@@ -277,7 +276,7 @@ fun BikerImage(
     Image(
         painter,
         contentDescription = "biker image",
-        modifier = Modifier.padding(Dimens.standardPadding * 2),
+        modifier = Modifier.size(250.dp).padding(vertical = Dimens.standardPadding),
     )
 }
 

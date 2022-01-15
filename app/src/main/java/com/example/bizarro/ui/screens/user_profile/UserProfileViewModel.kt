@@ -30,6 +30,7 @@ class UserProfileViewModel @Inject constructor(
     private val opinionsRepository: OpinionsRepository,
 ) : NetworkingViewModel()
 {
+    var userName by mutableStateOf("")
     var nameUser by mutableStateOf("")
     var emailUser by mutableStateOf("")
     var phoneUser by mutableStateOf("")
@@ -76,24 +77,26 @@ class UserProfileViewModel @Inject constructor(
 
             when (resource) {
                 is Resource.Success -> {
-                    val firstNameUser = resource.data?.firstName
-                    val secondNameUser = resource.data?.lastName
+                    val profile = resource.data!!
+                    val firstNameUser = profile.firstName
+                    val secondNameUser = profile.lastName
 
-                    if(firstNameUser == null && secondNameUser == null) {
+                    if(firstNameUser.isNullOrEmpty() && secondNameUser.isNullOrEmpty()) {
                         nameUser = Strings.emptyUserNames
-                    } else if(firstNameUser == null && secondNameUser != null) {
+                    } else if(firstNameUser.isNullOrEmpty() && !secondNameUser.isNullOrEmpty()) {
                         nameUser = "$$secondNameUser"
-                    } else if(firstNameUser != null && secondNameUser == null) {
+                    } else if(!firstNameUser.isNullOrEmpty() && secondNameUser.isNullOrEmpty()) {
                         nameUser = "$firstNameUser"
                     } else {
                         nameUser = "$firstNameUser $secondNameUser"
                     }
 
-                    emailUser = resource.data?.email ?: Strings.emptyUserEmail
-                    phoneUser = resource.data?.phone ?: Strings.emptyUserPhone
-                    userDescription = resource.data?.description ?: Strings.emptyUserDescription
-                    address = resource.data?.address ?: Strings.emptyUserAddress
-                    userImage.value = resource.data!!.imagePath
+                    userName = profile.username
+                    emailUser = if (profile.email.isNullOrEmpty()) Strings.emptyUserEmail else profile.email
+                    phoneUser = if (profile.phone.isNullOrEmpty()) Strings.emptyUserPhone else profile.phone
+                    userDescription = if (profile.description.isNullOrEmpty()) Strings.emptyUserDescription else profile.description
+                    address = if (profile.address.isNullOrEmpty()) Strings.emptyUserAddress else profile.address
+                    userImage.value = profile.imagePath
                     userProfile = resource.data!!
 
                     endLoading()

@@ -1,17 +1,19 @@
 package com.example.bizarro.ui.screens.user_profile
 
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
-import androidx.compose.foundation.border
+import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
+import androidx.compose.material.MaterialTheme.colors
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.shadow
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
@@ -29,9 +31,11 @@ import com.example.bizarro.ui.components.TopBar
 import com.example.bizarro.ui.screens.record_details.RecordDetailsViewModel
 import com.example.bizarro.ui.screens.user_profile.other_user_profile.OtherUserViewModel
 import com.example.bizarro.ui.theme.*
+import com.example.bizarro.utils.CommonMethods
 import com.example.bizarro.utils.Constants
 import com.example.bizarro.utils.Dimens
 import com.example.bizarro.utils.Strings
+import com.example.bizarro.utils.models.TopBarAction
 
 @Composable
 fun OtherUserProfileScreen(
@@ -43,20 +47,20 @@ fun OtherUserProfileScreen(
     BizarroTheme(
         darkTheme = viewModel.appState.isDarkTheme.value
     ) {
+        val backgroundColor = if (viewModel.appState.isDarkTheme.value) MaterialTheme.colors.background else kVeryLightGray
+
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .background(MaterialTheme.colors.background),
+                .background(backgroundColor)
+                .verticalScroll(rememberScrollState()),
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
 
-
+            // * * * * * * TOP BAR ICON * * * * * *
             TopBar(
                 navController = navController,
-                title = Strings.empty,
-                modifier = Modifier
-                    .background(MaterialTheme.colors.background)
-                    .align(Alignment.CenterHorizontally)
+                showBackButton = false,
             )
 
             // * * * * * * ERROR TEXT * * * * * *
@@ -80,14 +84,10 @@ fun OtherUserProfileScreen(
                 }
             }
 
-
             // * * * * * * USER PROFILE * * * * * *
             if (!viewModel.isLoading.value) {
-
                 OtherUserInfo()
-
-                OtherUserButtonSection(navController)
-
+                OtherUserButtonSection(navController = navController)
             }
 
             // * * * * * * PROGRESS BAR * * * * * *
@@ -95,160 +95,161 @@ fun OtherUserProfileScreen(
                 CircularProgressIndicator(modifier = Modifier.align(Alignment.CenterHorizontally))
             }
 
+            Spacer(modifier = Modifier.height(Dimens.bottomBarHeight))
         }
     }
 }
 
 @Composable
-fun OtherUserInfo(viewModel: OtherUserViewModel = hiltViewModel()) {
+fun OtherUserInfo(
+    viewModel: OtherUserViewModel = hiltViewModel(),
+) {
+    val textSize = 18.sp
+    val iconSize = 20.dp
+    val textToIconSpace = 16.dp
+
+    // * * * * * * IMAGE * * * * * *
+    var painter: Painter? = null
+    if (viewModel.userImage.value != null) {
+        painter = rememberImagePainter(CommonMethods.getUrlForImage(viewModel.userImage.value!!))
+    } else {
+        painter = painterResource(id = R.drawable.user_default)
+    }
 
     Image(
-        painter = rememberImagePainter(viewModel.userImage),
-        contentDescription = "Other user Image",
+        painter = painter,
+        contentDescription = "User Image",
         contentScale = ContentScale.Crop,
         modifier = Modifier
             .size(128.dp)
             .clip(RoundedCornerShape(10))
-            .border(3.dp, kBlueDark, RoundedCornerShape(10))
+            .border(3.dp, MaterialTheme.colors.primary, RoundedCornerShape(10))
     )
 
-    Spacer(modifier = Modifier.size(20.dp))
+    Spacer(modifier = Modifier.size(textToIconSpace / 2))
 
     Box(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(12.dp)
-            .background(MaterialTheme.colors.secondaryVariant),
+            .padding(vertical = 12.dp, horizontal = Dimens.standardPadding)
+            .shadow(5.dp, RoundedCornerShape(Dimens.cornerRadius))
+            .clip(RoundedCornerShape(Dimens.cornerRadius))
+            .background(MaterialTheme.colors.surface)
+            .clickable {},
         contentAlignment = Alignment.Center
     ) {
-
-        Column(horizontalAlignment = Alignment.CenterHorizontally)
-        {
-
-            Row(
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.Center
+        Column(
+            modifier = Modifier
+                .padding(horizontal = textToIconSpace * 2, vertical = textToIconSpace)
+                .fillMaxSize(),
+            horizontalAlignment = Alignment.CenterHorizontally,
+        ) {
+            // * * * * * * USERNAME * * * * * *
+            Text(
+                viewModel.userName,
+                style = TextStyle(
+                    color = colors.onSurface,
+                    fontSize = 20.sp,
+                    fontFamily = FontFamily.Default,
+                    fontWeight = FontWeight.Bold
+                )
             )
-            {
 
-                Icon(Icons.Default.Person, "Icon description", tint = MaterialTheme.colors.onSurface)
+            Spacer(modifier = Modifier.size(textToIconSpace))
 
-                Text(
-                    viewModel.nameUser,
-                    style = TextStyle(
-                        fontSize = 30.sp,
-                        fontFamily = FontFamily.Default,
-                        fontWeight = FontWeight.Bold,
-                        color = MaterialTheme.colors.onSurface
-                    )
-                )
-            }
-
-            Spacer(modifier = Modifier.size(20.dp))
-
-            Row(
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.Center
+            // * * * * * * NAME * * * * * *
+            Icon(
+                Icons.Default.Person,
+                "Icon description",
+                tint = colors.primary,
+                modifier = Modifier.size(iconSize),
             )
-            {
-
-                Icon(Icons.Default.Email, "Icon description", tint = MaterialTheme.colors.onSurface)
-
-                Text(
-                    viewModel.emailUser,
-                    style = TextStyle(
-                        fontSize = 30.sp,
-                        fontFamily = FontFamily.Default,
-                        fontWeight = FontWeight.Normal,
-                        color = MaterialTheme.colors.onSurface
-                    )
+            Text(
+                viewModel.nameUser,
+                style = TextStyle(
+                    color = MaterialTheme.colors.onSurface,
+                    fontSize = textSize,
+                    fontFamily = FontFamily.Default,
                 )
-            }
-
-            Spacer(modifier = Modifier.size(20.dp))
-
-            Row(
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.Center
             )
-            {
 
-                Icon(Icons.Default.Phone, "Icon description", tint = MaterialTheme.colors.onSurface)
+            Spacer(modifier = Modifier.size(textToIconSpace))
 
-                Text(
-                    viewModel.phoneUser,
-                    style = TextStyle(
-                        fontSize = 30.sp,
-                        fontFamily = FontFamily.Default,
-                        fontWeight = FontWeight.Normal,
-                        color = MaterialTheme.colors.onSurface
-                    )
+            // * * * * * * E_MAIL * * * * * *
+            Icon(
+                Icons.Default.Email,
+                "Icon description",
+                tint = colors.primary,
+                modifier = Modifier.size(iconSize),
+            )
+            Text(
+                viewModel.emailUser,
+                style = TextStyle(
+                    color = MaterialTheme.colors.onSurface,
+                    fontSize = textSize,
+                    fontFamily = FontFamily.Default,
+                    fontWeight = FontWeight.Normal
                 )
-            }
+            )
 
-            Spacer(modifier = Modifier.size(20.dp))
+            Spacer(modifier = Modifier.size(textToIconSpace))
 
-            Row(
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.Center,
-            ) {
-
-                Icon(
-                    Icons.Default.Info,
-                    "Icon description",
-                    tint = MaterialTheme.colors.onSurface
+            // * * * * * * PHONE * * * * * *
+            Icon(
+                Icons.Default.Phone,
+                "Icon description",
+                tint = colors.primary,
+                modifier = Modifier.size(iconSize),
+            )
+            Text(
+                viewModel.phoneUser,
+                style = TextStyle(
+                    color = MaterialTheme.colors.onSurface,
+                    fontSize = textSize,
+                    fontFamily = FontFamily.Default,
+                    fontWeight = FontWeight.Normal
                 )
+            )
 
-                Text(
-                    text = "Opis profilu:",
-                    style = TextStyle(
-                        fontSize = 25.sp,
-                        fontFamily = FontFamily.Default,
-                        fontWeight = FontWeight.Bold,
-                        textAlign = TextAlign.Start,
-                        color = MaterialTheme.colors.onSurface
-                    ),
-                )
-            }
+            Spacer(modifier = Modifier.size(textToIconSpace))
 
-            Spacer(modifier = Modifier.size(20.dp))
+            // * * * * * * ADDRESS * * * * * *
+            Icon(
+                Icons.Default.LocationOn,
+                "Location description",
+                tint = colors.primary,
+                modifier = Modifier.size(iconSize),
+            )
+            Text(
+                text = viewModel.address,
+                style = TextStyle(
+                    color = MaterialTheme.colors.onSurface,
+                    fontSize = textSize,
+                    fontFamily = FontFamily.Default,
+                    textAlign = TextAlign.Start
+                ),
+            )
 
+            Spacer(modifier = Modifier.size(textToIconSpace))
+
+            // * * * * * * DESCRIPTION * * * * * *
+            Icon(
+                Icons.Default.Info,
+                "Icon description",
+                tint = colors.primary,
+                modifier = Modifier.size(iconSize),
+            )
             Text(
                 text = viewModel.userDescription,
                 style = TextStyle(
-                    fontSize = 15.sp,
+                    color = MaterialTheme.colors.onSurface,
+                    fontSize = textSize,
                     fontFamily = FontFamily.Default,
-                    fontWeight = FontWeight.Bold,
-                    textAlign = TextAlign.Center,
-                    color = MaterialTheme.colors.onSurface
-                )
+                    textAlign = TextAlign.Center
+                ),
             )
-
         }
-
     }
-
-    Box(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(12.dp)
-            .background(MaterialTheme.colors.secondaryVariant),
-        contentAlignment = Alignment.Center
-    ) {
-
-    }
-
-
-    Box(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(12.dp)
-            .background(MaterialTheme.colors.secondaryVariant),
-        contentAlignment = Alignment.Center
-    ) {
-
-    }
-
 }
 
 @Composable
@@ -263,13 +264,6 @@ fun OtherUserButtonSection(navController: NavController) {
             .fillMaxWidth()
             .padding(Dimens.standardPadding)
     ) {
-
-        Image(
-            painterResource(R.drawable.ic_baseline_star_24),
-            contentDescription = "Dodaj opinię",
-            modifier = Modifier.size(30.dp),
-        )
-
         Text(
             text = "Dodaj opinię",
             Modifier.padding(start = 10.dp),

@@ -141,7 +141,7 @@ fun ResetPasswordCodeBody(
             leadingIcon = {
                 Icon(
                     imageVector = Icons.Default.Lock, contentDescription = "lock icon",
-                    tint = MaterialTheme.colors.onSurface
+                    tint = colors.onSurface
                 )
             },
             visualTransformation = PasswordVisualTransformation(),
@@ -157,7 +157,7 @@ fun ResetPasswordCodeBody(
             modifier = Modifier.fillMaxWidth(),
             colors = ButtonDefaults.buttonColors(backgroundColor = colors.onSurface),
         ) {
-            Text(text = Strings.confirm, color = kWhite)
+            Text(text = Strings.confirm, color = colors.surface)
         }
     }
 }
@@ -208,7 +208,7 @@ fun ResetPasswordBody(
             modifier = Modifier.fillMaxWidth(),
             colors = ButtonDefaults.buttonColors(backgroundColor = colors.onSurface),
         ) {
-            Text(text = Strings.passwordReset, color = kWhite)
+            Text(text = Strings.passwordReset, color = colors.surface)
         }
     }
 }
