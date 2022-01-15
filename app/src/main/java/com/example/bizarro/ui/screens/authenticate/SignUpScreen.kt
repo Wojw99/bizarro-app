@@ -134,7 +134,7 @@ fun SignUpScreenBody(
             value = viewModel.passwordRegisterText.value,
             onValueChange = { viewModel.passwordRegisterText.value = it },
             labelText = Strings.password,
-            keyboardType = KeyboardType.Text,
+            keyboardType = KeyboardType.Password,
             modifier = textFieldModifier,
             leadingIcon = {
                 Icon(
@@ -151,7 +151,7 @@ fun SignUpScreenBody(
             value = viewModel.passwordRepeatRegisterText.value,
             onValueChange = { viewModel.passwordRepeatRegisterText.value = it },
             labelText = Strings.passwordRepeat,
-            keyboardType = KeyboardType.Text,
+            keyboardType = KeyboardType.Password,
             modifier = textFieldModifier,
             leadingIcon = {
                 Icon(

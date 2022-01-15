@@ -101,10 +101,9 @@ class AddRecordViewModel @Inject constructor(
     }
 
     fun confirm(context: Context) {
-        if (!allFieldsCorrect()) {
-            endLoadingWithError(Strings.emptyFieldsError)
-            return
-        }
+        validateFields()
+        if (isError()) return
+
         if(isEditScreen.value) {
             updateRecord()
         } else {
@@ -192,8 +191,10 @@ class AddRecordViewModel @Inject constructor(
         }
     }
 
-    private fun allFieldsCorrect(): Boolean {
-        if (titleText.value.isNullOrEmpty()
+    // TODO: Check length validation
+    private fun validateFields() {
+        if (
+            titleText.value.isNullOrEmpty()
             || descriptionText.value.isNullOrEmpty()
             || selectedType.value.isNullOrEmpty()
             || selectedCategory.value.isNullOrEmpty()
@@ -203,9 +204,18 @@ class AddRecordViewModel @Inject constructor(
             || numberText.value.isNullOrEmpty()
             || (imageBitmap.value == null && !isEditScreen.value)
         ) {
-            return false
+            loadError.value = Strings.emptyFieldsError
+        } else if (titleText.value.length > 70) {
+            loadError.value = "Tytuł jest za długi!"
+        } else if (descriptionText.value.length > 1000) {
+            loadError.value = "Opis jest za długi!"
+        } else if (cityText.value.length > 30) {
+            loadError.value = "Nazwa miasta jest za długa!"
+        } else if (streetText.value.length > 30) {
+            loadError.value = "Ulica jest za długa!"
+        } else if (numberText.value.length > 5) {
+            loadError.value = "Numer domu/lokalu jest za długi!"
         }
-        return true
     }
 
     private fun convertText(text: MutableState<String>): String? {

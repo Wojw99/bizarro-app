@@ -120,7 +120,7 @@ fun SignInScreenBody(
             value = viewModel.passwordLoginText.value,
             onValueChange = { viewModel.passwordLoginText.value = it },
             labelText = Strings.passwordRepeat,
-            keyboardType = KeyboardType.Text,
+            keyboardType = KeyboardType.Password,
             modifier = textFieldModifier,
             leadingIcon = {
                 Icon(

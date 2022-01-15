@@ -84,7 +84,7 @@ class UserProfileViewModel @Inject constructor(
                     if(firstNameUser.isNullOrEmpty() && secondNameUser.isNullOrEmpty()) {
                         nameUser = Strings.emptyUserNames
                     } else if(firstNameUser.isNullOrEmpty() && !secondNameUser.isNullOrEmpty()) {
-                        nameUser = "$$secondNameUser"
+                        nameUser = "$secondNameUser"
                     } else if(!firstNameUser.isNullOrEmpty() && secondNameUser.isNullOrEmpty()) {
                         nameUser = "$firstNameUser"
                     } else {
