@@ -142,6 +142,7 @@ class AddRecordViewModel @Inject constructor(
                     isSuccess.value = true
                     UserRecordListViewModel.signalUpdate()
                     RecordDetailsViewModel.signalUpdate()
+                    SearchViewModel.signalUpdate()
                 }
                 is Resource.Error<*> -> {
                     endLoadingWithError(resource.message!!)
@@ -200,7 +201,7 @@ class AddRecordViewModel @Inject constructor(
             || cityText.value.isNullOrEmpty()
             || streetText.value.isNullOrEmpty()
             || numberText.value.isNullOrEmpty()
-            || imageBitmap.value == null
+            || (imageBitmap.value == null && !isEditScreen.value)
         ) {
             return false
         }

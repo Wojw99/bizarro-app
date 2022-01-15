@@ -183,32 +183,34 @@ fun AddRecordScreen(
                 )
 
                 // * * * * * PHOTO * * * * *
-                Text(
-                    modifier = headerModifier,
-                    text = Strings.photo,
-                    style = headerStyle,
-                    color = colors.onSurface
-                )
-                Spacer(modifier = Modifier.height(8.dp))
-
-                if (viewModel.imageUri.value != null) {
-                    val painter = rememberImagePainter(viewModel.imageUri.value)
-                    Image(
-                        painter = painter,
-                        contentDescription = Strings.photo,
-                        modifier = textFieldModifier.height(250.dp),
+                if(!viewModel.isEditScreen.value) {
+                    Text(
+                        modifier = headerModifier,
+                        text = Strings.photo,
+                        style = headerStyle,
+                        color = colors.onSurface
                     )
                     Spacer(modifier = Modifier.height(8.dp))
-                }
 
-                Button(
-                    onClick = {
-                        // launch only for images
-                        launcher.launch("image/*")
-                    },
-                    modifier = textFieldModifier,
-                ) {
-                    Text(text = Strings.select)
+                    if (viewModel.imageUri.value != null) {
+                        val painter = rememberImagePainter(viewModel.imageUri.value)
+                        Image(
+                            painter = painter,
+                            contentDescription = Strings.photo,
+                            modifier = textFieldModifier.height(250.dp),
+                        )
+                        Spacer(modifier = Modifier.height(8.dp))
+                    }
+
+                    Button(
+                        onClick = {
+                            // launch only for images
+                            launcher.launch("image/*")
+                        },
+                        modifier = textFieldModifier,
+                    ) {
+                        Text(text = Strings.select)
+                    }
                 }
 
                 Spacer(modifier = Modifier.height(128.dp))
