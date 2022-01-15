@@ -37,6 +37,8 @@ object Strings {
     const val type = "Typ"
     const val header = "Nagłówek"
     const val startDate = "Data wystawienia"
+    const val noCategoryDesc = "Brak opisu kategorii."
+    const val noMarkDesc = "Bądź pierwszym, który wystawi opinię!"
 
     const val emptyUserEmail = "Nie podano adresu e-mail"
     const val emptyUserPhone = "Nie podano numeru telefonu"
@@ -111,6 +113,9 @@ object Strings {
     const val address = "Adres"
     const val addToCompareSuccessMessage = "Pomyślnie dodano do porównywanych ogłoszeń!"
     const val removeFromCompareSuccessMessage = "Pomyślnie usunięto z porównywanych ogłoszeń!"
+
+    const val positiveOpinions = "Większość osób ma pozytywną opinię o transakcjach i kontakcie z tym użytkownikiem."
+    const val negativeOpinions = "Większość osób ma negatywną lub neutralną opinię o transakcjach i kontakcie z tym użytkownikiem."
 
     // * * * * * * * * ADD RECORD SCREEN * * * * * * * *
     const val addRecord = "Dodaj ogłoszenie"

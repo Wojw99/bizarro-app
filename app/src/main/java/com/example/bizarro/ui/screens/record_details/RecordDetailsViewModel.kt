@@ -15,6 +15,7 @@ import com.example.bizarro.repositories.RecordRepository
 import com.example.bizarro.repositories.UserRepository
 import com.example.bizarro.ui.AppState
 import com.example.bizarro.ui.NetworkingViewModel
+import com.example.bizarro.ui.screens.search.SearchViewModel
 import com.example.bizarro.ui.screens.user_record_list.UserRecordListViewModel
 import com.example.bizarro.utils.CommonMethods
 import com.example.bizarro.utils.Constants
@@ -56,7 +57,7 @@ class RecordDetailsViewModel @Inject constructor(
 
     val recordBody = mutableStateOf("")
     val recordGeneralOpinion = mutableStateOf("")
-    val recordGeneralOpinionDesc = mutableStateOf("")
+    val recordGeneralOpinionNumber = mutableStateOf<Double?>(null)
     val recordCategory = mutableStateOf("")
     val recordCategoryDesc = mutableStateOf("")
     val recordAddress = mutableStateOf("")
@@ -138,6 +139,7 @@ class RecordDetailsViewModel @Inject constructor(
                     endLoading()
                     successfullyDeleted.value = true
                     UserRecordListViewModel.signalUpdate()
+                    SearchViewModel.signalUpdate()
                 }
                 is Resource.Error<*> -> {
                     endLoadingWithError(resource.message!!)
@@ -198,7 +200,7 @@ class RecordDetailsViewModel @Inject constructor(
                     topBarTitle.value = profile.username
                     topBarImagePath.value = profile.imagePath ?: Constants.USER_DEFAULT_IMG_URL
                     recordGeneralOpinion.value = markInfo.textMark
-                    recordGeneralOpinionDesc.value = markInfo.textMark
+                    recordGeneralOpinionNumber.value = markInfo.numberMark
                 }
                 is Resource.Error<*> -> {
                     endLoadingWithError()

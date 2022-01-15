@@ -221,8 +221,8 @@ fun RecordDetailsBody(
         Box(
             modifier = Modifier
                 .fillMaxWidth()
-                .shadow(5.dp, RoundedCornerShape(Dimens.cornerRadius))
-                .clip(RoundedCornerShape(Dimens.cornerRadius))
+                .shadow(5.dp, RoundedCornerShape(0.dp, 0.dp, Dimens.cornerRadius, Dimens.cornerRadius))
+                .clip(RoundedCornerShape(0.dp, 0.dp, Dimens.cornerRadius, Dimens.cornerRadius))
                 .background(colors.surface),
         ) {
             Column(
@@ -373,7 +373,7 @@ fun RecordDetailsBody(
             )
 
             Text(
-                text = viewModel.recordGeneralOpinionDesc.value,
+                text = CommonMethods.getDescriptionForNumberMark(viewModel.recordGeneralOpinionNumber.value),
                 style = TextStyle(color = colors.onSurface, fontSize = 18.sp),
                 modifier = sectionsTextModifier,
             )
@@ -421,7 +421,7 @@ fun RecordDetailsBody(
             )
 
             Text(
-                text = viewModel.recordCategoryDesc.value,
+                text = CommonMethods.getDescriptionForCategory(viewModel.recordCategory.value),
                 style = TextStyle(color = colors.onSurface, fontSize = 18.sp),
                 modifier = sectionsTextModifier,
             )

@@ -20,7 +20,7 @@ class FilterViewModel @Inject constructor(
     val appState: AppState,
 ) : NetworkingViewModel() {
     val typeLabels = Constants.types
-    val categoryLabels = Constants.categories
+    val categoryLabels = Constants.categories.map { category -> category.name }
     val provinceLabels = Constants.provinces
 
     val selectedType = mutableStateOf("")

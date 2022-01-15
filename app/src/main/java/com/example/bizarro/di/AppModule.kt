@@ -12,7 +12,6 @@ import com.example.bizarro.repositories.OpinionsRepository
 import com.example.bizarro.repositories.RecordRepository
 import com.example.bizarro.repositories.UserRepository
 import com.example.bizarro.ui.AppState
-import com.example.bizarro.ui.FilterState
 import com.example.bizarro.utils.Constants
 import com.google.gson.GsonBuilder
 import dagger.Module
@@ -32,12 +31,6 @@ import javax.inject.Singleton
 class AppModule {
     // Dependencies here live as long as the whole application.
     // All dependencies are singletons.
-
-    @Singleton
-    @Provides
-    fun provideFilterState(): FilterState {
-        return FilterState()
-    }
 
     @Singleton
     @Provides

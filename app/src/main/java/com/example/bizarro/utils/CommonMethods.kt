@@ -34,6 +34,19 @@ object CommonMethods {
         return string
     }
 
+    fun getDescriptionForCategory(categoryName: String?): String {
+        for(x in Constants.categories) {
+            if(categoryName == x.name) return x.description
+        }
+        return Strings.noCategoryDesc
+    }
+
+    fun getDescriptionForNumberMark(numberMark: Double?): String {
+        if (numberMark == null) return Strings.noMarkDesc
+        if (numberMark > 2.5) return Strings.positiveOpinions
+        if (numberMark < 2.5) return Strings.negativeOpinions
+        return Strings.noMarkDesc
+    }
 
     fun getUrlForImage(imageUrl: String): String {
         return "https${imageUrl.substring(4)}"
