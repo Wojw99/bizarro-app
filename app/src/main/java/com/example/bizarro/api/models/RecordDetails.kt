@@ -5,7 +5,7 @@ import com.google.gson.annotations.SerializedName
 
 data class RecordDetails(
     @SerializedName("Post Details")
-    val postDetails: Record,
+    val details: Record,
     @SerializedName("Post Photo")
-    val postPhoto: List<Any>
+    val photos: List<Any>
 )

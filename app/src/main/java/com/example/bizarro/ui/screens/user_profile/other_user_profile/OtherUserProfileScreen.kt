@@ -60,7 +60,7 @@ fun OtherUserProfileScreen(
             // * * * * * * TOP BAR ICON * * * * * *
             TopBar(
                 navController = navController,
-                showBackButton = false,
+                showBackButton = true,
             )
 
             // * * * * * * ERROR TEXT * * * * * *

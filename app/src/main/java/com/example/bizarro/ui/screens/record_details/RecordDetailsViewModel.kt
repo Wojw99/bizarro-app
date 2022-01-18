@@ -39,7 +39,7 @@ class RecordDetailsViewModel @Inject constructor(
         var record: Record? = null
         var userId: Long? = null
 
-        val signal = MutableLiveData(false)
+        private val signal = MutableLiveData(false)
 
         fun signalUpdate() {
             signal.value = true
@@ -95,7 +95,7 @@ class RecordDetailsViewModel @Inject constructor(
                 is Resource.Success -> {
                     endLoading()
                     val recordDetails = resource.data as RecordDetails
-                    record = recordDetails.postDetails
+                    record = recordDetails.details
                     updateRecordInfo()
                 }
                 is Resource.Error<*> -> {

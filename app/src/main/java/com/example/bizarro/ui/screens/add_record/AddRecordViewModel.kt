@@ -1,18 +1,11 @@
 package com.example.bizarro.ui.screens.add_record
 
 import android.content.Context
-import android.content.ContextWrapper
 import android.graphics.Bitmap
-import android.graphics.ImageDecoder
 import android.net.Uri
-import android.os.FileUtils
-import android.provider.MediaStore
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
-import androidx.core.net.toFile
 import androidx.lifecycle.viewModelScope
-import com.example.bizarro.api.models.Address
-import com.example.bizarro.api.models.Category
 import com.example.bizarro.api.models.Record
 import com.example.bizarro.repositories.RecordRepository
 import com.example.bizarro.ui.AppState
@@ -26,17 +19,11 @@ import com.example.bizarro.utils.Resource
 import com.example.bizarro.utils.Strings
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
-import okhttp3.MediaType
-import okhttp3.MediaType.Companion.get
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
-import java.time.LocalDate
 import javax.inject.Inject
 import okhttp3.RequestBody
-import okhttp3.RequestBody.Companion.asRequestBody
 import timber.log.Timber
-import java.io.*
-import java.util.*
 
 
 @HiltViewModel

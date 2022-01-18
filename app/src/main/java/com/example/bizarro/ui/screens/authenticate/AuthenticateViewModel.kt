@@ -9,6 +9,7 @@ import com.example.bizarro.ui.NetworkingViewModel
 import com.example.bizarro.utils.CommonMethods
 import com.example.bizarro.utils.Resource
 import com.example.bizarro.utils.Strings
+import com.example.bizarro.utils.ValidationHelper
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -80,7 +81,12 @@ class AuthenticateViewModel @Inject constructor(
     }
 
     fun register() {
-        validateRegisterFields()
+        loadError.value = ValidationHelper.validateRegisterFields(
+            userNameRegisterText.value,
+            emailRegisterText.value,
+            passwordRegisterText.value,
+            passwordRepeatRegisterText.value,
+        )
         if (isError()) return
 
         viewModelScope.launch {
@@ -108,20 +114,6 @@ class AuthenticateViewModel @Inject constructor(
                     endLoadingWithError(resource.message!!)
                 }
             }
-        }
-    }
-
-    private fun validateRegisterFields() {
-        if (userNameRegisterText.value.isEmpty()
-            || emailRegisterText.value.isEmpty()
-            || passwordRegisterText.value.isEmpty()
-            || passwordRepeatRegisterText.value.isEmpty()
-        ) {
-            loadError.value = Strings.emptyFieldsError
-        } else if (!CommonMethods.isValidEmail(emailRegisterText.value)) {
-            loadError.value = Strings.emailIncorrectError
-        } else if (passwordRegisterText.value != passwordRepeatRegisterText.value) {
-            loadError.value = Strings.passwordNotEqualsError
         }
     }
 }

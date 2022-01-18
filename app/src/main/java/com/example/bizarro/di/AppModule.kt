@@ -52,10 +52,9 @@ class AppModule {
     @Provides
     fun provideRecordRepository(
         api: BizarroApi,
-        userRepository: UserRepository,
         tokenManager: TokenManager
     ): RecordRepository {
-        return RecordRepository(api, userRepository, tokenManager)
+        return RecordRepository(api, tokenManager)
     }
 
     @Singleton

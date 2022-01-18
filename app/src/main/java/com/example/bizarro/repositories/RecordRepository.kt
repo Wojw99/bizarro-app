@@ -22,11 +22,8 @@ import javax.inject.Inject
 
 class RecordRepository @Inject constructor(
     private val api: BizarroApi,
-    private val userRepository: UserRepository,
     private val tokenManager: TokenManager,
 ) {
-    // TODO: prevent before multiple calling, here or in view models
-
     suspend fun getUserRecords(): Resource<List<Record>> {
         if (tokenManager.isUserNotSignedIn()) return Resource.Error(Strings.userNotSignedInError)
 
@@ -86,14 +83,14 @@ class RecordRepository @Inject constructor(
         if (tokenManager.isUserNotSignedIn()) return Resource.Error(Strings.userNotSignedInError)
 
         val response = try {
-            api.getRecordDetails(recordId)
+            api.getRecordDetails(recordId = recordId)
         } catch (e: Exception) {
             Timber.d(e)
             val errorText = parseError(e)
-            return Resource.Error(errorText)
+            return Resource.Error(message = errorText)
         }
 
-        return Resource.Success(response)
+        return Resource.Success(data = response)
     }
 
     suspend fun deleteRecord(recordId: Long): Resource<String> {

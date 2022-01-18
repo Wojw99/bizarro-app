@@ -24,6 +24,9 @@ class TokenManager(
         return false
     }
 
+    /**
+     * Save access token to shared preferences
+     */
     fun loadAccessToken() {
         val sharedPreferences = applicationContext.getSharedPreferences(
             Constants.SHARED_PREFERENCES_KEY, Context.MODE_PRIVATE

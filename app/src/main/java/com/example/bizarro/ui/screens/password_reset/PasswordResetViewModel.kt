@@ -9,6 +9,7 @@ import com.example.bizarro.ui.NetworkingViewModel
 import com.example.bizarro.utils.CommonMethods
 import com.example.bizarro.utils.Resource
 import com.example.bizarro.utils.Strings
+import com.example.bizarro.utils.ValidationHelper
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -27,14 +28,13 @@ class PasswordResetViewModel @Inject constructor(
     val isSuccess = mutableStateOf(false)
 
     fun sendResetRequest() {
-        loadError.value = validateEmail()
+        loadError.value = ValidationHelper.validateEmail(email.value)
         if(isError()) return
 
         viewModelScope.launch {
             startLoading()
 
             val resource = userRepository.sendResetPasswordRequest(email.value)
-
             when (resource) {
                 is Resource.Success -> {
                     endLoading()
@@ -48,7 +48,11 @@ class PasswordResetViewModel @Inject constructor(
     }
 
     fun resetPassword() {
-        loadError.value = validatePasswordAndCode()
+        loadError.value = ValidationHelper.validatePasswordAndCode(
+            code.value,
+            password.value,
+            passwordRepeat.value,
+        )
         if(isError()) return
 
         viewModelScope.launch {
@@ -70,26 +74,5 @@ class PasswordResetViewModel @Inject constructor(
                 }
             }
         }
-    }
-
-    private fun validateEmail(): String {
-        if (email.value.isEmpty() ) {
-            return Strings.emptyFieldsError
-        } else if (!CommonMethods.isValidEmail(email.value)) {
-            return Strings.emailIncorrectError
-        }
-        return Strings.empty
-    }
-
-    private fun validatePasswordAndCode(): String {
-        if (code.value.isEmpty()
-            || password.value.isEmpty()
-            || passwordRepeat.value.isEmpty()
-        ) {
-            return Strings.emptyFieldsError
-        } else if (password.value != passwordRepeat.value) {
-            return Strings.passwordNotEqualsError
-        }
-        return Strings.empty
     }
 }
