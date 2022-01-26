@@ -109,38 +109,6 @@ fun SettingsScreen(
                                 tint = colors.onSurface
                             )
                     }
-                    
-                    Spacer(modifier = Modifier.height(5.dp))
-
-                    Box(modifier = Modifier
-                        .background(colors.background)
-                        .clickable {
-                            navController.navigate(route = Screen.PrivacyPolicyScreen.route)
-                        }
-                        .height(80.dp)
-                        .fillMaxWidth()
-                        .fillMaxSize()
-                        .padding(start = 16.dp, end = 16.dp)
-                    ) {
-                        
-                            Text(
-                                modifier = Modifier.align(CenterStart),
-                                text = "Polityka prywatności",
-                                color = colors.onBackground,
-                                style = MaterialTheme.typography.button
-                            )
-                        
-                                Icon(
-                                    modifier = Modifier
-                                        .align(Alignment.CenterEnd)
-                                        .size(30.dp)
-                                    ,
-                                    imageVector = Icons.Default.List,
-                                    contentDescription = "Privacy policy Button",
-
-                                    tint = colors.onSurface
-                                )
-                    }
 
                     Spacer(modifier = Modifier.height(5.dp))
 
